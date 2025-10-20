@@ -8,6 +8,19 @@
             <a class="btn primary" href="/signup">{{ t['landing']['cta_creator'] }}</a>
             <a class="btn secondary" href="/signup?role=manager">{{ t['landing']['cta_manager'] }}</a>
         </div>
+        <div class="hero-highlights">
+            {% for highlight in t['landing']['hero_highlights'] %}
+            <span class="highlight-chip">
+                <span class="chip-icon" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" focusable="false" role="img">
+                        <path fill="currentColor" d="M9.5 1.5 7.7 6.2l-4.7 1.8 4.7 1.8 1.8 4.7 1.8-4.7 4.7-1.8-4.7-1.8z" opacity="0.85" />
+                        <circle cx="9.5" cy="9.8" r="2.4" fill="var(--chip-accent)" />
+                    </svg>
+                </span>
+                {{ highlight }}
+            </span>
+            {% endfor %}
+        </div>
     </div>
     <div class="hero-visual">
         <div class="dashboard-preview">
@@ -25,10 +38,18 @@
 </section>
 <section class="metrics-grid">
     {% for metric in t['landing']['metrics'] %}
-    <article class="metric-card">
-        <span class="metric-value">{{ metric['value'] }}</span>
-        <span class="metric-label">{{ metric['label'] }}</span>
-        <p class="metric-description">{{ metric['description'] }}</p>
+    <article class="metric-card" data-metric-index="{{ loop.index }}">
+        <span class="metric-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false" role="img">
+                <path d="M6 22c3-4.5 6-9 9-14l4 6 7-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="23" cy="7" r="3" fill="currentColor" opacity="0.7" />
+            </svg>
+        </span>
+        <div class="metric-body">
+            <span class="metric-value">{{ metric['value'] }}</span>
+            <span class="metric-label">{{ metric['label'] }}</span>
+            <p class="metric-description">{{ metric['description'] }}</p>
+        </div>
     </article>
     {% endfor %}
 </section>
@@ -39,7 +60,13 @@
     </div>
     <div class="feature-grid">
         {% for feature in t['landing']['feature_section']['items'] %}
-        <article class="feature-card">
+        <article class="feature-card" data-feature-index="{{ loop.index }}">
+            <span class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" focusable="false" role="img">
+                    <path d="M4 12.5 13.5 4l9.5 8.5-9.5 9.5z" fill="currentColor" opacity="0.75" />
+                    <path d="M10.5 13.5h7l-3.5 6z" fill="var(--feature-accent)" />
+                </svg>
+            </span>
             <strong>{{ feature['tag'] }}</strong>
             <h3>{{ feature['title'] }}</h3>
             <p>{{ feature['description'] }}</p>
@@ -76,7 +103,13 @@
     </div>
     {% for step in t['landing']['journey']['steps'] %}
     <article class="journey-step">
-        <span>{{ step['label'] }}</span>
+        <span class="step-icon" aria-hidden="true">
+            <svg viewBox="0 0 28 28" focusable="false" role="img">
+                <circle cx="14" cy="14" r="12" fill="currentColor" opacity="0.18" />
+                <path d="m11 15 2.5 2.5L18 11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </span>
+        <span class="step-label">{{ step['label'] }}</span>
         <h3>{{ step['title'] }}</h3>
         <p>{{ step['description'] }}</p>
     </article>
@@ -85,7 +118,8 @@
 <section class="testimonial-grid">
     {% for testimonial in t['landing']['testimonials'] %}
     <article class="testimonial-card">
-        <p>“{{ testimonial['quote'] }}”</p>
+        <span class="testimonial-quote" aria-hidden="true">“</span>
+        <p>{{ testimonial['quote'] }}</p>
         <cite>{{ testimonial['name'] }} · {{ testimonial['title'] }}</cite>
     </article>
     {% endfor %}

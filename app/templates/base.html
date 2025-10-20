@@ -19,8 +19,26 @@
     <script defer src="/static/js/theme.js"></script>
 </head>
 <body>
+<div class="ambient-orbs" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+</div>
 <header class="topbar">
     <div class="logo">
+        <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false" role="img">
+                <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6366f1" />
+                        <stop offset="100%" stop-color="#a855f7" />
+                    </linearGradient>
+                </defs>
+                <rect x="4" y="4" width="24" height="24" rx="8" fill="url(#logoGradient)" />
+                <path d="M11 21c1.8-3.5 3.5-7 6-10l4 2-3 9z" fill="#eef2ff" opacity="0.85" />
+                <circle cx="14" cy="13" r="2" fill="#fef9c3" />
+            </svg>
+        </span>
         <a href="/">Creator Control Center</a>
     </div>
     <nav class="main-nav">

@@ -35,6 +35,11 @@
   "landing": {
     "headline": "Your marketing-grade command center for creator growth",
     "subheadline": "Connect channel analytics, campaign reporting, and revenue impact so every decision is backed by data.",
+    "hero_highlights": [
+      "Trusted by 2,300+ creator teams",
+      "Daily syncs across 15+ platforms",
+      "Privacy-first infrastructure"
+    ],
     "cta_creator": "Start for free",
     "cta_manager": "Trial with your team",
     "preview_title": "Live channel score",
