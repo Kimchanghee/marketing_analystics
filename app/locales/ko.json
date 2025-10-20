@@ -1,0 +1,117 @@
+{
+  "app": {
+    "title": "크리에이터 컨트롤 센터"
+  },
+  "nav": {
+    "home": "홈",
+    "dashboard": "대시보드",
+    "profile": "프로필"
+  },
+  "footer": {
+    "tagline": "크리에이터와 그들을 돕는 팀을 위한 통합 분석 플랫폼"
+  },
+  "roles": {
+    "creator": "크리에이터",
+    "manager": "크리에이터 관리자",
+    "admin": "관리자",
+    "super_admin": "제작자"
+  },
+  "landing": {
+    "headline": "여러 채널을 한눈에 보는 크리에이터 통합 본부",
+    "subheadline": "엑셀과 무한 탭을 닫으세요. 구독자 증감, 게시물 성과, 커뮤니티 반응을 한곳에서 확인합니다.",
+    "cta_creator": "크리에이터로 시작하기",
+    "cta_manager": "관리자로 사용하기",
+    "preview_title": "채널 건강 미리보기",
+    "mock_metric": "이번 주 +12%",
+    "platforms": {
+      "instagram": "인스타그램",
+      "threads": "쓰레드",
+      "youtube": "유튜브",
+      "twitter": "트위터/X",
+      "tiktok": "틱톡",
+      "facebook": "페이스북",
+      "meta_ads": "메타 광고"
+    },
+    "features": [
+      {
+        "title": "성장 지표 한곳에",
+        "description": "구독자 변화, 도달률, 참여도를 직관적인 시각으로 확인합니다."
+      },
+      {
+        "title": "콘텐츠별 성과",
+        "description": "업로드 제목, 시간, 조회와 반응 데이터를 게시물 단위로 제공합니다."
+      },
+      {
+        "title": "관리자 맞춤 협업",
+        "description": "크리에이터 승인 기반으로 관리자와 팀이 안전하게 협업합니다."
+      }
+    ],
+    "creator_section": {
+      "title": "바쁜 크리에이터를 위해",
+      "description": "복잡한 대시보드 대신 지금 필요한 정보만 빠르게 확인하세요."
+    },
+    "manager_section": {
+      "title": "관리자와 교육 담당자를 위해",
+      "description": "관리 중인 채널 현황과 고객 커뮤니케이션을 한 번에 정리합니다."
+    }
+  },
+  "auth": {
+    "login_title": "로그인",
+    "signup_title": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "role": "역할",
+    "organization": "소속/팀",
+    "language": "언어",
+    "login_button": "로그인",
+    "signup_button": "가입하기",
+    "signup_hint": "계정이 없으신가요?",
+    "signup_link": "회원가입"
+  },
+  "dashboard": {
+    "welcome": "환영합니다",
+    "current_plan": "현재 이용권",
+    "upgrade_prompt": "이용권 변경",
+    "update_plan": "변경",
+    "your_channels": "내 채널",
+    "add_channel": "채널 추가",
+    "remove": "삭제",
+    "account_label": "계정",
+    "followers": "구독자",
+    "growth": "성장률",
+    "engagement": "참여율",
+    "last_post": "최근 게시",
+    "recent_posts": "최근 게시물",
+    "manager_hint": "승인된 크리에이터 목록",
+    "creator_hint": "내 크리에이터 관리자",
+    "collaboration": "협업 현황",
+    "account_placeholder": "채널 아이디 또는 URL"
+  },
+  "channels": {
+    "instagram": "인스타그램",
+    "threads": "쓰레드",
+    "youtube": "유튜브",
+    "twitter": "트위터/X",
+    "tiktok": "틱톡",
+    "facebook": "페이스북",
+    "meta_ads": "메타 광고"
+  },
+  "subscriptions": {
+    "free": "무료",
+    "pro": "프로",
+    "enterprise": "엔터프라이즈"
+  },
+  "super_admin": {
+    "title": "제작자 관리실",
+    "description": "회원, 구독, 활동 내역을 빠르게 확인하세요.",
+    "users": "회원",
+    "email": "이메일",
+    "role": "역할",
+    "plan": "이용권",
+    "activity": "최근 활동"
+  },
+  "profile": {
+    "title": "내 정보",
+    "logout": "로그아웃"
+  }
+}

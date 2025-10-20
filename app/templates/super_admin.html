@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-header">
+    <h1>{{ t['super_admin']['title'] }}</h1>
+    <p>{{ t['super_admin']['description'] }}</p>
+</section>
+<section class="admin-panels">
+    <article>
+        <h2>{{ t['super_admin']['users'] }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ t['super_admin']['email'] }}</th>
+                    <th>{{ t['super_admin']['role'] }}</th>
+                    <th>{{ t['super_admin']['plan'] }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.email }}</td>
+                    <td>{{ t['roles'][u.role.value] }}</td>
+                    <td>{{ t['subscriptions'][subscriptions[u.id].tier.value] if u.id in subscriptions else t['subscriptions']['free'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </article>
+    <article>
+        <h2>{{ t['super_admin']['activity'] }}</h2>
+        <ul>
+            {% for log in logs %}
+            <li>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }} — {{ log.action }} ({{ log.details or '' }})</li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+{% endblock %}

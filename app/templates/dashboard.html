@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-header">
+    <h1>{{ t['dashboard']['welcome'] }} {{ user.email }}</h1>
+    <div class="subscription">
+        <span>{{ t['dashboard']['current_plan'] }}: {{ t['subscriptions'][subscription.tier.value] }}</span>
+        <form method="post" action="/subscriptions/change">
+            <label>{{ t['dashboard']['upgrade_prompt'] }}
+                <select name="tier">
+                    <option value="free">{{ t['subscriptions']['free'] }}</option>
+                    <option value="pro">{{ t['subscriptions']['pro'] }}</option>
+                    <option value="enterprise">{{ t['subscriptions']['enterprise'] }}</option>
+                </select>
+            </label>
+            <button class="btn secondary" type="submit">{{ t['dashboard']['update_plan'] }}</button>
+        </form>
+    </div>
+</section>
+<section class="channels">
+    <h2>{{ t['dashboard']['your_channels'] }}</h2>
+    <form method="post" action="/channels/add" class="channel-form">
+        <select name="platform">
+            {% for key, label in t['channels'].items() %}
+            <option value="{{ key }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="account_name" placeholder="{{ t['dashboard']['account_placeholder'] }}" required>
+        <button class="btn primary" type="submit">{{ t['dashboard']['add_channel'] }}</button>
+    </form>
+    <div class="channel-grid">
+        {% for account in accounts %}
+        <article class="channel-card">
+            <header>
+                <h3>{{ t['channels'][account.platform] if account.platform in t['channels'] else account.platform }}</h3>
+                <form method="post" action="/channels/remove">
+                    <input type="hidden" name="channel_id" value="{{ account.id }}">
+                    <button class="link danger" type="submit">{{ t['dashboard']['remove'] }}</button>
+                </form>
+            </header>
+            <p>{{ t['dashboard']['account_label'] }}: {{ account.account_name }}</p>
+            {% set snapshot = snapshots.get(account.platform) %}
+            {% if snapshot %}
+            <ul class="metrics">
+                <li>{{ t['dashboard']['followers'] }}: {{ snapshot['followers'] }}</li>
+                <li>{{ t['dashboard']['growth'] }}: {{ snapshot['growth_rate'] }}%</li>
+                <li>{{ t['dashboard']['engagement'] }}: {{ snapshot['engagement_rate'] }}%</li>
+                <li>{{ t['dashboard']['last_post'] }}: {{ snapshot['last_post_date'][:10] }}</li>
+            </ul>
+            <div class="recent-posts">
+                <h4>{{ t['dashboard']['recent_posts'] }}</h4>
+                {% for post in snapshot['recent_posts'] %}
+                <div class="post">
+                    <div>
+                        <strong>{{ post['title'] }}</strong>
+                        <span>{{ post['published_at'][:10] }}</span>
+                    </div>
+                    <div class="post-metrics">
+                        <span>👍 {{ post['likes'] }}</span>
+                        <span>💬 {{ post['comments'] }}</span>
+                        <span>👀 {{ post['impressions'] }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<section class="collaboration">
+    <h2>{{ t['dashboard']['collaboration'] }}</h2>
+    {% if user.role == 'manager' %}
+    <p>{{ t['dashboard']['manager_hint'] }}</p>
+    <ul>
+        {% for link in manager_links %}
+        <li>{{ link.creator.email }} - {{ '✅' if link.approved else '⏳' }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{{ t['dashboard']['creator_hint'] }}</p>
+    <ul>
+        {% for link in manager_links %}
+        <li>{{ link.manager.email }} - {{ '✅' if link.approved else '⏳' }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</section>
+{% endblock %}

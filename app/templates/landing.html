@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>{{ t['landing']['headline'] }}</h1>
+        <p>{{ t['landing']['subheadline'] }}</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="/signup">{{ t['landing']['cta_creator'] }}</a>
+            <a class="btn secondary" href="/signup?role=manager">{{ t['landing']['cta_manager'] }}</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="dashboard-preview">
+            <h3>{{ t['landing']['preview_title'] }}</h3>
+            <ul>
+                {% for platform, label in t['landing']['platforms'].items() %}
+                <li>
+                    <span class="platform">{{ label }}</span>
+                    <span class="metric">{{ t['landing']['mock_metric'] }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="features">
+    {% for feature in t['landing']['features'] %}
+    <article>
+        <h3>{{ feature['title'] }}</h3>
+        <p>{{ feature['description'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section class="personas">
+    <div class="persona">
+        <h2>{{ t['landing']['creator_section']['title'] }}</h2>
+        <p>{{ t['landing']['creator_section']['description'] }}</p>
+    </div>
+    <div class="persona">
+        <h2>{{ t['landing']['manager_section']['title'] }}</h2>
+        <p>{{ t['landing']['manager_section']['description'] }}</p>
+    </div>
+</section>
+{% endblock %}
