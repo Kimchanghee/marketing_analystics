@@ -1,7 +1,9 @@
 import enum
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, Optional
 
+from sqlalchemy import Column
+from sqlalchemy.types import JSON
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -42,7 +44,10 @@ class ChannelAccount(SQLModel, table=True):
     engagement_rate: float = 0.0
     last_post_date: Optional[datetime] = None
     last_post_title: Optional[str] = None
-    extra_metadata: dict = Field(default_factory=dict, sa_column_kwargs={"nullable": False})
+    extra_metadata: Dict[str, Any] = Field(
+        default_factory=dict,
+        sa_column=Column(JSON, nullable=False, default=dict),
+    )
 
     owner: User = Relationship(back_populates="channels")
 
