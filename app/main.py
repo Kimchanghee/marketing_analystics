@@ -52,6 +52,56 @@ async def landing(request: Request):
     )
 
 
+@app.get("/services")
+async def services(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    return app.state.templates.TemplateResponse(
+        "services.html",
+        {"request": request, "locale": locale, "t": strings},
+    )
+
+
+@app.get("/personal")
+async def personal_plan(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    return app.state.templates.TemplateResponse(
+        "personal.html",
+        {"request": request, "locale": locale, "t": strings},
+    )
+
+
+@app.get("/business")
+async def business_plan(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    return app.state.templates.TemplateResponse(
+        "business.html",
+        {"request": request, "locale": locale, "t": strings},
+    )
+
+
+@app.get("/pricing")
+async def pricing(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    return app.state.templates.TemplateResponse(
+        "pricing.html",
+        {"request": request, "locale": locale, "t": strings},
+    )
+
+
+@app.get("/support")
+async def support(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    return app.state.templates.TemplateResponse(
+        "support.html",
+        {"request": request, "locale": locale, "t": strings},
+    )
+
+
 @app.get("/profile")
 async def profile(request: Request, user: User = Depends(get_current_user)):
     locale = user.locale

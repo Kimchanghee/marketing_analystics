@@ -23,22 +23,81 @@
         </div>
     </div>
 </section>
-<section class="features">
-    {% for feature in t['landing']['features'] %}
-    <article>
-        <h3>{{ feature['title'] }}</h3>
-        <p>{{ feature['description'] }}</p>
+<section class="metrics-grid">
+    {% for metric in t['landing']['metrics'] %}
+    <article class="metric-card">
+        <span class="metric-value">{{ metric['value'] }}</span>
+        <span class="metric-label">{{ metric['label'] }}</span>
+        <p class="metric-description">{{ metric['description'] }}</p>
     </article>
     {% endfor %}
 </section>
-<section class="personas">
-    <div class="persona">
-        <h2>{{ t['landing']['creator_section']['title'] }}</h2>
-        <p>{{ t['landing']['creator_section']['description'] }}</p>
+<section>
+    <div class="section-header">
+        <h2>{{ t['landing']['feature_section']['title'] }}</h2>
+        <p>{{ t['landing']['feature_section']['description'] }}</p>
     </div>
-    <div class="persona">
-        <h2>{{ t['landing']['manager_section']['title'] }}</h2>
+    <div class="feature-grid">
+        {% for feature in t['landing']['feature_section']['items'] %}
+        <article class="feature-card">
+            <strong>{{ feature['tag'] }}</strong>
+            <h3>{{ feature['title'] }}</h3>
+            <p>{{ feature['description'] }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<section class="section-split personas">
+    <div class="section-card">
+        <h3>{{ t['landing']['creator_section']['title'] }}</h3>
+        <p>{{ t['landing']['creator_section']['description'] }}</p>
+        <ul class="section-list">
+            {% for highlight in t['landing']['creator_section']['highlights'] %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+        </ul>
+        <a class="btn tertiary" href="/personal">{{ t['landing']['creator_section']['cta'] }}</a>
+    </div>
+    <div class="section-card">
+        <h3>{{ t['landing']['manager_section']['title'] }}</h3>
         <p>{{ t['landing']['manager_section']['description'] }}</p>
+        <ul class="section-list">
+            {% for highlight in t['landing']['manager_section']['highlights'] %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+        </ul>
+        <a class="btn tertiary" href="/business">{{ t['landing']['manager_section']['cta'] }}</a>
+    </div>
+</section>
+<section class="journey-steps">
+    <div class="section-header">
+        <h2>{{ t['landing']['journey']['title'] }}</h2>
+        <p>{{ t['landing']['journey']['description'] }}</p>
+    </div>
+    {% for step in t['landing']['journey']['steps'] %}
+    <article class="journey-step">
+        <span>{{ step['label'] }}</span>
+        <h3>{{ step['title'] }}</h3>
+        <p>{{ step['description'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section class="testimonial-grid">
+    {% for testimonial in t['landing']['testimonials'] %}
+    <article class="testimonial-card">
+        <p>“{{ testimonial['quote'] }}”</p>
+        <cite>{{ testimonial['name'] }} · {{ testimonial['title'] }}</cite>
+    </article>
+    {% endfor %}
+</section>
+<section class="cta-banner">
+    <div>
+        <h2>{{ t['landing']['cta']['title'] }}</h2>
+        <p>{{ t['landing']['cta']['description'] }}</p>
+    </div>
+    <div class="hero-actions">
+        <a class="btn primary" href="/signup">{{ t['landing']['cta']['primary'] }}</a>
+        <a class="btn tertiary" href="/services">{{ t['landing']['cta']['secondary'] }}</a>
     </div>
 </section>
 {% endblock %}

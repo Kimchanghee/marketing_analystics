@@ -4,27 +4,85 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ t['app']['title'] }}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        (function () {
+            const storageKey = 'ccc-theme';
+            const storedTheme = window.localStorage.getItem(storageKey);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <script defer src="/static/js/theme.js"></script>
 </head>
 <body>
 <header class="topbar">
-    <div class="logo">Creator Control Center</div>
-    <nav>
+    <div class="logo">
+        <a href="/">Creator Control Center</a>
+    </div>
+    <nav class="main-nav">
         <a href="/">{{ t['nav']['home'] }}</a>
-        <a href="/dashboard">{{ t['nav']['dashboard'] }}</a>
-        <a href="/profile">{{ t['nav']['profile'] }}</a>
+        <a href="/services">{{ t['nav']['services'] }}</a>
+        <a href="/personal">{{ t['nav']['personal'] }}</a>
+        <a href="/business">{{ t['nav']['business'] }}</a>
+        <a href="/pricing">{{ t['nav']['pricing'] }}</a>
+        <a href="/support">{{ t['nav']['support'] }}</a>
     </nav>
-    <div class="lang-selector">
-        <a href="?lang=ko">🇰🇷</a>
-        <a href="?lang=en">🇺🇸</a>
-        <a href="?lang=ja">🇯🇵</a>
+    <div class="topbar-actions">
+        <nav class="secondary-nav">
+            <a href="/dashboard">{{ t['nav']['dashboard'] }}</a>
+            <a href="/profile">{{ t['nav']['profile'] }}</a>
+        </nav>
+        <button
+            class="theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-label="{{ t['theme']['toggle_label'] }}"
+            data-light-label="{{ t['theme']['light_label'] }}"
+            data-dark-label="{{ t['theme']['dark_label'] }}"
+        >
+            <span class="theme-icon" aria-hidden="true"></span>
+            <span class="theme-label">{{ t['theme']['light_label'] }}</span>
+        </button>
+        <div class="lang-selector" aria-label="{{ t['nav']['language'] }}">
+            <a href="?lang=ko">🇰🇷</a>
+            <a href="?lang=en">🇺🇸</a>
+            <a href="?lang=ja">🇯🇵</a>
+        </div>
     </div>
 </header>
 <main class="content">
     {% block content %}{% endblock %}
 </main>
 <footer class="footer">
-    <p>{{ t['footer']['tagline'] }}</p>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <span class="footer-title">Creator Control Center</span>
+            <p>{{ t['footer']['tagline'] }}</p>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>{{ t['footer']['product'] }}</h4>
+                <a href="/services">{{ t['nav']['services'] }}</a>
+                <a href="/pricing">{{ t['nav']['pricing'] }}</a>
+                <a href="/dashboard">{{ t['nav']['dashboard'] }}</a>
+            </div>
+            <div>
+                <h4>{{ t['footer']['solutions'] }}</h4>
+                <a href="/personal">{{ t['nav']['personal'] }}</a>
+                <a href="/business">{{ t['nav']['business'] }}</a>
+            </div>
+            <div>
+                <h4>{{ t['footer']['support'] }}</h4>
+                <a href="/support">{{ t['nav']['support'] }}</a>
+                <a href="mailto:hello@creatorcontrol.center">{{ t['footer']['contact'] }}</a>
+            </div>
+        </div>
+    </div>
+    <p class="footer-note">{{ t['footer']['note'] }}</p>
 </footer>
 </body>
 </html>

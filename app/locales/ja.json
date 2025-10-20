@@ -1,80 +1,181 @@
 {
   "app": {
-    "title": "クリエイター・コントロール・センター"
+    "title": "Creator Control Center"
   },
   "nav": {
     "home": "ホーム",
+    "services": "サービス",
+    "personal": "個人アカウント",
+    "business": "法人アカウント",
+    "pricing": "料金",
+    "support": "サポート",
     "dashboard": "ダッシュボード",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "language": "言語"
+  },
+  "theme": {
+    "toggle_label": "テーマを切り替え",
+    "light_label": "ライトモード",
+    "dark_label": "ダークモード"
   },
   "footer": {
-    "tagline": "クリエイターとサポートチームのための包括的な分析ツール"
+    "tagline": "クリエイターとそのチームのためのマーケティングオペレーションハブ",
+    "product": "プロダクト",
+    "solutions": "ソリューション",
+    "support": "サポート",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. 無断転載を禁じます。"
   },
   "roles": {
     "creator": "クリエイター",
-    "manager": "マネージャー",
+    "manager": "クリエイターマネージャー",
     "admin": "管理者",
-    "super_admin": "プラットフォーム運営者"
+    "super_admin": "プラットフォーム責任者"
   },
   "landing": {
-    "headline": "すべてのチャンネル状況を一つの画面で管理",
-    "subheadline": "フォロワー推移、投稿の反応、コミュニティの声をまとめて確認できます。",
-    "cta_creator": "クリエイターとして始める",
-    "cta_manager": "管理者として利用",
-    "preview_title": "チャンネルヘルス スナップショット",
+    "headline": "説得力のあるクリエイターマーケティング指令室",
+    "subheadline": "チャネル分析、キャンペーンレポート、収益インパクトを結び付け、すべての意思決定をデータで支えます。",
+    "cta_creator": "無料で始める",
+    "cta_manager": "チームで試す",
+    "preview_title": "ライブチャネルスコア",
     "mock_metric": "今週 +12%",
     "platforms": {
       "instagram": "Instagram",
       "threads": "Threads",
       "youtube": "YouTube",
-      "twitter": "Twitter/X",
+      "twitter": "X",
       "tiktok": "TikTok",
       "facebook": "Facebook",
-      "meta_ads": "Meta広告"
+      "meta_ads": "Meta Ads"
     },
-    "features": [
+    "metrics": [
       {
-        "title": "成長指標を一括表示",
-        "description": "フォロワー数、リーチ、エンゲージメントを直感的に把握。"
+        "label": "レポート作成時間",
+        "value": "70% 短縮",
+        "description": "自動収集により週あたり平均4.5時間の集計作業を削減します。"
       },
       {
-        "title": "投稿ごとの詳細分析",
-        "description": "投稿タイトル、公開日時、成果データを投稿単位で確認。"
+        "label": "コンテンツ失敗率",
+        "value": "30% 改善",
+        "description": "成功したフォーマットを実験ごとに記録し、再現可能なプレイブックを構築します。"
       },
       {
-        "title": "マネージャー向けワークフロー",
-        "description": "承認制で安全に情報共有し、チーム連携をスムーズに。"
+        "label": "承認スピード",
+        "value": "2.4倍",
+        "description": "リクエストと承認を一元管理し、チーム間コミュニケーションを簡素化します。"
       }
     ],
+    "feature_section": {
+      "title": "すべての関係者が信頼できるワークフロー",
+      "description": "予測可能な成長を支えるデータの収集・構造化・共有を支援します。",
+      "items": [
+        {
+          "tag": "INSIGHTS",
+          "title": "KPI自動更新ダッシュボード",
+          "description": "主要指標を毎日同期し、目標に対する進捗を可視化します。"
+        },
+        {
+          "tag": "OPERATIONS",
+          "title": "キャンペーンブリーフとレポート",
+          "description": "スプレッドシート不要で制作情報を記録し、ワンクリックでPDFを出力します。"
+        },
+        {
+          "tag": "COLLAB",
+          "title": "権限ベースのコラボレーション",
+          "description": "社内外のメンバーを役割に応じて招待し、承認履歴を残します。"
+        },
+        {
+          "tag": "AUTOMATION",
+          "title": "コミュニティインテリジェンス",
+          "description": "コメントやDMをテーマ別に分類し、製品・キャンペーンの洞察を抽出します。"
+        }
+      ]
+    },
     "creator_section": {
-      "title": "クリエイターの皆様へ",
-      "description": "複雑なダッシュボードではなく、必要な情報を素早く取得。"
+      "title": "ソロクリエイターの成長コパイロット",
+      "description": "一人でもチームのように分析・提案・運用を進められます。",
+      "highlights": [
+        "主要チャネルのKPIを自動取得",
+        "ブランド提案に使えるハイライト",
+        "スポンサーとローンチの統合カレンダー"
+      ],
+      "cta": "個人プランを見る"
     },
     "manager_section": {
-      "title": "教育・運営担当者の皆様へ",
-      "description": "担当クリエイターの状況を一目で把握し、顧客対応に活用。"
+      "title": "エージェンシーと企業のためのアライメント",
+      "description": "複数のクリエイターとキャンペーンを信頼できるデータで支援します。",
+      "highlights": [
+        "複数アカウントの権限管理",
+        "クライアント向けエグゼクティブサマリー",
+        "成果とリスクの自動アラート"
+      ],
+      "cta": "法人プランを見る"
+    },
+    "journey": {
+      "title": "1週間で体感できる変化",
+      "description": "ガイド付きオンボーディングで登録から共有までスピーディーに進みます。",
+      "steps": [
+        {
+          "label": "Day 1",
+          "title": "チャネル接続",
+          "description": "主要プラットフォームを認証し、優先KPIを選択します。"
+        },
+        {
+          "label": "Day 3",
+          "title": "ダッシュボード構築",
+          "description": "チーム目標に合わせてウィジェットを配置し、共有リンクを発行します。"
+        },
+        {
+          "label": "Day 7",
+          "title": "レポート自動化",
+          "description": "次のアクション提案を含む週間レポートを自動配信します。"
+        }
+      ]
+    },
+    "testimonials": [
+      {
+        "quote": "データ集計に費やしていた時間が戦略の議論に変わりました。",
+        "name": "Hiroko Tanaka",
+        "title": "DTCブランド マーケティング責任者"
+      },
+      {
+        "quote": "クリエイティブと広告成果を同じ画面で確認でき、チームの会話が噛み合います。",
+        "name": "Kenji Sato",
+        "title": "クリエイターマネジメントエージェンシー パートナー"
+      },
+      {
+        "quote": "提案に必要な指標が整っているので、ブランドとの交渉がスムーズです。",
+        "name": "Mika Suzuki",
+        "title": "ライフスタイルクリエイター"
+      }
+    ],
+    "cta": {
+      "title": "次の成長ステージを設計しませんか？",
+      "description": "14日間の無料トライアルでダッシュボード、オートメーション、コラボ機能を体験してください。",
+      "primary": "無料トライアル開始",
+      "secondary": "機能一覧を見る"
     }
   },
   "auth": {
     "login_title": "ログイン",
-    "signup_title": "アカウント作成",
+    "signup_title": "アカウント登録",
     "email": "メール",
     "password": "パスワード",
     "role": "役割",
-    "organization": "所属 / チーム",
+    "organization": "組織 / チーム",
     "language": "言語",
     "login_button": "ログイン",
     "signup_button": "登録",
-    "signup_hint": "アカウントが必要ですか?",
-    "signup_link": "今すぐ作成"
+    "signup_hint": "アカウントが必要ですか？",
+    "signup_link": "こちら"
   },
   "dashboard": {
     "welcome": "ようこそ",
     "current_plan": "現在のプラン",
-    "upgrade_prompt": "プラン変更",
+    "upgrade_prompt": "プランをアップグレード",
     "update_plan": "更新",
-    "your_channels": "あなたのチャンネル",
-    "add_channel": "チャンネル追加",
+    "your_channels": "管理チャネル",
+    "add_channel": "チャネル追加",
     "remove": "削除",
     "account_label": "アカウント",
     "followers": "フォロワー",
@@ -82,33 +183,433 @@
     "engagement": "エンゲージメント",
     "last_post": "最新投稿",
     "recent_posts": "最近の投稿",
-    "manager_hint": "承認済みクリエイター",
+    "manager_hint": "アクセスを許可したクリエイター",
     "creator_hint": "あなたを支援するマネージャー",
-    "collaboration": "コラボレーション状況",
-    "account_placeholder": "チャンネルID または URL"
+    "collaboration": "コラボレーションハブ",
+    "account_placeholder": "ハンドルまたはURL"
   },
   "channels": {
     "instagram": "Instagram",
     "threads": "Threads",
     "youtube": "YouTube",
-    "twitter": "Twitter/X",
+    "twitter": "X",
     "tiktok": "TikTok",
     "facebook": "Facebook",
-    "meta_ads": "Meta広告"
+    "meta_ads": "Meta Ads"
   },
   "subscriptions": {
     "free": "フリー",
     "pro": "プロ",
     "enterprise": "エンタープライズ"
   },
+  "service": {
+    "hero": {
+      "title": "クリエイターマーケティングの統合OS",
+      "subtitle": "チャネル分析、コンテンツ運用、コミュニティ管理をつなげ、成果を生み出します。",
+      "primary_cta": "デモを予約",
+      "secondary_cta": "料金を見る",
+      "visual_title": "人気のインサイト",
+      "visual_points": [
+        {
+          "label": "コンテンツリマインダー",
+          "value": "自動通知 72件"
+        },
+        {
+          "label": "発行レポート",
+          "value": "週24件"
+        },
+        {
+          "label": "承認ワークフロー",
+          "value": "平均8時間短縮"
+        }
+      ]
+    },
+    "pillars_title": "チームが頼る4つの柱",
+    "pillars_description": "クリエイター主導マーケティングを前に進める動きを設計しました。",
+    "pillars": [
+      {
+        "tagline": "Plan",
+        "title": "目標とKPIの整合",
+        "description": "キャンペーン目標と成功指標を定義し、共有します。",
+        "bullets": [
+          "キャンペーンブリーフテンプレート",
+          "ベースラインアラート",
+          "ステークホルダー向け要約"
+        ]
+      },
+      {
+        "tagline": "Create",
+        "title": "コンテンツカレンダー",
+        "description": "担当者ごとの進捗を可視化し、スケジュールを管理します。",
+        "bullets": [
+          "ドラッグ&ドロップでの計画",
+          "承認フィードバックループ",
+          "アセットライブラリ連携"
+        ]
+      },
+      {
+        "tagline": "Launch",
+        "title": "広告・タイアップ管理",
+        "description": "有料施策とパートナーシップの成果を一つのビューで確認します。",
+        "bullets": [
+          "オーガニック＋広告の統合",
+          "契約状況トラッキング",
+          "ROI算出"
+        ]
+      },
+      {
+        "tagline": "Grow",
+        "title": "コミュニティインサイト",
+        "description": "コメントとDMをフィードバックに変換し、改善に活かします。",
+        "bullets": [
+          "感情・トレンド検知",
+          "推奨返信",
+          "フィードバックの振り分け"
+        ]
+      }
+    ],
+    "outcomes": {
+      "title": "導入効果",
+      "description": "導入初月に多くのチームが達成した成果です。",
+      "items": [
+        {
+          "label": "効率",
+          "title": "レポート作成3倍高速化",
+          "detail": "自動データパイプラインで手作業のスプレッドシートを排除します。"
+        },
+        {
+          "label": "可視性",
+          "title": "ステータス確認50%削減",
+          "detail": "共有ダッシュボードで関係者が自ら状況を把握できます。"
+        },
+        {
+          "label": "成長",
+          "title": "コンバージョン18%向上",
+          "detail": "成果の高いクリエイティブとオーディエンスを迅速に再現します。"
+        }
+      ]
+    },
+    "cta": {
+      "title": "専任オンボーディングでスピード導入",
+      "description": "2週間以内にデータ連携とワークフロー構築を支援します。",
+      "primary": "営業に相談",
+      "secondary": "サポートを見る"
+    }
+  },
+  "personal": {
+    "hero": {
+      "title": "個人クリエイターのための成長ダッシュボード",
+      "subtitle": "どのコンテンツが成長を生むかを把握し、ブランド提案の準備を整えましょう。",
+      "primary_cta": "個人プランを開始",
+      "secondary_cta": "料金を見る",
+      "visual_title": "今日のハイライト",
+      "visual_points": [
+        {
+          "label": "純増フォロワー",
+          "value": "+1,240"
+        },
+        {
+          "label": "エンゲージメント率",
+          "value": "8.4%"
+        },
+        {
+          "label": "提案待ち",
+          "value": "3件"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "個人プランが選ばれる理由",
+      "description": "分析・提案・成長に必要なものを1つのダッシュボードで提供します。",
+      "items": [
+        {
+          "tag": "Focus",
+          "title": "重要指標に集中",
+          "description": "フォロワー・再生・収益など必要な指標だけを表示します。"
+        },
+        {
+          "tag": "Pitch",
+          "title": "ブランド提案書の自動生成",
+          "description": "成果を選ぶだけでピッチ用PDFを即座に出力します。"
+        },
+        {
+          "tag": "Automate",
+          "title": "スマートリマインダー",
+          "description": "最も結果の良い投稿リズムに基づき通知を受け取ります。"
+        }
+      ]
+    },
+    "workflow": {
+      "title": "3ステップで導入完了",
+      "description": "接続・目標設定・共有まで30分以内で完了します。",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "チャネル認証",
+          "detail": "InstagramやYouTubeなどを安全に連携します。"
+        },
+        {
+          "label": "Step 2",
+          "title": "成長目標を設定",
+          "detail": "今月の注力指標を選びます。"
+        },
+        {
+          "label": "Step 3",
+          "title": "ライブレポート共有",
+          "detail": "ブランド向けにカスタムレポートリンクを発行します。"
+        }
+      ]
+    },
+    "cta": {
+      "title": "今すぐ個人プランを体験",
+      "description": "プレミアム機能を14日間無料で利用できます。",
+      "primary": "無料トライアル",
+      "secondary": "サポートに連絡"
+    }
+  },
+  "business": {
+    "hero": {
+      "title": "クリエイター組織を拡張する法人プラン",
+      "subtitle": "マルチチャネルチームのためのコラボ・セキュリティ・レポーティングを統合しました。",
+      "primary_cta": "相談を予約",
+      "secondary_cta": "料金を見る",
+      "visual_title": "組織スナップショット",
+      "visual_points": [
+        {
+          "label": "接続チャネル",
+          "value": "58"
+        },
+        {
+          "label": "アクティブパートナー",
+          "value": "26"
+        },
+        {
+          "label": "進行中キャンペーン",
+          "value": "14"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "法人プランの価値",
+      "description": "ガバナンスとスピードを両立し、インパクトに集中できます。",
+      "items": [
+        {
+          "tag": "Control",
+          "title": "セキュアなアクセス管理",
+          "description": "SSOとロールベースアクセスで機密データを保護します。"
+        },
+        {
+          "tag": "Scale",
+          "title": "ポートフォリオインテリジェンス",
+          "description": "クリエイター・契約・成果を俯瞰し、配分を最適化します。"
+        },
+        {
+          "tag": "Insights",
+          "title": "カスタムBI連携",
+          "description": "データウェアハウスや分析基盤とスムーズに同期します。"
+        }
+      ]
+    },
+    "workflow": {
+      "title": "ホワイトグローブオンボーディング",
+      "description": "ソリューションエンジニアとカスタマーサクセスが伴走します。",
+      "steps": [
+        {
+          "label": "Phase 1",
+          "title": "技術レビュー",
+          "detail": "セキュリティ要件とAPIスコープを確認します。"
+        },
+        {
+          "label": "Phase 2",
+          "title": "データマッピング",
+          "detail": "既存指標を構造に合わせ、カスタムダッシュボードを構築します。"
+        },
+        {
+          "label": "Phase 3",
+          "title": "ローンチと研修",
+          "detail": "パイロットキャンペーンと継続的な測定を支援します。"
+        }
+      ]
+    },
+    "cta": {
+      "title": "エンタープライズチームと相談",
+      "description": "要件を共有いただければ、1営業日以内に導入プランをご提案します。",
+      "primary": "営業に連絡",
+      "secondary": "料金を確認"
+    }
+  },
+  "pricing": {
+    "hero": {
+      "title": "成長ステージに合わせた料金",
+      "subtitle": "全プランでゲスト閲覧者は無制限、ライブダッシュボード共有を標準搭載。",
+      "primary_cta": "14日間トライアル",
+      "secondary_cta": "営業に相談",
+      "visual_title": "おすすめの利用シーン",
+      "visual_points": [
+        {
+          "label": "フリー",
+          "value": "始めたばかりの個人"
+        },
+        {
+          "label": "プロ",
+          "value": "自動化と協業を進めるチーム"
+        },
+        {
+          "label": "エンタープライズ",
+          "value": "セキュリティ重視の組織"
+        }
+      ]
+    },
+    "plans": [
+      {
+        "name": "フリー",
+        "description": "個人クリエイター向け基本モニタリング",
+        "price": "¥0",
+        "cycle": "いつでもアップグレード",
+        "features": [
+          "接続チャネル 1件",
+          "主要KPIダッシュボード",
+          "週次メールレポート",
+          "ブランド提案テンプレート"
+        ],
+        "cta": "無料アカウント作成",
+        "highlighted": false
+      },
+      {
+        "name": "プロ",
+        "description": "成長中チームの自動化とコラボレーション",
+        "price": "¥7,900",
+        "cycle": "月額請求",
+        "features": [
+          "接続チャネル 5件",
+          "キャンペーンブリーフ無制限",
+          "承認ワークフローと監査ログ",
+          "PDF/スライド出力",
+          "優先サポート"
+        ],
+        "cta": "プロを選択",
+        "highlighted": true
+      },
+      {
+        "name": "エンタープライズ",
+        "description": "セキュリティ・ガバナンス・統合を重視する組織向け",
+        "price": "お見積り",
+        "cycle": "年間契約",
+        "features": [
+          "接続チャネル無制限",
+          "SSOとロールベースアクセス",
+          "専任カスタマーサクセス",
+          "BI/データウェアハウス連携",
+          "コンプライアンス対応監査ログ"
+        ],
+        "cta": "見積もり依頼",
+        "highlighted": false
+      }
+    ],
+    "comparison": {
+      "title": "プラン比較",
+      "description": "優先事項に合わせて最適なプランを選びましょう。",
+      "items": [
+        {
+          "label": "1",
+          "title": "拡張性",
+          "detail": "プロ以上で複数チームとチャネルグループを無制限に管理できます。"
+        },
+        {
+          "label": "2",
+          "title": "自動化",
+          "detail": "レポート自動生成と承認フローはプロプランから利用可能です。"
+        },
+        {
+          "label": "3",
+          "title": "セキュリティ",
+          "detail": "エンタープライズプランはSSO・暗号化・監査ログを標準搭載しています。"
+        }
+      ]
+    },
+    "cta": {
+      "title": "最適なプランを選択",
+      "description": "カスタム構成が必要な場合はお気軽にご相談ください。",
+      "primary": "無料トライアル",
+      "secondary": "サポートに問い合わせ"
+    }
+  },
+  "support": {
+    "hero": {
+      "title": "必要なときに受けられるサポート",
+      "subtitle": "オンボーディングから統合まで専門チームがサポートします。",
+      "primary_cta": "メールで問い合わせ",
+      "secondary_cta": "料金を見る",
+      "visual_title": "サポート指標",
+      "visual_points": [
+        {
+          "label": "平均応答時間",
+          "value": "2時間以内"
+        },
+        {
+          "label": "満足度",
+          "value": "4.8 / 5"
+        },
+        {
+          "label": "ヘルプ記事",
+          "value": "120+"
+        }
+      ]
+    },
+    "cards": [
+      {
+        "title": "オンボーディングと戦略",
+        "description": "専任マネージャーがデータ接続とワークフロー設計を支援します。",
+        "items": [
+          "カスタムオンボーディングセッション",
+          "データ品質レビュー",
+          "社内トレーニング資料"
+        ]
+      },
+      {
+        "title": "技術サポート",
+        "description": "ソリューションエンジニアがAPI統合とセキュリティレビューを担当します。",
+        "items": [
+          "APIガイドとサンプルコード",
+          "SSO・セキュリティコンサルティング",
+          "優先度付き課題管理"
+        ]
+      },
+      {
+        "title": "コミュニティ",
+        "description": "スケールするクリエイターとマーケターの知見を共有します。",
+        "items": [
+          "月次ウェビナー",
+          "ベータ機能の先行提供",
+          "ベストプラクティスライブラリ"
+        ]
+      }
+    ],
+    "contact": {
+      "title": "サポートチームへの連絡",
+      "description": "必要事項を伺い、最適な次のステップをご案内します。",
+      "email_label": "メール",
+      "email": "support@creatorcontrol.center",
+      "response": "営業日24時間以内にご返信します。",
+      "office_label": "営業時間",
+      "office_hours": "平日 9:00〜18:00 (KST)",
+      "office_description": "主要な祝日を除き、ライブチャットと電話サポートを提供しています。"
+    },
+    "cta": {
+      "title": "今すぐサポートを依頼",
+      "description": "技術的な質問から戦略相談までお気軽にお知らせください。",
+      "primary": "サポートにメール",
+      "secondary": "サービス概要を見る"
+    }
+  },
   "super_admin": {
-    "title": "運営者用コンソール",
-    "description": "メンバー、サブスクリプション、アクティビティを一括管理。",
+    "title": "プラットフォーム管理室",
+    "description": "会員・サブスクリプション・アクティビティを素早く確認。",
     "users": "メンバー",
     "email": "メール",
     "role": "役割",
     "plan": "プラン",
-    "activity": "最新アクティビティ"
+    "activity": "最近の活動"
   },
   "profile": {
     "title": "プロフィール",

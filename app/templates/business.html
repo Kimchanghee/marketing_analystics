@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>{{ t['business']['hero']['title'] }}</h1>
+        <p>{{ t['business']['hero']['subtitle'] }}</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="/signup?role=manager">{{ t['business']['hero']['primary_cta'] }}</a>
+            <a class="btn secondary" href="/pricing">{{ t['business']['hero']['secondary_cta'] }}</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="dashboard-preview">
+            <h3>{{ t['business']['hero']['visual_title'] }}</h3>
+            <ul>
+                {% for stat in t['business']['hero']['visual_points'] %}
+                <li>
+                    <span class="platform">{{ stat['label'] }}</span>
+                    <span class="metric">{{ stat['value'] }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="section-header">
+    <h2>{{ t['business']['benefits']['title'] }}</h2>
+    <p>{{ t['business']['benefits']['description'] }}</p>
+</section>
+<section class="feature-grid">
+    {% for benefit in t['business']['benefits']['items'] %}
+    <article class="feature-card">
+        <strong>{{ benefit['tag'] }}</strong>
+        <h3>{{ benefit['title'] }}</h3>
+        <p>{{ benefit['description'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section class="journey-steps">
+    <div class="section-header">
+        <h2>{{ t['business']['workflow']['title'] }}</h2>
+        <p>{{ t['business']['workflow']['description'] }}</p>
+    </div>
+    {% for step in t['business']['workflow']['steps'] %}
+    <article class="journey-step">
+        <span>{{ step['label'] }}</span>
+        <h3>{{ step['title'] }}</h3>
+        <p>{{ step['detail'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section class="cta-banner">
+    <div>
+        <h2>{{ t['business']['cta']['title'] }}</h2>
+        <p>{{ t['business']['cta']['description'] }}</p>
+    </div>
+    <div class="hero-actions">
+        <a class="btn primary" href="/support">{{ t['business']['cta']['primary'] }}</a>
+        <a class="btn tertiary" href="/pricing">{{ t['business']['cta']['secondary'] }}</a>
+    </div>
+</section>
+{% endblock %}

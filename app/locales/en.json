@@ -4,11 +4,27 @@
   },
   "nav": {
     "home": "Home",
+    "services": "Product",
+    "personal": "Personal",
+    "business": "Business",
+    "pricing": "Pricing",
+    "support": "Support",
     "dashboard": "Dashboard",
-    "profile": "Profile"
+    "profile": "Profile",
+    "language": "Language"
+  },
+  "theme": {
+    "toggle_label": "Toggle theme",
+    "light_label": "Light mode",
+    "dark_label": "Dark mode"
   },
   "footer": {
-    "tagline": "Built for modern creators and the teams who support them."
+    "tagline": "The marketing operations hub built for creators and the teams who champion them.",
+    "product": "Product",
+    "solutions": "Solutions",
+    "support": "Support",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. All rights reserved."
   },
   "roles": {
     "creator": "Creator",
@@ -17,11 +33,11 @@
     "super_admin": "Platform Owner"
   },
   "landing": {
-    "headline": "All of your creator channels in one beautiful command center",
-    "subheadline": "Stop juggling spreadsheets and tabs. Track growth, content impact, and community conversations for every channel in minutes.",
-    "cta_creator": "Start as a creator",
-    "cta_manager": "Manage your creators",
-    "preview_title": "Channel health snapshot",
+    "headline": "Your marketing-grade command center for creator growth",
+    "subheadline": "Connect channel analytics, campaign reporting, and revenue impact so every decision is backed by data.",
+    "cta_creator": "Start for free",
+    "cta_manager": "Trial with your team",
+    "preview_title": "Live channel score",
     "mock_metric": "↑ 12% this week",
     "platforms": {
       "instagram": "Instagram",
@@ -32,27 +48,112 @@
       "facebook": "Facebook",
       "meta_ads": "Meta Ads"
     },
-    "features": [
+    "metrics": [
       {
-        "title": "Unified growth tracking",
-        "description": "See follower changes, reach, and engagement with refreshingly clear visuals."
+        "label": "Reporting time saved",
+        "value": "70% ↓",
+        "description": "Automated collection cuts weekly consolidation by an average of 4.5 hours."
       },
       {
-        "title": "Content-level insights",
-        "description": "Every upload, reel, or short is listed with title, publish time, and performance."
+        "label": "Content failure rate",
+        "value": "30% less",
+        "description": "Track winning formats across experiments and build repeatable playbooks."
       },
       {
-        "title": "Manager-ready workflows",
-        "description": "Invite creator managers, request approval, and align your entire team effortlessly."
+        "label": "Approval speed",
+        "value": "2.4× faster",
+        "description": "Manage requests and approvals in one hub to simplify cross-team updates."
       }
     ],
+    "feature_section": {
+      "title": "One workflow every stakeholder trusts",
+      "description": "Collect, structure, and distribute the data that powers predictable creator growth.",
+      "items": [
+        {
+          "tag": "INSIGHTS",
+          "title": "Auto-updating KPI dashboards",
+          "description": "Sync followers, views, and engagement daily and track progress against targets."
+        },
+        {
+          "tag": "OPERATIONS",
+          "title": "Campaign briefs & reports",
+          "description": "Document production notes without spreadsheets and export polished PDFs in one click."
+        },
+        {
+          "tag": "COLLAB",
+          "title": "Role-based collaboration",
+          "description": "Invite internal teams and partners with granular permissions and approval trails."
+        },
+        {
+          "tag": "AUTOMATION",
+          "title": "Community intelligence",
+          "description": "Categorize comments and messages into themes to surface product and campaign insights."
+        }
+      ]
+    },
     "creator_section": {
-      "title": "For busy creators",
-      "description": "Understand what resonates without decoding complex dashboards."
+      "title": "Your personal growth co-pilot",
+      "description": "Operate like a full team even when you are creating solo.",
+      "highlights": [
+        "Auto-captured KPIs across key channels",
+        "Pitch-ready performance highlights",
+        "Unified calendar for sponsorships and launches"
+      ],
+      "cta": "Explore personal plan"
     },
     "manager_section": {
-      "title": "For creative leads",
-      "description": "Deliver clear updates to clients and leadership with one secure login."
+      "title": "Alignment for agencies and brands",
+      "description": "Support multiple creators and campaigns with shared, reliable data.",
+      "highlights": [
+        "Multi-account permissions",
+        "Client-ready executive summaries",
+        "Automated alerts for wins and risks"
+      ],
+      "cta": "Explore business plan"
+    },
+    "journey": {
+      "title": "Momentum within the first week",
+      "description": "A guided onboarding takes you from sign-up to shareable insights fast.",
+      "steps": [
+        {
+          "label": "Day 1",
+          "title": "Connect channels",
+          "description": "Authenticate major platforms and choose the KPIs that matter most."
+        },
+        {
+          "label": "Day 3",
+          "title": "Tailor dashboards",
+          "description": "Arrange widgets around team goals and publish a live link for stakeholders."
+        },
+        {
+          "label": "Day 7",
+          "title": "Automate reporting",
+          "description": "Send weekly recaps with next-step recommendations straight to inboxes."
+        }
+      ]
+    },
+    "testimonials": [
+      {
+        "quote": "The hours we spent gathering data are now invested in strategy.",
+        "name": "Hannah Park",
+        "title": "Marketing Lead, DTC brand"
+      },
+      {
+        "quote": "Seeing creative and paid performance together keeps the team speaking one language.",
+        "name": "Jordan Kim",
+        "title": "Partner, Creator Management Agency"
+      },
+      {
+        "quote": "Brand pitches land faster because every metric we need is already packaged.",
+        "name": "Sara Lee",
+        "title": "Lifestyle Creator"
+      }
+    ],
+    "cta": {
+      "title": "Ready to architect your next stage of growth?",
+      "description": "Unlock dashboards, automation, and collaboration with a 14-day free trial.",
+      "primary": "Start free trial",
+      "secondary": "View full feature set"
     }
   },
   "auth": {
@@ -100,6 +201,406 @@
     "free": "Free",
     "pro": "Pro",
     "enterprise": "Enterprise"
+  },
+  "service": {
+    "hero": {
+      "title": "The integrated operating system for creator marketing",
+      "subtitle": "Connect channel analytics, content ops, and community management to drive measurable growth.",
+      "primary_cta": "Request a demo",
+      "secondary_cta": "View pricing",
+      "visual_title": "Most-loved insights",
+      "visual_points": [
+        {
+          "label": "Content reminders",
+          "value": "72 automated nudges"
+        },
+        {
+          "label": "Published reports",
+          "value": "24 per week"
+        },
+        {
+          "label": "Approval workflows",
+          "value": "8 hrs saved"
+        }
+      ]
+    },
+    "pillars_title": "Four pillars teams rely on",
+    "pillars_description": "Designed around the motions that move creator-led marketing forward.",
+    "pillars": [
+      {
+        "tagline": "Plan",
+        "title": "Goal & KPI alignment",
+        "description": "Define campaign goals, KPIs, and share a single source of truth.",
+        "bullets": [
+          "Campaign brief templates",
+          "Baseline alerts",
+          "Stakeholder summaries"
+        ]
+      },
+      {
+        "tagline": "Create",
+        "title": "Content calendar",
+        "description": "Visualize schedules and track status across every responsible owner.",
+        "bullets": [
+          "Drag-and-drop planning",
+          "Approval feedback loops",
+          "Asset library integration"
+        ]
+      },
+      {
+        "tagline": "Launch",
+        "title": "Ads & sponsorships",
+        "description": "Monitor paid performance and partnerships in one connected view.",
+        "bullets": [
+          "Paid + organic rollup",
+          "Contract tracking",
+          "ROI calculations"
+        ]
+      },
+      {
+        "tagline": "Grow",
+        "title": "Community intelligence",
+        "description": "Turn comments and DMs into product feedback and campaign ideas.",
+        "bullets": [
+          "Sentiment & trend detection",
+          "Suggested replies",
+          "Feedback routing"
+        ]
+      }
+    ],
+    "outcomes": {
+      "title": "What teams achieve",
+      "description": "Common wins seen within the first month of adoption.",
+      "items": [
+        {
+          "label": "Efficiency",
+          "title": "3× faster reporting",
+          "detail": "Automated data pipelines remove manual spreadsheets from the process."
+        },
+        {
+          "label": "Visibility",
+          "title": "50% less status chasing",
+          "detail": "Share dashboards so every stakeholder can self-serve updates."
+        },
+        {
+          "label": "Growth",
+          "title": "18% lift in conversion",
+          "detail": "Double down on creative and audience combinations that work."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Launch with a tailored onboarding",
+      "description": "Our consultants help connect your data and workflows in under two weeks.",
+      "primary": "Talk to sales",
+      "secondary": "Visit support"
+    }
+  },
+  "personal": {
+    "hero": {
+      "title": "Clarity for solo creators",
+      "subtitle": "Know which content drives growth and prepare for every brand conversation.",
+      "primary_cta": "Start personal plan",
+      "secondary_cta": "See pricing",
+      "visual_title": "Today’s highlights",
+      "visual_points": [
+        {
+          "label": "Net followers",
+          "value": "+1,240"
+        },
+        {
+          "label": "Engagement rate",
+          "value": "8.4%"
+        },
+        {
+          "label": "Pending pitches",
+          "value": "3"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "Why creators love the personal plan",
+      "description": "Everything you need to analyze, pitch, and grow from a single dashboard.",
+      "items": [
+        {
+          "tag": "Focus",
+          "title": "Home built around essentials",
+          "description": "Pin the metrics that matter most—followers, views, revenue—in one glance."
+        },
+        {
+          "tag": "Pitch",
+          "title": "Auto-generated brand decks",
+          "description": "Select your wins and instantly export a pitch-ready PDF."
+        },
+        {
+          "tag": "Automate",
+          "title": "Smart reminders",
+          "description": "Receive nudges based on your top-performing posting cadence."
+        }
+      ]
+    },
+    "workflow": {
+      "title": "Onboard in three steps",
+      "description": "Connect, set goals, and share a report in under 30 minutes.",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "Authenticate channels",
+          "detail": "Securely connect Instagram, YouTube, TikTok, and more."
+        },
+        {
+          "label": "Step 2",
+          "title": "Define growth targets",
+          "detail": "Choose your focus metrics for the month."
+        },
+        {
+          "label": "Step 3",
+          "title": "Share live report",
+          "detail": "Generate a branded link to send to partners and managers."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Try the personal plan today",
+      "description": "Enjoy every premium feature free for 14 days.",
+      "primary": "Start free trial",
+      "secondary": "Contact support"
+    }
+  },
+  "business": {
+    "hero": {
+      "title": "Scale your creator organization",
+      "subtitle": "Enterprise-grade collaboration, security, and reporting for multi-channel teams.",
+      "primary_cta": "Book a consultation",
+      "secondary_cta": "See pricing",
+      "visual_title": "Organization snapshot",
+      "visual_points": [
+        {
+          "label": "Connected channels",
+          "value": "58"
+        },
+        {
+          "label": "Active partners",
+          "value": "26"
+        },
+        {
+          "label": "Live campaigns",
+          "value": "14"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "Enterprise value, right out of the box",
+      "description": "Balance governance with speed so your team can focus on impact.",
+      "items": [
+        {
+          "tag": "Control",
+          "title": "Security-first access",
+          "description": "SSO and role-based access keep sensitive data protected."
+        },
+        {
+          "tag": "Scale",
+          "title": "Portfolio intelligence",
+          "description": "See every creator, contract, and result to optimize allocations."
+        },
+        {
+          "tag": "Insights",
+          "title": "Custom BI integrations",
+          "description": "Sync with your warehouse and analytics stack with ease."
+        }
+      ]
+    },
+    "workflow": {
+      "title": "White-glove onboarding",
+      "description": "Solutions engineers and customer success partner with you end to end.",
+      "steps": [
+        {
+          "label": "Phase 1",
+          "title": "Technical review",
+          "detail": "Confirm security requirements and API scope."
+        },
+        {
+          "label": "Phase 2",
+          "title": "Data mapping",
+          "detail": "Map existing metrics and build tailored dashboards."
+        },
+        {
+          "label": "Phase 3",
+          "title": "Launch & training",
+          "detail": "Support pilot campaigns and ongoing measurement."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Talk with our enterprise team",
+      "description": "Share your requirements and receive a tailored rollout plan within one business day.",
+      "primary": "Contact sales",
+      "secondary": "Review pricing"
+    }
+  },
+  "pricing": {
+    "hero": {
+      "title": "Pricing designed for every stage",
+      "subtitle": "All plans include unlimited guest viewers and live dashboard sharing.",
+      "primary_cta": "Start 14-day trial",
+      "secondary_cta": "Talk to sales",
+      "visual_title": "Recommended use cases",
+      "visual_points": [
+        {
+          "label": "Free",
+          "value": "Solo creators getting started"
+        },
+        {
+          "label": "Pro",
+          "value": "Teams automating reporting"
+        },
+        {
+          "label": "Enterprise",
+          "value": "Security-first organizations"
+        }
+      ]
+    },
+    "plans": [
+      {
+        "name": "Free",
+        "description": "Essential monitoring for individual creators",
+        "price": "$0",
+        "cycle": "Upgrade anytime",
+        "features": [
+          "1 connected channel",
+          "Core KPI dashboard",
+          "Weekly email recap",
+          "Brand pitch template"
+        ],
+        "cta": "Create free account",
+        "highlighted": false
+      },
+      {
+        "name": "Pro",
+        "description": "Automation and collaboration for growing teams",
+        "price": "$59",
+        "cycle": "Billed monthly",
+        "features": [
+          "5 connected channels",
+          "Unlimited campaign briefs",
+          "Approval workflows & audit log",
+          "PDF & slide exports",
+          "Priority support"
+        ],
+        "cta": "Choose Pro",
+        "highlighted": true
+      },
+      {
+        "name": "Enterprise",
+        "description": "Security, governance, and custom integrations",
+        "price": "Custom",
+        "cycle": "Annual agreement",
+        "features": [
+          "Unlimited channels",
+          "SSO & role-based access",
+          "Dedicated success manager",
+          "BI & warehouse sync",
+          "Compliance-grade audit trail"
+        ],
+        "cta": "Request quote",
+        "highlighted": false
+      }
+    ],
+    "comparison": {
+      "title": "Compare plans",
+      "description": "See which tier matches your priorities.",
+      "items": [
+        {
+          "label": "1",
+          "title": "Scalability",
+          "detail": "Pro and above support unlimited teams and channel groups."
+        },
+        {
+          "label": "2",
+          "title": "Automation",
+          "detail": "Automated reporting and approvals are available starting in Pro."
+        },
+        {
+          "label": "3",
+          "title": "Security",
+          "detail": "Enterprise includes SSO, encryption, and compliance-ready audit logs."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Pick the plan that fits best",
+      "description": "Need something custom? Our team will craft the right bundle for you.",
+      "primary": "Start free trial",
+      "secondary": "Contact support"
+    }
+  },
+  "support": {
+    "hero": {
+      "title": "Support when and how you need it",
+      "subtitle": "From onboarding to integrations, our specialists have you covered.",
+      "primary_cta": "Email support",
+      "secondary_cta": "See pricing",
+      "visual_title": "Service metrics",
+      "visual_points": [
+        {
+          "label": "Avg. response time",
+          "value": "< 2 hrs"
+        },
+        {
+          "label": "CSAT",
+          "value": "4.8 / 5"
+        },
+        {
+          "label": "Help center articles",
+          "value": "120+"
+        }
+      ]
+    },
+    "cards": [
+      {
+        "title": "Onboarding & strategy",
+        "description": "Dedicated managers help configure data sources and workflows.",
+        "items": [
+          "Custom onboarding sessions",
+          "Data quality reviews",
+          "Internal training resources"
+        ]
+      },
+      {
+        "title": "Technical assistance",
+        "description": "Solutions engineers support API integrations and security reviews.",
+        "items": [
+          "API guides & samples",
+          "SSO and security consulting",
+          "Priority issue tracking"
+        ]
+      },
+      {
+        "title": "Community",
+        "description": "Learn from other creators and marketers operating at scale.",
+        "items": [
+          "Monthly webinars",
+          "Early access to betas",
+          "Best-practice library"
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Contact our support team",
+      "description": "Tell us what you need and we’ll guide you to the right next step.",
+      "email_label": "Email",
+      "email": "support@creatorcontrol.center",
+      "response": "Responses within 24 business hours.",
+      "office_label": "Office hours",
+      "office_hours": "Mon–Fri 9am–6pm (KST)",
+      "office_description": "Live chat and phone support available outside major holidays."
+    },
+    "cta": {
+      "title": "Get the help you need today",
+      "description": "Technical questions or strategic guidance—we’re ready to assist.",
+      "primary": "Email support",
+      "secondary": "View product overview"
+    }
   },
   "super_admin": {
     "title": "Owner control room",
