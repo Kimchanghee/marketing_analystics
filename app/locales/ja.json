@@ -1,0 +1,117 @@
+{
+  "app": {
+    "title": "クリエイター・コントロール・センター"
+  },
+  "nav": {
+    "home": "ホーム",
+    "dashboard": "ダッシュボード",
+    "profile": "プロフィール"
+  },
+  "footer": {
+    "tagline": "クリエイターとサポートチームのための包括的な分析ツール"
+  },
+  "roles": {
+    "creator": "クリエイター",
+    "manager": "マネージャー",
+    "admin": "管理者",
+    "super_admin": "プラットフォーム運営者"
+  },
+  "landing": {
+    "headline": "すべてのチャンネル状況を一つの画面で管理",
+    "subheadline": "フォロワー推移、投稿の反応、コミュニティの声をまとめて確認できます。",
+    "cta_creator": "クリエイターとして始める",
+    "cta_manager": "管理者として利用",
+    "preview_title": "チャンネルヘルス スナップショット",
+    "mock_metric": "今週 +12%",
+    "platforms": {
+      "instagram": "Instagram",
+      "threads": "Threads",
+      "youtube": "YouTube",
+      "twitter": "Twitter/X",
+      "tiktok": "TikTok",
+      "facebook": "Facebook",
+      "meta_ads": "Meta広告"
+    },
+    "features": [
+      {
+        "title": "成長指標を一括表示",
+        "description": "フォロワー数、リーチ、エンゲージメントを直感的に把握。"
+      },
+      {
+        "title": "投稿ごとの詳細分析",
+        "description": "投稿タイトル、公開日時、成果データを投稿単位で確認。"
+      },
+      {
+        "title": "マネージャー向けワークフロー",
+        "description": "承認制で安全に情報共有し、チーム連携をスムーズに。"
+      }
+    ],
+    "creator_section": {
+      "title": "クリエイターの皆様へ",
+      "description": "複雑なダッシュボードではなく、必要な情報を素早く取得。"
+    },
+    "manager_section": {
+      "title": "教育・運営担当者の皆様へ",
+      "description": "担当クリエイターの状況を一目で把握し、顧客対応に活用。"
+    }
+  },
+  "auth": {
+    "login_title": "ログイン",
+    "signup_title": "アカウント作成",
+    "email": "メール",
+    "password": "パスワード",
+    "role": "役割",
+    "organization": "所属 / チーム",
+    "language": "言語",
+    "login_button": "ログイン",
+    "signup_button": "登録",
+    "signup_hint": "アカウントが必要ですか?",
+    "signup_link": "今すぐ作成"
+  },
+  "dashboard": {
+    "welcome": "ようこそ",
+    "current_plan": "現在のプラン",
+    "upgrade_prompt": "プラン変更",
+    "update_plan": "更新",
+    "your_channels": "あなたのチャンネル",
+    "add_channel": "チャンネル追加",
+    "remove": "削除",
+    "account_label": "アカウント",
+    "followers": "フォロワー",
+    "growth": "成長率",
+    "engagement": "エンゲージメント",
+    "last_post": "最新投稿",
+    "recent_posts": "最近の投稿",
+    "manager_hint": "承認済みクリエイター",
+    "creator_hint": "あなたを支援するマネージャー",
+    "collaboration": "コラボレーション状況",
+    "account_placeholder": "チャンネルID または URL"
+  },
+  "channels": {
+    "instagram": "Instagram",
+    "threads": "Threads",
+    "youtube": "YouTube",
+    "twitter": "Twitter/X",
+    "tiktok": "TikTok",
+    "facebook": "Facebook",
+    "meta_ads": "Meta広告"
+  },
+  "subscriptions": {
+    "free": "フリー",
+    "pro": "プロ",
+    "enterprise": "エンタープライズ"
+  },
+  "super_admin": {
+    "title": "運営者用コンソール",
+    "description": "メンバー、サブスクリプション、アクティビティを一括管理。",
+    "users": "メンバー",
+    "email": "メール",
+    "role": "役割",
+    "plan": "プラン",
+    "activity": "最新アクティビティ"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "logout": "ログアウト"
+  }
+}

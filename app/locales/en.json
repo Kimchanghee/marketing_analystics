@@ -1,0 +1,117 @@
+{
+  "app": {
+    "title": "Creator Control Center"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile"
+  },
+  "footer": {
+    "tagline": "Built for modern creators and the teams who support them."
+  },
+  "roles": {
+    "creator": "Creator",
+    "manager": "Creator Manager",
+    "admin": "Admin",
+    "super_admin": "Platform Owner"
+  },
+  "landing": {
+    "headline": "All of your creator channels in one beautiful command center",
+    "subheadline": "Stop juggling spreadsheets and tabs. Track growth, content impact, and community conversations for every channel in minutes.",
+    "cta_creator": "Start as a creator",
+    "cta_manager": "Manage your creators",
+    "preview_title": "Channel health snapshot",
+    "mock_metric": "↑ 12% this week",
+    "platforms": {
+      "instagram": "Instagram",
+      "threads": "Threads",
+      "youtube": "YouTube",
+      "twitter": "Twitter / X",
+      "tiktok": "TikTok",
+      "facebook": "Facebook",
+      "meta_ads": "Meta Ads"
+    },
+    "features": [
+      {
+        "title": "Unified growth tracking",
+        "description": "See follower changes, reach, and engagement with refreshingly clear visuals."
+      },
+      {
+        "title": "Content-level insights",
+        "description": "Every upload, reel, or short is listed with title, publish time, and performance."
+      },
+      {
+        "title": "Manager-ready workflows",
+        "description": "Invite creator managers, request approval, and align your entire team effortlessly."
+      }
+    ],
+    "creator_section": {
+      "title": "For busy creators",
+      "description": "Understand what resonates without decoding complex dashboards."
+    },
+    "manager_section": {
+      "title": "For creative leads",
+      "description": "Deliver clear updates to clients and leadership with one secure login."
+    }
+  },
+  "auth": {
+    "login_title": "Log in",
+    "signup_title": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "role": "Role",
+    "organization": "Organization / Team",
+    "language": "Language",
+    "login_button": "Log in",
+    "signup_button": "Sign up",
+    "signup_hint": "Need an account?",
+    "signup_link": "Create one"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "current_plan": "Current plan",
+    "upgrade_prompt": "Upgrade tier",
+    "update_plan": "Update",
+    "your_channels": "Your channels",
+    "add_channel": "Add channel",
+    "remove": "Remove",
+    "account_label": "Account",
+    "followers": "Followers",
+    "growth": "Growth",
+    "engagement": "Engagement",
+    "last_post": "Last post",
+    "recent_posts": "Recent posts",
+    "manager_hint": "Creators who accepted your access",
+    "creator_hint": "Managers looking after your growth",
+    "collaboration": "Collaboration hub",
+    "account_placeholder": "Channel handle or URL"
+  },
+  "channels": {
+    "instagram": "Instagram",
+    "threads": "Threads",
+    "youtube": "YouTube",
+    "twitter": "Twitter / X",
+    "tiktok": "TikTok",
+    "facebook": "Facebook",
+    "meta_ads": "Meta Ads"
+  },
+  "subscriptions": {
+    "free": "Free",
+    "pro": "Pro",
+    "enterprise": "Enterprise"
+  },
+  "super_admin": {
+    "title": "Owner control room",
+    "description": "Manage every member, subscription, and activity trail in seconds.",
+    "users": "Members",
+    "email": "Email",
+    "role": "Role",
+    "plan": "Plan",
+    "activity": "Latest activity"
+  },
+  "profile": {
+    "title": "Your profile",
+    "logout": "Log out"
+  }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ t['app']['title'] }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="logo">Creator Control Center</div>
+    <nav>
+        <a href="/">{{ t['nav']['home'] }}</a>
+        <a href="/dashboard">{{ t['nav']['dashboard'] }}</a>
+        <a href="/profile">{{ t['nav']['profile'] }}</a>
+    </nav>
+    <div class="lang-selector">
+        <a href="?lang=ko">🇰🇷</a>
+        <a href="?lang=en">🇺🇸</a>
+        <a href="?lang=ja">🇯🇵</a>
+    </div>
+</header>
+<main class="content">
+    {% block content %}{% endblock %}
+</main>
+<footer class="footer">
+    <p>{{ t['footer']['tagline'] }}</p>
+</footer>
+</body>
+</html>
