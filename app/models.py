@@ -99,9 +99,9 @@ class ChannelCredential(SQLModel, table=True):
     access_token_encrypted: Optional[str] = None
     refresh_token_encrypted: Optional[str] = None
     expires_at: Optional[datetime] = None
-    metadata: Dict[str, Any] = Field(
+    metadata_json: Dict[str, Any] = Field(
         default_factory=dict,
-        sa_column=Column(JSON, nullable=False, default=dict),
+        sa_column=Column("metadata", JSON, nullable=False, default=dict),
     )
 
     channel: ChannelAccount = Relationship(back_populates="credential")
@@ -147,7 +147,7 @@ class ChannelCredential(SQLModel, table=True):
             "auth_type": self.auth_type.value,
             "identifier": self.identifier,
             "expires_at": self.expires_at.isoformat() if self.expires_at else None,
-            "metadata": self.metadata,
+            "metadata": self.metadata_json,
             "has_secret": self.secret_encrypted is not None,
             "has_access_token": self.access_token_encrypted is not None,
             "has_refresh_token": self.refresh_token_encrypted is not None,

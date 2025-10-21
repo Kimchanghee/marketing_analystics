@@ -143,7 +143,7 @@ def upsert_channel_credentials(
             raise HTTPException(status_code=400, detail="Invalid expires_at format") from exc
     if metadata:
         try:
-            credential.metadata = json.loads(metadata)
+            credential.metadata_json = json.loads(metadata)
         except json.JSONDecodeError as exc:  # noqa: B904
             raise HTTPException(status_code=400, detail="Invalid metadata JSON") from exc
 
