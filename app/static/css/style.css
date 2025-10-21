@@ -701,6 +701,30 @@ a:hover {
     color: var(--text-primary);
 }
 
+.pricing-categories {
+    display: grid;
+    gap: 3rem;
+}
+
+.plan-category {
+    display: grid;
+    gap: 2rem;
+}
+
+.plan-category-header {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 560px;
+}
+
+.plan-category-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+}
+
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -708,6 +732,7 @@ a:hover {
 }
 
 .pricing-card {
+    position: relative;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     background: var(--surface-primary);
@@ -716,6 +741,36 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    word-break: keep-all;
+}
+
+.pricing-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.pricing-card p {
+    color: var(--text-secondary);
+}
+
+.plan-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.plan-price-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
 }
 
 .pricing-card.highlight {
@@ -746,6 +801,10 @@ a:hover {
     align-items: center;
     gap: 0.5rem;
     color: var(--text-secondary);
+}
+
+.pricing-card .btn {
+    align-self: flex-start;
 }
 
 .support-grid {
@@ -1156,6 +1215,24 @@ select:focus {
         gap: 0.5rem;
     }
 
+    .pricing-categories {
+        gap: 2.5rem;
+    }
+
+    .plan-category-header {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .pricing-card {
+        padding: 2rem 1.75rem;
+    }
+
+    .plan-badge {
+        right: 1.25rem;
+        top: 1.25rem;
+    }
+
     .cta-banner {
         grid-template-columns: 1fr;
     }
@@ -1167,5 +1244,31 @@ select:focus {
     .footer-links {
         flex-wrap: wrap;
         gap: 1.5rem;
+    }
+}
+
+@media (max-width: 720px) {
+    .plan-category {
+        gap: 1.5rem;
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pricing-card {
+        padding: 1.75rem 1.5rem;
+    }
+
+    .pricing-card.highlight {
+        transform: none;
+    }
+
+    .pricing-price {
+        font-size: clamp(2rem, 6vw, 2.4rem);
+    }
+
+    .plan-price-row {
+        gap: 0.5rem;
     }
 }
