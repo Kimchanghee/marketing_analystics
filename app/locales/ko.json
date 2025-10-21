@@ -334,20 +334,8 @@
       "primary_cta": "개인 시작",
       "secondary_cta": "개인 요금제 보기",
       "visual_title": "오늘의 하이라이트",
-      "visual_points": [
-        {
-          "label": "팔로워 순증",
-          "value": "+1,240"
-        },
-        {
-          "label": "참여율",
-          "value": "8.4%"
-        },
-        {
-          "label": "브랜드 제안 대기",
-          "value": "3건"
-        }
-      ]
+      "visual_caption": "실시간 개인 워크스페이스에서 팔로워 증가, 참여율, 일정 추천을 요약한 화면입니다.",
+      "visual_alt": "크리에이터 팔로워 성장 지표가 표시된 대시보드."
     },
     "benefits": {
       "title": "혼자서도 빠르게 성장하는 이유",
@@ -465,20 +453,8 @@
       "primary_cta": "기업 상담 예약",
       "secondary_cta": "기업 요금제 보기",
       "visual_title": "조직 현황",
-      "visual_points": [
-        {
-          "label": "연결된 채널",
-          "value": "58개"
-        },
-        {
-          "label": "협업 중인 파트너",
-          "value": "26명"
-        },
-        {
-          "label": "활성 캠페인",
-          "value": "14건"
-        }
-      ]
+      "visual_caption": "캠페인 매출, 파트너 파이프라인, 승인 워크플로우 단계를 보여주는 실제 분석 화면입니다.",
+      "visual_alt": "캠페인 성과와 ROI를 요약한 마케팅 대시보드."
     },
     "benefits": {
       "title": "기업 플랜 핵심 가치",
