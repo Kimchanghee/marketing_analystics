@@ -102,7 +102,7 @@ class InstagramConnector(GraphConnector):
 
     def fetch(self, account: ChannelAccount) -> Dict[str, Any]:
         credential = self._ensure_credential(account, require_token=True)
-        ig_business_id = credential.metadata.get("business_id") or credential.identifier
+        ig_business_id = credential.metadata_json.get("business_id") or credential.identifier
         if not ig_business_id:
             raise ChannelConnectorConfigError("Instagram Business ID가 필요합니다.")
         profile = self._graph_get(
@@ -144,7 +144,7 @@ class InstagramConnector(GraphConnector):
         return {
             "account": profile.get("username", account.account_name),
             "followers": followers,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)),
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)),
             "engagement_rate": engagement_rate,
             "last_post_date": last_post.get("published_at"),
             "last_post_title": last_post.get("title"),
@@ -204,7 +204,7 @@ class ThreadsConnector(BaseConnector):
         return {
             "account": username,
             "followers": followers,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)) if credential else 0.0,
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)) if credential else 0.0,
             "engagement_rate": engagement,
             "last_post_date": last_post.get("published_at"),
             "last_post_title": last_post.get("title"),
@@ -273,7 +273,7 @@ class YouTubeConnector(BaseConnector):
         return {
             "account": snippet.get("title", identifier),
             "followers": followers,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)),
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)),
             "engagement_rate": engagement_rate,
             "last_post_date": last_post.get("published_at"),
             "last_post_title": last_post.get("title"),
@@ -332,7 +332,7 @@ class TwitterConnector(BaseConnector):
         return {
             "account": user.get("name", username),
             "followers": followers,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)),
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)),
             "engagement_rate": engagement_rate,
             "last_post_date": last_post.get("published_at"),
             "last_post_title": last_post.get("title"),
@@ -377,7 +377,7 @@ class TikTokConnector(BaseConnector):
         return {
             "account": username,
             "followers": followers,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)) if credential else 0.0,
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)) if credential else 0.0,
             "engagement_rate": engagement,
             "last_post_date": last_post.get("published_at"),
             "last_post_title": last_post.get("title"),
@@ -390,7 +390,7 @@ class FacebookConnector(GraphConnector):
 
     def fetch(self, account: ChannelAccount) -> Dict[str, Any]:
         credential = self._ensure_credential(account, require_token=True)
-        page_id = credential.metadata.get("page_id") or credential.identifier
+        page_id = credential.metadata_json.get("page_id") or credential.identifier
         if not page_id:
             raise ChannelConnectorConfigError("Facebook 페이지 ID가 필요합니다.")
         page = self._graph_get(
@@ -419,7 +419,7 @@ class FacebookConnector(GraphConnector):
         return {
             "account": page.get("name", account.account_name),
             "followers": followers,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)),
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)),
             "engagement_rate": 0.0,
             "last_post_date": last_post.get("published_at"),
             "last_post_title": last_post.get("title"),
@@ -432,7 +432,7 @@ class MetaAdsConnector(GraphConnector):
 
     def fetch(self, account: ChannelAccount) -> Dict[str, Any]:
         credential = self._ensure_credential(account, require_token=True)
-        ad_account_id = credential.metadata.get("ad_account_id") or credential.identifier
+        ad_account_id = credential.metadata_json.get("ad_account_id") or credential.identifier
         if not ad_account_id:
             raise ChannelConnectorConfigError("Meta Ads 계정 ID가 필요합니다.")
         insights = self._graph_get(
@@ -451,7 +451,7 @@ class MetaAdsConnector(GraphConnector):
         return {
             "account": ad_account_id,
             "followers": impressions,
-            "growth_rate": float(credential.metadata.get("growth_rate", 0.0)),
+            "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)),
             "engagement_rate": engagement,
             "last_post_date": datetime.utcnow().isoformat(),
             "last_post_title": "최근 7일 광고 인사이트",

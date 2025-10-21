@@ -128,7 +128,7 @@
                     </label>
                     <label>
                         {{ t['dashboard']['metadata_label'] }}
-                        <textarea name="metadata" placeholder="{{ t['dashboard']['placeholder_metadata'] }}">{% if credential %}{{ credential.metadata | tojson(indent=2) }}{% endif %}</textarea>
+                        <textarea name="metadata" placeholder="{{ t['dashboard']['placeholder_metadata'] }}">{% if credential %}{{ credential.metadata_json | tojson(indent=2) }}{% endif %}</textarea>
                     </label>
                     <button class="btn secondary" type="submit">{{ t['dashboard']['save_credentials'] }}</button>
                 </form>
