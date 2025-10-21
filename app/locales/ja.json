@@ -41,6 +41,14 @@
     ],
     "cta_creator": "無料で始める",
     "cta_manager": "営業に相談",
+    "auth_section": {
+      "login_title": "すぐにログイン",
+      "login_description": "メールとパスワードですぐにダッシュボードを開けます。",
+      "advanced_login": "他のログイン方法",
+      "signup_title": "新しいアカウントを作成",
+      "signup_description": "クリエイターまたはマネージャー用のワークスペースを数分で登録。",
+      "advanced_signup": "詳細な登録ページへ"
+    },
     "preview_title": "リアルタイム指標",
     "mock_metric": "今週のトレンド",
     "platforms": {
@@ -206,7 +214,9 @@
     "signup_hint": "アカウントが必要ですか？",
     "signup_link": "こちら",
     "invalid_credentials": "メールアドレスまたはパスワードが正しくありません。",
-    "account_inactive": "このアカウントは停止中です。管理者にお問い合わせください。"
+    "account_inactive": "このアカウントは停止中です。管理者にお問い合わせください。",
+    "email_exists": "このメールアドレスは既に登録されています。",
+    "signup_success": "アカウントが作成されました。ログインして続行してください。"
   },
   "dashboard": {
     "welcome": "ようこそ",
@@ -957,7 +967,34 @@
     "save": "変更を保存",
     "total_members": "メンバー数",
     "activity": "最近の活動",
-    "no_details": "追加情報なし"
+    "no_details": "追加情報なし",
+    "payments": "決済管理",
+    "payments_description": "手動請求や決済状況を記録・管理します。"
+  },
+  "payments": {
+    "title": "決済履歴",
+    "create_title": "決済を登録",
+    "description": "自動課金以外で発生した請求・入金・返金を記録します。",
+    "empty": "登録された決済履歴がありません。",
+    "fields": {
+      "user": "メンバー",
+      "amount": "金額",
+      "currency": "通貨",
+      "status": "ステータス",
+      "period_start": "開始日",
+      "period_end": "終了日",
+      "description": "メモ"
+    },
+    "actions": {
+      "create": "決済を追加",
+      "update": "ステータス更新"
+    },
+    "status": {
+      "pending": "保留",
+      "paid": "支払い済み",
+      "failed": "失敗",
+      "refunded": "返金済み"
+    }
   },
   "profile": {
     "title": "プロフィール",

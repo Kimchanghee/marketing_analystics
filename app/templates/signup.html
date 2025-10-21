@@ -2,6 +2,9 @@
 {% block content %}
 <section class="auth-card">
     <h1>{{ t['auth']['signup_title'] }}</h1>
+    {% if error %}
+    <div class="form-alert error">{{ error }}</div>
+    {% endif %}
     <form method="post" action="/signup">
         <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
         <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>

@@ -33,6 +33,7 @@ class User(SQLModel, table=True):
     channels: list["ChannelAccount"] = Relationship(back_populates="owner")
     managed_creators: list["ManagerCreatorLink"] = Relationship(back_populates="manager")
     managers: list["ManagerCreatorLink"] = Relationship(back_populates="creator")
+    payments: list["Payment"] = Relationship(back_populates="user")
 
 
 class ChannelAccount(SQLModel, table=True):
@@ -152,3 +153,24 @@ class ChannelCredential(SQLModel, table=True):
             "has_access_token": self.access_token_encrypted is not None,
             "has_refresh_token": self.refresh_token_encrypted is not None,
         }
+
+
+class PaymentStatus(str, enum.Enum):
+    PENDING = "pending"
+    PAID = "paid"
+    FAILED = "failed"
+    REFUNDED = "refunded"
+
+
+class Payment(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    amount: float = Field(default=0.0, ge=0)
+    currency: str = Field(default="KRW")
+    status: PaymentStatus = Field(default=PaymentStatus.PENDING)
+    description: Optional[str] = None
+    billing_period_start: Optional[datetime] = None
+    billing_period_end: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    user: "User" = Relationship(back_populates="payments")
