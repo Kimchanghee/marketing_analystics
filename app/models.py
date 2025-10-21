@@ -51,6 +51,10 @@ class ChannelAccount(SQLModel, table=True):
     )
 
     owner: User = Relationship(back_populates="channels")
+    credential: Optional["ChannelCredential"] = Relationship(
+        back_populates="channel",
+        sa_relationship_kwargs={"uselist": False, "cascade": "all, delete-orphan"},
+    )
 
 
 class ManagerCreatorLink(SQLModel, table=True):
@@ -78,3 +82,73 @@ class ActivityLog(SQLModel, table=True):
     action: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
     details: Optional[str] = None
+
+
+class AuthType(str, enum.Enum):
+    API_TOKEN = "api_token"
+    USER_PASSWORD = "user_password"
+    OAUTH2 = "oauth2"
+
+
+class ChannelCredential(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    channel_id: int = Field(foreign_key="channelaccount.id", unique=True)
+    auth_type: AuthType = Field(default=AuthType.API_TOKEN)
+    identifier: Optional[str] = None
+    secret_encrypted: Optional[str] = None
+    access_token_encrypted: Optional[str] = None
+    refresh_token_encrypted: Optional[str] = None
+    expires_at: Optional[datetime] = None
+    metadata: Dict[str, Any] = Field(
+        default_factory=dict,
+        sa_column=Column(JSON, nullable=False, default=dict),
+    )
+
+    channel: ChannelAccount = Relationship(back_populates="credential")
+
+    @property
+    def secret(self) -> Optional[str]:
+        from .services.crypto import decrypt
+
+        return decrypt(self.secret_encrypted)
+
+    @secret.setter
+    def secret(self, value: Optional[str]) -> None:
+        from .services.crypto import encrypt
+
+        self.secret_encrypted = encrypt(value)
+
+    @property
+    def access_token(self) -> Optional[str]:
+        from .services.crypto import decrypt
+
+        return decrypt(self.access_token_encrypted)
+
+    @access_token.setter
+    def access_token(self, value: Optional[str]) -> None:
+        from .services.crypto import encrypt
+
+        self.access_token_encrypted = encrypt(value)
+
+    @property
+    def refresh_token(self) -> Optional[str]:
+        from .services.crypto import decrypt
+
+        return decrypt(self.refresh_token_encrypted)
+
+    @refresh_token.setter
+    def refresh_token(self, value: Optional[str]) -> None:
+        from .services.crypto import encrypt
+
+        self.refresh_token_encrypted = encrypt(value)
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "auth_type": self.auth_type.value,
+            "identifier": self.identifier,
+            "expires_at": self.expires_at.isoformat() if self.expires_at else None,
+            "metadata": self.metadata,
+            "has_secret": self.secret_encrypted is not None,
+            "has_access_token": self.access_token_encrypted is not None,
+            "has_refresh_token": self.refresh_token_encrypted is not None,
+        }

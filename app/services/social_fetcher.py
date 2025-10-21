@@ -1,6 +1,13 @@
 from datetime import datetime, timedelta
 from random import randint, random
-from typing import Dict, List
+from typing import Any, Dict, List
+
+from ..models import ChannelAccount
+from .channel_connectors import (
+    ChannelConnectorConfigError,
+    ChannelConnectorError,
+    get_connector,
+)
 
 PLATFORMS = [
     "instagram",
@@ -38,10 +45,45 @@ def generate_mock_metrics(account_name: str) -> Dict[str, str | int | float]:
     }
 
 
-def fetch_channel_snapshots(accounts: List[Dict[str, str]]) -> Dict[str, Dict[str, str | int | float]]:
-    snapshots: Dict[str, Dict[str, str | int | float]] = {}
+def _with_metadata(metrics: Dict[str, Any], *, source: str, error: str | None = None) -> Dict[str, Any]:
+    metrics["source"] = source
+    if error:
+        metrics["error"] = error
+    return metrics
+
+
+def fetch_channel_snapshots(accounts: List[ChannelAccount]) -> Dict[str, Dict[str, Any]]:
+    snapshots: Dict[str, Dict[str, Any]] = {}
     for account in accounts:
-        platform = account.get("platform", "unknown")
-        account_name = account.get("account_name", "")
-        snapshots[platform] = generate_mock_metrics(account_name)
+        connector = get_connector(account.platform)
+        if not connector:
+            metrics = generate_mock_metrics(account.account_name)
+            snapshots[account.platform] = _with_metadata(
+                metrics,
+                source="mock",
+                error="지원되지 않는 채널입니다.",
+            )
+            continue
+        try:
+            metrics = connector.fetch(account)
+            metrics.setdefault("recent_posts", [])
+            metrics.setdefault("followers", 0)
+            metrics.setdefault("growth_rate", 0.0)
+            metrics.setdefault("engagement_rate", 0.0)
+            metrics.setdefault("account", account.account_name)
+            snapshots[account.platform] = _with_metadata(metrics, source="api")
+        except ChannelConnectorConfigError as exc:
+            metrics = generate_mock_metrics(account.account_name)
+            snapshots[account.platform] = _with_metadata(
+                metrics,
+                source="mock",
+                error=str(exc),
+            )
+        except ChannelConnectorError as exc:
+            metrics = generate_mock_metrics(account.account_name)
+            snapshots[account.platform] = _with_metadata(
+                metrics,
+                source="mock",
+                error=str(exc),
+            )
     return snapshots

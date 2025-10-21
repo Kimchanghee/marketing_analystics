@@ -193,7 +193,32 @@
     "manager_hint": "Creators who accepted your access",
     "creator_hint": "Managers looking after your growth",
     "collaboration": "Collaboration hub",
-    "account_placeholder": "Channel handle or URL"
+    "account_placeholder": "Channel handle or URL",
+    "data_source": "Data source",
+    "source_api": "Live API",
+    "source_mock": "Sample data",
+    "credentials_heading": "Connection credentials",
+    "credentials_status": "Status",
+    "credentials_present": "Credentials stored",
+    "credentials_missing": "Not connected",
+    "auth_type_label": "Authentication method",
+    "auth_type_labels": {
+      "api_token": "API token",
+      "user_password": "Username & password",
+      "oauth2": "OAuth 2.0"
+    },
+    "identifier_label": "Identifier / profile ID",
+    "access_token_label": "Access token",
+    "secret_label": "Client secret / password",
+    "refresh_token_label": "Refresh token",
+    "expires_at_label": "Expires at",
+    "metadata_label": "Extra metadata (JSON)",
+    "save_credentials": "Save credentials",
+    "credential_hint": "Already saved — leave blank to keep the current value.",
+    "placeholder_identifier": "e.g. @creator or 123456",
+    "placeholder_secret": "Paste client secret or password",
+    "placeholder_token": "Paste new token",
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}"
   },
   "channels": {
     "instagram": "Instagram",

@@ -1048,6 +1048,92 @@ select:focus {
     border-bottom: none;
 }
 
+.data-source {
+    margin: 0.75rem 0;
+    font-size: 0.85rem;
+    color: var(--text-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+}
+
+.data-source .source {
+    font-weight: 600;
+}
+
+.data-source .source.api {
+    color: var(--success);
+}
+
+.data-source .source.mock {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.data-source .error {
+    color: var(--danger);
+    font-weight: 500;
+}
+
+.credential-panel {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-elevated);
+    border: 1px dashed var(--border-color);
+}
+
+.credential-panel summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.credential-status {
+    margin: 0.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.credential-status.ok {
+    color: var(--success);
+}
+
+.credential-status.warning {
+    color: var(--danger);
+}
+
+.credential-form {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.credential-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.credential-form input,
+.credential-form select,
+.credential-form textarea {
+    width: 100%;
+}
+
+.credential-form textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: 'Fira Code', 'Roboto Mono', monospace;
+}
+
+.credential-form small {
+    color: var(--text-subtle);
+    font-size: 0.75rem;
+}
+
 .dashboard-meta {
     display: flex;
     align-items: center;
