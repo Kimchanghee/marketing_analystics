@@ -19,6 +19,31 @@
         </figure>
     </div>
 </section>
+<section class="subscription-overview data-section">
+    <div class="section-header">
+        <h2>{{ t['personal']['pricing_overview']['title'] }}</h2>
+        <p>{{ t['personal']['pricing_overview']['description'] }}</p>
+    </div>
+    {% set columns = t['personal']['pricing_overview']['columns'] %}
+    <div class="pricing-table">
+        <div class="pricing-row pricing-row-header">
+            {% for column in columns %}
+            <span>{{ column }}</span>
+            {% endfor %}
+        </div>
+        {% for row in t['personal']['pricing_overview']['rows'] %}
+        <div class="pricing-row">
+            <div data-column="{{ columns[0] }}">
+                <strong>{{ row['label'] }}</strong>
+            </div>
+            <div data-column="{{ columns[1] }}">{{ row['monthly'] }}</div>
+            <div data-column="{{ columns[2] }}">{{ row['annual'] }}</div>
+            <div class="pricing-note" data-column="{{ columns[3] }}">{{ row['note'] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    <p class="pricing-footnote">{{ t['personal']['pricing_overview']['footnote'] }}</p>
+</section>
 <section class="section-header">
     <h2>{{ t['personal']['benefits']['title'] }}</h2>
     <p>{{ t['personal']['benefits']['description'] }}</p>
@@ -59,6 +84,59 @@
             </ul>
             <a class="btn {% if plan['highlighted'] %}primary{% else %}tertiary{% endif %}"
                 href="{{ plan.get('cta_link', '/signup') }}">{{ plan['cta'] }}</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<section class="metrics-showcase data-section">
+    <div class="metrics-layout">
+        <div class="metrics-intro">
+            <h2>{{ t['personal']['metrics']['title'] }}</h2>
+            <p>{{ t['personal']['metrics']['description'] }}</p>
+        </div>
+        <figure class="metrics-figure">
+            <img src="/static/img/personal-insights-snapshot.svg" alt="{{ t['personal']['metrics']['visual_alt'] }}">
+            <figcaption>
+                <strong>{{ t['personal']['metrics']['source_label'] }}</strong>
+                <span>{{ t['personal']['metrics']['source_caption'] }}</span>
+            </figcaption>
+        </figure>
+    </div>
+    <div class="metrics-grid">
+        {% for metric in t['personal']['metrics']['items'] %}
+        <article class="metric-card">
+            <span class="metric-value">{{ metric['value'] }}</span>
+            <h3>{{ metric['label'] }}</h3>
+            <p>{{ metric['description'] }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<section class="persona-insights data-section">
+    <div class="section-header">
+        <h2>{{ t['personal']['personas']['title'] }}</h2>
+        <p>{{ t['personal']['personas']['description'] }}</p>
+    </div>
+    <div class="persona-grid">
+        {% for persona in t['personal']['personas']['items'] %}
+        <article class="persona-card">
+            <header>
+                <h3>{{ persona['name'] }}</h3>
+                <span>{{ persona['role'] }}</span>
+            </header>
+            <blockquote>“{{ persona['quote'] }}”</blockquote>
+            <dl>
+                <dt>{{ t['personal']['personas']['goal_label'] }}</dt>
+                <dd>{{ persona['goal'] }}</dd>
+            </dl>
+            <div class="persona-needs">
+                <span>{{ t['personal']['personas']['needs_label'] }}</span>
+                <ul>
+                    {% for need in persona['needs'] %}
+                    <li>{{ need }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </article>
         {% endfor %}
     </div>

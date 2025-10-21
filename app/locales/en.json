@@ -444,6 +444,85 @@
       "description": "Enjoy every premium feature free for 14 days.",
       "primary": "Start free trial",
       "secondary": "Contact support"
+    },
+    "pricing_overview": {
+      "title": "Transparent pricing for solo creators",
+      "description": "See monthly versus annual costs before you commit.",
+      "columns": [
+        "Plan",
+        "Monthly",
+        "Annual",
+        "Notes"
+      ],
+      "rows": [
+        {
+          "label": "Creator Plus",
+          "monthly": "₩49,000",
+          "annual": "₩529,000 (save 10%)",
+          "note": "Includes up to 3 connected channels after the 14-day trial."
+        },
+        {
+          "label": "Basic",
+          "monthly": "₩0",
+          "annual": "₩0",
+          "note": "Essential metrics and weekly recap remain free."
+        }
+      ],
+      "footnote": "Annual billing includes VAT and you can switch plans at any time."
+    },
+    "metrics": {
+      "title": "Metrics pulled from a live personal dashboard",
+      "description": "Snapshot from 32 lifestyle creators tracked in September 2024.",
+      "visual_alt": "Dashboard capture showing follower growth, pitch acceptance, and calendar cards.",
+      "source_label": "Source",
+      "source_caption": "Creator Control Center personal workspace — September 2024",
+      "items": [
+        {
+          "label": "30-day follower lift",
+          "value": "+18%",
+          "description": "Creators following the auto-scheduling recommendations."
+        },
+        {
+          "label": "Brand pitch acceptance",
+          "value": "42%",
+          "description": "5 of 12 proposals approved within seven days."
+        },
+        {
+          "label": "Weekly reporting time saved",
+          "value": "3.2h",
+          "description": "Automated PDF exports replace manual spreadsheets."
+        }
+      ]
+    },
+    "personas": {
+      "title": "Built around real creator workflows",
+      "description": "A glimpse at the professional needs we designed for.",
+      "goal_label": "Primary goal",
+      "needs_label": "Needs",
+      "items": [
+        {
+          "name": "Ji-hye Yoon",
+          "role": "Freelance beauty creator",
+          "quote": "I can send sponsor-ready decks without rebuilding them every time.",
+          "goal": "Maintain at least two brand collaborations per month.",
+          "needs": [
+            "Dashboard that spotlights outcomes",
+            "Automated PDF pitch builder",
+            "Campaign schedule reminders"
+          ]
+        },
+        {
+          "name": "Alex Kim",
+          "role": "English learning creator",
+          "quote": "Seeing every platform lesson mapped for the month keeps me focused.",
+          "goal": "Reach 1,000 paying subscribers.",
+          "needs": [
+            "Unified YouTube & Instagram sync",
+            "Topic suggestions by performance",
+            "Shareable membership recap links"
+          ]
+        }
+      ]
     }
   },
   "business": {
@@ -564,6 +643,91 @@
       "description": "Share your requirements and receive a tailored rollout plan within one business day.",
       "primary": "Contact sales",
       "secondary": "Review plans"
+    },
+    "pricing_overview": {
+      "title": "Subscription guide for growing teams",
+      "description": "Estimate monthly and annual spend before your demo.",
+      "columns": [
+        "Plan",
+        "Monthly",
+        "Annual",
+        "Notes"
+      ],
+      "rows": [
+        {
+          "label": "Team",
+          "monthly": "₩289,000 (monthly billing)",
+          "annual": "₩2,988,000 (prepaid)",
+          "note": "Includes 10 seats and 10 connected channels."
+        },
+        {
+          "label": "Enterprise",
+          "monthly": "Custom quote",
+          "annual": "Annual agreement",
+          "note": "SSO, security reviews, and SLA coverage."
+        },
+        {
+          "label": "Analyst add-on seat",
+          "monthly": "₩39,000",
+          "annual": "₩420,000",
+          "note": "Per additional user with granular permissions."
+        }
+      ],
+      "footnote": "Prices shown exclude VAT. Unlimited onboarding is included for the contract term."
+    },
+    "metrics": {
+      "title": "Live metrics from a business workspace",
+      "description": "Q3 2024 pilot with a creator management agency.",
+      "visual_alt": "Business dashboard capture showing pipeline and approval timelines.",
+      "source_label": "Source",
+      "source_caption": "Creator Control Center Team plan — agency operations board",
+      "items": [
+        {
+          "label": "Weekly report prep time saved",
+          "value": "58%",
+          "description": "Automated exports cut average prep from 26 to 11 minutes."
+        },
+        {
+          "label": "Creators managed in one hub",
+          "value": "34",
+          "description": "Eight managers collaborating inside a single Team workspace."
+        },
+        {
+          "label": "Brand approval lead time",
+          "value": "48h",
+          "description": "Approval workflow replaces three back-and-forth email loops."
+        }
+      ]
+    },
+    "personas": {
+      "title": "Personas we designed this tier around",
+      "description": "Understand the expert needs driving each workflow.",
+      "goal_label": "Primary goal",
+      "needs_label": "Needs",
+      "items": [
+        {
+          "name": "Min-seo Park",
+          "role": "Creator partnerships lead",
+          "quote": "Standardized approvals keep every stakeholder on the same page.",
+          "goal": "Institutionalize monthly reports for ten partner brands.",
+          "needs": [
+            "Role-based approval routing",
+            "Campaign performance comparisons",
+            "Client-ready executive summaries"
+          ]
+        },
+        {
+          "name": "Sora Im",
+          "role": "Agency director",
+          "quote": "Consolidated exports cut our proposal prep time significantly.",
+          "goal": "Achieve a 30% win rate on new business.",
+          "needs": [
+            "Connect 15+ channels in one place",
+            "Export CSV and slides together",
+            "Slack alerts for milestones"
+          ]
+        }
+      ]
     }
   },
   "support": {

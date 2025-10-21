@@ -713,6 +713,211 @@ a:hover {
     margin-bottom: 1.25rem;
 }
 
+.data-section {
+    margin: 4rem 0;
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    display: grid;
+    gap: 2rem;
+}
+
+.subscription-overview .section-header p {
+    margin: 0;
+}
+
+.pricing-table {
+    display: grid;
+    gap: 1rem;
+}
+
+.pricing-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.pricing-row > div[data-column]::before {
+    display: none;
+}
+
+.pricing-row:not(.pricing-row-header):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-strong);
+}
+
+.pricing-row strong {
+    font-size: 1.1rem;
+}
+
+.pricing-row-header {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 1.5rem;
+}
+
+.pricing-row-header span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+}
+
+.pricing-note {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.pricing-footnote {
+    margin: 0;
+    color: var(--text-subtle);
+    font-size: 0.9rem;
+}
+
+.metrics-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    align-items: center;
+}
+
+.metrics-intro h2 {
+    margin-bottom: 0.75rem;
+}
+
+.metrics-figure {
+    margin: 0;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    display: grid;
+    gap: 1rem;
+}
+
+.metrics-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.metrics-figure figcaption {
+    display: grid;
+    gap: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.metrics-figure strong {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.metric-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    background: var(--surface-primary);
+    padding: 2rem;
+    display: grid;
+    gap: 0.75rem;
+    box-shadow: var(--card-shadow);
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.metric-card p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.persona-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.persona-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    background: var(--surface-primary);
+    padding: 2rem;
+    display: grid;
+    gap: 1rem;
+    box-shadow: var(--card-shadow);
+}
+
+.persona-card header {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.persona-card span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.persona-card blockquote {
+    margin: 0;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.persona-card dl {
+    margin: 0;
+    display: grid;
+    gap: 0.25rem;
+}
+
+.persona-card dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+}
+
+.persona-card dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.persona-needs span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+}
+
+.persona-needs ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--text-secondary);
+    display: grid;
+    gap: 0.35rem;
+}
+
 .section-list {
     display: grid;
     gap: 0.75rem;
@@ -1368,6 +1573,14 @@ select:focus {
         padding: 2.5rem 1.5rem 4rem;
     }
 
+    .data-section {
+        padding: 2.5rem 1.75rem;
+    }
+
+    .metrics-layout {
+        grid-template-columns: 1fr;
+    }
+
     .hero-highlights {
         gap: 0.5rem;
     }
@@ -1440,5 +1653,28 @@ select:focus {
 
     .plan-price-row {
         gap: 0.5rem;
+    }
+
+    .subscription-overview .pricing-table {
+        gap: 1.25rem;
+    }
+
+    .pricing-row {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        padding: 1.25rem 1.1rem;
+    }
+
+    .pricing-row-header {
+        display: none;
+    }
+
+    .pricing-row > div[data-column]::before {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
     }
 }
