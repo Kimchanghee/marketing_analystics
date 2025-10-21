@@ -117,28 +117,40 @@
         <h2>{{ t['personal']['personas']['title'] }}</h2>
         <p>{{ t['personal']['personas']['description'] }}</p>
     </div>
-    <div class="persona-grid">
-        {% for persona in t['personal']['personas']['items'] %}
-        <article class="persona-card">
-            <header>
-                <h3>{{ persona['name'] }}</h3>
-                <span>{{ persona['role'] }}</span>
-            </header>
-            <blockquote>“{{ persona['quote'] }}”</blockquote>
-            <dl>
-                <dt>{{ t['personal']['personas']['goal_label'] }}</dt>
-                <dd>{{ persona['goal'] }}</dd>
-            </dl>
-            <div class="persona-needs">
-                <span>{{ t['personal']['personas']['needs_label'] }}</span>
-                <ul>
-                    {% for need in persona['needs'] %}
-                    <li>{{ need }}</li>
-                    {% endfor %}
-                </ul>
+    <div class="slider" data-slider>
+        <button class="slider-button slider-button-prev" type="button" data-slider-prev
+            aria-label="{{ t['personal']['personas']['prev'] }}">
+            <span aria-hidden="true">‹</span>
+        </button>
+        <div class="slider-viewport" data-slider-viewport>
+            <div class="slider-track" data-slider-track>
+                {% for persona in t['personal']['personas']['items'] %}
+                <article class="persona-card slider-item">
+                    <header>
+                        <h3>{{ persona['name'] }}</h3>
+                        <span>{{ persona['role'] }}</span>
+                    </header>
+                    <blockquote>“{{ persona['quote'] }}”</blockquote>
+                    <dl>
+                        <dt>{{ t['personal']['personas']['goal_label'] }}</dt>
+                        <dd>{{ persona['goal'] }}</dd>
+                    </dl>
+                    <div class="persona-needs">
+                        <span>{{ t['personal']['personas']['needs_label'] }}</span>
+                        <ul>
+                            {% for need in persona['needs'] %}
+                            <li>{{ need }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
-        </article>
-        {% endfor %}
+        </div>
+        <button class="slider-button slider-button-next" type="button" data-slider-next
+            aria-label="{{ t['personal']['personas']['next'] }}">
+            <span aria-hidden="true">›</span>
+        </button>
     </div>
 </section>
 <section class="journey-steps plan-comparison">

@@ -115,14 +115,28 @@
     </article>
     {% endfor %}
 </section>
-<section class="testimonial-grid">
-    {% for testimonial in t['landing']['testimonials'] %}
-    <article class="testimonial-card">
-        <span class="testimonial-quote" aria-hidden="true">“</span>
-        <p>{{ testimonial['quote'] }}</p>
-        <cite>{{ testimonial['name'] }} · {{ testimonial['title'] }}</cite>
-    </article>
-    {% endfor %}
+<section class="testimonial-slider" aria-label="{{ t['landing']['testimonials_label'] }}">
+    <div class="slider" data-slider>
+        <button class="slider-button slider-button-prev" type="button" data-slider-prev
+            aria-label="{{ t['landing']['testimonials_prev'] }}">
+            <span aria-hidden="true">‹</span>
+        </button>
+        <div class="slider-viewport" data-slider-viewport>
+            <div class="slider-track" data-slider-track>
+                {% for testimonial in t['landing']['testimonials'] %}
+                <article class="testimonial-card slider-item">
+                    <span class="testimonial-quote" aria-hidden="true">“</span>
+                    <p>{{ testimonial['quote'] }}</p>
+                    <cite>{{ testimonial['name'] }} · {{ testimonial['title'] }}</cite>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        <button class="slider-button slider-button-next" type="button" data-slider-next
+            aria-label="{{ t['landing']['testimonials_next'] }}">
+            <span aria-hidden="true">›</span>
+        </button>
+    </div>
 </section>
 <section class="cta-banner">
     <div>
