@@ -174,7 +174,9 @@
     "signup_hint": "Need an account?",
     "signup_link": "Create one",
     "invalid_credentials": "We couldn't match those credentials.",
-    "account_inactive": "This account is currently inactive. Please contact support."
+    "account_inactive": "This account is currently inactive. Please contact support.",
+    "email_exists": "That email is already registered. Try signing in or reset your password.",
+    "signup_success": "You're all set! Sign in with the email you just registered."
   },
   "dashboard": {
     "welcome": "Welcome",
@@ -321,6 +323,53 @@
         }
       ]
     },
+    "integrations": {
+      "title": "Channel API coverage",
+      "description": "Every connector is built on official partner programs and reviewed for compliance.",
+      "channels": [
+        {
+          "name": "Instagram Graph API",
+          "status": "Live",
+          "badge": "live",
+          "detail": "Sync post, Reels, and Stories insights almost in real time."
+        },
+        {
+          "name": "YouTube Data API",
+          "status": "Live",
+          "badge": "live",
+          "detail": "Refresh views, watch time, and Shorts performance every day."
+        },
+        {
+          "name": "TikTok for Business API",
+          "status": "Beta",
+          "badge": "beta",
+          "detail": "Import campaign and organic analytics on a 24-hour cadence."
+        },
+        {
+          "name": "Twitter/X API v2",
+          "status": "Planned",
+          "badge": "planned",
+          "detail": "Upcoming support for mention monitoring and community sentiment."
+        },
+        {
+          "name": "Meta Ads Marketing API",
+          "status": "Live",
+          "badge": "live",
+          "detail": "Unify spend and conversions by ad set and creative in one board."
+        }
+      ],
+      "footnote": "Data is encrypted at rest and OAuth tokens are scoped to the minimum permissions required."
+    },
+    "membership": {
+      "title": "Account governance",
+      "description": "Security-first guardrails cover creator and enterprise accounts alike.",
+      "items": [
+        "Email verification with Argon2 password hashing",
+        "Role-based access control (creator, manager, platform owner)",
+        "Audit trails for sign-up and login activity",
+        "Automatic channel limits enforced per subscription tier"
+      ]
+    },
     "cta": {
       "title": "Launch with a tailored onboarding",
       "description": "Our consultants help connect your data and workflows in under two weeks.",
@@ -397,6 +446,11 @@
       "description": "Enjoy every premium feature free for 14 days.",
       "primary": "Start free trial",
       "secondary": "Contact support"
+    },
+    "screens": {
+      "title": "See the personal dashboard in action",
+      "description": "A sample layout of the widgets available in the live product.",
+      "image_alt": "Preview of the personal creator dashboard"
     }
   },
   "business": {
@@ -468,6 +522,11 @@
       "description": "Share your requirements and receive a tailored rollout plan within one business day.",
       "primary": "Contact sales",
       "secondary": "Review pricing"
+    },
+    "screens": {
+      "title": "Enterprise control tower preview",
+      "description": "Mock UI of how agencies orchestrate multiple brands and campaigns.",
+      "image_alt": "Preview of the enterprise brand hub"
     }
   },
   "pricing": {

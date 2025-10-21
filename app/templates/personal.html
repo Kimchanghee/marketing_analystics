@@ -49,6 +49,15 @@
     </article>
     {% endfor %}
 </section>
+<section class="persona-gallery">
+    <div class="section-header">
+        <h2>{{ t['personal']['screens']['title'] }}</h2>
+        <p>{{ t['personal']['screens']['description'] }}</p>
+    </div>
+    <div class="mock-screenshot">
+        <img src="/static/images/personal-dashboard.svg" alt="{{ t['personal']['screens']['image_alt'] }}" loading="lazy">
+    </div>
+</section>
 <section class="cta-banner">
     <div>
         <h2>{{ t['personal']['cta']['title'] }}</h2>

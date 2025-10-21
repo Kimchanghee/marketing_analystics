@@ -43,6 +43,35 @@
         {% endfor %}
     </div>
 </section>
+<section class="integration-showcase">
+    <div class="section-header">
+        <h2>{{ t['service']['integrations']['title'] }}</h2>
+        <p>{{ t['service']['integrations']['description'] }}</p>
+    </div>
+    <div class="integration-grid">
+        {% for channel in t['service']['integrations']['channels'] %}
+        <article class="integration-card integration-{{ channel['badge'] }}">
+            <header>
+                <h3>{{ channel['name'] }}</h3>
+                <span class="status-chip is-{{ channel['badge'] }}">{{ channel['status'] }}</span>
+            </header>
+            <p>{{ channel['detail'] }}</p>
+        </article>
+        {% endfor %}
+    </div>
+    <p class="integration-footnote">{{ t['service']['integrations']['footnote'] }}</p>
+</section>
+<section class="membership-section">
+    <div class="section-header">
+        <h2>{{ t['service']['membership']['title'] }}</h2>
+        <p>{{ t['service']['membership']['description'] }}</p>
+    </div>
+    <ul class="membership-list">
+        {% for item in t['service']['membership']['items'] %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+</section>
 <section class="journey-steps">
     <div class="section-header">
         <h2>{{ t['service']['outcomes']['title'] }}</h2>

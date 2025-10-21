@@ -1,0 +1,35 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1280" height="720" rx="32" fill="#F6FBFF"/>
+    <rect x="48" y="48" width="1184" height="96" rx="24" fill="#14203B"/>
+    <text x="96" y="110" fill="#F8FAFF" font-family="'Pretendard','Poppins',sans-serif" font-size="32" font-weight="600">기업/에이전시용 브랜드 허브</text>
+    <rect x="48" y="168" width="480" height="504" rx="24" fill="#FFFFFF" stroke="#C8E5FF" stroke-width="2"/>
+    <text x="76" y="216" fill="#14203B" font-family="'Pretendard','Poppins',sans-serif" font-size="22" font-weight="600">채널 연결 상태</text>
+    <rect x="76" y="240" width="432" height="72" rx="18" fill="#EBF4FF"/>
+    <text x="102" y="286" fill="#2563EB" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">Meta Business Suite</text>
+    <text x="102" y="314" fill="#3B82F6" font-family="'Pretendard','Poppins',sans-serif" font-size="16">광고계정 6개 · 승인 완료</text>
+    <rect x="76" y="336" width="432" height="72" rx="18" fill="#EBF4FF"/>
+    <text x="102" y="382" fill="#2563EB" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">YouTube Brand Studio</text>
+    <text x="102" y="410" fill="#3B82F6" font-family="'Pretendard','Poppins',sans-serif" font-size="16">채널 4개 · 관리자 3명 협업중</text>
+    <rect x="76" y="432" width="432" height="72" rx="18" fill="#EBF4FF"/>
+    <text x="102" y="478" fill="#2563EB" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">TikTok Creative Exchange</text>
+    <text x="102" y="506" fill="#3B82F6" font-family="'Pretendard','Poppins',sans-serif" font-size="16">캠페인 3건 진행중 · CPI 12% 개선</text>
+    <rect x="76" y="528" width="432" height="120" rx="18" fill="#EEF9FF" stroke="#7DD3FC" stroke-width="2"/>
+    <text x="102" y="574" fill="#0EA5E9" font-family="'Pretendard','Poppins',sans-serif" font-size="16" font-weight="600">새 채널 연결 요청</text>
+    <text x="102" y="602" fill="#38BDF8" font-family="'Pretendard','Poppins',sans-serif" font-size="14">Slack · Email · API 키 등록 옵션 제공</text>
+
+    <rect x="560" y="168" width="640" height="216" rx="24" fill="#FFFFFF" stroke="#C8E5FF" stroke-width="2"/>
+    <text x="588" y="216" fill="#14203B" font-family="'Pretendard','Poppins',sans-serif" font-size="22" font-weight="600">캠페인별 성과 비교</text>
+    <rect x="588" y="240" width="592" height="128" rx="20" fill="#EBF4FF"/>
+    <text x="616" y="280" fill="#1D4ED8" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">Brand Lift 4주 보고서</text>
+    <text x="616" y="308" fill="#3B82F6" font-family="'Pretendard','Poppins',sans-serif" font-size="16">노출 +38% · 전환 +21% · CPA 16,800원</text>
+    <text x="1160" y="308" fill="#1E3A8A" font-family="'Pretendard','Poppins',sans-serif" font-size="16" font-weight="600" text-anchor="end">최상위 10% 성과</text>
+
+    <rect x="560" y="408" width="640" height="264" rx="24" fill="#FFFFFF" stroke="#C8E5FF" stroke-width="2"/>
+    <text x="588" y="456" fill="#14203B" font-family="'Pretendard','Poppins',sans-serif" font-size="22" font-weight="600">협업 승인 워크플로우</text>
+    <rect x="588" y="480" width="592" height="72" rx="18" fill="#EEF9FF"/>
+    <text x="616" y="520" fill="#0284C7" font-family="'Pretendard','Poppins',sans-serif" font-size="16" font-weight="600">관리자 요청: creators@agency.kr</text>
+    <text x="616" y="548" fill="#0EA5E9" font-family="'Pretendard','Poppins',sans-serif" font-size="14">승인 대기 2명 · Slack 알림 전송 완료</text>
+    <rect x="588" y="564" width="592" height="72" rx="18" fill="#EEF9FF"/>
+    <text x="616" y="604" fill="#0284C7" font-family="'Pretendard','Poppins',sans-serif" font-size="16" font-weight="600">계약서 &amp; 세금계산서 아카이브</text>
+    <text x="616" y="632" fill="#0EA5E9" font-family="'Pretendard','Poppins',sans-serif" font-size="14">연동된 Google Drive, Notion, 전자계약 연계</text>
+</svg>
