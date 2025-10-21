@@ -446,100 +446,139 @@
     }
   },
   "pricing": {
-    "hero": {
-      "title": "Pricing designed for every stage",
-      "subtitle": "All plans include unlimited guest viewers and live dashboard sharing.",
-      "primary_cta": "Start 14-day trial",
-      "secondary_cta": "Talk to sales",
-      "visual_title": "Recommended use cases",
-      "visual_points": [
-        {
-          "label": "Free",
-          "value": "Solo creators getting started"
-        },
-        {
-          "label": "Pro",
-          "value": "Teams automating reporting"
-        },
-        {
-          "label": "Enterprise",
-          "value": "Security-first organizations"
-        }
-      ]
-    },
-    "plans": [
+  "hero": {
+    "title": "Pricing designed for every stage",
+    "subtitle": "All plans include unlimited guest viewers and live dashboard sharing.",
+    "primary_cta": "Start 14-day trial",
+    "secondary_cta": "Talk to sales",
+    "visual_title": "Recommended use cases",
+    "visual_points": [
       {
-        "name": "Free",
-        "description": "Essential monitoring for individual creators",
-        "price": "$0",
-        "cycle": "Upgrade anytime",
-        "features": [
-          "1 connected channel",
-          "Core KPI dashboard",
-          "Weekly email recap",
-          "Brand pitch template"
-        ],
-        "cta": "Create free account",
-        "highlighted": false
+        "label": "Basic",
+        "value": "Solo voices building a following"
       },
       {
-        "name": "Pro",
-        "description": "Automation and collaboration for growing teams",
-        "price": "$59",
-        "cycle": "Billed monthly",
-        "features": [
-          "5 connected channels",
-          "Unlimited campaign briefs",
-          "Approval workflows & audit log",
-          "PDF & slide exports",
-          "Priority support"
-        ],
-        "cta": "Choose Pro",
-        "highlighted": true
+        "label": "Creator Plus",
+        "value": "Freelancers managing collaborations"
       },
       {
-        "name": "Enterprise",
-        "description": "Security, governance, and custom integrations",
-        "price": "Custom",
-        "cycle": "Annual agreement",
-        "features": [
-          "Unlimited channels",
-          "SSO & role-based access",
-          "Dedicated success manager",
-          "BI & warehouse sync",
-          "Compliance-grade audit trail"
-        ],
-        "cta": "Request quote",
-        "highlighted": false
+        "label": "Team",
+        "value": "In-house marketing pods"
+      },
+      {
+        "label": "Enterprise",
+        "value": "Global brand rollouts"
       }
-    ],
-    "comparison": {
-      "title": "Compare plans",
-      "description": "See which tier matches your priorities.",
-      "items": [
+    ]
+  },
+  "plan_groups": [
+    {
+      "label": "Personal plans",
+      "title": "For individual storytellers",
+      "description": "Stay on top of every channel with streamlined dashboards built for solos and side projects.",
+      "plans": [
         {
-          "label": "1",
-          "title": "Scalability",
-          "detail": "Pro and above support unlimited teams and channel groups."
+          "name": "Basic",
+          "description": "Essential listening and reporting for personal brands",
+          "price": "$0",
+          "cycle": "Always free",
+          "features": [
+            "1 connected channel",
+            "Real-time KPI snapshot",
+            "Weekly performance email",
+            "Community support"
+          ],
+          "cta": "Get started free",
+          "cta_link": "/signup",
+          "highlighted": false
         },
         {
-          "label": "2",
-          "title": "Automation",
-          "detail": "Automated reporting and approvals are available starting in Pro."
-        },
-        {
-          "label": "3",
-          "title": "Security",
-          "detail": "Enterprise includes SSO, encryption, and compliance-ready audit logs."
+          "name": "Creator Plus",
+          "description": "Advanced scheduling and reporting for independent creators",
+          "price": "$39",
+          "cycle": "Billed monthly",
+          "features": [
+            "3 connected channels",
+            "Automated publishing calendar",
+            "Campaign brief templates",
+            "Export to PDF & slides",
+            "Priority chat support"
+          ],
+          "cta": "Upgrade to Plus",
+          "cta_link": "/signup",
+          "highlighted": true,
+          "badge": "Most popular"
         }
       ]
     },
-    "cta": {
-      "title": "Pick the plan that fits best",
-      "description": "Need something custom? Our team will craft the right bundle for you.",
-      "primary": "Start free trial",
-      "secondary": "Contact support"
+    {
+      "label": "Business plans",
+      "title": "For brands and agencies",
+      "description": "Unlock governance, automation, and dedicated support as your organization scales.",
+      "plans": [
+        {
+          "name": "Team",
+          "description": "Powerful collaboration for marketing departments and boutique agencies",
+          "price": "$189",
+          "cycle": "Per month, billed annually",
+          "features": [
+            "10 connected channels",
+            "Shared campaign workspaces",
+            "Role-based approvals",
+            "Unlimited exports & archives",
+            "Dedicated onboarding"
+          ],
+          "cta": "Talk to sales",
+          "cta_link": "/support",
+          "highlighted": true,
+          "badge": "Best value"
+        },
+        {
+          "name": "Enterprise",
+          "description": "Custom security, compliance, and integrations for large organizations",
+          "price": "From $499",
+          "cycle": "Custom annual agreement",
+          "features": [
+            "Unlimited channels",
+            "SSO & advanced permissions",
+            "Dedicated success manager",
+            "Private data lake sync",
+            "Enterprise SLA & compliance"
+          ],
+          "cta": "Request enterprise demo",
+          "cta_link": "/support",
+          "highlighted": false
+        }
+      ]
     }
+  ],
+  "comparison": {
+    "title": "Compare plans",
+    "description": "See which tier matches your priorities.",
+    "items": [
+      {
+        "label": "1",
+        "title": "Scalability",
+        "detail": "Team and Enterprise unlock unlimited workspaces and admin controls."
+      },
+      {
+        "label": "2",
+        "title": "Automation",
+        "detail": "Creator Plus introduces scheduling flows, with approvals extending in business tiers."
+      },
+      {
+        "label": "3",
+        "title": "Assurance",
+        "detail": "Enterprise adds SSO, encryption, and compliance-ready audit trails."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Pick the plan that fits best",
+    "description": "Need something custom? Our team will craft the right bundle for you.",
+    "primary": "Start free trial",
+    "secondary": "Contact support"
+  }
   },
   "support": {
     "hero": {

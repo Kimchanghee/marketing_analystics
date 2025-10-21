@@ -23,23 +23,38 @@
         </div>
     </div>
 </section>
-<section class="pricing-grid">
-    {% for plan in t['pricing']['plans'] %}
-    <article class="pricing-card{% if plan['highlighted'] %} highlight{% endif %}">
-        <div>
-            <h3>{{ plan['name'] }}</h3>
-            <p>{{ plan['description'] }}</p>
+<section class="pricing-categories">
+    {% for group in t['pricing']['plan_groups'] %}
+    <article class="plan-category">
+        <div class="plan-category-header">
+            <span class="plan-category-label">{{ group['label'] }}</span>
+            <h2>{{ group['title'] }}</h2>
+            <p>{{ group['description'] }}</p>
         </div>
-        <div>
-            <span class="pricing-price">{{ plan['price'] }}</span>
-            <span class="pricing-cycle">{{ plan['cycle'] }}</span>
-        </div>
-        <ul class="pricing-features">
-            {% for feature in plan['features'] %}
-            <li>• {{ feature }}</li>
+        <div class="pricing-grid">
+            {% for plan in group['plans'] %}
+            <article class="pricing-card{% if plan['highlighted'] %} highlight{% endif %}">
+                {% if plan.get('badge') %}
+                <span class="plan-badge">{{ plan['badge'] }}</span>
+                {% endif %}
+                <div>
+                    <h3>{{ plan['name'] }}</h3>
+                    <p>{{ plan['description'] }}</p>
+                </div>
+                <div class="plan-price-row">
+                    <span class="pricing-price">{{ plan['price'] }}</span>
+                    <span class="pricing-cycle">{{ plan['cycle'] }}</span>
+                </div>
+                <ul class="pricing-features">
+                    {% for feature in plan['features'] %}
+                    <li>• {{ feature }}</li>
+                    {% endfor %}
+                </ul>
+                <a class="btn {% if plan['highlighted'] %}primary{% else %}tertiary{% endif %}"
+                    href="{{ plan.get('cta_link', '/signup') }}">{{ plan['cta'] }}</a>
+            </article>
             {% endfor %}
-        </ul>
-        <a class="btn {% if plan['highlighted'] %}primary{% else %}tertiary{% endif %}" href="/signup">{{ plan['cta'] }}</a>
+        </div>
     </article>
     {% endfor %}
 </section>
