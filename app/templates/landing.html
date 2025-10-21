@@ -36,41 +36,6 @@
         </div>
     </div>
 </section>
-<section class="auth-showcase" id="account">
-    {% if login_error or signup_error or signup_success %}
-        <div class="auth-status">
-            {% if login_error %}
-                <div class="form-alert error">{{ login_error }}</div>
-            {% endif %}
-            {% if signup_error %}
-                <div class="form-alert error">{{ signup_error }}</div>
-            {% endif %}
-            {% if signup_success %}
-                <div class="form-alert success">{{ signup_success }}</div>
-            {% endif %}
-        </div>
-    {% endif %}
-    <article class="auth-card landing-auth">
-        <div>
-            <h2>{{ t['landing']['auth_section']['login_title'] }}</h2>
-            <p class="auth-description">{{ t['landing']['auth_section']['login_description'] }}</p>
-        </div>
-        <div class="auth-actions">
-            <a class="btn ghost" href="/login">{{ t['auth']['login_button'] }}</a>
-        </div>
-        <p class="auth-hint"><a href="/support">{{ t['landing']['auth_section']['advanced_login'] }}</a></p>
-    </article>
-    <article class="auth-card landing-auth">
-        <div>
-            <h2>{{ t['landing']['auth_section']['signup_title'] }}</h2>
-            <p class="auth-description">{{ t['landing']['auth_section']['signup_description'] }}</p>
-        </div>
-        <div class="auth-actions">
-            <a class="btn primary" href="/signup">{{ t['auth']['signup_button'] }}</a>
-        </div>
-        <p class="auth-hint"><a href="/services">{{ t['landing']['auth_section']['advanced_signup'] }}</a></p>
-    </article>
-</section>
 <section class="metrics-grid">
     {% for metric in t['landing']['metrics'] %}
     <article class="metric-card" data-metric-index="{{ loop.index }}">
