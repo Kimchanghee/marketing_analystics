@@ -235,133 +235,133 @@
   },
   "service": {
     "hero": {
-      "title": "The integrated operating system for creator marketing",
-      "subtitle": "Connect channel analytics, content ops, and community management to drive measurable growth.",
-      "primary_cta": "Request a demo",
-      "secondary_cta": "Explore personal plans",
-      "visual_title": "Most-loved insights",
+      "title": "One workspace for social analytics and ads",
+      "subtitle": "Review follower, content, and reaction trends alongside Meta Ads guidance for every creator you manage.",
+      "primary_cta": "Explore plans",
+      "secondary_cta": "See personal features",
+      "visual_title": "Sample insight cards",
       "visual_points": [
         {
-          "label": "Content reminders",
-          "value": "72 automated nudges"
+          "label": "Follower change",
+          "value": "YouTube · Instagram"
         },
         {
-          "label": "Published reports",
-          "value": "24 per week"
+          "label": "Reaction mix",
+          "value": "Likes vs. dislikes"
         },
         {
-          "label": "Approval workflows",
-          "value": "8 hrs saved"
+          "label": "Hourly views",
+          "value": "Peak performance"
         }
       ]
     },
-    "pillars_title": "Four pillars teams rely on",
-    "pillars_description": "Designed around the motions that move creator-led marketing forward.",
+    "pillars_title": "Core capabilities",
+    "pillars_description": "Everything centers on accurate channel analytics and collaborative client management.",
     "pillars": [
       {
-        "tagline": "Plan",
-        "title": "Goal & KPI alignment",
-        "description": "Define campaign goals, KPIs, and share a single source of truth.",
+        "tagline": "Insights",
+        "title": "Channel intelligence",
+        "description": "Track followers, posts, comments, likes, dislikes, and hourly views for YouTube, Instagram, TikTok, Facebook, and Threads.",
         "bullets": [
-          "Campaign brief templates",
-          "Baseline alerts",
-          "Stakeholder summaries"
+          "Follower and engagement snapshots",
+          "Top-performing post breakdowns",
+          "Comment sentiment overview"
         ]
       },
       {
-        "tagline": "Create",
-        "title": "Content calendar",
-        "description": "Visualize schedules and track status across every responsible owner.",
+        "tagline": "Access",
+        "title": "Account management",
+        "description": "Let personal users connect their own accounts and request approval from business managers.",
         "bullets": [
-          "Drag-and-drop planning",
-          "Approval feedback loops",
-          "Asset library integration"
+          "Personal free tier for one YouTube and one Instagram account",
+          "Upgrade path for additional channels",
+          "Client approval queue for managers"
         ]
       },
       {
-        "tagline": "Launch",
-        "title": "Ads & sponsorships",
-        "description": "Monitor paid performance and partnerships in one connected view.",
+        "tagline": "Ads",
+        "title": "Meta Ads guidance",
+        "description": "Use the Meta Ads API to compare performance and receive AI recommendations on what to scale or pause.",
         "bullets": [
-          "Paid + organic rollup",
-          "Contract tracking",
-          "ROI calculations"
+          "Campaign health overview",
+          "AI-generated next steps",
+          "Budget pacing alerts"
         ]
       },
       {
-        "tagline": "Grow",
-        "title": "Community intelligence",
-        "description": "Turn comments and DMs into product feedback and campaign ideas.",
+        "tagline": "Support",
+        "title": "Business operations",
+        "description": "Help teams supervise every managed creator and keep customer service consistent.",
         "bullets": [
-          "Sentiment & trend detection",
-          "Suggested replies",
-          "Feedback routing"
+          "Portfolio-wide dashboards",
+          "AI-assisted client summaries",
+          "Optional AI CS draft replies"
         ]
       }
     ],
     "outcomes": {
-      "title": "What teams achieve",
-      "description": "Common wins seen within the first month of adoption.",
+      "title": "What teams can do",
+      "description": "Ways personal and business workspaces simplify day-to-day decisions.",
       "items": [
         {
-          "label": "Efficiency",
-          "title": "3× faster reporting",
-          "detail": "Automated data pipelines remove manual spreadsheets from the process."
+          "label": "Creators",
+          "title": "See channel health at a glance",
+          "detail": "Monitor followers, reactions, and hourly views without juggling multiple tabs."
         },
         {
-          "label": "Visibility",
-          "title": "50% less status chasing",
-          "detail": "Share dashboards so every stakeholder can self-serve updates."
+          "label": "Managers",
+          "title": "Approve client requests quickly",
+          "detail": "Personal signups route into a shared approval queue with their connected analytics."
         },
         {
-          "label": "Growth",
-          "title": "18% lift in conversion",
-          "detail": "Double down on creative and audience combinations that work."
+          "label": "Ads",
+          "title": "Act on AI suggestions",
+          "detail": "Review recommended optimizations before extending or pausing a campaign."
         }
       ]
     },
     "cta": {
-      "title": "Launch with a tailored onboarding",
-      "description": "Our consultants help connect your data and workflows in under two weeks.",
-      "primary": "Talk to sales",
+      "title": "Choose the plan that fits today",
+      "description": "Start free as a creator, begin a 7-day business trial, or talk with our team for enterprise needs.",
+      "primary": "Compare plans",
       "secondary": "Visit support"
     }
   },
   "personal": {
     "hero": {
-      "title": "Unified analytics for solo creators",
-      "subtitle": "Connect YouTube and Instagram for free, then add more channels with an affordable upgrade.",
+      "title": "Personal analytics without guesswork",
+      "subtitle": "Free tier covers one YouTube and one Instagram account. Upgrade later to analyze TikTok, Facebook, and Threads together.",
       "primary_cta": "Start for free",
       "secondary_cta": "View personal pricing",
       "visual_title": "Key metrics today",
-      "visual_caption": "Example dashboard summarizing follower trends, reactions, and hourly views.",
+      "visual_caption": "Example dashboard with follower, comment, like, dislike, and hourly view summaries.",
       "visual_alt": "Personal dashboard showing follower and engagement metrics"
     },
     "benefits": {
-      "title": "Data you need without extra tools",
-      "description": "Automatically pull platform metrics and review Meta Ads performance alongside them.",
+      "title": "Track the essentials in one place",
+      "description": "Followers, posts, comment reactions, likes, dislikes, and hourly views stay synced from each channel.",
       "items": [
         {
           "tag": "CHANNELS",
           "title": "Channel coverage",
-          "description": "Keep YouTube and Instagram for free, and expand to TikTok, Facebook, and Threads on Plus."
+          "description": "Keep YouTube and Instagram for free, and expand to TikTok, Facebook, and Threads with Personal Plus."
         },
         {
           "tag": "REACTIONS",
           "title": "Reaction analysis",
-          "description": "Measure likes, dislikes, and comment trends to see what resonates."
+          "description": "Measure likes, dislikes, comment volume, and response speed to see what resonates."
         },
         {
           "tag": "ADS",
           "title": "AI ad tips",
-          "description": "Use Meta Ads API data to know which campaigns to scale or pause."
+          "description": "Use Meta Ads API data to view campaign results and receive suggestions on next steps."
         }
       ]
     },
     "plans": {
       "label": "Personal plans",
       "title": "Choose the coverage you need",
-      "description": "Start free and upgrade whenever you want more channels or automation.",
+      "description": "Start free and upgrade whenever you want more channels or ad automation.",
       "items": [
         {
           "name": "Personal Free",
@@ -370,7 +370,7 @@
           "cycle": "Always free",
           "features": [
             "Connect one YouTube and one Instagram account",
-            "Summaries for posts, comments, and hourly views",
+            "Summaries for posts, comments, likes, dislikes, and hourly views",
             "Read-only Meta Ads campaign overview",
             "Weekly email recap"
           ],
@@ -380,13 +380,13 @@
         },
         {
           "name": "Personal Plus",
-          "description": "Expanded channels with AI recommendations",
+          "description": "Expanded channels with evolving AI recommendations",
           "price": "₩9,900",
           "cycle": "Billed monthly",
           "features": [
             "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
             "Post and comment comparison reports",
-            "AI-powered Meta Ads scale/pause suggestions",
+            "AI-powered Meta Ads suggestions (roadmap updates included)",
             "CSV/PDF export and chat support"
           ],
           "cta": "Upgrade to Plus",
@@ -417,30 +417,30 @@
         ]
       }
     },
-    "workflow": {
-      "title": "Three-step onboarding",
-      "description": "Connect accounts, choose goals, and share a report in minutes.",
-      "steps": [
-        {
-          "label": "Step 1",
-          "title": "Link core channels",
-          "detail": "Authenticate YouTube and Instagram to sync key KPIs."
-        },
-        {
-          "label": "Step 2",
-          "title": "Add optional platforms",
-          "detail": "Upgrade to Plus to include TikTok, Facebook, and Threads."
-        },
-        {
-          "label": "Step 3",
-          "title": "Review ads and share",
-          "detail": "Check Meta Ads insights, apply AI tips, and send the recap."
-        }
-      ]
-    },
+      "workflow": {
+        "title": "Three-step onboarding",
+        "description": "Connect accounts, confirm metrics, and share a report in minutes.",
+        "steps": [
+          {
+            "label": "Step 1",
+            "title": "Link core channels",
+            "detail": "Authenticate one YouTube and one Instagram account for the free plan."
+          },
+          {
+            "label": "Step 2",
+            "title": "Add optional platforms",
+            "detail": "Upgrade to Plus to include TikTok, Facebook, and Threads whenever you are ready."
+          },
+          {
+            "label": "Step 3",
+            "title": "Review ads and share",
+            "detail": "Check Meta Ads insights, apply AI tips, and send the recap."
+          }
+        ]
+      },
     "cta": {
       "title": "Start with the free personal plan",
-      "description": "Upgrade to Plus anytime for additional channels and automation.",
+      "description": "Upgrade to Plus anytime for additional channels and evolving AI support.",
       "primary": "Create account",
       "secondary": "Contact support"
     },
@@ -467,29 +467,29 @@
           "note": "YouTube and Instagram analytics remain free"
         }
       ],
-      "footnote": "Annual billing includes VAT and you can switch plans anytime."
+      "footnote": "Annual billing includes VAT. Feature roadmap items may evolve during the subscription."
     },
     "metrics": {
-      "title": "Beta program feedback",
-      "description": "Summary from 50 creators who tested the workspace in October 2024.",
+      "title": "What you can monitor",
+      "description": "Example insight tiles showing the level of detail available inside the dashboard.",
       "visual_alt": "Cards from the personal dashboard",
-      "source_label": "Survey",
-      "source_caption": "Creator Control Center beta survey (Oct 2024)",
+      "source_label": "Example",
+      "source_caption": "Illustrative data from the personal workspace",
       "items": [
         {
           "label": "Weekly review time",
-          "value": "1.5 hours",
-          "description": "Average time spent checking YouTube and Instagram metrics."
+          "value": "Follower change",
+          "description": "Compare week-over-week gains across YouTube and Instagram."
         },
         {
-          "label": "Ad adjustments",
-          "value": "Weekly",
-          "description": "Plus users acted on Meta Ads suggestions about once per week."
+          "label": "Reaction insights",
+          "value": "Likes & dislikes",
+          "description": "Spot content that drives more positive responses at a glance."
         },
         {
-          "label": "Extra channel adoption",
-          "value": "64%",
-          "description": "Share of Plus users who connected TikTok or Facebook."
+          "label": "Hourly views",
+          "value": "Peak hours",
+          "description": "Understand when views spike so you can schedule future uploads."
         }
       ]
     },
@@ -541,17 +541,17 @@
         {
           "tag": "APPROVAL",
           "title": "Customer approval flow",
-          "description": "Clients sign up as personal users and request access so managers can review analytics."
+          "description": "Clients sign up as personal users, request approval, and share their analytics securely."
         },
         {
           "tag": "OVERVIEW",
           "title": "Portfolio overview",
-          "description": "See channel metrics and reactions for all managed creators at a glance."
+          "description": "See follower, post, reaction, and hourly view metrics for all managed creators at a glance."
         },
         {
           "tag": "ADS",
           "title": "AI ad management",
-          "description": "Connect Meta Ads to track performance and receive recommended actions."
+          "description": "Connect Meta Ads to track performance and receive suggested optimizations from AI."
         }
       ]
     },
@@ -584,7 +584,7 @@
           "features": [
             "Expanded seats and advanced permissions",
             "AI summaries of client activity for managers",
-            "AI-generated CS reply drafts",
+            "AI-generated CS reply drafts and nudges",
             "Priority support and training"
           ],
           "cta": "Contact sales",

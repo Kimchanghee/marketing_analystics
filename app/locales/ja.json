@@ -235,126 +235,126 @@
   },
   "service": {
     "hero": {
-      "title": "クリエイターマーケティングの統合OS",
-      "subtitle": "チャネル分析、コンテンツ運用、コミュニティ管理をつなげ、成果を生み出します。",
-      "primary_cta": "デモを予約",
-      "secondary_cta": "個人プランを見る",
-      "visual_title": "人気のインサイト",
+      "title": "SNS分析と広告を一体管理",
+      "subtitle": "フォロワー・投稿・反応の推移とMeta広告の示唆を、担当クリエイターごとにまとめて確認できます。",
+      "primary_cta": "プランを確認",
+      "secondary_cta": "個人向け機能を見る",
+      "visual_title": "インサイトカード例",
       "visual_points": [
         {
-          "label": "コンテンツリマインダー",
-          "value": "自動通知 72件"
+          "label": "フォロワー増減",
+          "value": "YouTube・Instagram"
         },
         {
-          "label": "発行レポート",
-          "value": "週24件"
+          "label": "反応バランス",
+          "value": "高評価 vs. 低評価"
         },
         {
-          "label": "承認ワークフロー",
-          "value": "平均8時間短縮"
+          "label": "時間帯別視聴",
+          "value": "ピーク時間"
         }
       ]
     },
-    "pillars_title": "チームが頼る4つの柱",
-    "pillars_description": "クリエイター主導マーケティングを前に進める動きを設計しました。",
+    "pillars_title": "主要機能",
+    "pillars_description": "正確なチャネルデータと協働しやすい顧客管理を中心に設計しました。",
     "pillars": [
       {
-        "tagline": "Plan",
-        "title": "目標とKPIの整合",
-        "description": "キャンペーン目標と成功指標を定義し、共有します。",
+        "tagline": "Insights",
+        "title": "チャネルインテリジェンス",
+        "description": "YouTube・Instagram・TikTok・Facebook・Threadsのフォロワー、投稿、コメント、高評価・低評価、時間帯別視聴を追跡します。",
         "bullets": [
-          "キャンペーンブリーフテンプレート",
-          "ベースラインアラート",
-          "ステークホルダー向け要約"
+          "フォロワー/エンゲージメントのスナップショット",
+          "上位投稿のブレークダウン",
+          "コメント感情のハイライト"
         ]
       },
       {
-        "tagline": "Create",
-        "title": "コンテンツカレンダー",
-        "description": "担当者ごとの進捗を可視化し、スケジュールを管理します。",
+        "tagline": "Access",
+        "title": "アカウント管理",
+        "description": "個人ユーザーが自分のアカウントを接続し、ビジネス管理者が承認キューでリクエストを処理します。",
         "bullets": [
-          "ドラッグ&ドロップでの計画",
-          "承認フィードバックループ",
-          "アセットライブラリ連携"
+          "YouTube・Instagram各1件まで無料連携",
+          "追加チャネル拡張のためのアップグレード経路",
+          "管理者向け承認待ちリスト"
         ]
       },
       {
-        "tagline": "Launch",
-        "title": "広告・タイアップ管理",
-        "description": "有料施策とパートナーシップの成果を一つのビューで確認します。",
+        "tagline": "Ads",
+        "title": "Meta広告ガイダンス",
+        "description": "Meta Ads APIと連携し、どのキャンペーンを拡大・停止すべきかAIが提案します。",
         "bullets": [
-          "オーガニック＋広告の統合",
-          "契約状況トラッキング",
-          "ROI算出"
+          "キャンペン健全性の概要",
+          "AIが提案する次のアクション",
+          "予算消化のアラート"
         ]
       },
       {
-        "tagline": "Grow",
-        "title": "コミュニティインサイト",
-        "description": "コメントとDMをフィードバックに変換し、改善に活かします。",
+        "tagline": "Support",
+        "title": "ビジネス運用",
+        "description": "管理中のクリエイター全体を俯瞰し、均一なカスタマーサポート体制を整えます。",
         "bullets": [
-          "感情・トレンド検知",
-          "推奨返信",
-          "フィードバックの振り分け"
+          "ポートフォリオダッシュボード",
+          "AIによる顧客サマリー",
+          "任意で使えるAI CS返信ドラフト"
         ]
       }
     ],
     "outcomes": {
-      "title": "導入効果",
-      "description": "導入初月に多くのチームが達成した成果です。",
+      "title": "活用シーン",
+      "description": "個人・ビジネスそれぞれのワークスペースが日々の判断をどう支援するかをまとめました。",
       "items": [
         {
-          "label": "効率",
-          "title": "レポート作成3倍高速化",
-          "detail": "自動データパイプラインで手作業のスプレッドシートを排除します。"
+          "label": "Creator",
+          "title": "チャネル状況をひと目で把握",
+          "detail": "フォロワー、反応、時間帯別視聴を複数タブを切り替えずに確認。"
         },
         {
-          "label": "可視性",
-          "title": "ステータス確認50%削減",
-          "detail": "共有ダッシュボードで関係者が自ら状況を把握できます。"
+          "label": "Manager",
+          "title": "承認リクエストを素早く処理",
+          "detail": "個人の申請が承認キューに入り、接続された分析を即座にレビュー。"
         },
         {
-          "label": "成長",
-          "title": "コンバージョン18%向上",
-          "detail": "成果の高いクリエイティブとオーディエンスを迅速に再現します。"
+          "label": "Ads",
+          "title": "AI提案に基づいて行動",
+          "detail": "キャンペーン拡大・停止前に推奨アクションを確認して判断できます。"
         }
       ]
     },
     "cta": {
-      "title": "専任オンボーディングでスピード導入",
-      "description": "2週間以内にデータ連携とワークフロー構築を支援します。",
-      "primary": "営業に相談",
+      "title": "今のチームに合うプランを選ぶ",
+      "description": "クリエイターは無料で、ビジネスは7日間のトライアル後に月額プランを選択できます。",
+      "primary": "プランを比較",
       "secondary": "サポートを見る"
     }
   },
   "personal": {
     "hero": {
-      "title": "個人クリエイターのための統合分析",
-      "subtitle": "YouTubeとInstagramを無料で連携し、必要に応じて追加チャネルをプラスプランで拡張できます。",
+      "title": "個人クリエイター分析をシンプルに",
+      "subtitle": "フリープランはYouTubeとInstagram各1アカウントに対応。必要になったらTikTok・Facebook・Threadsを追加できます。",
       "primary_cta": "無料で始める",
       "secondary_cta": "料金を見る",
       "visual_title": "今日の主要指標",
-      "visual_caption": "フォロワー推移・投稿反応・時間帯別視聴をまとめたダッシュボード例です。",
+      "visual_caption": "フォロワー・コメント・高評価/低評価・時間帯別視聴をまとめたダッシュボード例です。",
       "visual_alt": "個人クリエイター向け指標が表示されたダッシュボード"
     },
     "benefits": {
-      "title": "必要なデータを自動で取得",
-      "description": "各プラットフォームの主要指標とMeta広告の結果をまとめて確認できます。",
+      "title": "必要なデータを1か所で",
+      "description": "プラットフォームごとのフォロワー、投稿、コメント反応、高評価・低評価、時間帯別視聴を自動で取り込みます。",
       "items": [
         {
           "tag": "CHANNELS",
           "title": "チャネル統合",
-          "description": "無料でYouTubeとInstagram、プラスでTikTok・Facebook・Threadsも分析。"
+          "description": "YouTubeとInstagramは無料で利用し、プラスにアップグレードすればTikTok・Facebook・Threadsも比較可能。"
         },
         {
           "tag": "REACTIONS",
           "title": "反応分析",
-          "description": "高評価/低評価やコメント推移から刺さったコンテンツを把握。"
+          "description": "高評価・低評価、コメント数、返信速度から反応の変化を把握。"
         },
         {
           "tag": "ADS",
           "title": "AI広告提案",
-          "description": "Meta広告APIのデータを基に拡大・縮小すべきキャンペーンを提示。"
+          "description": "Meta Ads APIのデータを基に拡大・縮小すべきキャンペーンの示唆を確認。"
         }
       ]
     },
@@ -370,8 +370,8 @@
           "cycle": "ずっと無料",
           "features": [
             "YouTube 1件・Instagram 1件を連携",
-            "投稿・コメント反応と時間帯別視聴のサマリー",
-            "Meta広告キャンペーンの閲覧",
+            "投稿・コメント・高評価/低評価・時間帯別視聴のサマリー",
+            "Meta Adsキャンペーンの閲覧",
             "週次メールレポート"
           ],
           "cta": "無料で開始",
@@ -380,13 +380,13 @@
         },
         {
           "name": "個人プラス",
-          "description": "追加チャネルとAI提案を利用",
+          "description": "追加チャネルと進化中のAI提案を利用",
           "price": "₩9,900",
           "cycle": "月額",
           "features": [
             "YouTube・Instagram・TikTok・Facebook・Threadsの分析",
-            "投稿/コメント比較レポート",
-            "AIによるMeta広告の拡大/停止提案",
+            "投稿とコメントの比較レポート",
+            "AIによるMeta広告提案（ロードマップ更新を含む）",
             "CSV/PDFエクスポートとチャットサポート"
           ],
           "cta": "プラスにアップグレード",
@@ -419,17 +419,17 @@
     },
     "workflow": {
       "title": "3ステップのオンボーディング",
-      "description": "アカウント連携からレポート共有まで数分で完了します。",
+      "description": "アカウント連携、指標確認、レポート共有まで数分で完了します。",
       "steps": [
         {
           "label": "Step 1",
           "title": "基本チャネルを連携",
-          "detail": "YouTubeとInstagramを認証し主要指標を取得。"
+          "detail": "フリープランに合わせてYouTubeとInstagram各1アカウントを認証。"
         },
         {
           "label": "Step 2",
           "title": "追加プラットフォームを選択",
-          "detail": "プラス加入でTikTok・Facebook・Threadsを連携して比較範囲を拡大。"
+          "detail": "必要になったらプラスへアップグレードしTikTok・Facebook・Threadsを追加。"
         },
         {
           "label": "Step 3",
@@ -440,7 +440,7 @@
     },
     "cta": {
       "title": "個人フリープランで今すぐ開始",
-      "description": "必要に応じていつでもプラスにアップグレードできます。",
+      "description": "必要に応じていつでもプラスにアップグレードし、追加チャネルと進化するAI支援を利用できます。",
       "primary": "アカウント作成",
       "secondary": "お問い合わせ"
     },
@@ -467,29 +467,29 @@
           "note": "YouTube・Instagramの主要指標を無料提供"
         }
       ],
-      "footnote": "年額は税込み。いつでもプラン変更・解約可能です。"
+      "footnote": "年額は税込み。提供機能は契約期間中に順次アップデートされる場合があります。"
     },
     "metrics": {
-      "title": "ベータ利用者の声",
-      "description": "2024年10月に実施した個人クリエイター50名のフィードバックです。",
+      "title": "ダッシュボードで確認できる項目",
+      "description": "ダッシュボードで得られる詳細度を示すサンプルカードです。",
       "visual_alt": "個人ダッシュボードのカード例",
-      "source_label": "調査",
-      "source_caption": "Creator Control Center ベータ調査 (2024年10月)",
+      "source_label": "サンプル",
+      "source_caption": "個人ワークスペースの例示データ",
       "items": [
         {
-          "label": "週次チェック時間",
-          "value": "平均1.5時間",
-          "description": "YouTubeとInstagramの指標確認に費やした平均時間。"
+          "label": "週次フォロワー推移",
+          "value": "増減比較",
+          "description": "YouTubeとInstagramの増減を並べて確認。"
         },
         {
-          "label": "広告調整頻度",
-          "value": "週1回",
-          "description": "プラス利用者がMeta広告提案を反映した頻度。"
+          "label": "反応インサイト",
+          "value": "高評価・低評価",
+          "description": "投稿ごとのポジティブ/ネガティブ反応を簡単にチェック。"
         },
         {
-          "label": "追加チャネル連携率",
-          "value": "64%",
-          "description": "プラス利用者がTikTokまたはFacebookを連携した割合。"
+          "label": "時間帯別視聴",
+          "value": "ピーク時間",
+          "description": "視聴が伸びるタイミングを把握し次の投稿計画に活用。"
         }
       ]
     },
@@ -546,12 +546,12 @@
         {
           "tag": "OVERVIEW",
           "title": "ポートフォリオ管理",
-          "description": "管理下のクリエイターについて、チャネル指標と反応を一覧化。"
+          "description": "フォロワー、投稿、反応、時間帯別視聴をまとめて把握できます。"
         },
         {
           "tag": "ADS",
           "title": "AI広告運用",
-          "description": "Meta広告APIと連携し成果と推奨アクションを確認。"
+          "description": "Meta Ads APIと連携し成果とAIが提案するアクションを確認。"
         }
       ]
     },

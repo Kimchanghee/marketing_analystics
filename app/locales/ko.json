@@ -235,126 +235,126 @@
   },
   "service": {
     "hero": {
-      "title": "마케팅 조직을 위한 통합 실행 플랫폼",
-      "subtitle": "채널 데이터, 콘텐츠 운영, 커뮤니티 관리까지 하나의 흐름으로 묶어 성과를 만드는 구조를 제공합니다.",
-      "primary_cta": "데모 요청하기",
-      "secondary_cta": "개인 요금제 보기",
-      "visual_title": "팀이 가장 많이 활용한 인사이트",
+      "title": "소셜 분석과 광고를 한눈에 보는 워크스페이스",
+      "subtitle": "팔로워, 게시물, 반응 흐름과 메타 광고 가이드를 동시에 확인해 관리 중인 모든 크리에이터를 지원하세요.",
+      "primary_cta": "요금제 살펴보기",
+      "secondary_cta": "개인 기능 보기",
+      "visual_title": "인사이트 카드 예시",
       "visual_points": [
         {
-          "label": "콘텐츠 리마인더",
-          "value": "72개의 자동 알림"
+          "label": "팔로워 증감",
+          "value": "YouTube · Instagram"
         },
         {
-          "label": "성과 보고서",
-          "value": "주 24건 발행"
+          "label": "반응 비율",
+          "value": "좋아요 vs. 싫어요"
         },
         {
-          "label": "승인 워크플로우",
-          "value": "평균 8시간 단축"
+          "label": "시간대별 조회수",
+          "value": "피크 시간"
         }
       ]
     },
-    "pillars_title": "운영팀이 바로 쓰는 핵심 영역",
-    "pillars_description": "성과를 만드는 네 가지 축을 기준으로 설계된 기능 세트를 제공합니다.",
+    "pillars_title": "핵심 기능",
+    "pillars_description": "정확한 채널 데이터와 협업형 고객 관리를 중심으로 구성했습니다.",
     "pillars": [
       {
-        "tagline": "Plan",
-        "title": "목표와 KPI 정렬",
-        "description": "캠페인 목표와 성공 지표를 정의하고 팀 전체에 공유합니다.",
+        "tagline": "Insights",
+        "title": "채널 인텔리전스",
+        "description": "YouTube, Instagram, TikTok, Facebook, Threads의 팔로워·게시물·댓글·좋아요·싫어요·시간대별 조회수를 추적합니다.",
         "bullets": [
-          "캠페인 브리프 템플릿",
-          "KPI 기준선 및 알림",
-          "관계자 공유용 요약"
+          "팔로워·참여도 스냅샷",
+          "상위 게시물 분석",
+          "댓글 감성 요약"
         ]
       },
       {
-        "tagline": "Create",
-        "title": "콘텐츠 캘린더",
-        "description": "채널별 게시 일정을 시각화하고 담당자별 작업 상태를 추적합니다.",
+        "tagline": "Access",
+        "title": "계정 관리",
+        "description": "개인 사용자가 직접 계정을 연결하고, 비즈니스 관리자는 승인 큐에서 요청을 처리합니다.",
         "bullets": [
-          "드래그 앤 드롭 일정 관리",
-          "승인 요청 및 피드백 기록",
-          "자산 라이브러리 연동"
+          "YouTube·Instagram 1계정 무료 연동",
+          "추가 채널 확장을 위한 업그레이드 경로",
+          "관리자를 위한 승인 대기열"
         ]
       },
       {
-        "tagline": "Launch",
-        "title": "광고와 협찬 관리",
-        "description": "네이티브 광고 계정과 연동해 집행 결과를 실시간으로 확인합니다.",
+        "tagline": "Ads",
+        "title": "메타 광고 가이드",
+        "description": "Meta Ads API와 연동해 캠페인 성과를 비교하고 확대·중단이 필요한 항목을 AI가 제안합니다.",
         "bullets": [
-          "광고 비용·성과 통합",
-          "협찬 계약 상태 추적",
-          "성과 대비 ROI 계산"
+          "캠페인 건강도 요약",
+          "AI가 제안하는 다음 단계",
+          "예산 소진 알림"
         ]
       },
       {
-        "tagline": "Grow",
-        "title": "팬 커뮤니티 인사이트",
-        "description": "댓글과 DM을 토픽별로 분류해 제품 개선과 캠페인 아이디어로 연결합니다.",
+        "tagline": "Support",
+        "title": "비즈니스 운영",
+        "description": "모든 관리 크리에이터의 현황을 한눈에 보고 일관된 고객 응대를 준비합니다.",
         "bullets": [
-          "감성 분석과 반복 질문 감지",
-          "FAQ 자동 응답 추천",
-          "피드백 태그 및 담당 배정"
+          "포트폴리오 대시보드",
+          "AI 기반 고객 요약",
+          "선택형 AI CS 답변 초안"
         ]
       }
     ],
     "outcomes": {
-      "title": "도입 효과",
-      "description": "팀 규모와 상관없이 4주 안에 확인한 대표 지표입니다.",
+      "title": "이렇게 활용하세요",
+      "description": "개인과 비즈니스 워크스페이스가 일상적인 의사결정을 어떻게 돕는지 정리했습니다.",
       "items": [
         {
-          "label": "효율",
-          "title": "주간 리포트 생산성 3배",
-          "detail": "자동화된 데이터 파이프라인으로 분석가 없이도 보고서를 완성합니다."
+          "label": "Creator",
+          "title": "채널 건강 상태를 즉시 확인",
+          "detail": "팔로워, 반응, 시간대별 조회수를 여러 탭을 이동하지 않고 점검합니다."
         },
         {
-          "label": "투명성",
-          "title": "이해관계자 업데이트 시간 50% 감소",
-          "detail": "대시보드를 공유해 각 채널 담당자가 직접 현황을 확인합니다."
+          "label": "Manager",
+          "title": "승인 요청을 빠르게 처리",
+          "detail": "개인 가입 요청이 승인 대기열로 들어와 연결된 데이터를 한 번에 검토합니다."
         },
         {
-          "label": "성장",
-          "title": "캠페인 전환율 평균 18% 상승",
-          "detail": "성과 높은 크리에이티브와 타겟 조합을 빠르게 반복합니다."
+          "label": "Ads",
+          "title": "AI 제안을 근거로 실행",
+          "detail": "캠페인 확장 또는 일시 중단 전에 추천 조치를 확인하고 결정합니다."
         }
       ]
     },
     "cta": {
-      "title": "팀 맞춤 온보딩으로 빠르게 시작하세요",
-      "description": "도입 컨설턴트가 2주간 데이터 연결과 워크플로우 설정을 지원합니다.",
-      "primary": "도입 상담 신청",
+      "title": "지금 맞는 플랜을 선택하세요",
+      "description": "크리에이터는 무료로, 비즈니스는 7일 체험 후 원하는 월 구독으로 시작할 수 있습니다.",
+      "primary": "요금제 비교",
       "secondary": "지원 센터"
     }
   },
   "personal": {
     "hero": {
-      "title": "개인 크리에이터를 위한 통합 분석",
-      "subtitle": "유튜브와 인스타그램은 무료로, 추가 채널은 합리적인 비용으로 연결해 실제 반응을 확인하세요.",
+      "title": "개인 크리에이터 분석을 간편하게",
+      "subtitle": "무료 플랜은 YouTube와 Instagram 각 1계정을 지원하고, 필요할 때 TikTok·Facebook·Threads 분석을 추가할 수 있습니다.",
       "primary_cta": "개인 무료 시작",
       "secondary_cta": "개인 요금제 보기",
       "visual_title": "오늘의 핵심 지표",
-      "visual_caption": "팔로워 추세, 게시물 반응, 시간대별 조회수를 정리한 개인 대시보드 예시입니다.",
+      "visual_caption": "팔로워, 댓글, 좋아요·싫어요, 시간대별 조회수를 정리한 대시보드 예시입니다.",
       "visual_alt": "팔로워와 참여 지표가 표시된 개인 크리에이터 대시보드"
     },
     "benefits": {
-      "title": "혼자서도 필요한 데이터를 바로 확인",
-      "description": "각 플랫폼에서 중요한 수치를 자동으로 불러오고 메타 광고 결과까지 함께 검토할 수 있습니다.",
+      "title": "필수 데이터를 한곳에서",
+      "description": "플랫폼별 팔로워, 게시물, 댓글 반응, 좋아요·싫어요, 시간대별 조회수를 자동으로 불러옵니다.",
       "items": [
         {
           "tag": "CHANNELS",
           "title": "채널 통합",
-          "description": "YouTube, Instagram을 기본으로 TikTok, Facebook, Threads까지 확장해 비교합니다."
+          "description": "무료로 YouTube와 Instagram을 유지하고, 플러스 업그레이드로 TikTok·Facebook·Threads까지 비교합니다."
         },
         {
           "tag": "REACTIONS",
           "title": "게시물 반응 분석",
-          "description": "좋아요, 싫어요, 댓글 흐름을 정리해 어떤 콘텐츠가 효과적이었는지 파악합니다."
+          "description": "좋아요, 싫어요, 댓글량, 응답 속도를 정리해 어떤 콘텐츠가 반응을 이끌었는지 파악합니다."
         },
         {
           "tag": "ADS",
           "title": "AI 광고 제안",
-          "description": "메타 광고 API 데이터를 기반으로 예산을 늘리거나 축소할 캠페인을 알려줍니다."
+          "description": "Meta Ads API 데이터를 바탕으로 확대·축소가 필요한 캠페인에 대한 제안을 확인합니다."
         }
       ]
     },
@@ -369,9 +369,9 @@
           "price": "₩0",
           "cycle": "항상 무료",
           "features": [
-            "유튜브 1개, 인스타그램 1개 계정 연동",
-            "게시물·댓글 반응과 시간대별 조회수 요약",
-            "메타 광고 캠페인 현황 열람",
+            "YouTube 1개, Instagram 1개 계정 연동",
+            "게시물·댓글·좋아요·싫어요·시간대별 조회수 요약",
+            "Meta Ads 캠페인 현황 열람",
             "주간 이메일 리포트"
           ],
           "cta": "무료로 시작",
@@ -380,13 +380,13 @@
         },
         {
           "name": "개인 플러스",
-          "description": "추가 채널과 AI 추천을 포함한 확장 기능",
+          "description": "추가 채널과 확장 중인 AI 추천 제공",
           "price": "₩9,900",
-          "cycle": "월간 결제",
+          "cycle": "월 정기 결제",
           "features": [
             "YouTube·Instagram·TikTok·Facebook·Threads 분석",
-            "게시물·댓글 반응 비교 리포트",
-            "AI 기반 메타 광고 확장/중단 추천",
+            "게시물 및 댓글 비교 리포트",
+            "AI 기반 Meta Ads 제안(로드맵 업데이트 포함)",
             "CSV/PDF 다운로드와 채팅 지원"
           ],
           "cta": "플러스로 업그레이드",
@@ -419,17 +419,17 @@
     },
     "workflow": {
       "title": "간단한 3단계 온보딩",
-      "description": "계정 연결과 목표 설정, 보고서 공유까지 몇 분이면 충분합니다.",
+      "description": "계정 연결, 지표 확인, 보고서 공유까지 몇 분이면 충분합니다.",
       "steps": [
         {
           "label": "Step 1",
           "title": "기본 채널 연결",
-          "detail": "YouTube와 Instagram 계정을 인증해 핵심 지표를 불러옵니다."
+          "detail": "무료 플랜에 맞춰 YouTube와 Instagram 각 1개 계정을 인증합니다."
         },
         {
           "label": "Step 2",
           "title": "추가 플랫폼 선택",
-          "detail": "플러스 가입 시 TikTok, Facebook, Threads를 연결해 비교 범위를 넓힙니다."
+          "detail": "필요할 때 플러스로 업그레이드해 TikTok·Facebook·Threads를 추가합니다."
         },
         {
           "label": "Step 3",
@@ -440,7 +440,7 @@
     },
     "cta": {
       "title": "개인 무료 플랜으로 바로 시작하세요",
-      "description": "언제든지 플러스 플랜으로 확장해 추가 채널과 자동화를 이용할 수 있습니다.",
+      "description": "언제든지 플러스 플랜으로 확장해 추가 채널과 진화하는 AI 지원을 이용할 수 있습니다.",
       "primary": "무료 가입",
       "secondary": "문의 남기기"
     },
@@ -467,29 +467,29 @@
           "note": "YouTube·Instagram 기본 지표 제공"
         }
       ],
-      "footnote": "연간 결제는 부가세 포함가이며, 언제든지 플랜을 변경하거나 해지할 수 있습니다."
+      "footnote": "연간 결제 금액에는 부가세가 포함되어 있으며, 제공 기능은 구독 기간 동안 순차적으로 개선될 수 있습니다."
     },
     "metrics": {
-      "title": "베타 사용자 피드백",
-      "description": "2024년 10월 개인 크리에이터 50명을 대상으로 수집한 사용 경험 요약입니다.",
+      "title": "대시보드에서 확인할 수 있는 항목",
+      "description": "대시보드가 제공하는 세부 수준을 보여주는 예시 카드입니다.",
       "visual_alt": "개인 대시보드의 지표 카드 예시",
-      "source_label": "응답 기반",
-      "source_caption": "Creator Control Center 설문 (2024.10)",
+      "source_label": "예시",
+      "source_caption": "개인 워크스페이스 샘플 데이터",
       "items": [
         {
-          "label": "주간 점검 시간",
-          "value": "평균 1.5시간",
-          "description": "YouTube·Instagram 핵심 지표를 확인하는 데 걸리는 시간이었습니다."
+          "label": "주간 팔로워 변동",
+          "value": "증감 비교",
+          "description": "YouTube와 Instagram의 주간 증감 추이를 나란히 비교합니다."
         },
         {
-          "label": "광고 조정 빈도",
-          "value": "주 1회",
-          "description": "플러스 사용자 기준, AI 제안을 반영해 예산을 조정한 빈도입니다."
+          "label": "반응 인사이트",
+          "value": "좋아요·싫어요",
+          "description": "게시물별 긍·부정 반응을 간단히 확인합니다."
         },
         {
-          "label": "추가 채널 연결률",
-          "value": "64%",
-          "description": "플러스 사용자 중 TikTok 또는 Facebook을 함께 연동한 비율입니다."
+          "label": "시간대별 조회수",
+          "value": "피크 타임",
+          "description": "조회수가 급증하는 시간대를 파악해 업로드 시점을 계획합니다."
         }
       ]
     },
@@ -536,7 +536,7 @@
     },
     "benefits": {
       "title": "기업 플랜으로 얻을 수 있는 장점",
-      "description": "고객이 보내는 데이터를 안전하게 승인하고, 팀이 공동으로 광고와 콘텐츠 성과를 관리할 수 있습니다.",
+      "description": "고객이 보내는 데이터를 안전하게 승인하고, 팀이 공동으로 콘텐츠와 광고 성과를 관리할 수 있습니다.",
       "items": [
         {
           "tag": "APPROVAL",
@@ -546,12 +546,12 @@
         {
           "tag": "OVERVIEW",
           "title": "크리에이터 현황 정리",
-          "description": "관리 중인 크리에이터의 채널 지표와 게시물 반응을 한 화면에 모읍니다."
+          "description": "관리 중인 크리에이터의 팔로워, 게시물, 반응, 시간대별 조회수를 한 화면에 모읍니다."
         },
         {
           "tag": "ADS",
           "title": "AI 광고 관리",
-          "description": "메타 광고 API와 연동해 캠페인 성과와 추천 액션을 확인합니다."
+          "description": "Meta Ads API와 연동해 캠페인 성과를 확인하고 AI가 제안하는 조치를 검토합니다."
         }
       ]
     },
@@ -564,7 +564,7 @@
           "name": "비즈니스 100",
           "description": "최대 100명의 고객 통계를 관리",
           "price": "₩99,000",
-          "cycle": "월간 결제",
+          "cycle": "월 정기 결제",
           "features": [
             "개인 고객 승인 관리",
             "YouTube·Instagram·TikTok·Facebook·Threads 지표 열람",
@@ -580,7 +580,7 @@
           "name": "비즈니스 1000",
           "description": "최대 1,000명의 고객과 팀 운영 자동화",
           "price": "₩499,000",
-          "cycle": "월간 결제",
+          "cycle": "월 정기 결제",
           "features": [
             "확장 좌석과 고급 권한",
             "AI가 고객 활동을 요약해 관리자에게 보고",
