@@ -82,16 +82,6 @@ async def business_plan(request: Request):
     )
 
 
-@app.get("/pricing")
-async def pricing(request: Request):
-    locale = getattr(request.state, "locale", "ko")
-    strings = translator.load_locale(locale)
-    return app.state.templates.TemplateResponse(
-        "pricing.html",
-        {"request": request, "locale": locale, "t": strings},
-    )
-
-
 @app.get("/support")
 async def support(request: Request):
     locale = getattr(request.state, "locale", "ko")

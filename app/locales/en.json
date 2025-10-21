@@ -239,7 +239,7 @@
       "title": "The integrated operating system for creator marketing",
       "subtitle": "Connect channel analytics, content ops, and community management to drive measurable growth.",
       "primary_cta": "Request a demo",
-      "secondary_cta": "View pricing",
+      "secondary_cta": "Explore personal plans",
       "visual_title": "Most-loved insights",
       "visual_points": [
         {
@@ -333,7 +333,7 @@
       "title": "Clarity for solo creators",
       "subtitle": "Know which content drives growth and prepare for every brand conversation.",
       "primary_cta": "Start personal plan",
-      "secondary_cta": "See pricing",
+      "secondary_cta": "View personal plans",
       "visual_title": "Today’s highlights",
       "visual_points": [
         {
@@ -371,6 +371,66 @@
         }
       ]
     },
+    "plans": {
+      "label": "Personal plans",
+      "title": "Choose the right solo toolkit",
+      "description": "Match your channel mix and workflow needs with transparent personal pricing.",
+      "items": [
+        {
+          "name": "Basic",
+          "description": "Essential listening and reporting for personal brands",
+          "price": "$0",
+          "cycle": "Always free",
+          "features": [
+            "1 connected channel",
+            "Real-time KPI snapshot",
+            "Weekly performance email",
+            "Community support"
+          ],
+          "cta": "Get started free",
+          "cta_link": "/signup",
+          "highlighted": false
+        },
+        {
+          "name": "Creator Plus",
+          "description": "Advanced scheduling and reporting for independent creators",
+          "price": "$39",
+          "cycle": "Billed monthly",
+          "features": [
+            "3 connected channels",
+            "Automated publishing calendar",
+            "Campaign brief templates",
+            "Export to PDF & slides",
+            "Priority chat support"
+          ],
+          "cta": "Upgrade to Plus",
+          "cta_link": "/signup",
+          "highlighted": true,
+          "badge": "Most popular"
+        }
+      ],
+      "comparison": {
+        "title": "Which personal plan fits you?",
+        "description": "Align automation and support with your creator goals.",
+        "items": [
+          {
+            "label": "A",
+            "title": "Stay focused",
+            "detail": "Basic keeps core KPIs visible with zero cost."
+          },
+          {
+            "label": "B",
+            "title": "Automate workflows",
+            "detail": "Creator Plus adds scheduling and campaign templates to save hours each week."
+          },
+          {
+            "label": "C",
+            "title": "Pitch-ready in minutes",
+            "detail": "Export decks and use priority chat to deliver polished proposals fast."
+          }
+        ]
+      }
+    },
     "workflow": {
       "title": "Onboard in three steps",
       "description": "Connect, set goals, and share a report in under 30 minutes.",
@@ -404,7 +464,7 @@
       "title": "Scale your creator organization",
       "subtitle": "Enterprise-grade collaboration, security, and reporting for multi-channel teams.",
       "primary_cta": "Book a consultation",
-      "secondary_cta": "See pricing",
+      "secondary_cta": "View business plans",
       "visual_title": "Organization snapshot",
       "visual_points": [
         {
@@ -442,105 +502,11 @@
         }
       ]
     },
-    "workflow": {
-      "title": "White-glove onboarding",
-      "description": "Solutions engineers and customer success partner with you end to end.",
-      "steps": [
-        {
-          "label": "Phase 1",
-          "title": "Technical review",
-          "detail": "Confirm security requirements and API scope."
-        },
-        {
-          "label": "Phase 2",
-          "title": "Data mapping",
-          "detail": "Map existing metrics and build tailored dashboards."
-        },
-        {
-          "label": "Phase 3",
-          "title": "Launch & training",
-          "detail": "Support pilot campaigns and ongoing measurement."
-        }
-      ]
-    },
-    "cta": {
-      "title": "Talk with our enterprise team",
-      "description": "Share your requirements and receive a tailored rollout plan within one business day.",
-      "primary": "Contact sales",
-      "secondary": "Review pricing"
-    }
-  },
-  "pricing": {
-  "hero": {
-    "title": "Pricing designed for every stage",
-    "subtitle": "All plans include unlimited guest viewers and live dashboard sharing.",
-    "primary_cta": "Start 14-day trial",
-    "secondary_cta": "Talk to sales",
-    "visual_title": "Recommended use cases",
-    "visual_points": [
-      {
-        "label": "Basic",
-        "value": "Solo voices building a following"
-      },
-      {
-        "label": "Creator Plus",
-        "value": "Freelancers managing collaborations"
-      },
-      {
-        "label": "Team",
-        "value": "In-house marketing pods"
-      },
-      {
-        "label": "Enterprise",
-        "value": "Global brand rollouts"
-      }
-    ]
-  },
-  "plan_groups": [
-    {
-      "label": "Personal plans",
-      "title": "For individual storytellers",
-      "description": "Stay on top of every channel with streamlined dashboards built for solos and side projects.",
-      "plans": [
-        {
-          "name": "Basic",
-          "description": "Essential listening and reporting for personal brands",
-          "price": "$0",
-          "cycle": "Always free",
-          "features": [
-            "1 connected channel",
-            "Real-time KPI snapshot",
-            "Weekly performance email",
-            "Community support"
-          ],
-          "cta": "Get started free",
-          "cta_link": "/signup",
-          "highlighted": false
-        },
-        {
-          "name": "Creator Plus",
-          "description": "Advanced scheduling and reporting for independent creators",
-          "price": "$39",
-          "cycle": "Billed monthly",
-          "features": [
-            "3 connected channels",
-            "Automated publishing calendar",
-            "Campaign brief templates",
-            "Export to PDF & slides",
-            "Priority chat support"
-          ],
-          "cta": "Upgrade to Plus",
-          "cta_link": "/signup",
-          "highlighted": true,
-          "badge": "Most popular"
-        }
-      ]
-    },
-    {
+    "plans": {
       "label": "Business plans",
-      "title": "For brands and agencies",
-      "description": "Unlock governance, automation, and dedicated support as your organization scales.",
-      "plans": [
+      "title": "Scale with confidence",
+      "description": "Choose the governance, automation, and partnership model your organization requires.",
+      "items": [
         {
           "name": "Team",
           "description": "Powerful collaboration for marketing departments and boutique agencies",
@@ -574,43 +540,63 @@
           "cta_link": "/support",
           "highlighted": false
         }
-      ]
-    }
-  ],
-  "comparison": {
-    "title": "Compare plans",
-    "description": "See which tier matches your priorities.",
-    "items": [
-      {
-        "label": "1",
-        "title": "Scalability",
-        "detail": "Team and Enterprise unlock unlimited workspaces and admin controls."
-      },
-      {
-        "label": "2",
-        "title": "Automation",
-        "detail": "Creator Plus introduces scheduling flows, with approvals extending in business tiers."
-      },
-      {
-        "label": "3",
-        "title": "Assurance",
-        "detail": "Enterprise adds SSO, encryption, and compliance-ready audit trails."
+      ],
+      "comparison": {
+        "title": "Compare business plans",
+        "description": "Evaluate scalability, automation, and assurance for every stakeholder.",
+        "items": [
+          {
+            "label": "1",
+            "title": "Scalability",
+            "detail": "Unlock unlimited workspaces and admin controls as your team grows."
+          },
+          {
+            "label": "2",
+            "title": "Automation",
+            "detail": "Streamline approvals in Team and extend custom automation with Enterprise."
+          },
+          {
+            "label": "3",
+            "title": "Assurance",
+            "detail": "Enterprise delivers SSO, encryption, and compliance-backed SLAs."
+          }
+        ]
       }
-    ]
-  },
-  "cta": {
-    "title": "Pick the plan that fits best",
-    "description": "Need something custom? Our team will craft the right bundle for you.",
-    "primary": "Start free trial",
-    "secondary": "Contact support"
-  }
+    },
+    "workflow": {
+      "title": "White-glove onboarding",
+      "description": "Solutions engineers and customer success partner with you end to end.",
+      "steps": [
+        {
+          "label": "Phase 1",
+          "title": "Technical review",
+          "detail": "Confirm security requirements and API scope."
+        },
+        {
+          "label": "Phase 2",
+          "title": "Data mapping",
+          "detail": "Map existing metrics and build tailored dashboards."
+        },
+        {
+          "label": "Phase 3",
+          "title": "Launch & training",
+          "detail": "Support pilot campaigns and ongoing measurement."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Talk with our enterprise team",
+      "description": "Share your requirements and receive a tailored rollout plan within one business day.",
+      "primary": "Contact sales",
+      "secondary": "Review plans"
+    }
   },
   "support": {
     "hero": {
       "title": "Support when and how you need it",
       "subtitle": "From onboarding to integrations, our specialists have you covered.",
       "primary_cta": "Email support",
-      "secondary_cta": "See pricing",
+      "secondary_cta": "Explore business plans",
       "visual_title": "Service metrics",
       "visual_points": [
         {
