@@ -5,32 +5,136 @@
     <p>{{ t['super_admin']['description'] }}</p>
 </section>
 <section class="admin-panels">
-    <article>
-        <h2>{{ t['super_admin']['users'] }}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>{{ t['super_admin']['email'] }}</th>
-                    <th>{{ t['super_admin']['role'] }}</th>
-                    <th>{{ t['super_admin']['plan'] }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for u in users %}
-                <tr>
-                    <td>{{ u.email }}</td>
-                    <td>{{ t['roles'][u.role.value] }}</td>
-                    <td>{{ t['subscriptions'][subscriptions[u.id].tier.value] if u.id in subscriptions else t['subscriptions']['free'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <article class="admin-section">
+        <header class="admin-section__header">
+            <div>
+                <h2>{{ t['super_admin']['users'] }}</h2>
+                <p>{{ t['super_admin']['users_description'] }}</p>
+            </div>
+        </header>
+        {% if status_message %}
+        <div class="admin-alert admin-alert--{{ status_type }}">
+            {{ status_message }}
+        </div>
+        {% endif %}
+        <div class="user-grid">
+            {% for u in users %}
+            {% set subscription = subscriptions.get(u.id) if subscriptions else None %}
+            <section class="user-card">
+                <header class="user-card__header">
+                    <div class="user-card__identity">
+                        <h3>{{ u.email }}</h3>
+                        <span class="status-badge {{ 'status-badge--active' if u.is_active else 'status-badge--inactive' }}">
+                            {{ t['super_admin']['active'] if u.is_active else t['super_admin']['inactive'] }}
+                        </span>
+                    </div>
+                    <div class="user-card__meta">
+                        <span class="meta-pill">{{ t['roles'][u.role.value] }}</span>
+                        <span class="meta-pill">
+                            {{ t['subscriptions'][subscription.tier.value] if subscription else t['subscriptions']['free'] }}
+                        </span>
+                        {% if subscription %}
+                        <span class="meta-pill meta-pill--sub {{ 'meta-pill--inactive' if not subscription.active else '' }}">
+                            {{ t['super_admin']['subscription_active'] if subscription.active else t['super_admin']['subscription_inactive'] }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </header>
+                <div class="user-card__body">
+                    <div class="user-card__group">
+                        <h4>{{ t['super_admin']['role_management'] }}</h4>
+                        <form method="post" action="/super-admin/users/{{ u.id }}/role" class="inline-form">
+                            <label>
+                                <span>{{ t['super_admin']['role'] }}</span>
+                                <select name="role">
+                                    {% for role_key, role_label in t['roles'].items() %}
+                                    <option value="{{ role_key }}" {% if u.role.value == role_key %}selected{% endif %}>{{ role_label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <button class="btn primary" type="submit">{{ t['super_admin']['update_role'] }}</button>
+                        </form>
+                    </div>
+                    <div class="user-card__group">
+                        <h4>{{ t['super_admin']['profile_management'] }}</h4>
+                        <form method="post" action="/super-admin/users/{{ u.id }}/profile" class="inline-form">
+                            <label>
+                                <span>{{ t['super_admin']['locale'] }}</span>
+                                <select name="locale">
+                                    {% for code, label in t['super_admin']['languages'].items() %}
+                                    <option value="{{ code }}" {% if u.locale == code %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <label>
+                                <span>{{ t['super_admin']['organization'] }}</span>
+                                <input type="text" name="organization" value="{{ u.organization or '' }}" placeholder="{{ t['super_admin']['organization_placeholder'] }}">
+                            </label>
+                            <button class="btn secondary" type="submit">{{ t['super_admin']['update_profile'] }}</button>
+                        </form>
+                    </div>
+                    <div class="user-card__group">
+                        <h4>{{ t['super_admin']['subscription_management'] }}</h4>
+                        <form method="post" action="/super-admin/users/{{ u.id }}/subscription" class="inline-form">
+                            <label>
+                                <span>{{ t['super_admin']['tier'] }}</span>
+                                <select name="tier">
+                                    {% for tier_key, tier_label in t['subscriptions'].items() %}
+                                    {% set current_tier = subscription.tier.value if subscription else 'free' %}
+                                    <option value="{{ tier_key }}" {% if current_tier == tier_key %}selected{% endif %}>{{ tier_label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <label>
+                                <span>{{ t['super_admin']['max_accounts'] }}</span>
+                                <input type="number" min="1" name="max_accounts" value="{{ subscription.max_accounts if subscription else 1 }}">
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="active" value="true" {% if subscription is none or subscription.active %}checked{% endif %}>
+                                <span>{{ t['super_admin']['subscription_active'] }}</span>
+                            </label>
+                            <button class="btn secondary" type="submit">{{ t['super_admin']['update_subscription'] }}</button>
+                        </form>
+                    </div>
+                    <div class="user-card__group">
+                        <h4>{{ t['super_admin']['security_tools'] }}</h4>
+                        <div class="user-card__actions">
+                            <form method="post" action="/super-admin/users/{{ u.id }}/status">
+                                <input type="hidden" name="is_active" value="{{ 'false' if u.is_active else 'true' }}">
+                                <button class="btn tertiary" type="submit">
+                                    {{ t['super_admin']['deactivate_user'] if u.is_active else t['super_admin']['activate_user'] }}
+                                </button>
+                            </form>
+                            <form method="post" action="/super-admin/users/{{ u.id }}/password" class="inline-form inline-form--compact">
+                                <label>
+                                    <span>{{ t['super_admin']['new_password'] }}</span>
+                                    <input type="password" name="password" placeholder="{{ t['super_admin']['new_password_placeholder'] }}" required minlength="8">
+                                </label>
+                                <button class="btn primary" type="submit">{{ t['super_admin']['reset_password'] }}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+        </div>
     </article>
-    <article>
-        <h2>{{ t['super_admin']['activity'] }}</h2>
-        <ul>
+    <article class="admin-section">
+        <header class="admin-section__header">
+            <div>
+                <h2>{{ t['super_admin']['activity'] }}</h2>
+                <p>{{ t['super_admin']['activity_description'] }}</p>
+            </div>
+        </header>
+        <ul class="activity-feed">
             {% for log in logs %}
-            <li>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }} — {{ log.action }} ({{ log.details or '' }})</li>
+            <li>
+                <span class="activity-feed__timestamp">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                <span class="activity-feed__action">{{ log.action }}</span>
+                {% if log.details %}<span class="activity-feed__details">{{ log.details }}</span>{% endif %}
+            </li>
+            {% else %}
+            <li class="activity-feed__empty">{{ t['super_admin']['no_activity'] }}</li>
             {% endfor %}
         </ul>
     </article>

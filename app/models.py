@@ -27,6 +27,7 @@ class User(SQLModel, table=True):
     role: UserRole = Field(default=UserRole.CREATOR)
     locale: str = Field(default="ko")
     organization: Optional[str] = None
+    is_active: bool = Field(default=True)
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     channels: list["ChannelAccount"] = Relationship(back_populates="owner")

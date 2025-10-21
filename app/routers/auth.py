@@ -30,6 +30,8 @@ def login(
     user = session.exec(select(User).where(User.email == email)).first()
     if not user or not auth_manager.verify_password(password, user.hashed_password):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid credentials")
+    if not user.is_active:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account disabled")
     token = auth_manager.create_access_token(user.email)
     auth_manager.set_login_cookie(response, token)
 
