@@ -136,21 +136,54 @@
         }
       ]
     },
+    "testimonials_label": "Customer testimonials slider",
+    "testimonials_prev": "View previous testimonial",
+    "testimonials_next": "View next testimonial",
     "testimonials": [
       {
-        "quote": "Comparing reactions by platform helped me adjust posting schedules.",
+        "quote": "Comparing reactions by platform helped me adjust posting schedules. The day-of-week tips and hashtag suggestions lifted launch engagement by 35%.",
         "name": "Hyunwoo Park",
         "title": "Content marketer"
       },
       {
-        "quote": "Client approvals arrive with full context, so we respond faster.",
+        "quote": "Client approvals arrive with full context, so we respond faster. Auto-generated packets make it easier to tailor offers to each brand's specific needs.",
         "name": "Jieun Kim",
         "title": "Creator management lead"
       },
       {
-        "quote": "The Meta Ads guidance flagged campaigns that needed quick edits.",
+        "quote": "The Meta Ads guidance flagged campaigns that needed quick edits. We paired the recommendations with new collaborations and cut cost per result in half.",
         "name": "Sora Lee",
         "title": "Lifestyle creator"
+      },
+      {
+        "quote": "The slide deck view lets me compare multiple creators and understand what clients are asking for. Selecting only the relevant metrics trimmed proposal prep time dramatically.",
+        "name": "Haneul Jung",
+        "title": "Brand collaboration manager"
+      },
+      {
+        "quote": "Our team board surfaces the content formats with the highest demand and recommended next steps. New creators understand their weekly tasks right away, so onboarding now takes half the time.",
+        "name": "Seoyun Choi",
+        "title": "Entertainment MCN PM"
+      },
+      {
+        "quote": "I review the slide-based testimonials and needs in multiple languages to sync with regional teams. Because the data and suggested talking points stay connected, headquarters reports are easier to localize.",
+        "name": "Alex Lee",
+        "title": "Global campaign director"
+      },
+      {
+        "quote": "Linking campaign requirements with testimonial data produces much clearer insights. When a client message comes in, the workspace suggests which metrics to highlight, so we avoid mistakes.",
+        "name": "Mirae Han",
+        "title": "Data analyst"
+      },
+      {
+        "quote": "I mark the needs and recommendations I care about directly on the slide dashboard and assign them to teammates. Ads, content, and live commerce initiatives now run in one flow, cutting weekly prep by 40%.",
+        "name": "Dohyun Yoon",
+        "title": "D2C marketing lead"
+      },
+      {
+        "quote": "Showing the feedback slides to customers helps them articulate what support they expect. Having testimonials and needs in one place also pushed our satisfaction survey response rate higher.",
+        "name": "Rina Ahn",
+        "title": "Community manager"
       }
     ],
     "cta": {
@@ -498,27 +531,85 @@
       "description": "Examples of creator goals and required features.",
       "goal_label": "Primary goal",
       "needs_label": "Key needs",
+      "prev": "View previous persona",
+      "next": "View next persona",
       "items": [
         {
-          "name": "Ji-hye Yoon",
+          "name": "Jihye Yoon",
           "role": "Beauty creator",
-          "quote": "I rely on the reaction summaries when preparing sponsorship pitches.",
-          "goal": "Secure at least two collaborations a month",
+          "quote": "I rely on the reaction summaries when preparing sponsorship pitches. The recommended next steps help me decide which brands to approach right after a launch.",
+          "goal": "Keep at least two collaborations per month and run one co-branded campaign each quarter",
           "needs": [
             "Post and comment summaries",
             "Hourly view insights",
-            "PDF report sharing"
+            "PDF report sharing",
+            "Brand pitch templates",
+            "New product keyword monitoring"
           ]
         },
         {
           "name": "Alex Kim",
           "role": "Education creator",
-          "quote": "Comparing TikTok and Facebook shows where my community grows faster.",
-          "goal": "Reach 1,000 paid members",
+          "quote": "Comparing TikTok and Facebook shows where my community grows faster. Following the needs-based recommendations makes planning new course launches much easier.",
+          "goal": "Reach 1,000 paid members and maintain two live class conversions every month",
           "needs": [
             "Multi-channel comparisons",
             "AI ad scale suggestions",
-            "Weekly email recap"
+            "Weekly email recap",
+            "Student need-based content tips",
+            "Automated class booking schedule"
+          ]
+        },
+        {
+          "name": "Seojun Park",
+          "role": "Game streamer",
+          "quote": "The slide-ready fan feedback tells me which shows to remake, and I see sponsor requirements on the same screen. That clarity speeds up my broadcast prep.",
+          "goal": "Grow new subscribers by 15% each month and keep sponsorship mission success at 90%",
+          "needs": [
+            "Auto-cut live highlights",
+            "Sponsor mission checklist",
+            "Fan reward needs analysis",
+            "Twitch & YouTube side-by-side view",
+            "Game update reminders"
+          ]
+        },
+        {
+          "name": "Yuna Oh",
+          "role": "Yoga influencer",
+          "quote": "Member needs are organized in slides so I can pitch the right program instantly. Pairing testimonials with suggested offers boosted my renewal rate.",
+          "goal": "Maintain a 75% premium renewal rate and sell out one offline workshop every month",
+          "needs": [
+            "Engagement by member tier",
+            "Shareable lesson review slides",
+            "Offline class booking tracker",
+            "Wellness brand collaboration picks",
+            "Subscriber Q&A summaries"
+          ]
+        },
+        {
+          "name": "Mina Choi",
+          "role": "Music tutorial creator",
+          "quote": "Comparing feedback for each tutorial shows exactly which sections need updates. The email recommendation flows also help me respond to community requests quickly.",
+          "goal": "Book three masterclasses per month and keep community retention at 80%",
+          "needs": [
+            "Performance by song tutorial",
+            "Community survey summaries",
+            "Email A/B test suggestions",
+            "Global time-zone posting advice",
+            "Sample pack download tracking"
+          ]
+        },
+        {
+          "name": "Raon Kim",
+          "role": "Family vlogger",
+          "quote": "I map out what family-focused sponsors expect before drafting proposals. With testimonial and recommendation slides ready, approval time dropped by half.",
+          "goal": "Publish two co-branded family videos each month and keep viewer satisfaction above 90",
+          "needs": [
+            "Family event schedule ideas",
+            "Sponsor prioritization hints",
+            "Audience need keyword tracking",
+            "Social comment sentiment analysis",
+            "Auto-generated sponsor reports"
           ]
         }
       ]
@@ -695,27 +786,85 @@
       "description": "Examples of how different roles rely on the platform.",
       "goal_label": "Primary goal",
       "needs_label": "Key needs",
+      "prev": "View previous scenario",
+      "next": "View next scenario",
       "items": [
         {
           "name": "Minseo Park",
           "role": "Agency account manager",
-          "quote": "Approvals come with organized data, making client briefings easier.",
-          "goal": "Maintain visibility across 80+ clients",
+          "quote": "Approval requests arrive with structured data, so client briefings are straightforward. The recommended actions help us surface each advertiser's needs before meetings.",
+          "goal": "Maintain insights for 80+ clients and keep weekly performance reports automated",
           "needs": [
             "Approval workflow",
-            "Channel overview dashboard",
-            "AI ad recommendations"
+            "Cross-channel dashboards",
+            "AI ad suggestions",
+            "Goal variance alerts",
+            "Slide-ready proposal exports"
           ]
         },
         {
-          "name": "Sora Im",
+          "name": "Sora Lim",
           "role": "In-house marketing lead",
-          "quote": "AI CS drafts helped us reduce response times.",
-          "goal": "Reply to customers within 24 hours",
+          "quote": "AI CS drafts shortened our response time dramatically. With needs and testimonials linked together, collaboration with sales is much faster.",
+          "goal": "Respond within 24 hours and keep monthly churn under 2%",
           "needs": [
-            "AI customer management",
+            "AI customer automation",
             "Activity summary reports",
-            "Dedicated support"
+            "Dedicated support",
+            "Team task board sync",
+            "Renewal need tagging"
+          ]
+        },
+        {
+          "name": "Jaehoon Lee",
+          "role": "Brand partnerships director",
+          "quote": "Slide comparisons highlight which creators match a partner's requirements. Housing campaign feedback and requests together trimmed approval times considerably.",
+          "goal": "Close three new partnerships per month and sustain 90% campaign satisfaction",
+          "needs": [
+            "Need-based creator recommendations",
+            "Budget versus outcome simulator",
+            "Shareable testimonial slides",
+            "Legal coordination checklist",
+            "Campaign feedback tracker"
+          ]
+        },
+        {
+          "name": "Hanna Choi",
+          "role": "Global community manager",
+          "quote": "Regional needs are automatically tagged, so I can route resources instantly. The standardized slide reports keep headquarters approvals lightweight.",
+          "goal": "Keep global chapter participation above 60% and meet a 48-hour regional support SLA",
+          "needs": [
+            "Multilingual report conversion",
+            "Slack & Teams alerts",
+            "Regional need tagging",
+            "Testimonial archive",
+            "Local action planner"
+          ]
+        },
+        {
+          "name": "Taehun Kim",
+          "role": "Performance marketing head",
+          "quote": "When performance dips, the recommended actions appear instantly. Seeing campaign needs next to goals makes test budget allocation far easier.",
+          "goal": "Maintain 120% ROAS and run five test campaigns at once",
+          "needs": [
+            "Segment-level ad guidance",
+            "Budget pacing alerts",
+            "Campaign comparison slides",
+            "CRM lead sync",
+            "Automated retrospective notes"
+          ]
+        },
+        {
+          "name": "Elena Park",
+          "role": "Data strategy consultant",
+          "quote": "I package requested needs and recommendation examples into ready slides for clients. Reusable data templates mean repeat projects start much faster.",
+          "goal": "Deliver eight consulting proposals per quarter and hit a 70% renewal rate",
+          "needs": [
+            "Need-based data templates",
+            "Testimonial & recommendation summaries",
+            "API usage monitoring",
+            "Security audit checklist",
+            "Presentation mode sharing"
           ]
         }
       ]
