@@ -193,7 +193,32 @@
     "manager_hint": "アクセスを許可したクリエイター",
     "creator_hint": "あなたを支援するマネージャー",
     "collaboration": "コラボレーションハブ",
-    "account_placeholder": "ハンドルまたはURL"
+    "account_placeholder": "ハンドルまたはURL",
+    "data_source": "データソース",
+    "source_api": "ライブAPI",
+    "source_mock": "サンプルデータ",
+    "credentials_heading": "接続認証情報",
+    "credentials_status": "ステータス",
+    "credentials_present": "認証情報を保存済み",
+    "credentials_missing": "未接続",
+    "auth_type_label": "認証方式",
+    "auth_type_labels": {
+      "api_token": "APIトークン",
+      "user_password": "ユーザー名・パスワード",
+      "oauth2": "OAuth 2.0"
+    },
+    "identifier_label": "識別子 / プロフィールID",
+    "access_token_label": "アクセストークン",
+    "secret_label": "クライアントシークレット / パスワード",
+    "refresh_token_label": "リフレッシュトークン",
+    "expires_at_label": "有効期限",
+    "metadata_label": "追加メタデータ (JSON)",
+    "save_credentials": "認証情報を保存",
+    "credential_hint": "既に保存されています。変更しない場合は空のままにしてください。",
+    "placeholder_identifier": "例: @creator または 123456",
+    "placeholder_secret": "クライアントシークレットまたはパスワードを貼り付け",
+    "placeholder_token": "新しいトークンを貼り付け",
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}"
   },
   "channels": {
     "instagram": "Instagram",

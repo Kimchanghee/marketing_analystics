@@ -44,15 +44,26 @@
                 <li>{{ t['dashboard']['followers'] }}: {{ snapshot['followers'] }}</li>
                 <li>{{ t['dashboard']['growth'] }}: {{ snapshot['growth_rate'] }}%</li>
                 <li>{{ t['dashboard']['engagement'] }}: {{ snapshot['engagement_rate'] }}%</li>
-                <li>{{ t['dashboard']['last_post'] }}: {{ snapshot['last_post_date'][:10] }}</li>
+                <li>{{ t['dashboard']['last_post'] }}: {{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</li>
             </ul>
+            <p class="data-source">
+                {{ t['dashboard']['data_source'] }}:
+                {% if snapshot['source'] == 'api' %}
+                <span class="source api">{{ t['dashboard']['source_api'] }}</span>
+                {% else %}
+                <span class="source mock">{{ t['dashboard']['source_mock'] }}</span>
+                {% endif %}
+                {% if snapshot.get('error') %}
+                <span class="error">{{ snapshot['error'] }}</span>
+                {% endif %}
+            </p>
             <div class="recent-posts">
                 <h4>{{ t['dashboard']['recent_posts'] }}</h4>
                 {% for post in snapshot['recent_posts'] %}
                 <div class="post">
                     <div>
                         <strong>{{ post['title'] }}</strong>
-                        <span>{{ post['published_at'][:10] }}</span>
+                        <span>{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
                     </div>
                     <div class="post-metrics">
                         <span>👍 {{ post['likes'] }}</span>
@@ -63,6 +74,65 @@
                 {% endfor %}
             </div>
             {% endif %}
+            <details class="credential-panel">
+                <summary>{{ t['dashboard']['credentials_heading'] }}</summary>
+                {% set credential = account.credential %}
+                <p class="credential-status {{ 'ok' if credential else 'warning' }}">
+                    {{ t['dashboard']['credentials_status'] }}:
+                    {% if credential %}
+                    {{ t['dashboard']['credentials_present'] }}
+                    {% else %}
+                    {{ t['dashboard']['credentials_missing'] }}
+                    {% endif %}
+                </p>
+                <form method="post" action="/channels/credentials" class="credential-form">
+                    <input type="hidden" name="channel_id" value="{{ account.id }}">
+                    <label>
+                        {{ t['dashboard']['auth_type_label'] }}
+                        <select name="auth_type">
+                            {% for auth in auth_types %}
+                            <option value="{{ auth.value }}" {% if credential and credential.auth_type == auth %}selected{% endif %}>
+                                {{ t['dashboard']['auth_type_labels'][auth.value] }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        {{ t['dashboard']['identifier_label'] }}
+                        <input type="text" name="identifier" value="{{ credential.identifier if credential and credential.identifier else '' }}" placeholder="{{ t['dashboard']['placeholder_identifier'] }}">
+                    </label>
+                    <label>
+                        {{ t['dashboard']['access_token_label'] }}
+                        <input type="password" name="access_token" placeholder="{{ t['dashboard']['placeholder_token'] }}">
+                        {% if credential and credential.as_dict().get('has_access_token') %}
+                        <small>{{ t['dashboard']['credential_hint'] }}</small>
+                        {% endif %}
+                    </label>
+                    <label>
+                        {{ t['dashboard']['secret_label'] }}
+                        <input type="password" name="secret" placeholder="{{ t['dashboard']['placeholder_secret'] }}">
+                        {% if credential and credential.as_dict().get('has_secret') %}
+                        <small>{{ t['dashboard']['credential_hint'] }}</small>
+                        {% endif %}
+                    </label>
+                    <label>
+                        {{ t['dashboard']['refresh_token_label'] }}
+                        <input type="password" name="refresh_token" placeholder="{{ t['dashboard']['placeholder_token'] }}">
+                        {% if credential and credential.as_dict().get('has_refresh_token') %}
+                        <small>{{ t['dashboard']['credential_hint'] }}</small>
+                        {% endif %}
+                    </label>
+                    <label>
+                        {{ t['dashboard']['expires_at_label'] }}
+                        <input type="text" name="expires_at" value="{{ credential.expires_at.isoformat() if credential and credential.expires_at else '' }}" placeholder="YYYY-MM-DDTHH:MM:SS">
+                    </label>
+                    <label>
+                        {{ t['dashboard']['metadata_label'] }}
+                        <textarea name="metadata" placeholder="{{ t['dashboard']['placeholder_metadata'] }}">{% if credential %}{{ credential.metadata | tojson(indent=2) }}{% endif %}</textarea>
+                    </label>
+                    <button class="btn secondary" type="submit">{{ t['dashboard']['save_credentials'] }}</button>
+                </form>
+            </details>
         </article>
         {% endfor %}
     </div>
