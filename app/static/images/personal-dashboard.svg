@@ -1,0 +1,36 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1280" height="720" rx="32" fill="#F8F5FF"/>
+    <rect x="48" y="48" width="1184" height="96" rx="24" fill="#2C356D"/>
+    <text x="96" y="110" fill="white" font-family="'Pretendard','Poppins',sans-serif" font-size="32" font-weight="600">개인 크리에이터 대시보드</text>
+    <rect x="48" y="168" width="360" height="480" rx="24" fill="#FFFFFF" stroke="#E1D8FF" stroke-width="2"/>
+    <text x="72" y="216" fill="#2C356D" font-family="'Pretendard','Poppins',sans-serif" font-size="22" font-weight="600">계정 요약</text>
+    <rect x="72" y="240" width="312" height="72" rx="18" fill="#F4F0FF"/>
+    <text x="96" y="286" fill="#4A3FA3" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">Instagram @hello_brand</text>
+    <text x="96" y="314" fill="#6D5FC5" font-family="'Pretendard','Poppins',sans-serif" font-size="16">구독자 52K · 참여율 8.2%</text>
+    <rect x="72" y="336" width="312" height="72" rx="18" fill="#F4F0FF"/>
+    <text x="96" y="382" fill="#4A3FA3" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">YouTube hello_brand</text>
+    <text x="96" y="410" fill="#6D5FC5" font-family="'Pretendard','Poppins',sans-serif" font-size="16">구독자 81K · 조회수 +12%</text>
+    <rect x="72" y="432" width="312" height="72" rx="18" fill="#F4F0FF"/>
+    <text x="96" y="478" fill="#4A3FA3" font-family="'Pretendard','Poppins',sans-serif" font-size="18" font-weight="600">Threads hello_brand</text>
+    <text x="96" y="506" fill="#6D5FC5" font-family="'Pretendard','Poppins',sans-serif" font-size="16">팔로워 12K · 노출수 +24%</text>
+    <rect x="72" y="528" width="312" height="96" rx="18" fill="#FFF4F7" stroke="#FFB4C9" stroke-width="2"/>
+    <text x="96" y="572" fill="#D63F70" font-family="'Pretendard','Poppins',sans-serif" font-size="16" font-weight="600">채널 추가하기</text>
+    <text x="96" y="600" fill="#EA7096" font-family="'Pretendard','Poppins',sans-serif" font-size="14">무료 요금제는 최대 1개까지 관리 가능</text>
+
+    <rect x="432" y="168" width="768" height="216" rx="24" fill="#FFFFFF" stroke="#E1D8FF" stroke-width="2"/>
+    <text x="460" y="216" fill="#2C356D" font-family="'Pretendard','Poppins',sans-serif" font-size="22" font-weight="600">실시간 성장 리포트</text>
+    <polyline points="484,330 564,288 644,304 724,260 804,280 884,240 964,252 1044,228" fill="none" stroke="#6D5FC5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="564" cy="288" r="8" fill="#6D5FC5"/>
+    <circle cx="724" cy="260" r="8" fill="#6D5FC5"/>
+    <circle cx="884" cy="240" r="8" fill="#6D5FC5"/>
+    <circle cx="1044" cy="228" r="8" fill="#6D5FC5"/>
+
+    <rect x="432" y="408" width="768" height="240" rx="24" fill="#FFFFFF" stroke="#E1D8FF" stroke-width="2"/>
+    <text x="460" y="456" fill="#2C356D" font-family="'Pretendard','Poppins',sans-serif" font-size="22" font-weight="600">콘텐츠 퍼포먼스</text>
+    <rect x="460" y="480" width="720" height="64" rx="16" fill="#F4F0FF"/>
+    <text x="484" y="520" fill="#4A3FA3" font-family="'Pretendard','Poppins',sans-serif" font-size="16">Reels: #hello_brand 캠페인 리뷰</text>
+    <text x="980" y="520" fill="#6D5FC5" font-family="'Pretendard','Poppins',sans-serif" font-size="16" text-anchor="end">도달 58K · 좋아요 6.3K · 댓글 820</text>
+    <rect x="460" y="560" width="720" height="64" rx="16" fill="#F4F0FF"/>
+    <text x="484" y="600" fill="#4A3FA3" font-family="'Pretendard','Poppins',sans-serif" font-size="16">YouTube Shorts: 24시간 챌린지</text>
+    <text x="980" y="600" fill="#6D5FC5" font-family="'Pretendard','Poppins',sans-serif" font-size="16" text-anchor="end">조회 112K · 좋아요 8.5K · 댓글 420</text>
+</svg>

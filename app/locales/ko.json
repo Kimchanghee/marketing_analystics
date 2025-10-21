@@ -174,7 +174,9 @@
     "signup_hint": "계정이 없으신가요?",
     "signup_link": "회원가입",
     "invalid_credentials": "이메일 또는 비밀번호가 일치하지 않습니다.",
-    "account_inactive": "비활성화된 계정입니다. 관리자에게 문의하세요."
+    "account_inactive": "비활성화된 계정입니다. 관리자에게 문의하세요.",
+    "email_exists": "이미 등록된 이메일입니다. 다른 이메일을 사용하거나 비밀번호를 재설정해 주세요.",
+    "signup_success": "회원가입이 완료되었습니다. 등록한 이메일로 로그인해 주세요."
   },
   "dashboard": {
     "welcome": "환영합니다",
@@ -296,6 +298,53 @@
         }
       ]
     },
+    "integrations": {
+      "title": "주요 채널 API 연동 현황",
+      "description": "공식 파트너 인증을 획득한 커넥터로 플랫폼 보안 규정을 준수합니다.",
+      "channels": [
+        {
+          "name": "Instagram Graph API",
+          "status": "실서비스",
+          "badge": "live",
+          "detail": "게시물, 릴스, 스토리 통계를 실시간에 가깝게 동기화합니다."
+        },
+        {
+          "name": "YouTube Data API",
+          "status": "실서비스",
+          "badge": "live",
+          "detail": "조회수, 시청 시간, 쇼츠 성과 지표를 매일 새로고침합니다."
+        },
+        {
+          "name": "TikTok for Business API",
+          "status": "베타",
+          "badge": "beta",
+          "detail": "광고 캠페인 및 오가닉 콘텐츠 인사이트를 24시간 주기로 동기화합니다."
+        },
+        {
+          "name": "Twitter/X API v2",
+          "status": "연동 예정",
+          "badge": "planned",
+          "detail": "커뮤니티 반응 분석과 멘션 모니터링 기능을 준비 중입니다."
+        },
+        {
+          "name": "Meta Ads Marketing API",
+          "status": "실서비스",
+          "badge": "live",
+          "detail": "광고 세트·소재별 비용과 전환 데이터를 단일 보드에서 확인합니다."
+        }
+      ],
+      "footnote": "모든 데이터는 OAuth 2.0 기반 인증 후 암호화되어 저장되며, 토큰은 최소 권한 원칙을 따릅니다."
+    },
+    "membership": {
+      "title": "회원 관리 정책",
+      "description": "크리에이터와 기업 고객 모두를 위한 보안 중심 계정 운영 기준을 제공합니다.",
+      "items": [
+        "이메일 인증과 Argon2 기반 비밀번호 해시 처리",
+        "역할 기반 접근 제어(크리에이터, 관리자, 제작자)",
+        "가입·로그인 활동 로그 자동 기록 및 감사 추적",
+        "구독 플랜별 채널 수 한도를 자동으로 검증"
+      ]
+    },
     "cta": {
       "title": "팀 맞춤 온보딩으로 빠르게 시작하세요",
       "description": "도입 컨설턴트가 2주간 데이터 연결과 워크플로우 설정을 지원합니다.",
@@ -372,6 +421,11 @@
       "description": "14일 동안 모든 프리미엄 기능을 제한 없이 이용하실 수 있습니다.",
       "primary": "무료 체험 시작",
       "secondary": "지원 요청"
+    },
+    "screens": {
+      "title": "미리 보는 개인용 대시보드",
+      "description": "실제 서비스에서 제공하는 카드형 위젯 구성 예시입니다.",
+      "image_alt": "개인 크리에이터 대시보드 미리보기"
     }
   },
   "business": {
@@ -443,6 +497,11 @@
       "description": "요구 사항을 공유해 주시면 전담 매니저가 1영업일 내 연락드립니다.",
       "primary": "상담 요청",
       "secondary": "요금제 안내"
+    },
+    "screens": {
+      "title": "기업/에이전시용 운영 허브 화면",
+      "description": "여러 채널과 캠페인을 관리하는 팀을 위한 실제 UI 목업입니다.",
+      "image_alt": "기업 계정 브랜드 허브 미리보기"
     }
   },
   "pricing": {

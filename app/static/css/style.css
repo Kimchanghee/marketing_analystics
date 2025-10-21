@@ -860,6 +860,11 @@ a:hover {
     background: rgba(244, 93, 93, 0.12);
     color: var(--danger);
 }
+.form-alert.success {
+    border-color: rgba(27, 185, 120, 0.28);
+    background: rgba(27, 185, 120, 0.14);
+    color: var(--success);
+}
 
 input,
 select {
@@ -1134,6 +1139,122 @@ select:focus {
 
 .persona p {
     color: var(--text-secondary);
+}
+
+.integration-showcase,
+.membership-section,
+.persona-gallery {
+    margin: 4rem 0;
+    display: grid;
+    gap: 2rem;
+}
+
+.integration-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.integration-card {
+    background: var(--surface-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-soft);
+    display: grid;
+    gap: 0.75rem;
+}
+
+.integration-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.integration-card h3 {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.integration-card p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+}
+
+.status-chip.is-live {
+    background: rgba(27, 185, 120, 0.16);
+    color: var(--success);
+}
+
+.status-chip.is-beta {
+    background: rgba(99, 102, 241, 0.18);
+    color: var(--accent-soft);
+}
+
+.status-chip.is-planned {
+    background: rgba(107, 114, 128, 0.16);
+    color: var(--text-subtle);
+}
+
+.integration-footnote {
+    margin: 0;
+    color: var(--text-subtle);
+    font-size: 0.9rem;
+}
+
+.membership-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.85rem;
+}
+
+.membership-list li {
+    position: relative;
+    padding-left: 2rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.membership-list li::before {
+    content: "";
+    position: absolute;
+    left: 0.65rem;
+    top: 0.6rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(221, 42, 123, 0.18);
+}
+
+.mock-screenshot {
+    background: var(--surface-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.mock-screenshot img {
+    width: 100%;
+    display: block;
+    border-radius: calc(var(--radius-lg) - 0.5rem);
+    box-shadow: 0 24px 48px rgba(24, 119, 242, 0.18), 0 12px 32px rgba(221, 42, 123, 0.16);
 }
 
 @media (max-width: 960px) {
