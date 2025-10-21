@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Request
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import select
@@ -80,6 +81,14 @@ async def business_plan(request: Request):
         "business.html",
         {"request": request, "locale": locale, "t": strings},
     )
+
+
+@app.get("/pricing", include_in_schema=False)
+async def pricing_redirect(request: Request):
+    target = request.query_params.get("type", "personal").lower()
+    if target == "business":
+        return RedirectResponse(url="/business", status_code=307)
+    return RedirectResponse(url="/personal", status_code=307)
 
 
 @app.get("/support")
