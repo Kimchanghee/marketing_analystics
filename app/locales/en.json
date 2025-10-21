@@ -330,7 +330,7 @@
   "personal": {
     "hero": {
       "title": "Clarity for solo creators",
-      "subtitle": "Know which content drives growth and prepare for every brand conversation.",
+      "subtitle": "Connect every channel and ad manager in one place, and let AI onboarding guide even first-time creators through setup in minutes.",
       "primary_cta": "Start personal plan",
       "secondary_cta": "View personal plans",
       "visual_title": "Today’s highlights",
@@ -339,22 +339,22 @@
     },
     "benefits": {
       "title": "Why creators love the personal plan",
-      "description": "Everything you need to analyze, pitch, and grow from a single dashboard.",
+      "description": "An AI assistant unifies channels, reporting, and automation so solo creators save hours and avoid extra staffing.",
       "items": [
         {
           "tag": "Focus",
           "title": "Home built around essentials",
-          "description": "Pin the metrics that matter most—followers, views, revenue—in one glance."
+          "description": "Compare Instagram, YouTube, TikTok, and ad managers side by side so you instantly know where to focus."
         },
         {
           "tag": "Pitch",
           "title": "Auto-generated brand decks",
-          "description": "Select your wins and instantly export a pitch-ready PDF."
+          "description": "AI suggests the wins to highlight, shrinking first-draft time and tailoring decks for each brand."
         },
         {
           "tag": "Automate",
           "title": "Smart reminders",
-          "description": "Receive nudges based on your top-performing posting cadence."
+          "description": "AI scheduling and reminders reclaim over three hours a week and cut outsourced management costs."
         }
       ]
     },
@@ -472,7 +472,7 @@
     },
     "metrics": {
       "title": "Metrics pulled from a live personal dashboard",
-      "description": "Snapshot from 32 lifestyle creators tracked in September 2024.",
+      "description": "Snapshot from 32 lifestyle creators in September 2024 using AI scheduling and automated reporting.",
       "visual_alt": "Dashboard capture showing follower growth, pitch acceptance, and calendar cards.",
       "source_label": "Source",
       "source_caption": "Creator Control Center personal workspace — September 2024",
@@ -490,7 +490,7 @@
         {
           "label": "Weekly reporting time saved",
           "value": "3.2h",
-          "description": "Automated PDF exports replace manual spreadsheets."
+          "description": "AI copilots and automated reports remove manual spreadsheets without hiring extra help."
         }
       ]
     },
@@ -528,7 +528,7 @@
   "business": {
     "hero": {
       "title": "Scale your creator organization",
-      "subtitle": "Enterprise-grade collaboration, security, and reporting for multi-channel teams.",
+      "subtitle": "Automatically ingest and monitor hundreds—sometimes thousands—of client channels so your team can manage everything from one screen.",
       "primary_cta": "Book a consultation",
       "secondary_cta": "View business plans",
       "visual_title": "Organization snapshot",
@@ -537,7 +537,7 @@
     },
     "benefits": {
       "title": "Enterprise value, right out of the box",
-      "description": "Balance governance with speed so your team can focus on impact.",
+      "description": "Built for teams juggling many creators and clients, combining governance with high-volume automation.",
       "items": [
         {
           "tag": "Control",
@@ -547,12 +547,12 @@
         {
           "tag": "Scale",
           "title": "Portfolio intelligence",
-          "description": "See every creator, contract, and result to optimize allocations."
+          "description": "Automatically pull in hundreds of channels and ad accounts to compare contracts, performance, and status at once."
         },
         {
           "tag": "Insights",
           "title": "Custom BI integrations",
-          "description": "Sync with your warehouse and analytics stack with ease."
+          "description": "AI summarizes campaign outcomes so client reports and next steps are ready fast."
         }
       ]
     },
@@ -677,7 +677,7 @@
     },
     "metrics": {
       "title": "Live metrics from a business workspace",
-      "description": "Q3 2024 pilot with a creator management agency.",
+      "description": "Q3 2024 pilot with a creator management agency using automated channel ingestion.",
       "visual_alt": "Business dashboard capture showing pipeline and approval timelines.",
       "source_label": "Source",
       "source_caption": "Creator Control Center Team plan — agency operations board",
@@ -690,12 +690,12 @@
         {
           "label": "Creators managed in one hub",
           "value": "34",
-          "description": "Eight managers collaborating inside a single Team workspace."
+          "description": "Eight managers ran 34 creators from one Team workspace with automatically aggregated channel data."
         },
         {
           "label": "Brand approval lead time",
           "value": "48h",
-          "description": "Approval workflow replaces three back-and-forth email loops."
+          "description": "Approval automation replaces three back-and-forth email loops, sharply reducing client response time."
         }
       ]
     },
