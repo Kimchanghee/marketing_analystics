@@ -334,20 +334,8 @@
       "primary_cta": "Start personal plan",
       "secondary_cta": "View personal plans",
       "visual_title": "Today’s highlights",
-      "visual_points": [
-        {
-          "label": "Net followers",
-          "value": "+1,240"
-        },
-        {
-          "label": "Engagement rate",
-          "value": "8.4%"
-        },
-        {
-          "label": "Pending pitches",
-          "value": "3"
-        }
-      ]
+      "visual_caption": "Snapshot of follower gains, engagement, and scheduling suggestions from the live personal workspace.",
+      "visual_alt": "Dashboard showing creator follower growth metrics."
     },
     "benefits": {
       "title": "Why creators love the personal plan",
@@ -465,20 +453,8 @@
       "primary_cta": "Book a consultation",
       "secondary_cta": "View business plans",
       "visual_title": "Organization snapshot",
-      "visual_points": [
-        {
-          "label": "Connected channels",
-          "value": "58"
-        },
-        {
-          "label": "Active partners",
-          "value": "26"
-        },
-        {
-          "label": "Live campaigns",
-          "value": "14"
-        }
-      ]
+      "visual_caption": "Real analytics workspace highlighting campaign revenue, creator pipeline, and approval workflow stages.",
+      "visual_alt": "Marketing dashboard summarizing campaign performance and ROI."
     },
     "benefits": {
       "title": "Enterprise value, right out of the box",

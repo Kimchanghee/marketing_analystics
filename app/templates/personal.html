@@ -10,17 +10,13 @@
         </div>
     </div>
     <div class="hero-visual">
-        <div class="dashboard-preview">
-            <h3>{{ t['personal']['hero']['visual_title'] }}</h3>
-            <ul>
-                {% for stat in t['personal']['hero']['visual_points'] %}
-                <li>
-                    <span class="platform">{{ stat['label'] }}</span>
-                    <span class="metric">{{ stat['value'] }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+        <figure class="dashboard-figure">
+            <img src="/static/img/personal-analytics.svg" alt="{{ t['personal']['hero']['visual_alt'] }}">
+            <figcaption>
+                <strong>{{ t['personal']['hero']['visual_title'] }}</strong>
+                <span>{{ t['personal']['hero']['visual_caption'] }}</span>
+            </figcaption>
+        </figure>
     </div>
 </section>
 <section class="section-header">
