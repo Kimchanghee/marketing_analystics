@@ -32,132 +32,132 @@
     "super_admin": "Platform Owner"
   },
   "landing": {
-    "headline": "Your marketing-grade command center for creator growth",
-    "subheadline": "Connect channel analytics, campaign reporting, and revenue impact so every decision is backed by data.",
+    "headline": "A clear analytics hub for creators and teams",
+    "subheadline": "Compare YouTube, Instagram, TikTok, Facebook, Threads metrics and Meta Ads performance in one place.",
     "hero_highlights": [
-      "Trusted by 2,300+ creator teams",
-      "Daily syncs across 15+ platforms",
-      "Privacy-first infrastructure"
+      "Real-time follower, post, and comment reaction summaries",
+      "Hourly view patterns grouped by publish time",
+      "AI guidance powered by the Meta Ads API"
     ],
-    "cta_creator": "Start for free",
-    "cta_manager": "Trial with your team",
-    "preview_title": "Live channel score",
-    "mock_metric": "↑ 12% this week",
+    "cta_creator": "Start free",
+    "cta_manager": "Talk to sales",
+    "preview_title": "Live channel insight",
+    "mock_metric": "Weekly trend",
     "platforms": {
       "instagram": "Instagram",
       "threads": "Threads",
       "youtube": "YouTube",
-      "twitter": "Twitter / X",
-      "tiktok": "TikTok",
       "facebook": "Facebook",
-      "meta_ads": "Meta Ads"
+      "tiktok": "TikTok",
+      "meta_ads": "Meta Ads",
+      "shorts": "YouTube Shorts"
     },
     "metrics": [
       {
-        "label": "Reporting time saved",
-        "value": "70% ↓",
-        "description": "Automated collection cuts weekly consolidation by an average of 4.5 hours."
+        "label": "Supported platforms",
+        "value": "5",
+        "description": "Analytics for YouTube, Instagram, TikTok, Facebook, and Threads."
       },
       {
-        "label": "Content failure rate",
-        "value": "30% less",
-        "description": "Track winning formats across experiments and build repeatable playbooks."
+        "label": "Tracked signals",
+        "value": "Followers · Posts · Comments",
+        "description": "See reactions, likes vs. dislikes, and comment trends without spreadsheets."
       },
       {
-        "label": "Approval speed",
-        "value": "2.4× faster",
-        "description": "Manage requests and approvals in one hub to simplify cross-team updates."
+        "label": "Ad insights",
+        "value": "AI suggestions",
+        "description": "Meta Ads API data highlights campaigns to scale or pause."
       }
     ],
     "feature_section": {
-      "title": "One workflow every stakeholder trusts",
-      "description": "Collect, structure, and distribute the data that powers predictable creator growth.",
+      "title": "Key capabilities across channels and ads",
+      "description": "Collect channel data, combine it with Meta Ads results, and prepare decisions quickly.",
       "items": [
         {
           "tag": "INSIGHTS",
-          "title": "Auto-updating KPI dashboards",
-          "description": "Sync followers, views, and engagement daily and track progress against targets."
+          "title": "Detailed channel metrics",
+          "description": "Track follower shifts, post likes and dislikes, comment sentiment, and hourly views."
         },
         {
-          "tag": "OPERATIONS",
-          "title": "Campaign briefs & reports",
-          "description": "Document production notes without spreadsheets and export polished PDFs in one click."
+          "tag": "ADS",
+          "title": "Meta Ads management",
+          "description": "Bring in campaign performance through the Meta Ads API and receive AI action items."
         },
         {
-          "tag": "COLLAB",
-          "title": "Role-based collaboration",
-          "description": "Invite internal teams and partners with granular permissions and approval trails."
+          "tag": "ACCESS",
+          "title": "Account approval workflow",
+          "description": "Creators can request access so business managers can review their analytics."
         },
         {
-          "tag": "AUTOMATION",
-          "title": "Community intelligence",
-          "description": "Categorize comments and messages into themes to surface product and campaign insights."
+          "tag": "REPORTS",
+          "title": "Shareable reports",
+          "description": "Export dashboards for both personal and business workspaces."
         }
       ]
     },
     "creator_section": {
-      "title": "Your personal growth co-pilot",
-      "description": "Operate like a full team even when you are creating solo.",
+      "title": "Personal creator workspace",
+      "description": "YouTube and Instagram are free, and the paid plan adds TikTok, Facebook, and Threads analytics.",
       "highlights": [
-        "Auto-captured KPIs across key channels",
-        "Pitch-ready performance highlights",
-        "Unified calendar for sponsorships and launches"
+        "Compare follower and post performance",
+        "Review reactions and hourly views",
+        "Get AI advice for Meta Ads campaigns"
       ],
-      "cta": "Explore personal plan"
+      "cta": "See personal plan"
     },
     "manager_section": {
-      "title": "Alignment for agencies and brands",
-      "description": "Support multiple creators and campaigns with shared, reliable data.",
+      "title": "Business & agency controls",
+      "description": "Customers sign up with personal accounts, send approval requests, and managers review every creator in one hub.",
       "highlights": [
-        "Multi-account permissions",
-        "Client-ready executive summaries",
-        "Automated alerts for wins and risks"
+        "View approved client metrics",
+        "Monitor every managed creator",
+        "Receive AI summaries for ads and activity"
       ],
-      "cta": "Explore business plan"
+      "cta": "See business plan"
     },
     "journey": {
-      "title": "Momentum within the first week",
-      "description": "A guided onboarding takes you from sign-up to shareable insights fast.",
+      "title": "Setup in a single week",
+      "description": "Connect channels, approve clients, and ship reports with these checkpoints.",
       "steps": [
         {
           "label": "Day 1",
           "title": "Connect channels",
-          "description": "Authenticate major platforms and choose the KPIs that matter most."
+          "description": "Link YouTube and Instagram to surface baseline metrics."
         },
         {
           "label": "Day 3",
-          "title": "Tailor dashboards",
-          "description": "Arrange widgets around team goals and publish a live link for stakeholders."
+          "title": "Add more sources",
+          "description": "Connect TikTok, Facebook, Threads, and Meta Ads to broaden coverage."
         },
         {
           "label": "Day 7",
-          "title": "Automate reporting",
-          "description": "Send weekly recaps with next-step recommendations straight to inboxes."
+          "title": "Share insights",
+          "description": "Send reports with AI-backed recommendations for content and ads."
         }
       ]
     },
     "testimonials": [
       {
-        "quote": "The hours we spent gathering data are now invested in strategy.",
-        "name": "Hannah Park",
-        "title": "Marketing Lead, DTC brand"
+        "quote": "Comparing reactions by platform helped me adjust posting schedules.",
+        "name": "Hyunwoo Park",
+        "title": "Content marketer"
       },
       {
-        "quote": "Seeing creative and paid performance together keeps the team speaking one language.",
-        "name": "Jordan Kim",
-        "title": "Partner, Creator Management Agency"
+        "quote": "Client approvals arrive with full context, so we respond faster.",
+        "name": "Jieun Kim",
+        "title": "Creator management lead"
       },
       {
-        "quote": "Brand pitches land faster because every metric we need is already packaged.",
-        "name": "Sara Lee",
-        "title": "Lifestyle Creator"
+        "quote": "The Meta Ads guidance flagged campaigns that needed quick edits.",
+        "name": "Sora Lee",
+        "title": "Lifestyle creator"
       }
     ],
     "cta": {
-      "title": "Ready to architect your next stage of growth?",
-      "description": "Unlock dashboards, automation, and collaboration with a 14-day free trial.",
-      "primary": "Start free trial",
-      "secondary": "View full feature set"
+      "title": "Explore the dashboard today",
+      "description": "Use the personal plan for free or start a 7-day business trial.",
+      "primary": "Start personal plan",
+      "secondary": "Book business demo"
     }
   },
   "auth": {
@@ -329,125 +329,124 @@
   },
   "personal": {
     "hero": {
-      "title": "Clarity for solo creators",
-      "subtitle": "Connect every channel and ad manager in one place, and let AI onboarding guide even first-time creators through setup in minutes.",
-      "primary_cta": "Start personal plan",
-      "secondary_cta": "View personal plans",
-      "visual_title": "Today’s highlights",
-      "visual_caption": "Snapshot of follower gains, engagement, and scheduling suggestions from the live personal workspace.",
-      "visual_alt": "Dashboard showing creator follower growth metrics."
+      "title": "Unified analytics for solo creators",
+      "subtitle": "Connect YouTube and Instagram for free, then add more channels with an affordable upgrade.",
+      "primary_cta": "Start for free",
+      "secondary_cta": "View personal pricing",
+      "visual_title": "Key metrics today",
+      "visual_caption": "Example dashboard summarizing follower trends, reactions, and hourly views.",
+      "visual_alt": "Personal dashboard showing follower and engagement metrics"
     },
     "benefits": {
-      "title": "Why creators love the personal plan",
-      "description": "An AI assistant unifies channels, reporting, and automation so solo creators save hours and avoid extra staffing.",
+      "title": "Data you need without extra tools",
+      "description": "Automatically pull platform metrics and review Meta Ads performance alongside them.",
       "items": [
         {
-          "tag": "Focus",
-          "title": "Home built around essentials",
-          "description": "Compare Instagram, YouTube, TikTok, and ad managers side by side so you instantly know where to focus."
+          "tag": "CHANNELS",
+          "title": "Channel coverage",
+          "description": "Keep YouTube and Instagram for free, and expand to TikTok, Facebook, and Threads on Plus."
         },
         {
-          "tag": "Pitch",
-          "title": "Auto-generated brand decks",
-          "description": "AI suggests the wins to highlight, shrinking first-draft time and tailoring decks for each brand."
+          "tag": "REACTIONS",
+          "title": "Reaction analysis",
+          "description": "Measure likes, dislikes, and comment trends to see what resonates."
         },
         {
-          "tag": "Automate",
-          "title": "Smart reminders",
-          "description": "AI scheduling and reminders reclaim over three hours a week and cut outsourced management costs."
+          "tag": "ADS",
+          "title": "AI ad tips",
+          "description": "Use Meta Ads API data to know which campaigns to scale or pause."
         }
       ]
     },
     "plans": {
       "label": "Personal plans",
-      "title": "Choose the right solo toolkit",
-      "description": "Match your channel mix and workflow needs with transparent personal pricing.",
+      "title": "Choose the coverage you need",
+      "description": "Start free and upgrade whenever you want more channels or automation.",
       "items": [
         {
-          "name": "Basic",
-          "description": "Essential listening and reporting for personal brands",
+          "name": "Personal Free",
+          "description": "Core insights for YouTube and Instagram",
           "price": "$0",
           "cycle": "Always free",
           "features": [
-            "1 connected channel",
-            "Real-time KPI snapshot",
-            "Weekly performance email",
-            "Community support"
+            "Connect one YouTube and one Instagram account",
+            "Summaries for posts, comments, and hourly views",
+            "Read-only Meta Ads campaign overview",
+            "Weekly email recap"
           ],
-          "cta": "Get started free",
+          "cta": "Start free",
           "cta_link": "/signup",
           "highlighted": false
         },
         {
-          "name": "Creator Plus",
-          "description": "Advanced scheduling and reporting for independent creators",
-          "price": "$39",
+          "name": "Personal Plus",
+          "description": "Expanded channels with AI recommendations",
+          "price": "₩9,900",
           "cycle": "Billed monthly",
           "features": [
-            "3 connected channels",
-            "Automated publishing calendar",
-            "Campaign brief templates",
-            "Export to PDF & slides",
-            "Priority chat support"
+            "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
+            "Post and comment comparison reports",
+            "AI-powered Meta Ads scale/pause suggestions",
+            "CSV/PDF export and chat support"
           ],
           "cta": "Upgrade to Plus",
           "cta_link": "/signup",
           "highlighted": true,
-          "badge": "Most popular"
+          "badge": "Recommended"
         }
       ],
       "comparison": {
-        "title": "Which personal plan fits you?",
-        "description": "Align automation and support with your creator goals.",
+        "title": "Free vs. Plus",
+        "description": "See how coverage and automation change between plans.",
         "items": [
           {
             "label": "A",
-            "title": "Stay focused",
-            "detail": "Basic keeps core KPIs visible with zero cost."
+            "title": "Core metrics",
+            "detail": "Free keeps YouTube and Instagram KPIs visible at all times."
           },
           {
             "label": "B",
-            "title": "Automate workflows",
-            "detail": "Creator Plus adds scheduling and campaign templates to save hours each week."
+            "title": "More platforms",
+            "detail": "Plus adds TikTok, Facebook, and Threads comparisons."
           },
           {
             "label": "C",
-            "title": "Pitch-ready in minutes",
-            "detail": "Export decks and use priority chat to deliver polished proposals fast."
+            "title": "Ad guidance",
+            "detail": "AI ad suggestions and downloadable reports are Plus only."
           }
         ]
       }
     },
     "workflow": {
-      "title": "Onboard in three steps",
-      "description": "Connect, set goals, and share a report in under 30 minutes.",
+      "title": "Three-step onboarding",
+      "description": "Connect accounts, choose goals, and share a report in minutes.",
       "steps": [
         {
           "label": "Step 1",
-          "title": "Authenticate channels",
-          "detail": "Securely connect Instagram, YouTube, TikTok, and more."
+          "title": "Link core channels",
+          "detail": "Authenticate YouTube and Instagram to sync key KPIs."
         },
         {
           "label": "Step 2",
-          "title": "Define growth targets",
-          "detail": "Choose your focus metrics for the month."
+          "title": "Add optional platforms",
+          "detail": "Upgrade to Plus to include TikTok, Facebook, and Threads."
         },
         {
           "label": "Step 3",
-          "title": "Share live report",
-          "detail": "Generate a branded link to send to partners and managers."
+          "title": "Review ads and share",
+          "detail": "Check Meta Ads insights, apply AI tips, and send the recap."
         }
       ]
     },
     "cta": {
-      "title": "Try the personal plan today",
-      "description": "Enjoy every premium feature free for 14 days.",
-      "primary": "Start free trial",
+      "title": "Start with the free personal plan",
+      "description": "Upgrade to Plus anytime for additional channels and automation.",
+      "primary": "Create account",
       "secondary": "Contact support"
     },
     "pricing_overview": {
-      "title": "Transparent pricing for solo creators",
-      "description": "See monthly versus annual costs before you commit.",
+      "title": "Personal pricing",
+      "description": "Monthly billing with an optional annual discount.",
       "columns": [
         "Plan",
         "Monthly",
@@ -456,70 +455,70 @@
       ],
       "rows": [
         {
-          "label": "Creator Plus",
-          "monthly": "₩49,000",
-          "annual": "₩529,000 (save 10%)",
-          "note": "Includes up to 3 connected channels after the 14-day trial."
+          "label": "Personal Plus",
+          "monthly": "₩9,900",
+          "annual": "₩108,900 (save 10%)",
+          "note": "Includes TikTok, Facebook, Threads, and AI ad suggestions"
         },
         {
-          "label": "Basic",
+          "label": "Personal Free",
           "monthly": "₩0",
           "annual": "₩0",
-          "note": "Essential metrics and weekly recap remain free."
+          "note": "YouTube and Instagram analytics remain free"
         }
       ],
-      "footnote": "Annual billing includes VAT and you can switch plans at any time."
+      "footnote": "Annual billing includes VAT and you can switch plans anytime."
     },
     "metrics": {
-      "title": "Metrics pulled from a live personal dashboard",
-      "description": "Snapshot from 32 lifestyle creators in September 2024 using AI scheduling and automated reporting.",
-      "visual_alt": "Dashboard capture showing follower growth, pitch acceptance, and calendar cards.",
-      "source_label": "Source",
-      "source_caption": "Creator Control Center personal workspace — September 2024",
+      "title": "Beta program feedback",
+      "description": "Summary from 50 creators who tested the workspace in October 2024.",
+      "visual_alt": "Cards from the personal dashboard",
+      "source_label": "Survey",
+      "source_caption": "Creator Control Center beta survey (Oct 2024)",
       "items": [
         {
-          "label": "30-day follower lift",
-          "value": "+18%",
-          "description": "Creators following the auto-scheduling recommendations."
+          "label": "Weekly review time",
+          "value": "1.5 hours",
+          "description": "Average time spent checking YouTube and Instagram metrics."
         },
         {
-          "label": "Brand pitch acceptance",
-          "value": "42%",
-          "description": "5 of 12 proposals approved within seven days."
+          "label": "Ad adjustments",
+          "value": "Weekly",
+          "description": "Plus users acted on Meta Ads suggestions about once per week."
         },
         {
-          "label": "Weekly reporting time saved",
-          "value": "3.2h",
-          "description": "AI copilots and automated reports remove manual spreadsheets without hiring extra help."
+          "label": "Extra channel adoption",
+          "value": "64%",
+          "description": "Share of Plus users who connected TikTok or Facebook."
         }
       ]
     },
     "personas": {
-      "title": "Built around real creator workflows",
-      "description": "A glimpse at the professional needs we designed for.",
+      "title": "Who benefits most",
+      "description": "Examples of creator goals and required features.",
       "goal_label": "Primary goal",
-      "needs_label": "Needs",
+      "needs_label": "Key needs",
       "items": [
         {
           "name": "Ji-hye Yoon",
-          "role": "Freelance beauty creator",
-          "quote": "I can send sponsor-ready decks without rebuilding them every time.",
-          "goal": "Maintain at least two brand collaborations per month.",
+          "role": "Beauty creator",
+          "quote": "I rely on the reaction summaries when preparing sponsorship pitches.",
+          "goal": "Secure at least two collaborations a month",
           "needs": [
-            "Dashboard that spotlights outcomes",
-            "Automated PDF pitch builder",
-            "Campaign schedule reminders"
+            "Post and comment summaries",
+            "Hourly view insights",
+            "PDF report sharing"
           ]
         },
         {
           "name": "Alex Kim",
-          "role": "English learning creator",
-          "quote": "Seeing every platform lesson mapped for the month keeps me focused.",
-          "goal": "Reach 1,000 paying subscribers.",
+          "role": "Education creator",
+          "quote": "Comparing TikTok and Facebook shows where my community grows faster.",
+          "goal": "Reach 1,000 paid members",
           "needs": [
-            "Unified YouTube & Instagram sync",
-            "Topic suggestions by performance",
-            "Shareable membership recap links"
+            "Multi-channel comparisons",
+            "AI ad scale suggestions",
+            "Weekly email recap"
           ]
         }
       ]
@@ -527,126 +526,124 @@
   },
   "business": {
     "hero": {
-      "title": "Scale your creator organization",
-      "subtitle": "Automatically ingest and monitor hundreds—sometimes thousands—of client channels so your team can manage everything from one screen.",
-      "primary_cta": "Book a consultation",
-      "secondary_cta": "View business plans",
-      "visual_title": "Organization snapshot",
-      "visual_caption": "Real analytics workspace highlighting campaign revenue, creator pipeline, and approval workflow stages.",
-      "visual_alt": "Marketing dashboard summarizing campaign performance and ROI."
+      "title": "Business dashboard for creator management",
+      "subtitle": "Clients join with personal accounts, send approval requests, and managers view every metric in one hub.",
+      "primary_cta": "Book demo",
+      "secondary_cta": "View business pricing",
+      "visual_title": "Pending approvals",
+      "visual_caption": "Example business dashboard showing approval queue, channel stats, and ad performance.",
+      "visual_alt": "Business dashboard with approval states and metrics"
     },
     "benefits": {
-      "title": "Enterprise value, right out of the box",
-      "description": "Built for teams juggling many creators and clients, combining governance with high-volume automation.",
+      "title": "Why teams use the business plan",
+      "description": "Approve client data safely, monitor every managed creator, and align on ad strategy.",
       "items": [
         {
-          "tag": "Control",
-          "title": "Security-first access",
-          "description": "SSO and role-based access keep sensitive data protected."
+          "tag": "APPROVAL",
+          "title": "Customer approval flow",
+          "description": "Clients sign up as personal users and request access so managers can review analytics."
         },
         {
-          "tag": "Scale",
-          "title": "Portfolio intelligence",
-          "description": "Automatically pull in hundreds of channels and ad accounts to compare contracts, performance, and status at once."
+          "tag": "OVERVIEW",
+          "title": "Portfolio overview",
+          "description": "See channel metrics and reactions for all managed creators at a glance."
         },
         {
-          "tag": "Insights",
-          "title": "Custom BI integrations",
-          "description": "AI summarizes campaign outcomes so client reports and next steps are ready fast."
+          "tag": "ADS",
+          "title": "AI ad management",
+          "description": "Connect Meta Ads to track performance and receive recommended actions."
         }
       ]
     },
     "plans": {
       "label": "Business plans",
-      "title": "Scale with confidence",
-      "description": "Choose the governance, automation, and partnership model your organization requires.",
+      "title": "Two options by team size",
+      "description": "Start with a 7-day trial, then choose a monthly plan based on the number of managed creators.",
       "items": [
         {
-          "name": "Team",
-          "description": "Powerful collaboration for marketing departments and boutique agencies",
-          "price": "$189",
-          "cycle": "Per month, billed annually",
+          "name": "Business 100",
+          "description": "Manage up to 100 clients",
+          "price": "₩99,000",
+          "cycle": "Billed monthly",
           "features": [
-            "10 connected channels",
-            "Shared campaign workspaces",
-            "Role-based approvals",
-            "Unlimited exports & archives",
-            "Dedicated onboarding"
+            "Client approval workflow",
+            "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
+            "Meta Ads summaries with AI suggestions",
+            "Shareable dashboards and reports"
           ],
-          "cta": "Talk to sales",
-          "cta_link": "/support",
+          "cta": "Start 7-day trial",
+          "cta_link": "/signup?role=manager",
           "highlighted": true,
-          "badge": "Best value"
+          "badge": "Standard"
         },
         {
-          "name": "Enterprise",
-          "description": "Custom security, compliance, and integrations for large organizations",
-          "price": "From $499",
-          "cycle": "Custom annual agreement",
+          "name": "Business 1000",
+          "description": "Scale to 1,000 clients with automation",
+          "price": "₩499,000",
+          "cycle": "Billed monthly",
           "features": [
-            "Unlimited channels",
-            "SSO & advanced permissions",
-            "Dedicated success manager",
-            "Private data lake sync",
-            "Enterprise SLA & compliance"
+            "Expanded seats and advanced permissions",
+            "AI summaries of client activity for managers",
+            "AI-generated CS reply drafts",
+            "Priority support and training"
           ],
-          "cta": "Request enterprise demo",
+          "cta": "Contact sales",
           "cta_link": "/support",
           "highlighted": false
         }
       ],
       "comparison": {
-        "title": "Compare business plans",
-        "description": "Evaluate scalability, automation, and assurance for every stakeholder.",
+        "title": "Compare plans",
+        "description": "Check differences in scale and automation.",
         "items": [
           {
             "label": "1",
-            "title": "Scalability",
-            "detail": "Unlock unlimited workspaces and admin controls as your team grows."
+            "title": "Managed clients",
+            "detail": "Business 100 covers up to 100, Business 1000 supports up to 1,000."
           },
           {
             "label": "2",
-            "title": "Automation",
-            "detail": "Streamline approvals in Team and extend custom automation with Enterprise."
+            "title": "AI automation",
+            "detail": "Business 1000 adds AI customer management and CS drafting."
           },
           {
             "label": "3",
-            "title": "Assurance",
-            "detail": "Enterprise delivers SSO, encryption, and compliance-backed SLAs."
+            "title": "Support",
+            "detail": "Business 1000 includes dedicated support and training."
           }
         ]
       }
     },
     "workflow": {
-      "title": "White-glove onboarding",
-      "description": "Solutions engineers and customer success partner with you end to end.",
+      "title": "How client data connects",
+      "description": "Invite clients, approve requests, and share insights with your team.",
       "steps": [
         {
           "label": "Phase 1",
-          "title": "Technical review",
-          "detail": "Confirm security requirements and API scope."
+          "title": "Invite clients",
+          "detail": "Send personal signup links so creators can connect their core channels."
         },
         {
           "label": "Phase 2",
-          "title": "Data mapping",
-          "detail": "Map existing metrics and build tailored dashboards."
+          "title": "Approve and review",
+          "detail": "Approve requests to unlock analytics inside the business dashboard."
         },
         {
           "label": "Phase 3",
-          "title": "Launch & training",
-          "detail": "Support pilot campaigns and ongoing measurement."
+          "title": "Report and act",
+          "detail": "Share AI ad recommendations and client activity summaries with your team."
         }
       ]
     },
     "cta": {
-      "title": "Talk with our enterprise team",
-      "description": "Share your requirements and receive a tailored rollout plan within one business day.",
-      "primary": "Contact sales",
-      "secondary": "Review plans"
+      "title": "Start a 7-day business trial",
+      "description": "Connect up to five clients during the trial to experience every feature.",
+      "primary": "Start trial",
+      "secondary": "Compare plans"
     },
     "pricing_overview": {
-      "title": "Subscription guide for growing teams",
-      "description": "Estimate monthly and annual spend before your demo.",
+      "title": "Business pricing",
+      "description": "Monthly costs and included features at a glance.",
       "columns": [
         "Plan",
         "Monthly",
@@ -655,76 +652,70 @@
       ],
       "rows": [
         {
-          "label": "Team",
-          "monthly": "₩289,000 (monthly billing)",
-          "annual": "₩2,988,000 (prepaid)",
-          "note": "Includes 10 seats and 10 connected channels."
+          "label": "Business 100",
+          "monthly": "₩99,000",
+          "annual": "₩1,069,000 (save 10%)",
+          "note": "Up to 100 clients with Meta Ads AI recommendations"
         },
         {
-          "label": "Enterprise",
-          "monthly": "Custom quote",
-          "annual": "Annual agreement",
-          "note": "SSO, security reviews, and SLA coverage."
-        },
-        {
-          "label": "Analyst add-on seat",
-          "monthly": "₩39,000",
-          "annual": "₩420,000",
-          "note": "Per additional user with granular permissions."
+          "label": "Business 1000",
+          "monthly": "₩499,000",
+          "annual": "₩5,389,000 (save 10%)",
+          "note": "AI customer management automation and CS drafting"
         }
       ],
-      "footnote": "Prices shown exclude VAT. Unlimited onboarding is included for the contract term."
+      "footnote": "Prices exclude VAT. After the trial, billing continues monthly."
     },
     "metrics": {
-      "title": "Live metrics from a business workspace",
-      "description": "Q3 2024 pilot with a creator management agency using automated channel ingestion.",
-      "visual_alt": "Business dashboard capture showing pipeline and approval timelines.",
-      "source_label": "Source",
-      "source_caption": "Creator Control Center Team plan — agency operations board",
+      "title": "Pilot program results",
+      "description": "Usage patterns observed across three pilot teams in September 2024.",
+      "visual_alt": "Business dashboard with approval and ad cards",
+      "source_label": "Pilot",
+      "source_caption": "Creator Control Center business pilot (Sep 2024)",
       "items": [
         {
-          "label": "Weekly report prep time saved",
-          "value": "58%",
-          "description": "Automated exports cut average prep from 26 to 11 minutes."
+          "label": "Average approved clients",
+          "value": "78",
+          "description": "Typical number of clients managed on Business 100."
         },
         {
-          "label": "Creators managed in one hub",
-          "value": "34",
-          "description": "Eight managers ran 34 creators from one Team workspace with automatically aggregated channel data."
+          "label": "Ad adjustment requests",
+          "value": "12/mo",
+          "description": "Requests triggered by AI recommendations each month."
         },
         {
-          "label": "Brand approval lead time",
-          "value": "48h",
-          "description": "Approval automation replaces three back-and-forth email loops, sharply reducing client response time."
+          "label": "CS automation usage",
+          "value": "82%",
+          "description": "Business 1000 teams drafting AI CS replies at least weekly."
         }
       ]
     },
     "personas": {
-      "title": "Personas we designed this tier around",
-      "description": "Understand the expert needs driving each workflow.",
+      "title": "Business user scenarios",
+      "description": "Examples of how different roles rely on the platform.",
       "goal_label": "Primary goal",
-      "needs_label": "Needs",
+      "needs_label": "Key needs",
       "items": [
         {
-          "name": "Min-seo Park",
-          "role": "Creator partnerships lead",
-          "quote": "Standardized approvals keep every stakeholder on the same page.",
-          "goal": "Institutionalize monthly reports for ten partner brands.",
+          "name": "Minseo Park",
+          "role": "Agency account manager",
+          "quote": "Approvals come with organized data, making client briefings easier.",
+          "goal": "Maintain visibility across 80+ clients",
           "needs": [
-            "Role-based approval routing",
-            "Campaign performance comparisons",
-            "Client-ready executive summaries"
+            "Approval workflow",
+            "Channel overview dashboard",
+            "AI ad recommendations"
           ]
         },
         {
           "name": "Sora Im",
-          "role": "Agency director",
-          "quote": "Consolidated exports cut our proposal prep time significantly.",
-          "goal": "Achieve a 30% win rate on new business.",
+          "role": "In-house marketing lead",
+          "quote": "AI CS drafts helped us reduce response times.",
+          "goal": "Reply to customers within 24 hours",
           "needs": [
-            "Connect 15+ channels in one place",
-            "Export CSV and slides together",
-            "Slack alerts for milestones"
+            "AI customer management",
+            "Activity summary reports",
+            "Dedicated support"
           ]
         }
       ]
