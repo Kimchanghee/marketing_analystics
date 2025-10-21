@@ -44,10 +44,10 @@
     "auth_section": {
       "login_title": "바로 로그인",
       "login_description": "이메일과 비밀번호로 즉시 대시보드를 열어보세요.",
-      "advanced_login": "다른 로그인 옵션",
+      "advanced_login": "지원 센터에서 도움받기",
       "signup_title": "새 계정 만들기",
       "signup_description": "크리에이터 또는 매니저 계정을 몇 분 안에 등록하세요.",
-      "advanced_signup": "전체 회원가입 페이지로 이동"
+      "advanced_signup": "요금제 및 기능 살펴보기"
     },
     "preview_title": "실시간 채널 인사이트",
     "mock_metric": "현재 주간 동향",

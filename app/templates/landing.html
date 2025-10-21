@@ -37,51 +37,38 @@
     </div>
 </section>
 <section class="auth-showcase" id="account">
+    {% if login_error or signup_error or signup_success %}
+        <div class="auth-status">
+            {% if login_error %}
+                <div class="form-alert error">{{ login_error }}</div>
+            {% endif %}
+            {% if signup_error %}
+                <div class="form-alert error">{{ signup_error }}</div>
+            {% endif %}
+            {% if signup_success %}
+                <div class="form-alert success">{{ signup_success }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
     <article class="auth-card landing-auth">
-        <h2>{{ t['landing']['auth_section']['login_title'] }}</h2>
-        <p class="auth-description">{{ t['landing']['auth_section']['login_description'] }}</p>
-        {% if login_error %}
-        <div class="form-alert error">{{ login_error }}</div>
-        {% endif %}
-        <form method="post" action="/login">
-            <input type="hidden" name="origin" value="landing">
-            <input type="hidden" name="locale" value="{{ locale }}">
-            <label>{{ t['auth']['email'] }}<input type="email" name="email" required autocomplete="email"></label>
-            <label>{{ t['auth']['password'] }}<input type="password" name="password" required autocomplete="current-password"></label>
-            <button class="btn primary" type="submit">{{ t['auth']['login_button'] }}</button>
-        </form>
-        <p class="auth-hint"><a href="/login">{{ t['landing']['auth_section']['advanced_login'] }}</a></p>
+        <div>
+            <h2>{{ t['landing']['auth_section']['login_title'] }}</h2>
+            <p class="auth-description">{{ t['landing']['auth_section']['login_description'] }}</p>
+        </div>
+        <div class="auth-actions">
+            <a class="btn ghost" href="/login">{{ t['auth']['login_button'] }}</a>
+        </div>
+        <p class="auth-hint"><a href="/support">{{ t['landing']['auth_section']['advanced_login'] }}</a></p>
     </article>
     <article class="auth-card landing-auth">
-        <h2>{{ t['landing']['auth_section']['signup_title'] }}</h2>
-        <p class="auth-description">{{ t['landing']['auth_section']['signup_description'] }}</p>
-        {% if signup_success %}
-        <div class="form-alert success">{{ signup_success }}</div>
-        {% endif %}
-        {% if signup_error %}
-        <div class="form-alert error">{{ signup_error }}</div>
-        {% endif %}
-        <form method="post" action="/signup">
-            <input type="hidden" name="origin" value="landing">
-            <label>{{ t['auth']['email'] }}<input type="email" name="email" required autocomplete="email"></label>
-            <label>{{ t['auth']['password'] }}<input type="password" name="password" required autocomplete="new-password"></label>
-            <label>{{ t['auth']['role'] }}
-                <select name="role">
-                    <option value="creator" {% if preferred_role == 'creator' %}selected{% endif %}>{{ t['roles']['creator'] }}</option>
-                    <option value="manager" {% if preferred_role == 'manager' %}selected{% endif %}>{{ t['roles']['manager'] }}</option>
-                </select>
-            </label>
-            <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
-            <label>{{ t['auth']['language'] }}
-                <select name="locale">
-                    <option value="ko" {% if locale == 'ko' %}selected{% endif %}>한국어</option>
-                    <option value="en" {% if locale == 'en' %}selected{% endif %}>English</option>
-                    <option value="ja" {% if locale == 'ja' %}selected{% endif %}>日本語</option>
-                </select>
-            </label>
-            <button class="btn primary" type="submit">{{ t['auth']['signup_button'] }}</button>
-        </form>
-        <p class="auth-hint"><a href="/signup">{{ t['landing']['auth_section']['advanced_signup'] }}</a></p>
+        <div>
+            <h2>{{ t['landing']['auth_section']['signup_title'] }}</h2>
+            <p class="auth-description">{{ t['landing']['auth_section']['signup_description'] }}</p>
+        </div>
+        <div class="auth-actions">
+            <a class="btn primary" href="/signup">{{ t['auth']['signup_button'] }}</a>
+        </div>
+        <p class="auth-hint"><a href="/services">{{ t['landing']['auth_section']['advanced_signup'] }}</a></p>
     </article>
 </section>
 <section class="metrics-grid">
