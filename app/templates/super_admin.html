@@ -1,36 +1,97 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="dashboard-header">
-    <h1>{{ t['super_admin']['title'] }}</h1>
-    <p>{{ t['super_admin']['description'] }}</p>
+    <div>
+        <h1>{{ t['super_admin']['title'] }}</h1>
+        <p>{{ t['super_admin']['description'] }}</p>
+    </div>
+    <div class="dashboard-meta">
+        <span class="status-badge">{{ t['super_admin']['total_members'] }} {{ users|length }}</span>
+    </div>
 </section>
 <section class="admin-panels">
-    <article>
+    <article class="admin-card">
         <h2>{{ t['super_admin']['users'] }}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>{{ t['super_admin']['email'] }}</th>
-                    <th>{{ t['super_admin']['role'] }}</th>
-                    <th>{{ t['super_admin']['plan'] }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for u in users %}
-                <tr>
-                    <td>{{ u.email }}</td>
-                    <td>{{ t['roles'][u.role.value] }}</td>
-                    <td>{{ t['subscriptions'][subscriptions[u.id].tier.value] if u.id in subscriptions else t['subscriptions']['free'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="admin-table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>{{ t['super_admin']['email'] }}</th>
+                        <th>{{ t['super_admin']['status'] }}</th>
+                        <th>{{ t['super_admin']['role'] }}</th>
+                        <th>{{ t['super_admin']['plan'] }}</th>
+                        <th>{{ t['super_admin']['created'] }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    {% set subscription = subscriptions.get(u.id) %}
+                    <tr>
+                        <td>
+                            <div class="user-identity">
+                                <strong>{{ u.email }}</strong>
+                                <span class="subtext">{{ t['roles'][u.role.value] }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-pill {{ 'is-inactive' if not u.is_active }}">
+                                {{ t['super_admin']['status_active'] if u.is_active else t['super_admin']['status_inactive'] }}
+                            </span>
+                            <form class="inline-form" method="post" action="/super-admin/status">
+                                <input type="hidden" name="user_id" value="{{ u.id }}">
+                                <input type="hidden" name="is_active" value="{{ 'false' if u.is_active else 'true' }}">
+                                <button class="btn small {{ 'danger' if u.is_active else 'success' }}" type="submit">
+                                    {{ t['super_admin']['deactivate'] if u.is_active else t['super_admin']['activate'] }}
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="inline-form" method="post" action="/super-admin/promote">
+                                <input type="hidden" name="email" value="{{ u.email }}">
+                                <select name="role">
+                                    {% for role in roles %}
+                                    <option value="{{ role.value }}" {% if role == u.role %}selected{% endif %}>{{ t['roles'][role.value] }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn ghost small" type="submit">{{ t['super_admin']['update_role'] }}</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="inline-form" method="post" action="/super-admin/subscription">
+                                <input type="hidden" name="user_id" value="{{ u.id }}">
+                                <select name="tier">
+                                    {% for tier in tiers %}
+                                    <option value="{{ tier.value }}" {% if subscription and subscription.tier == tier %}selected{% endif %}>
+                                        {{ t['subscriptions'][tier.value] }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <label class="inline-number">
+                                    <span>{{ t['super_admin']['max_accounts'] }}</span>
+                                    <input type="number" min="1" name="max_accounts" value="{{ subscription.max_accounts if subscription else 1 }}">
+                                </label>
+                                <label class="inline-checkbox">
+                                    <input type="checkbox" name="active" value="true" {% if subscription and subscription.active %}checked{% endif %}>
+                                    <span>{{ t['super_admin']['subscription_active'] }}</span>
+                                </label>
+                                <button class="btn primary small" type="submit">{{ t['super_admin']['save'] }}</button>
+                            </form>
+                        </td>
+                        <td>{{ u.created_at.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </article>
-    <article>
+    <article class="admin-card">
         <h2>{{ t['super_admin']['activity'] }}</h2>
-        <ul>
+        <ul class="activity-feed">
             {% for log in logs %}
-            <li>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }} — {{ log.action }} ({{ log.details or '' }})</li>
+            <li>
+                <span class="activity-time">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                <span class="activity-description">{{ log.action }} — {{ log.details or t['super_admin']['no_details'] }}</span>
+            </li>
             {% endfor %}
         </ul>
     </article>

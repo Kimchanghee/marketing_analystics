@@ -172,7 +172,9 @@
     "login_button": "로그인",
     "signup_button": "가입하기",
     "signup_hint": "계정이 없으신가요?",
-    "signup_link": "회원가입"
+    "signup_link": "회원가입",
+    "invalid_credentials": "이메일 또는 비밀번호가 일치하지 않습니다.",
+    "account_inactive": "비활성화된 계정입니다. 관리자에게 문의하세요."
   },
   "dashboard": {
     "welcome": "환영합니다",
@@ -614,7 +616,19 @@
     "email": "이메일",
     "role": "역할",
     "plan": "이용권",
-    "activity": "최근 활동"
+    "status": "상태",
+    "created": "가입일",
+    "status_active": "활성",
+    "status_inactive": "비활성",
+    "activate": "활성화",
+    "deactivate": "중지",
+    "update_role": "역할 변경",
+    "max_accounts": "연동 가능 계정 수",
+    "subscription_active": "구독 활성화",
+    "save": "저장",
+    "total_members": "전체 회원",
+    "activity": "최근 활동",
+    "no_details": "추가 정보 없음"
   },
   "profile": {
     "title": "내 정보",
