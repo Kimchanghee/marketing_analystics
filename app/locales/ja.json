@@ -172,7 +172,9 @@
     "login_button": "ログイン",
     "signup_button": "登録",
     "signup_hint": "アカウントが必要ですか？",
-    "signup_link": "こちら"
+    "signup_link": "こちら",
+    "invalid_credentials": "メールアドレスまたはパスワードが正しくありません。",
+    "account_inactive": "このアカウントは停止中です。管理者にお問い合わせください。"
   },
   "dashboard": {
     "welcome": "ようこそ",
@@ -614,7 +616,19 @@
     "email": "メール",
     "role": "役割",
     "plan": "プラン",
-    "activity": "最近の活動"
+    "status": "ステータス",
+    "created": "登録日",
+    "status_active": "有効",
+    "status_inactive": "無効",
+    "activate": "有効化",
+    "deactivate": "停止",
+    "update_role": "役割を更新",
+    "max_accounts": "連携可能アカウント数",
+    "subscription_active": "サブスクリプション有効",
+    "save": "変更を保存",
+    "total_members": "メンバー数",
+    "activity": "最近の活動",
+    "no_details": "追加情報なし"
   },
   "profile": {
     "title": "プロフィール",

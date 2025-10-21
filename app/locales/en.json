@@ -172,7 +172,9 @@
     "login_button": "Log in",
     "signup_button": "Sign up",
     "signup_hint": "Need an account?",
-    "signup_link": "Create one"
+    "signup_link": "Create one",
+    "invalid_credentials": "We couldn't match those credentials.",
+    "account_inactive": "This account is currently inactive. Please contact support."
   },
   "dashboard": {
     "welcome": "Welcome",
@@ -614,7 +616,19 @@
     "email": "Email",
     "role": "Role",
     "plan": "Plan",
-    "activity": "Latest activity"
+    "status": "Status",
+    "created": "Joined",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "update_role": "Update role",
+    "max_accounts": "Seats",
+    "subscription_active": "Subscription active",
+    "save": "Save changes",
+    "total_members": "Total members",
+    "activity": "Latest activity",
+    "no_details": "No additional details"
   },
   "profile": {
     "title": "Your profile",
