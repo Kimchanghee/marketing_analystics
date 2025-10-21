@@ -44,10 +44,10 @@
     "auth_section": {
       "login_title": "Log in instantly",
       "login_description": "Use your email and password to open the dashboard.",
-      "advanced_login": "More login options",
+      "advanced_login": "Contact support for help",
       "signup_title": "Create a new account",
       "signup_description": "Register a creator or manager workspace in minutes.",
-      "advanced_signup": "Open full sign-up page"
+      "advanced_signup": "Review plans & pricing"
     },
     "preview_title": "Live channel insight",
     "mock_metric": "Weekly trend",

@@ -44,10 +44,10 @@
     "auth_section": {
       "login_title": "すぐにログイン",
       "login_description": "メールとパスワードですぐにダッシュボードを開けます。",
-      "advanced_login": "他のログイン方法",
+      "advanced_login": "サポートに問い合わせる",
       "signup_title": "新しいアカウントを作成",
       "signup_description": "クリエイターまたはマネージャー用のワークスペースを数分で登録。",
-      "advanced_signup": "詳細な登録ページへ"
+      "advanced_signup": "プランと料金を確認"
     },
     "preview_title": "リアルタイム指標",
     "mock_metric": "今週のトレンド",

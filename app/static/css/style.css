@@ -187,6 +187,17 @@ a:hover {
     gap: 1.25rem;
 }
 
+.auth-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.auth-links .btn {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
 .theme-toggle {
     display: inline-flex;
     align-items: center;
@@ -1306,10 +1317,6 @@ a:hover {
     gap: 1.5rem;
 }
 
-.auth-showcase .landing-auth form {
-    flex: 1;
-}
-
 .auth-description {
     margin: 0;
     color: var(--text-secondary);
@@ -1323,6 +1330,18 @@ a:hover {
 
 .auth-hint a {
     font-weight: 600;
+}
+
+.auth-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.auth-status {
+    display: grid;
+    gap: 0.75rem;
+    grid-column: 1 / -1;
 }
 
 input,
@@ -1747,6 +1766,17 @@ select:focus {
 
     .main-nav {
         flex-wrap: wrap;
+    }
+
+    .topbar-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .auth-links {
+        width: 100%;
+        justify-content: flex-start;
     }
 
     .content {

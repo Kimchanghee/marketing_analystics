@@ -50,7 +50,6 @@ async def landing(request: Request):
     login_error_key = request.query_params.get("login_error")
     signup_error_key = request.query_params.get("signup_error")
     signup_success_key = request.query_params.get("signup_success")
-    preferred_role = request.query_params.get("role", "creator")
     return app.state.templates.TemplateResponse(
         "landing.html",
         {
@@ -60,7 +59,6 @@ async def landing(request: Request):
             "login_error": strings["auth"].get(login_error_key) if login_error_key else None,
             "signup_error": strings["auth"].get(signup_error_key) if signup_error_key else None,
             "signup_success": strings["auth"].get(signup_success_key) if signup_success_key else None,
-            "preferred_role": preferred_role,
         },
     )
 
