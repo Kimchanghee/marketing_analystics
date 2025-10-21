@@ -41,6 +41,14 @@
     ],
     "cta_creator": "Start free",
     "cta_manager": "Talk to sales",
+    "auth_section": {
+      "login_title": "Log in instantly",
+      "login_description": "Use your email and password to open the dashboard.",
+      "advanced_login": "More login options",
+      "signup_title": "Create a new account",
+      "signup_description": "Register a creator or manager workspace in minutes.",
+      "advanced_signup": "Open full sign-up page"
+    },
     "preview_title": "Live channel insight",
     "mock_metric": "Weekly trend",
     "platforms": {
@@ -206,7 +214,9 @@
     "signup_hint": "Need an account?",
     "signup_link": "Create one",
     "invalid_credentials": "We couldn't match those credentials.",
-    "account_inactive": "This account is currently inactive. Please contact support."
+    "account_inactive": "This account is currently inactive. Please contact support.",
+    "email_exists": "This email address is already registered.",
+    "signup_success": "Your account is ready. Log in to continue."
   },
   "dashboard": {
     "welcome": "Welcome",
@@ -957,7 +967,34 @@
     "save": "Save changes",
     "total_members": "Total members",
     "activity": "Latest activity",
-    "no_details": "No additional details"
+    "no_details": "No additional details",
+    "payments": "Payments",
+    "payments_description": "Record manual charges and track their current status."
+  },
+  "payments": {
+    "title": "Payment history",
+    "create_title": "Record payment",
+    "description": "Each entry reflects an invoice, transfer, or refund processed outside the automated billing flow.",
+    "empty": "No payments recorded yet.",
+    "fields": {
+      "user": "Member",
+      "amount": "Amount",
+      "currency": "Currency",
+      "status": "Status",
+      "period_start": "Period start",
+      "period_end": "Period end",
+      "description": "Memo"
+    },
+    "actions": {
+      "create": "Add payment",
+      "update": "Update status"
+    },
+    "status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    }
   },
   "profile": {
     "title": "Your profile",

@@ -41,6 +41,14 @@
     ],
     "cta_creator": "무료로 시작하기",
     "cta_manager": "기업 상담 예약",
+    "auth_section": {
+      "login_title": "바로 로그인",
+      "login_description": "이메일과 비밀번호로 즉시 대시보드를 열어보세요.",
+      "advanced_login": "다른 로그인 옵션",
+      "signup_title": "새 계정 만들기",
+      "signup_description": "크리에이터 또는 매니저 계정을 몇 분 안에 등록하세요.",
+      "advanced_signup": "전체 회원가입 페이지로 이동"
+    },
     "preview_title": "실시간 채널 인사이트",
     "mock_metric": "현재 주간 동향",
     "platforms": {
@@ -206,7 +214,9 @@
     "signup_hint": "계정이 없으신가요?",
     "signup_link": "회원가입",
     "invalid_credentials": "이메일 또는 비밀번호가 일치하지 않습니다.",
-    "account_inactive": "비활성화된 계정입니다. 관리자에게 문의하세요."
+    "account_inactive": "비활성화된 계정입니다. 관리자에게 문의하세요.",
+    "email_exists": "이미 등록된 이메일입니다.",
+    "signup_success": "계정이 준비되었습니다. 로그인 후 이용하세요."
   },
   "dashboard": {
     "welcome": "환영합니다",
@@ -957,7 +967,34 @@
     "save": "저장",
     "total_members": "전체 회원",
     "activity": "최근 활동",
-    "no_details": "추가 정보 없음"
+    "no_details": "추가 정보 없음",
+    "payments": "결제 관리",
+    "payments_description": "수동 청구 및 결제 상태를 기록하고 관리하세요."
+  },
+  "payments": {
+    "title": "결제 내역",
+    "create_title": "결제 기록 추가",
+    "description": "자동 과금 외에 발생한 청구, 이체, 환불 내역을 저장합니다.",
+    "empty": "등록된 결제 내역이 없습니다.",
+    "fields": {
+      "user": "회원",
+      "amount": "금액",
+      "currency": "통화",
+      "status": "상태",
+      "period_start": "시작일",
+      "period_end": "종료일",
+      "description": "메모"
+    },
+    "actions": {
+      "create": "결제 추가",
+      "update": "상태 변경"
+    },
+    "status": {
+      "pending": "대기",
+      "paid": "결제 완료",
+      "failed": "실패",
+      "refunded": "환불"
+    }
   },
   "profile": {
     "title": "내 정보",

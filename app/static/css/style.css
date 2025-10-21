@@ -1283,6 +1283,48 @@ a:hover {
     color: var(--danger);
 }
 
+.form-alert.success {
+    border-color: rgba(34, 197, 94, 0.28);
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.auth-showcase {
+    display: grid;
+    gap: 2.5rem;
+    margin: 4rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: stretch;
+}
+
+.auth-showcase .landing-auth {
+    max-width: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.auth-showcase .landing-auth form {
+    flex: 1;
+}
+
+.auth-description {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.auth-hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-subtle);
+}
+
+.auth-hint a {
+    font-weight: 600;
+}
+
 input,
 select {
     padding: 0.75rem 1rem;
@@ -1487,6 +1529,57 @@ select:focus {
 .admin-card h2 {
     margin-top: 0;
     margin-bottom: 1.5rem;
+}
+
+.admin-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-subtext {
+    margin: 0;
+    color: var(--text-subtle);
+}
+
+.admin-form {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.form-row-wide {
+    grid-column: 1 / -1;
+}
+
+.form-row label {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-subtle);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.empty-state {
+    margin: 1.5rem 0;
+    color: var(--text-subtle);
+    text-align: center;
+}
+
+.stacked {
+    display: grid;
+    gap: 0.25rem;
 }
 
 .admin-table-wrapper {

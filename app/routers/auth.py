@@ -15,9 +15,15 @@ router = APIRouter()
 def login_page(request: Request):
     locale = getattr(request.state, "locale", request.query_params.get("lang", "ko"))
     strings = translator.load_locale(locale)
+    signup_status = request.query_params.get("signup")
     return request.app.state.templates.TemplateResponse(
         "login.html",
-        {"request": request, "locale": locale, "t": strings},
+        {
+            "request": request,
+            "locale": locale,
+            "t": strings,
+            "success": strings["auth"].get("signup_success") if signup_status == "success" else None,
+        },
     )
 
 
@@ -26,12 +32,16 @@ def login(
     request: Request,
     email: str = Form(...),
     password: str = Form(...),
+    origin: str | None = Form(None),
     session=Depends(get_session),
 ):
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
     user = session.exec(select(User).where(User.email == email)).first()
     if not user or not auth_manager.verify_password(password, user.hashed_password):
+        if origin == "landing":
+            redirect_url = f"/?lang={locale}&login_error=invalid_credentials"
+            return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
         return request.app.state.templates.TemplateResponse(
             "login.html",
             {
@@ -43,6 +53,9 @@ def login(
             status_code=status.HTTP_400_BAD_REQUEST,
         )
     if not user.is_active:
+        if origin == "landing":
+            redirect_url = f"/?lang={locale}&login_error=account_inactive"
+            return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
         return request.app.state.templates.TemplateResponse(
             "login.html",
             {
@@ -75,16 +88,31 @@ def signup_page(request: Request):
 
 @router.post("/signup")
 def signup(
+    request: Request,
     email: EmailStr = Form(...),
     password: str = Form(...),
     role: UserRole = Form(UserRole.CREATOR),
     locale: str = Form("ko"),
     organization: str | None = Form(None),
+    origin: str | None = Form(None),
     session=Depends(get_session),
 ):
+    strings = translator.load_locale(locale)
     existing = session.exec(select(User).where(User.email == email)).first()
     if existing:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
+        if origin == "landing":
+            redirect_url = f"/?lang={locale}&signup_error=email_exists&role={role.value}"
+            return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
+        return request.app.state.templates.TemplateResponse(
+            "signup.html",
+            {
+                "request": request,
+                "locale": locale,
+                "t": strings,
+                "error": strings["auth"].get("email_exists", "Email already registered"),
+            },
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
 
     hashed_password = auth_manager.hash_password(password)
     user = User(
@@ -101,7 +129,12 @@ def signup(
     session.add(subscription)
     session.add(ActivityLog(user_id=user.id, action="signup"))
     session.commit()
-    return {"message": "Account created", "email": user.email}
+    success_key = "signup_success"
+    if origin == "landing":
+        redirect_url = f"/?lang={locale}&signup_success={success_key}"
+    else:
+        redirect_url = f"/login?signup=success&lang={locale}"
+    return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
 
 @router.post("/logout")
