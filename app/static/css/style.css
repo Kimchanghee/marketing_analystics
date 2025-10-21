@@ -701,14 +701,58 @@ a:hover {
     color: var(--text-primary);
 }
 
+.pricing-switcher {
+    margin: 3rem 0 1.5rem;
+}
+
+.pricing-toggle {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+}
+
+.pricing-toggle-button {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background var(--transition-base), color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.pricing-toggle-button:hover,
+.pricing-toggle-button:focus-visible {
+    color: var(--accent);
+    background: rgba(230, 57, 70, 0.12);
+    outline: none;
+}
+
+.pricing-toggle-button.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 12px 24px rgba(221, 42, 123, 0.28);
+}
+
 .pricing-categories {
     display: grid;
     gap: 3rem;
 }
 
 .plan-category {
-    display: grid;
+    display: none;
     gap: 2rem;
+}
+
+.plan-category.is-active {
+    display: grid;
 }
 
 .plan-category-header {
@@ -1217,6 +1261,19 @@ select:focus {
 
     .pricing-categories {
         gap: 2.5rem;
+    }
+
+    .pricing-switcher {
+        margin: 2.5rem 0 1rem;
+        text-align: center;
+    }
+
+    .pricing-toggle {
+        justify-content: center;
+    }
+
+    .pricing-toggle-button {
+        flex: 1 1 140px;
     }
 
     .plan-category-header {
