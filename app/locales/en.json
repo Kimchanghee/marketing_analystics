@@ -172,7 +172,10 @@
     "login_button": "Log in",
     "signup_button": "Sign up",
     "signup_hint": "Need an account?",
-    "signup_link": "Create one"
+    "signup_link": "Create one",
+    "errors": {
+      "invalid_credentials": "The email or password is incorrect."
+    }
   },
   "dashboard": {
     "welcome": "Welcome",
@@ -614,7 +617,50 @@
     "email": "Email",
     "role": "Role",
     "plan": "Plan",
-    "activity": "Latest activity"
+    "activity": "Latest activity",
+    "activity_empty": "No activity recorded yet.",
+    "create": {
+      "title": "Invite a new member",
+      "description": "Provision access, assign a role, and set subscription limits in one step.",
+      "email": "Email",
+      "password": "Temporary password",
+      "role": "Role",
+      "locale": "Default language",
+      "organization": "Organization",
+      "optional": "Optional",
+      "subscription": "Subscription tier",
+      "max_accounts": "Channel slots",
+      "active": "Active subscription",
+      "submit": "Create member"
+    },
+    "manage": {
+      "title": "Manage existing members",
+      "description": "Update permissions, adjust plan limits, and keep credentials up to date.",
+      "role": "Role",
+      "subscription": "Plan",
+      "max_accounts": "Channel slots",
+      "locale": "Language",
+      "organization": "Organization",
+      "active": "Active",
+      "actions": "Actions",
+      "update_button": "Save changes",
+      "new_password": "New password",
+      "reset_button": "Reset password",
+      "delete_button": "Remove member",
+      "empty": "No members available yet."
+    },
+    "flash": {
+      "user_created": "Member added successfully.",
+      "user_updated": "Member details updated.",
+      "password_reset": "Password reset and ready to share.",
+      "user_deleted": "Member removed from the workspace."
+    },
+    "errors": {
+      "user_exists": "A user with that email already exists.",
+      "password_short": "Passwords must be at least 8 characters long.",
+      "user_missing": "The selected user could not be found.",
+      "cannot_delete_self": "You cannot delete your own super admin account."
+    }
   },
   "profile": {
     "title": "Your profile",

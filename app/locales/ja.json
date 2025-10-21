@@ -172,7 +172,10 @@
     "login_button": "ログイン",
     "signup_button": "登録",
     "signup_hint": "アカウントが必要ですか？",
-    "signup_link": "こちら"
+    "signup_link": "こちら",
+    "errors": {
+      "invalid_credentials": "メールまたはパスワードが正しくありません。"
+    }
   },
   "dashboard": {
     "welcome": "ようこそ",
@@ -614,7 +617,50 @@
     "email": "メール",
     "role": "役割",
     "plan": "プラン",
-    "activity": "最近の活動"
+    "activity": "最近の活動",
+    "activity_empty": "まだ活動履歴はありません。",
+    "create": {
+      "title": "新しいメンバーを招待",
+      "description": "役割とサブスクリプション制限を一度に設定します。",
+      "email": "メール",
+      "password": "仮パスワード",
+      "role": "役割",
+      "locale": "既定の言語",
+      "organization": "組織 / チーム",
+      "optional": "任意",
+      "subscription": "サブスクリプション階層",
+      "max_accounts": "チャネル枠",
+      "active": "サブスクリプションを有効化",
+      "submit": "メンバーを作成"
+    },
+    "manage": {
+      "title": "既存メンバーを管理",
+      "description": "権限やプラン枠を調整し、資格情報を最新に保ちます。",
+      "role": "役割",
+      "subscription": "プラン",
+      "max_accounts": "チャネル枠",
+      "locale": "言語",
+      "organization": "組織 / チーム",
+      "active": "有効",
+      "actions": "操作",
+      "update_button": "変更を保存",
+      "new_password": "新しいパスワード",
+      "reset_button": "パスワードをリセット",
+      "delete_button": "メンバーを削除",
+      "empty": "メンバーがまだ登録されていません。"
+    },
+    "flash": {
+      "user_created": "メンバーを追加しました。",
+      "user_updated": "メンバー情報を更新しました。",
+      "password_reset": "パスワードをリセットしました。",
+      "user_deleted": "メンバーを削除しました。"
+    },
+    "errors": {
+      "user_exists": "このメールは既に登録されています。",
+      "password_short": "パスワードは8文字以上で入力してください。",
+      "user_missing": "対象のメンバーが見つかりません。",
+      "cannot_delete_self": "自分のスーパー管理者アカウントは削除できません。"
+    }
   },
   "profile": {
     "title": "プロフィール",
