@@ -5,14 +5,45 @@
     {% if success %}
     <div class="form-alert success">{{ success }}</div>
     {% endif %}
+    {% if social_success %}
+    <div class="form-alert success">{{ social_success }}</div>
+    {% endif %}
+    {% if recovery_message %}
+    <div class="form-alert info">{{ recovery_message }}</div>
+    {% endif %}
     {% if error %}
     <div class="form-alert error">{{ error }}</div>
     {% endif %}
-    <form method="post" action="/login">
-        <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-        <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>
-        <button class="btn primary" type="submit">{{ t['auth']['login_button'] }}</button>
-    </form>
-    <p class="hint">{{ t['auth']['signup_hint'] }} <a href="/signup">{{ t['auth']['signup_link'] }}</a></p>
+    {% if social_error %}
+    <div class="form-alert error">{{ social_error }}</div>
+    {% endif %}
+    <div class="auth-panels">
+        <div class="auth-panel">
+            <h2>{{ t['auth']['email_login_title'] }}</h2>
+            <form method="post" action="/login">
+                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
+                <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>
+                <button class="btn primary" type="submit">{{ t['auth']['login_button'] }}</button>
+            </form>
+            <p class="hint">{{ t['auth']['recover_hint'] }} <a href="/recover">{{ t['auth']['recover_link'] }}</a></p>
+            <p class="hint">{{ t['auth']['signup_hint'] }} <a href="/signup">{{ t['auth']['signup_link'] }}</a></p>
+        </div>
+        <div class="auth-panel">
+            <h2>{{ t['auth']['social_login_title'] }}</h2>
+            <form method="post" action="/login/social">
+                <input type="hidden" name="locale" value="{{ locale }}">
+                <label>{{ t['auth']['provider'] }}
+                    <select name="provider">
+                        {% for provider in providers %}
+                        <option value="{{ provider.value }}">{{ t['auth']['providers'][provider.value] }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>{{ t['auth']['provider_account'] }}<input type="text" name="provider_user_id" required></label>
+                <button class="btn secondary" type="submit">{{ t['auth']['social_login_button'] }}</button>
+            </form>
+            <p class="hint">{{ t['auth']['social_hint'] }}</p>
+        </div>
+    </div>
 </section>
 {% endblock %}

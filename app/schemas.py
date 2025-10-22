@@ -12,6 +12,7 @@ class UserCreate(BaseModel):
     role: UserRole = UserRole.CREATOR
     locale: str = "ko"
     organization: Optional[str] = None
+    name: Optional[str] = None
 
 
 class UserRead(BaseModel):
@@ -20,6 +21,7 @@ class UserRead(BaseModel):
     role: UserRole
     locale: str
     organization: Optional[str]
+    name: Optional[str]
 
     class Config:
         orm_mode = True

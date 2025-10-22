@@ -2,27 +2,99 @@
 {% block content %}
 <section class="auth-card">
     <h1>{{ t['auth']['signup_title'] }}</h1>
+    {% if success %}
+    <div class="form-alert success">{{ success }}</div>
+    {% endif %}
+    {% if code_status %}
+    <div class="form-alert info">{{ code_status }}</div>
+    {% endif %}
     {% if error %}
     <div class="form-alert error">{{ error }}</div>
     {% endif %}
-    <form method="post" action="/signup">
-        <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-        <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>
-        <label>{{ t['auth']['role'] }}
-            <select name="role">
-                <option value="creator">{{ t['roles']['creator'] }}</option>
-                <option value="manager">{{ t['roles']['manager'] }}</option>
-            </select>
-        </label>
-        <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
-        <label>{{ t['auth']['language'] }}
-            <select name="locale">
-                <option value="ko">한국어</option>
-                <option value="en">English</option>
-                <option value="ja">日本語</option>
-            </select>
-        </label>
-        <button class="btn primary" type="submit">{{ t['auth']['signup_button'] }}</button>
-    </form>
+    <div class="auth-panels">
+        <div class="auth-panel">
+            <h2>{{ t['auth']['verification_request_title'] }}</h2>
+            <form method="post" action="/signup/request-code">
+                <input type="hidden" name="locale" value="{{ locale }}">
+                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
+                <button class="btn secondary" type="submit">{{ t['auth']['send_verification'] }}</button>
+            </form>
+            <p class="hint">{{ t['auth']['verification_hint'] }}</p>
+        </div>
+        <div class="auth-panel">
+            <h2>{{ t['auth']['consent_title'] }}</h2>
+            <p>{{ t['auth']['consent_description'] }}</p>
+            <ul class="consent-list">
+                <li>{{ t['auth']['consent_privacy_detail'] }}</li>
+                <li>{{ t['auth']['consent_terms_detail'] }}</li>
+                <li>{{ t['auth']['consent_marketing_detail'] }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="auth-panels">
+        <div class="auth-panel">
+            <h2>{{ t['auth']['email_signup_title'] }}</h2>
+            <form method="post" action="/signup">
+                <label>{{ t['auth']['name'] }}<input type="text" name="name" required></label>
+                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
+                <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>
+                <label>{{ t['auth']['verification_code'] }}<input type="text" name="verification_code" required></label>
+                <label>{{ t['auth']['role'] }}
+                    <select name="role">
+                        <option value="creator" {% if default_role == 'creator' %}selected{% endif %}>{{ t['roles']['creator'] }}</option>
+                        <option value="manager" {% if default_role == 'manager' %}selected{% endif %}>{{ t['roles']['manager'] }}</option>
+                    </select>
+                </label>
+                <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
+                <label>{{ t['auth']['language'] }}
+                    <select name="locale">
+                        <option value="ko" {% if locale == 'ko' %}selected{% endif %}>한국어</option>
+                        <option value="en" {% if locale == 'en' %}selected{% endif %}>English</option>
+                        <option value="ja" {% if locale == 'ja' %}selected{% endif %}>日本語</option>
+                    </select>
+                </label>
+                <label class="consent-option"><input type="checkbox" name="privacy_agreement" required> {{ t['auth']['consent_privacy'] }}</label>
+                <label class="consent-option"><input type="checkbox" name="guidance_agreement" required> {{ t['auth']['consent_terms'] }}</label>
+                <input type="hidden" name="origin" value="form">
+                <button class="btn primary" type="submit">{{ t['auth']['signup_button'] }}</button>
+            </form>
+        </div>
+        <div class="auth-panel">
+            <h2>{{ t['auth']['social_signup_title'] }}</h2>
+            <form method="post" action="/signup/social">
+                <label>{{ t['auth']['name'] }}<input type="text" name="name" required></label>
+                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
+                <label>{{ t['auth']['verification_code'] }}<input type="text" name="verification_code" required></label>
+                <label>{{ t['auth']['provider'] }}
+                    <select name="provider">
+                        {% for provider in providers %}
+                        <option value="{{ provider.value }}">{{ t['auth']['providers'][provider.value] }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>{{ t['auth']['provider_account'] }}<input type="text" name="provider_user_id" required></label>
+                <label>{{ t['auth']['password_optional'] }}<input type="password" name="password"></label>
+                <label>{{ t['auth']['language'] }}
+                    <select name="locale">
+                        <option value="ko" {% if locale == 'ko' %}selected{% endif %}>한국어</option>
+                        <option value="en" {% if locale == 'en' %}selected{% endif %}>English</option>
+                        <option value="ja" {% if locale == 'ja' %}selected{% endif %}>日本語</option>
+                    </select>
+                </label>
+                <label>{{ t['auth']['role'] }}
+                    <select name="role">
+                        <option value="creator" {% if default_role == 'creator' %}selected{% endif %}>{{ t['roles']['creator'] }}</option>
+                        <option value="manager" {% if default_role == 'manager' %}selected{% endif %}>{{ t['roles']['manager'] }}</option>
+                    </select>
+                </label>
+                <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
+                <label class="consent-option"><input type="checkbox" name="privacy_agreement" required> {{ t['auth']['consent_privacy'] }}</label>
+                <label class="consent-option"><input type="checkbox" name="guidance_agreement" required> {{ t['auth']['consent_terms'] }}</label>
+                <input type="hidden" name="origin" value="form">
+                <button class="btn secondary" type="submit">{{ t['auth']['social_signup_button'] }}</button>
+            </form>
+            <p class="hint">{{ t['auth']['social_signup_hint'] }}</p>
+        </div>
+    </div>
 </section>
 {% endblock %}

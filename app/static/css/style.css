@@ -1267,7 +1267,7 @@ a:hover {
 
 .auth-card,
 .profile-card {
-    max-width: 460px;
+    max-width: 900px;
     margin: 0 auto;
     background: var(--surface-primary);
     padding: 2.5rem;
@@ -1280,6 +1280,106 @@ a:hover {
 .profile-card form {
     display: grid;
     gap: 1rem;
+}
+
+.profile-card form.inline-form {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.auth-panels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.auth-panel {
+    background: var(--surface-elevated);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    display: grid;
+    gap: 1rem;
+}
+
+.auth-panel h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.auth-panel form {
+    display: grid;
+    gap: 1rem;
+}
+
+.consent-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.consent-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.consent-option input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge.success {
+    background: rgba(34, 197, 94, 0.18);
+    color: var(--success);
+}
+
+.badge.muted {
+    background: rgba(148, 163, 184, 0.2);
+    color: var(--text-subtle);
+}
+
+.profile-section {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.profile-section form {
+    display: grid;
+    gap: 1rem;
+}
+
+.social-account-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.inline-form {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .auth-card label,
@@ -1308,6 +1408,12 @@ a:hover {
     border-color: rgba(34, 197, 94, 0.28);
     background: rgba(16, 185, 129, 0.15);
     color: var(--success);
+}
+
+.form-alert.info {
+    border-color: rgba(59, 130, 246, 0.28);
+    background: rgba(96, 165, 250, 0.15);
+    color: var(--accent-soft);
 }
 
 .auth-showcase {
