@@ -38,7 +38,7 @@
                 </form>
             </header>
             <p>{{ t['dashboard']['account_label'] }}: {{ account.account_name }}</p>
-            {% set snapshot = snapshots.get(account.platform) %}
+            {% set snapshot = snapshots.get(account.id) %}
             {% if snapshot %}
             <ul class="metrics">
                 <li>{{ t['dashboard']['followers'] }}: {{ snapshot['followers'] }}</li>
