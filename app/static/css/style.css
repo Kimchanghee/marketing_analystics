@@ -1316,6 +1316,72 @@ a:hover {
     gap: 1rem;
 }
 
+.social-button-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.social-button-grid .btn.social {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    background: var(--surface-primary);
+    color: var(--text-primary);
+    box-shadow: none;
+}
+
+.btn.social.google {
+    background: #ffffff;
+    color: #1a73e8;
+    border-color: rgba(26, 115, 232, 0.35);
+}
+
+[data-theme='dark'] .btn.social.google {
+    background: rgba(26, 115, 232, 0.15);
+    color: #93c5fd;
+}
+
+.btn.social.apple {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: rgba(15, 23, 42, 0.45);
+}
+
+[data-theme='light'] .btn.social.apple {
+    background: #050505;
+    color: #ffffff;
+}
+
+.social-complete {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-color);
+    background: var(--surface-primary);
+}
+
+.social-complete h3 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.manual-social {
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    background: var(--surface-primary);
+}
+
+.manual-social summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.manual-social[open] {
+    box-shadow: var(--card-shadow);
+}
+
 .consent-list {
     margin: 0;
     padding-left: 1.25rem;
