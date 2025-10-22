@@ -576,6 +576,7 @@ a:hover {
 .slider {
     position: relative;
     margin: 3.5rem 0;
+    padding: 0 3.25rem;
 }
 
 .slider-viewport {
@@ -584,7 +585,7 @@ a:hover {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     padding: 0.5rem 0;
-    margin: 0 -0.5rem;
+    margin: 0;
 }
 
 .slider-viewport::-webkit-scrollbar {
@@ -631,7 +632,8 @@ a:hover {
     box-shadow: var(--shadow-soft);
     cursor: pointer;
     transition: background var(--transition-base), color var(--transition-base), border var(--transition-base);
-    z-index: 10;
+    z-index: 20;
+    opacity: 1;
 }
 
 .slider-button:hover {
@@ -649,11 +651,25 @@ a:hover {
 }
 
 .slider-button-prev {
-    left: -1rem;
+    left: 0.75rem;
 }
 
 .slider-button-next {
-    right: -1rem;
+    right: 0.75rem;
+}
+
+@media (max-width: 719px) {
+    .slider {
+        padding: 0 2.5rem;
+    }
+
+    .slider-button-prev {
+        left: 0.5rem;
+    }
+
+    .slider-button-next {
+        right: 0.5rem;
+    }
 }
 
 .testimonial-slider {

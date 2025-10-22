@@ -72,6 +72,14 @@
             return clone;
         };
 
+        const normalize = (value) => {
+            if (!items.length) {
+                return 0;
+            }
+
+            return ((value % items.length) + items.length) % items.length;
+        };
+
         const scrollToIndex = (index, behavior = 'smooth') => {
             const allItems = getAllItems();
 
@@ -161,11 +169,8 @@
 
             window.clearTimeout(animationTimer);
             animationTimer = window.setTimeout(() => {
-                if (currentIndex >= items.length) {
-                    currentIndex = 0;
-                    jumpToIndex(currentIndex);
-                } else if (currentIndex < 0) {
-                    currentIndex = items.length - 1;
+                if (currentIndex >= items.length || currentIndex < 0) {
+                    currentIndex = normalize(currentIndex);
                     jumpToIndex(currentIndex);
                 }
 
