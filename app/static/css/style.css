@@ -631,7 +631,7 @@ a:hover {
     box-shadow: var(--shadow-soft);
     cursor: pointer;
     transition: background var(--transition-base), color var(--transition-base), border var(--transition-base);
-    z-index: 2;
+    z-index: 10;
 }
 
 .slider-button:hover {
@@ -654,13 +654,6 @@ a:hover {
 
 .slider-button-next {
     right: -1rem;
-}
-
-@media (max-width: 640px) {
-    .slider-button-prev,
-    .slider-button-next {
-        display: none;
-    }
 }
 
 .testimonial-slider {
