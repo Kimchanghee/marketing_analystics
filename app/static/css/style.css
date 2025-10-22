@@ -631,6 +631,7 @@ a:hover {
     box-shadow: var(--shadow-soft);
     cursor: pointer;
     transition: background var(--transition-base), color var(--transition-base), border var(--transition-base);
+    z-index: 2;
 }
 
 .slider-button:hover {
