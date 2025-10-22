@@ -2,7 +2,7 @@ import enum
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from sqlalchemy import Column
+from sqlalchemy import Column, UniqueConstraint
 from sqlalchemy.types import JSON
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -27,13 +27,21 @@ class User(SQLModel, table=True):
     role: UserRole = Field(default=UserRole.CREATOR)
     locale: str = Field(default="ko")
     organization: Optional[str] = None
+    name: Optional[str] = None
     is_active: bool = Field(default=True)
+    is_email_verified: bool = Field(default=False)
+    password_login_enabled: bool = Field(default=True)
+    privacy_consent: bool = Field(default=False)
+    guidance_consent: bool = Field(default=False)
     created_at: datetime = Field(default_factory=datetime.utcnow)
+    password_set_at: Optional[datetime] = None
 
     channels: list["ChannelAccount"] = Relationship(back_populates="owner")
     managed_creators: list["ManagerCreatorLink"] = Relationship(back_populates="manager")
     managers: list["ManagerCreatorLink"] = Relationship(back_populates="creator")
     payments: list["Payment"] = Relationship(back_populates="user")
+    social_accounts: list["SocialAccount"] = Relationship(back_populates="user")
+    password_reset_tokens: list["PasswordResetToken"] = Relationship(back_populates="user")
 
 
 class ChannelAccount(SQLModel, table=True):
@@ -155,6 +163,28 @@ class ChannelCredential(SQLModel, table=True):
         }
 
 
+class SocialProvider(str, enum.Enum):
+    GOOGLE = "google"
+    APPLE = "apple"
+    EMAIL = "email"
+
+
+class SocialAccount(SQLModel, table=True):
+    __table_args__ = (UniqueConstraint("provider", "provider_user_id", name="uq_provider_user"),)
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    provider: SocialProvider
+    provider_user_id: str = Field(index=True)
+    metadata_json: Dict[str, Any] = Field(
+        default_factory=dict,
+        sa_column=Column(JSON, nullable=False, default=dict),
+    )
+    linked_at: datetime = Field(default_factory=datetime.utcnow)
+
+    user: User = Relationship(back_populates="social_accounts")
+
+
 class PaymentStatus(str, enum.Enum):
     PENDING = "pending"
     PAID = "paid"
@@ -174,3 +204,25 @@ class Payment(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     user: "User" = Relationship(back_populates="payments")
+
+
+class EmailVerification(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(index=True)
+    code_hash: str
+    locale: str = Field(default="ko")
+    verified: bool = Field(default=False)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    expires_at: datetime
+    attempt_count: int = Field(default=0)
+
+
+class PasswordResetToken(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    token_hash: str = Field(index=True, unique=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    expires_at: datetime
+    used: bool = Field(default=False)
+
+    user: User = Relationship(back_populates="password_reset_tokens")

@@ -9,9 +9,10 @@ from sqlmodel import select
 from .auth import auth_manager
 from .database import get_session, init_db
 from .dependencies import get_current_user
-from .models import User
+from .models import SocialAccount, User
 from .routers import admin, auth, dashboard, subscriptions
 from .services.localization import translator
+from .services.social_auth import social_auth_service
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -112,13 +113,36 @@ async def support(request: Request):
 
 
 @app.get("/profile")
-async def profile(request: Request, user: User = Depends(get_current_user)):
-    locale = user.locale
+async def profile(
+    request: Request,
+    user: User = Depends(get_current_user),
+    session=Depends(get_session),
+):
+    db_user = session.exec(select(User).where(User.id == user.id)).first() or user
+    social_accounts = session.exec(
+        select(SocialAccount).where(SocialAccount.user_id == db_user.id)
+    ).all()
+    locale = db_user.locale
     strings = translator.load_locale(locale)
-    return app.state.templates.TemplateResponse(
-        "profile.html",
-        {"request": request, "user": user, "t": strings, "locale": locale},
-    )
+    social_status = request.query_params.get("social")
+    credentials_status = request.query_params.get("credentials")
+    credentials_error_key = request.query_params.get("credentials_error")
+    code_status = request.query_params.get("code")
+    social_error_key = request.query_params.get("social_error")
+    context = {
+        "request": request,
+        "user": db_user,
+        "t": strings,
+        "locale": locale,
+        "providers": list(social_auth_service.get_supported_providers()),
+        "social_success": strings["auth"].get("social_linked") if social_status == "linked" else None,
+        "credentials_success": strings["auth"].get("password_updated") if credentials_status == "updated" else None,
+        "credentials_error": strings["auth"].get(credentials_error_key) if credentials_error_key else None,
+        "code_status": strings["auth"].get("verification_sent") if code_status == "sent" else None,
+        "social_error": strings["auth"].get(social_error_key) if social_error_key else None,
+        "social_accounts": social_accounts,
+    }
+    return app.state.templates.TemplateResponse("profile.html", context)
 
 
 app.include_router(auth.router)
