@@ -52,13 +52,15 @@ def _with_metadata(metrics: Dict[str, Any], *, source: str, error: str | None = 
     return metrics
 
 
-def fetch_channel_snapshots(accounts: List[ChannelAccount]) -> Dict[str, Dict[str, Any]]:
-    snapshots: Dict[str, Dict[str, Any]] = {}
+def fetch_channel_snapshots(accounts: List[ChannelAccount]) -> Dict[int, Dict[str, Any]]:
+    snapshots: Dict[int, Dict[str, Any]] = {}
     for account in accounts:
+        if account.id is None:
+            continue
         connector = get_connector(account.platform)
         if not connector:
             metrics = generate_mock_metrics(account.account_name)
-            snapshots[account.platform] = _with_metadata(
+            snapshots[account.id] = _with_metadata(
                 metrics,
                 source="mock",
                 error="지원되지 않는 채널입니다.",
@@ -71,17 +73,17 @@ def fetch_channel_snapshots(accounts: List[ChannelAccount]) -> Dict[str, Dict[st
             metrics.setdefault("growth_rate", 0.0)
             metrics.setdefault("engagement_rate", 0.0)
             metrics.setdefault("account", account.account_name)
-            snapshots[account.platform] = _with_metadata(metrics, source="api")
+            snapshots[account.id] = _with_metadata(metrics, source="api")
         except ChannelConnectorConfigError as exc:
             metrics = generate_mock_metrics(account.account_name)
-            snapshots[account.platform] = _with_metadata(
+            snapshots[account.id] = _with_metadata(
                 metrics,
                 source="mock",
                 error=str(exc),
             )
         except ChannelConnectorError as exc:
             metrics = generate_mock_metrics(account.account_name)
-            snapshots[account.platform] = _with_metadata(
+            snapshots[account.id] = _with_metadata(
                 metrics,
                 source="mock",
                 error=str(exc),
