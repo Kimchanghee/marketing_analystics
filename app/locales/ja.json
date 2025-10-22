@@ -229,10 +229,10 @@
     "verification_hint": "6桁のコードをメールで送信します。期限内に入力してください。",
     "verification_request_title": "認証コードのリクエスト",
     "consent_title": "必須の個人情報同意",
-    "consent_description": "多くの国で求められる個人情報と案内の同意事項を確認してください。",
-    "consent_privacy_detail": "個人情報はプライバシーポリシーに基づき取り扱います。",
-    "consent_terms_detail": "サービス案内やオンボーディングのメッセージを受け取ります。",
-    "consent_marketing_detail": "任意のマーケティング通知はログイン後に変更できます。",
+    "consent_description": "提供サービスのために収集・利用する個人情報の項目、保存期間、必須通知の内容を必ずご確認ください。この同意はアカウントの作成と運用に不可欠であり、適用される法令および利用規約に基づきます。",
+    "consent_privacy_detail": "収集項目: 氏名、メールアドレス、所属・役割情報、サービス利用ログ。利用目的: アカウント作成、セキュリティ監視、サポート対応。保存期間: 退会後30日または法令で義務付けられた期間まで安全に保管します。",
+    "consent_terms_detail": "サービス運用上の重要なお知らせ、オンボーディングガイド、セキュリティ通知、ポリシー変更をメールまたはアプリ内でお届けします。重大な変更はマーケティング設定に関わらず通知される場合があります。",
+    "consent_marketing_detail": "オプトインするとニュースレター、新機能の紹介、イベント招待などのマーケティング情報をメールで受け取れます。受信設定はプロフィール→通知設定でいつでも変更できます。",
     "consent_privacy": "プライバシーポリシーに同意します。",
     "consent_terms": "サービス案内とオンボーディングの受信に同意します。",
     "login_button": "ログイン",
@@ -287,7 +287,16 @@
     "reset_token": "再設定トークン",
     "social_link_title": "ソーシャルアカウントの案内",
     "social_link_hint": "ログインページでGoogleまたはAppleでサインインした後、ここで連携してください。",
-    "social_link_profile_hint": "連携後はパスワードを設定してログイン方法を統一できます。"
+    "social_link_profile_hint": "連携後はパスワードを設定してログイン方法を統一できます。",
+    "social_signup_description": "以下のボタンから Google または Apple で登録を開始してください。認可後に共有された氏名とメールアドレスを確認し、不足している情報を入力すれば完了です。",
+    "social_complete_title": "{provider} から受け取った情報を確認してください",
+    "social_complete_description": "認証コードと必須項目を入力して登録を完了させましょう。このソーシャルアカウントで再度サインインすると、保存された情報が自動的に利用されます。",
+    "social_manual_summary": "手動で連携する必要がありますか？",
+    "social_manual_help": "テストや管理者向けシナリオでは、下記フォームから提供元アカウントIDを直接入力できます。",
+    "social_buttons": {
+      "google": "Google で続行",
+      "apple": "Apple ID で続行"
+    }
   },
   "dashboard": {
     "welcome": "ようこそ",

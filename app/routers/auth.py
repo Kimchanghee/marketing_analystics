@@ -193,12 +193,21 @@ def signup_page(request: Request):
     code_status = request.query_params.get("code")
     error_key = request.query_params.get("signup_error")
     success_key = request.query_params.get("signup_success")
+    selected_provider = request.query_params.get("provider")
+    if selected_provider:
+        try:
+            provider_enum = SocialProvider(selected_provider)
+        except ValueError:
+            selected_provider = None
+        else:
+            selected_provider = provider_enum.value
     context = {
         "providers": list(social_auth_service.get_supported_providers()),
         "code_status": strings["auth"].get("verification_sent") if code_status == "sent" else None,
         "error": strings["auth"].get(error_key) if error_key else None,
         "success": strings["auth"].get(success_key) if success_key else None,
         "default_role": request.query_params.get("role", UserRole.CREATOR.value),
+        "selected_provider": selected_provider,
     }
     return request.app.state.templates.TemplateResponse(
         "signup.html", _template_context(request, locale, strings, context)
@@ -336,7 +345,7 @@ def signup(
 def social_signup(
     request: Request,
     provider: str = Form(...),
-    provider_user_id: str = Form(...),
+    provider_user_id: str | None = Form(None),
     email: EmailStr = Form(...),
     name: str = Form(...),
     locale: str = Form("ko"),
@@ -404,6 +413,12 @@ def social_signup(
             status_code=status.HTTP_400_BAD_REQUEST,
         )
 
+    derived_provider_user_id = (
+        provider_user_id.strip()
+        if provider_user_id and provider_user_id.strip()
+        else f"{provider_enum.value}:{email.strip().lower()}"
+    )
+
     existing_user = session.exec(select(User).where(User.email == email)).first()
     if existing_user:
         try:
@@ -411,7 +426,7 @@ def social_signup(
                 session=session,
                 user=existing_user,
                 provider=provider_enum,
-                provider_user_id=provider_user_id,
+                provider_user_id=derived_provider_user_id,
             )
         except ValueError:
             return request.app.state.templates.TemplateResponse(
@@ -464,7 +479,7 @@ def social_signup(
         session=session,
         user=user,
         provider=provider_enum,
-        provider_user_id=provider_user_id,
+        provider_user_id=derived_provider_user_id,
     )
     subscription = Subscription(user_id=user.id, tier=SubscriptionTier.FREE, max_accounts=1)
     session.add(subscription)

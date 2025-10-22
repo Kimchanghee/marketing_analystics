@@ -229,10 +229,10 @@
     "verification_hint": "A 6-digit code is sent to your inbox. Enter it before it expires.",
     "verification_request_title": "Request a verification code",
     "consent_title": "Required privacy notices",
-    "consent_description": "Confirm the standard privacy and data usage notices enforced in most regions.",
-    "consent_privacy_detail": "Personal information is processed according to our privacy policy.",
-    "consent_terms_detail": "Essential onboarding and service guidance messages will be delivered.",
-    "consent_marketing_detail": "You can change optional marketing preferences inside the dashboard.",
+    "consent_description": "Review the personal data we collect, how long it is retained, and the required service notifications. This consent is necessary to create and operate your account in compliance with applicable laws and our terms.",
+    "consent_privacy_detail": "Data collected: name, email, organization details, role, and product usage logs. Purposes: account provisioning, security monitoring, customer support. Retention: stored securely for 30 days after account deletion or longer when required by law.",
+    "consent_terms_detail": "We send essential service notices, onboarding tips, security alerts, and policy updates by email or in-app messaging. Critical updates may be delivered regardless of marketing preferences.",
+    "consent_marketing_detail": "If you opt in, we may email newsletters, feature highlights, and event invitations. You can update marketing preferences anytime in Profile → Notifications.",
     "consent_privacy": "I agree to the privacy policy.",
     "consent_terms": "I agree to receive onboarding and service guidance.",
     "login_button": "Log in",
@@ -287,7 +287,16 @@
     "reset_token": "Reset token",
     "social_link_title": "Social account help",
     "social_link_hint": "Use Google or Apple sign-in on the login page, then link the account here.",
-    "social_link_profile_hint": "After linking, you can set a password to unify access."
+    "social_link_profile_hint": "After linking, you can set a password to unify access.",
+    "social_signup_description": "Start with Google or Apple by selecting one of the buttons below. After authorization we will confirm the shared name and email so you can complete any missing fields.",
+    "social_complete_title": "Review the details received from {provider}",
+    "social_complete_description": "Enter the verification code and confirm the required fields to finish creating your account. Future sign-ins with this social account will reuse the saved information.",
+    "social_manual_summary": "Need to connect an account manually?",
+    "social_manual_help": "For testing or administrator scenarios you can still provide the provider account ID using the form below.",
+    "social_buttons": {
+      "google": "Continue with Google",
+      "apple": "Continue with Apple"
+    }
   },
   "dashboard": {
     "welcome": "Welcome",
@@ -531,27 +540,27 @@
         ]
       }
     },
-      "workflow": {
-        "title": "Three-step onboarding",
-        "description": "Connect accounts, confirm metrics, and share a report in minutes.",
-        "steps": [
-          {
-            "label": "Step 1",
-            "title": "Link core channels",
-            "detail": "Authenticate one YouTube and one Instagram account for the free plan."
-          },
-          {
-            "label": "Step 2",
-            "title": "Add optional platforms",
-            "detail": "Upgrade to Plus to include TikTok, Facebook, and Threads whenever you are ready."
-          },
-          {
-            "label": "Step 3",
-            "title": "Review ads and share",
-            "detail": "Check Meta Ads insights, apply AI tips, and send the recap."
-          }
-        ]
-      },
+    "workflow": {
+      "title": "Three-step onboarding",
+      "description": "Connect accounts, confirm metrics, and share a report in minutes.",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "Link core channels",
+          "detail": "Authenticate one YouTube and one Instagram account for the free plan."
+        },
+        {
+          "label": "Step 2",
+          "title": "Add optional platforms",
+          "detail": "Upgrade to Plus to include TikTok, Facebook, and Threads whenever you are ready."
+        },
+        {
+          "label": "Step 3",
+          "title": "Review ads and share",
+          "detail": "Check Meta Ads insights, apply AI tips, and send the recap."
+        }
+      ]
+    },
     "cta": {
       "title": "Start with the free personal plan",
       "description": "Upgrade to Plus anytime for additional channels and evolving AI support.",
