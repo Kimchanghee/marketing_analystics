@@ -15,6 +15,10 @@
             <button class="btn secondary" type="submit">{{ t['dashboard']['update_plan'] }}</button>
         </form>
     </div>
+    <div class="export-actions">
+        <a href="/dashboard/export/csv" class="btn tertiary" download>{{ t['dashboard']['export_csv'] }}</a>
+        <a href="/dashboard/export/json" class="btn tertiary" download>{{ t['dashboard']['export_json'] }}</a>
+    </div>
 </section>
 <section class="channels">
     <h2>{{ t['dashboard']['your_channels'] }}</h2>
@@ -73,6 +77,33 @@
                 </div>
                 {% endfor %}
             </div>
+            {% if snapshot.get('hourly_views') %}
+            <div class="hourly-views">
+                <h4>{{ t['dashboard']['hourly_views_title'] }}</h4>
+                <div class="hourly-chart">
+                    {% set max_views = snapshot['hourly_views']|map(attribute='views')|max %}
+                    {% for data in snapshot['hourly_views'] %}
+                    <div class="hour-bar">
+                        <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%" title="{{ data['hour'] }}시: {{ data['views'] }} 조회"></div>
+                        <span class="hour-label">{{ data['hour'] }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% set platform_recs = ai_recommendations.get(account.platform, []) %}
+            {% if platform_recs %}
+            <div class="ai-recommendations">
+                <h4>{{ t['dashboard']['ai_recommendations_title'] }}</h4>
+                {% for rec in platform_recs %}
+                <div class="recommendation-card priority-{{ rec['priority'] }}">
+                    <span class="rec-badge">{{ rec['type'] }}</span>
+                    <strong class="rec-action">{{ rec['action'] }}</strong>
+                    <p class="rec-reason">{{ rec['reason'] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             {% endif %}
             <details class="credential-panel">
                 <summary>{{ t['dashboard']['credentials_heading'] }}</summary>

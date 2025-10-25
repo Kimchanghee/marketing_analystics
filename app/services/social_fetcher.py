@@ -25,6 +25,24 @@ def generate_mock_metrics(account_name: str) -> Dict[str, str | int | float]:
     growth = round(random() * 10, 2)
     engagement = round(random() * 8, 2)
     last_post = datetime.utcnow() - timedelta(hours=randint(2, 72))
+
+    # 시간대별 조회수 데이터 생성 (24시간)
+    hourly_views = []
+    base_views = randint(1000, 10000)
+    for hour in range(24):
+        # 피크 시간대 (오후 6시-10시, 점심시간 12시-2시)에 더 높은 조회수
+        if hour in [12, 13, 18, 19, 20, 21]:
+            views = int(base_views * (1.5 + random() * 0.5))
+        elif hour in [0, 1, 2, 3, 4, 5]:
+            views = int(base_views * (0.3 + random() * 0.2))
+        else:
+            views = int(base_views * (0.8 + random() * 0.4))
+
+        hourly_views.append({
+            "hour": hour,
+            "views": views
+        })
+
     return {
         "account": account_name,
         "followers": base_followers,
@@ -42,6 +60,7 @@ def generate_mock_metrics(account_name: str) -> Dict[str, str | int | float]:
             }
             for i in range(3)
         ],
+        "hourly_views": hourly_views,
     }
 
 

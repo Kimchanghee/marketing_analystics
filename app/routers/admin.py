@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Form, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from sqlmodel import select
 
+from ..config import get_settings
 from ..database import get_session
 from ..dependencies import get_current_user, require_roles
 from ..models import (
@@ -21,11 +22,31 @@ from ..services.localization import translator
 router = APIRouter()
 
 
+def verify_admin_token(request: Request):
+    """관리자 페이지 접속 토큰 확인"""
+    settings = get_settings()
+    # 쿼리 파라미터에서 토큰 확인
+    token = request.query_params.get("admin_token")
+    # 쿠키에서 토큰 확인
+    cookie_token = request.cookies.get("admin_access_token")
+
+    if token == settings.super_admin_access_token:
+        return token
+    elif cookie_token == settings.super_admin_access_token:
+        return cookie_token
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="관리자 페이지 접속 토큰이 필요합니다. URL에 ?admin_token=YOUR_TOKEN을 추가하세요."
+        )
+
+
 @router.get("/super-admin")
 def super_admin_dashboard(
     request: Request,
     user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
+    admin_token: str = Depends(verify_admin_token),
 ):
     locale = user.locale
     strings = translator.load_locale(locale)
@@ -34,7 +55,8 @@ def super_admin_dashboard(
     payments = session.exec(select(Payment).order_by(Payment.created_at.desc()).limit(50)).all()
     user_lookup = {u.id: u for u in users}
     logs = session.exec(select(ActivityLog).order_by(ActivityLog.created_at.desc()).limit(25)).all()
-    return request.app.state.templates.TemplateResponse(
+
+    response = request.app.state.templates.TemplateResponse(
         "super_admin.html",
         {
             "request": request,
@@ -52,13 +74,26 @@ def super_admin_dashboard(
         },
     )
 
+    # 쿼리 파라미터로 토큰이 전달된 경우 쿠키에 저장
+    if request.query_params.get("admin_token"):
+        response.set_cookie(
+            key="admin_access_token",
+            value=admin_token,
+            httponly=True,
+            max_age=60 * 60 * 24  # 24시간 유효
+        )
+
+    return response
+
 
 @router.post("/super-admin/promote")
 def promote_user(
+    request: Request,
     email: str = Form(...),
     role: UserRole = Form(...),
     user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
+    admin_token: str = Depends(verify_admin_token),
 ):
     target = session.exec(select(User).where(User.email == email)).first()
     if not target:
@@ -78,10 +113,12 @@ def promote_user(
 
 @router.post("/super-admin/status")
 def update_user_status(
+    request: Request,
     user_id: int = Form(...),
     is_active: bool = Form(...),
     user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
+    admin_token: str = Depends(verify_admin_token),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -101,12 +138,14 @@ def update_user_status(
 
 @router.post("/super-admin/subscription")
 def update_subscription(
+    request: Request,
     user_id: int = Form(...),
     tier: SubscriptionTier = Form(...),
     max_accounts: int = Form(1),
     active: bool = Form(False),
     user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
+    admin_token: str = Depends(verify_admin_token),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -140,6 +179,7 @@ def _parse_datetime(value: str | None) -> datetime | None:
 
 @router.post("/super-admin/payment/create")
 def create_payment(
+    request: Request,
     user_id: int = Form(...),
     amount: float = Form(...),
     currency: str = Form("KRW"),
@@ -149,6 +189,7 @@ def create_payment(
     billing_period_end: str | None = Form(None),
     user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
+    admin_token: str = Depends(verify_admin_token),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -178,10 +219,12 @@ def create_payment(
 
 @router.post("/super-admin/payment/status")
 def update_payment_status(
+    request: Request,
     payment_id: int = Form(...),
     status_value: PaymentStatus = Form(...),
     user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
+    admin_token: str = Depends(verify_admin_token),
 ):
     payment = session.get(Payment, payment_id)
     if not payment:

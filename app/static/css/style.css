@@ -2070,3 +2070,161 @@ select:focus {
         margin-bottom: 0.25rem;
     }
 }
+
+/* 시간대별 조회수 차트 */
+.hourly-views {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-md);
+}
+
+.hourly-views h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.hourly-chart {
+    display: flex;
+    gap: 0.25rem;
+    align-items: flex-end;
+    height: 120px;
+    padding: 0.5rem;
+    background: var(--surface-primary);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+}
+
+.hour-bar {
+    flex: 1;
+    min-width: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    height: 100%;
+}
+
+.hour-bar .bar {
+    width: 100%;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-soft) 100%);
+    border-radius: 2px 2px 0 0;
+    transition: all var(--transition-base);
+    cursor: pointer;
+    min-height: 2px;
+}
+
+.hour-bar .bar:hover {
+    opacity: 0.8;
+    transform: scaleY(1.05);
+}
+
+.hour-bar .hour-label {
+    font-size: 0.65rem;
+    color: var(--text-subtle);
+    writing-mode: horizontal-tb;
+}
+
+@media (max-width: 768px) {
+    .hourly-chart {
+        overflow-x: scroll;
+    }
+
+    .hour-bar {
+        min-width: 18px;
+    }
+
+    .hour-bar .hour-label {
+        font-size: 0.6rem;
+    }
+}
+
+/* AI 추천 카드 */
+.ai-recommendations {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-md);
+}
+
+.ai-recommendations h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.recommendation-card {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--surface-primary);
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--accent);
+    transition: all var(--transition-base);
+}
+
+.recommendation-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--card-shadow);
+}
+
+.recommendation-card:last-child {
+    margin-bottom: 0;
+}
+
+.recommendation-card.priority-high {
+    border-left-color: var(--danger);
+}
+
+.recommendation-card.priority-medium {
+    border-left-color: var(--accent);
+}
+
+.recommendation-card.priority-low {
+    border-left-color: var(--text-subtle);
+}
+
+.rec-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: var(--surface-muted);
+    color: var(--text-primary);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.rec-action {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.rec-reason {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .ai-recommendations {
+        padding: 0.75rem;
+    }
+
+    .recommendation-card {
+        padding: 0.75rem;
+    }
+
+    .rec-action {
+        font-size: 0.85rem;
+    }
+
+    .rec-reason {
+        font-size: 0.8rem;
+    }
+}
