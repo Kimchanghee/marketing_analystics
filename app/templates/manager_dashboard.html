@@ -1,0 +1,412 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-header">
+    <h1>기업 관리자 대시보드</h1>
+    <div class="manager-stats">
+        <div class="stat-card">
+            <span class="stat-value">{{ approved_creators|length }}</span>
+            <span class="stat-label">승인된 크리에이터</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ pending_approvals|length }}</span>
+            <span class="stat-label">승인 대기 중</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ total_channels }}</span>
+            <span class="stat-label">총 관리 채널</span>
+        </div>
+    </div>
+</section>
+
+{% if pending_approvals %}
+<section class="approval-queue">
+    <h2>승인 대기 큐</h2>
+    <div class="approval-grid">
+        {% for link in pending_approvals %}
+        {% set creator = creator_lookup[link.creator_id] %}
+        <article class="approval-card">
+            <header>
+                <h3>{{ creator.name or creator.email }}</h3>
+                <span class="badge pending">승인 대기</span>
+            </header>
+            <div class="creator-info">
+                <p><strong>이메일:</strong> {{ creator.email }}</p>
+                <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
+                <p><strong>요청일:</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
+                {% if link.creator_id in creator_subscriptions %}
+                {% set sub = creator_subscriptions[link.creator_id] %}
+                <p><strong>구독 플랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
+                <p><strong>채널 수:</strong> {{ creator_channel_counts.get(link.creator_id, 0) }} / {{ sub.max_accounts }}</p>
+                {% endif %}
+            </div>
+            <div class="approval-actions">
+                <form method="post" action="/manager/approve" style="display: inline;">
+                    <input type="hidden" name="creator_email" value="{{ creator.email }}">
+                    <input type="hidden" name="manager_email" value="{{ user.email }}">
+                    <input type="hidden" name="approve" value="true">
+                    <button class="btn primary" type="submit">승인</button>
+                </form>
+                <form method="post" action="/manager/approve" style="display: inline;">
+                    <input type="hidden" name="creator_email" value="{{ creator.email }}">
+                    <input type="hidden" name="manager_email" value="{{ user.email }}">
+                    <input type="hidden" name="approve" value="false">
+                    <button class="btn tertiary" type="submit">거절</button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="managed-creators">
+    <h2>관리 중인 크리에이터</h2>
+    {% if approved_creators %}
+    <div class="creator-grid">
+        {% for link in approved_creators %}
+        {% set creator = creator_lookup[link.creator_id] %}
+        <article class="creator-card">
+            <header>
+                <h3>{{ creator.name or creator.email }}</h3>
+                <span class="badge approved">승인됨</span>
+            </header>
+            <div class="creator-summary">
+                <p><strong>이메일:</strong> {{ creator.email }}</p>
+                <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
+                <p><strong>연결일:</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
+                {% if link.creator_id in creator_subscriptions %}
+                {% set sub = creator_subscriptions[link.creator_id] %}
+                <p><strong>구독 플랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
+                {% endif %}
+            </div>
+
+            {% if link.creator_id in creator_channels %}
+            <div class="creator-channels">
+                <h4>채널 현황 ({{ creator_channels[link.creator_id]|length }}개)</h4>
+                <div class="channel-summary">
+                    {% for channel in creator_channels[link.creator_id] %}
+                    <div class="mini-channel-card">
+                        <div class="channel-header">
+                            <strong>{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</strong>
+                            <span class="account-name">{{ channel.account_name }}</span>
+                        </div>
+                        {% set snapshot = creator_snapshots.get(channel.id) %}
+                        {% if snapshot %}
+                        <div class="mini-metrics">
+                            <div class="metric-item">
+                                <span class="metric-icon">👥</span>
+                                <span class="metric-value">{{ snapshot['followers'] }}</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-icon">📈</span>
+                                <span class="metric-value">{{ snapshot['growth_rate'] }}%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-icon">💬</span>
+                                <span class="metric-value">{{ snapshot['engagement_rate'] }}%</span>
+                            </div>
+                        </div>
+                        {% if snapshot.get('recent_posts') %}
+                        <div class="recent-post-mini">
+                            <p class="post-title">최근: {{ snapshot['recent_posts'][0]['title'][:30] }}...</p>
+                            <p class="post-stats">
+                                👍 {{ snapshot['recent_posts'][0]['likes'] }}
+                                💬 {{ snapshot['recent_posts'][0]['comments'] }}
+                            </p>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="creator-actions">
+                <a href="/manager/creator/{{ creator.id }}" class="btn secondary">상세 보기</a>
+                <button class="btn tertiary" onclick="exportCreatorReport({{ creator.id }})">리포트 내보내기</button>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">아직 승인된 크리에이터가 없습니다.</p>
+    {% endif %}
+</section>
+
+<section class="manager-tools">
+    <h2>관리 도구</h2>
+    <div class="tool-grid">
+        <div class="tool-card">
+            <h3>크리에이터 초대</h3>
+            <p>새로운 크리에이터를 초대하여 연결 요청을 보낼 수 있습니다.</p>
+            <form method="post" action="/manager/invite" class="invite-form">
+                <input type="email" name="creator_email" placeholder="크리에이터 이메일" required>
+                <button class="btn primary" type="submit">초대 링크 생성</button>
+            </form>
+            {% if invite_link %}
+            <div class="invite-result">
+                <p><strong>초대 링크:</strong></p>
+                <input type="text" readonly value="{{ invite_link }}" onclick="this.select()">
+                <button class="btn tertiary" onclick="copyToClipboard('{{ invite_link }}')">복사</button>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="tool-card">
+            <h3>통합 리포트</h3>
+            <p>모든 승인된 크리에이터의 통합 리포트를 생성합니다.</p>
+            <div class="export-actions">
+                <a href="/manager/export/csv" class="btn secondary" download>CSV 다운로드</a>
+                <a href="/manager/export/pdf" class="btn secondary" download>PDF 다운로드</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.manager-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.approval-queue, .managed-creators, .manager-tools {
+    margin-bottom: 3rem;
+}
+
+.approval-grid, .creator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.approval-card, .creator-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.approval-card header, .creator-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge.pending {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.badge.approved {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.creator-info, .creator-summary {
+    margin-bottom: 1rem;
+}
+
+.creator-info p, .creator-summary p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.approval-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.creator-channels {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.creator-channels h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.channel-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mini-channel-card {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.channel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.account-name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.mini-metrics {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.metric-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.metric-icon {
+    font-size: 1rem;
+}
+
+.metric-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.recent-post-mini {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.post-stats {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.creator-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.tool-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.tool-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.tool-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.invite-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.invite-form input[type="email"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.invite-result {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.invite-result input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.export-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+</style>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('초대 링크가 클립보드에 복사되었습니다.');
+    });
+}
+
+function exportCreatorReport(creatorId) {
+    window.location.href = `/manager/creator/${creatorId}/export`;
+}
+</script>
+{% endblock %}

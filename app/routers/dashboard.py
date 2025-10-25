@@ -245,7 +245,7 @@ def export_dashboard_json(
     }
 
     for account in accounts:
-        snapshot = snapshots.get(account.platform, {})
+        snapshot = snapshots.get(account.id, {})
         channel_data = {
             "platform": account.platform,
             "account_name": account.account_name,
@@ -270,5 +270,33 @@ def export_dashboard_json(
     return Response(
         content=json.dumps(report_data, ensure_ascii=False, indent=2),
         media_type="application/json",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
+
+@router.get("/dashboard/export/pdf")
+def export_dashboard_pdf(
+    user: User = Depends(get_current_user),
+    session=Depends(get_session),
+):
+    """대시보드 데이터를 PDF 형식으로 내보내기"""
+    from ..services.pdf_generator import generate_dashboard_pdf
+
+    accounts = session.exec(
+        select(ChannelAccount)
+        .where(ChannelAccount.owner_id == user.id)
+        .options(selectinload(ChannelAccount.credential))
+    ).all()
+    snapshots = fetch_channel_snapshots(accounts)
+
+    # PDF 생성
+    pdf_buffer = generate_dashboard_pdf(user, accounts, snapshots)
+
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    filename = f"dashboard_report_{timestamp}.pdf"
+
+    return StreamingResponse(
+        pdf_buffer,
+        media_type="application/pdf",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
