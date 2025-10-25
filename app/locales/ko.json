@@ -340,7 +340,11 @@
     "placeholder_identifier": "예: @creator 또는 123456",
     "placeholder_secret": "클라이언트 시크릿 또는 비밀번호",
     "placeholder_token": "새 토큰을 붙여넣으세요",
-    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}"
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}",
+    "hourly_views_title": "시간대별 조회수 추이",
+    "export_csv": "CSV로 내보내기",
+    "export_json": "JSON으로 내보내기",
+    "ai_recommendations_title": "AI 추천 전략"
   },
   "channels": {
     "instagram": "인스타그램",

@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     verification_code_length: int = 6
     verification_code_expiry_minutes: int = 15
     password_reset_token_expiry_minutes: int = 30
+    super_admin_access_token: str = Field("Ckdgml9788@", env="SUPER_ADMIN_ACCESS_TOKEN")
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
