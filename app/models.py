@@ -226,3 +226,63 @@ class PasswordResetToken(SQLModel, table=True):
     used: bool = Field(default=False)
 
     user: User = Relationship(back_populates="password_reset_tokens")
+
+
+class ManagerAPIKey(SQLModel, table=True):
+    """기업 관리자의 암호화된 Gemini API 키 저장"""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    manager_id: int = Field(foreign_key="user.id", unique=True)
+    api_key_encrypted: str
+    service_name: str = Field(default="gemini")
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+    @property
+    def api_key(self) -> str:
+        from .services.crypto import decrypt
+        return decrypt(self.api_key_encrypted)
+
+    @api_key.setter
+    def api_key(self, value: str) -> None:
+        from .services.crypto import encrypt
+        self.api_key_encrypted = encrypt(value)
+        self.updated_at = datetime.utcnow()
+
+
+class InquiryStatus(str, enum.Enum):
+    """문의 상태"""
+    PENDING = "pending"  # 대기 중
+    IN_PROGRESS = "in_progress"  # 처리 중
+    AI_DRAFT_READY = "ai_draft_ready"  # AI 답변 초안 준비됨
+    ANSWERED = "answered"  # 답변 완료
+    CLOSED = "closed"  # 종결
+
+
+class InquiryCategory(str, enum.Enum):
+    """문의 카테고리"""
+    TECHNICAL = "technical"  # 기술 문의
+    ACCOUNT = "account"  # 계정 문의
+    BILLING = "billing"  # 결제 문의
+    FEATURE_REQUEST = "feature_request"  # 기능 요청
+    BUG_REPORT = "bug_report"  # 버그 신고
+    GENERAL = "general"  # 일반 문의
+
+
+class CreatorInquiry(SQLModel, table=True):
+    """크리에이터 문의/이슈 관리"""
+    id: Optional[int] = Field(default=None, primary_key=True)
+    creator_id: int = Field(foreign_key="user.id")
+    manager_id: int = Field(foreign_key="user.id")
+    category: InquiryCategory = Field(default=InquiryCategory.GENERAL)
+    subject: str
+    message: str
+    status: InquiryStatus = Field(default=InquiryStatus.PENDING)
+    ai_draft_response: Optional[str] = None
+    final_response: Optional[str] = None
+    context_data: Dict[str, Any] = Field(
+        default_factory=dict,
+        sa_column=Column("context_data", JSON, nullable=False, default=dict),
+    )
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    responded_at: Optional[datetime] = None

@@ -138,6 +138,42 @@
     <h2>관리 도구</h2>
     <div class="tool-grid">
         <div class="tool-card">
+            <h3>🤖 AI 기능 설정 (Gemini API)</h3>
+            <p>AI 기반 CS 답변 기능을 사용하려면 Gemini API 키를 등록하세요. API 키는 암호화되어 안전하게 저장됩니다.</p>
+            {% if has_api_key %}
+            <div class="api-key-status success">
+                <span class="status-icon">✓</span>
+                <span>Gemini API 키가 등록되어 있습니다.</span>
+            </div>
+            <p class="api-key-info">AI 답변 초안 생성 기능을 사용할 수 있습니다. <a href="/manager/inquiries">문의 관리 페이지</a>에서 확인하세요.</p>
+            <div class="api-key-actions">
+                <button class="btn secondary" onclick="document.getElementById('update-api-key-form').style.display='block'">API 키 변경</button>
+                <form method="post" action="/manager/api-key/delete" style="display: inline;" onsubmit="return confirm('정말 API 키를 삭제하시겠습니까?');">
+                    <button class="btn tertiary" type="submit">API 키 삭제</button>
+                </form>
+            </div>
+            <form id="update-api-key-form" method="post" action="/manager/api-key/save" class="api-key-form" style="display: none; margin-top: 1rem;">
+                <input type="password" name="api_key" placeholder="새 Gemini API 키 입력" required>
+                <button class="btn primary" type="submit">API 키 업데이트</button>
+                <button class="btn tertiary" type="button" onclick="document.getElementById('update-api-key-form').style.display='none'">취소</button>
+            </form>
+            {% else %}
+            <div class="api-key-status warning">
+                <span class="status-icon">⚠</span>
+                <span>Gemini API 키가 등록되지 않았습니다.</span>
+            </div>
+            <p class="api-key-info">
+                API 키를 등록하면 크리에이터 문의에 대한 AI 답변 초안을 자동으로 생성할 수 있습니다.<br>
+                <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a>에서 무료로 API 키를 발급받을 수 있습니다.
+            </p>
+            <form method="post" action="/manager/api-key/save" class="api-key-form">
+                <input type="password" name="api_key" placeholder="Gemini API 키 입력" required>
+                <button class="btn primary" type="submit">API 키 등록</button>
+            </form>
+            {% endif %}
+        </div>
+
+        <div class="tool-card">
             <h3>크리에이터 초대</h3>
             <p>새로운 크리에이터를 초대하여 연결 요청을 보낼 수 있습니다.</p>
             <form method="post" action="/manager/invite" class="invite-form">
@@ -395,6 +431,63 @@
     text-align: center;
     padding: 3rem;
     color: var(--text-secondary);
+}
+
+/* API 키 관리 스타일 */
+.api-key-status {
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.api-key-status.success {
+    background: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+}
+
+.api-key-status.warning {
+    background: #FFF3CD;
+    color: #856404;
+    border: 1px solid #FFEAA7;
+}
+
+.status-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.api-key-info {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 1rem 0;
+    line-height: 1.5;
+}
+
+.api-key-info a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.api-key-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.api-key-form input[type="password"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.api-key-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 </style>
 

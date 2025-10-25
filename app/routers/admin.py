@@ -9,6 +9,11 @@ from ..database import get_session
 from ..dependencies import get_current_user, require_roles
 from ..models import (
     ActivityLog,
+    ChannelAccount,
+    CreatorInquiry,
+    InquiryCategory,
+    InquiryStatus,
+    ManagerAPIKey,
     ManagerCreatorLink,
     Payment,
     PaymentStatus,
@@ -297,6 +302,10 @@ def manager_dashboard(
     # 모든 채널의 스냅샷 가져오기
     creator_snapshots = fetch_channel_snapshots(creator_channels_list)
 
+    # API 키 존재 여부 확인
+    api_key_record = session.exec(select(ManagerAPIKey).where(ManagerAPIKey.manager_id == user.id)).first()
+    has_api_key = api_key_record is not None
+
     return request.app.state.templates.TemplateResponse(
         "manager_dashboard.html",
         {
@@ -312,6 +321,7 @@ def manager_dashboard(
             "creator_channel_counts": creator_channel_counts,
             "total_channels": total_channels,
             "creator_snapshots": creator_snapshots,
+            "has_api_key": has_api_key,
         },
     )
 
@@ -596,4 +606,302 @@ def export_creator_pdf(
         pdf_buffer,
         media_type="application/pdf",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
+
+# ==================== Gemini API 키 관리 ====================
+
+@router.post("/manager/api-key/save")
+def save_gemini_api_key(
+    request: Request,
+    api_key: str = Form(...),
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """Gemini API 키 저장 (암호화)"""
+    # 기존 키가 있는지 확인
+    existing_key = session.exec(
+        select(ManagerAPIKey).where(ManagerAPIKey.manager_id == user.id)
+    ).first()
+
+    if existing_key:
+        # 업데이트
+        existing_key.api_key = api_key  # setter를 통해 자동 암호화
+        session.add(existing_key)
+    else:
+        # 새로 생성
+        new_key = ManagerAPIKey(manager_id=user.id)
+        new_key.api_key = api_key  # setter를 통해 자동 암호화
+        session.add(new_key)
+
+    session.add(
+        ActivityLog(
+            user_id=user.id,
+            action="api_key_saved",
+            details="Gemini API 키 저장됨"
+        )
+    )
+    session.commit()
+
+    return RedirectResponse(url="/manager/dashboard?api_key_saved=true", status_code=status.HTTP_303_SEE_OTHER)
+
+
+@router.post("/manager/api-key/delete")
+def delete_gemini_api_key(
+    request: Request,
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """Gemini API 키 삭제"""
+    api_key_record = session.exec(
+        select(ManagerAPIKey).where(ManagerAPIKey.manager_id == user.id)
+    ).first()
+
+    if api_key_record:
+        session.delete(api_key_record)
+        session.add(
+            ActivityLog(
+                user_id=user.id,
+                action="api_key_deleted",
+                details="Gemini API 키 삭제됨"
+            )
+        )
+        session.commit()
+
+    return RedirectResponse(url="/manager/dashboard?api_key_deleted=true", status_code=status.HTTP_303_SEE_OTHER)
+
+
+# ==================== 크리에이터 문의 관리 ====================
+
+@router.post("/manager/inquiry/create")
+def create_inquiry(
+    request: Request,
+    creator_id: int = Form(...),
+    category: InquiryCategory = Form(...),
+    subject: str = Form(...),
+    message: str = Form(...),
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """크리에이터 문의 수동 생성 (관리자가 대신 기록)"""
+    # 관리자-크리에이터 연결 확인
+    link = session.exec(
+        select(ManagerCreatorLink)
+        .where(ManagerCreatorLink.manager_id == user.id)
+        .where(ManagerCreatorLink.creator_id == creator_id)
+        .where(ManagerCreatorLink.approved == True)  # noqa: E712
+    ).first()
+
+    if not link:
+        raise HTTPException(status_code=403, detail="이 크리에이터를 관리할 권한이 없습니다.")
+
+    # 문의 생성
+    inquiry = CreatorInquiry(
+        creator_id=creator_id,
+        manager_id=user.id,
+        category=category,
+        subject=subject,
+        message=message,
+        status=InquiryStatus.PENDING
+    )
+    session.add(inquiry)
+    session.commit()
+
+    return RedirectResponse(
+        url=f"/manager/inquiries?created=true",
+        status_code=status.HTTP_303_SEE_OTHER
+    )
+
+
+@router.get("/manager/inquiries")
+def view_inquiries(
+    request: Request,
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """모든 문의 조회"""
+    from sqlalchemy.orm import selectinload
+
+    # 이 관리자가 관리하는 크리에이터들의 문의만 조회
+    inquiries = session.exec(
+        select(CreatorInquiry)
+        .where(CreatorInquiry.manager_id == user.id)
+        .order_by(CreatorInquiry.created_at.desc())
+    ).all()
+
+    # 크리에이터 정보 조회
+    creator_ids = list(set([inq.creator_id for inq in inquiries]))
+    creators = session.exec(select(User).where(User.id.in_(creator_ids))).all() if creator_ids else []
+    creator_lookup = {c.id: c for c in creators}
+
+    # API 키 존재 여부 확인
+    api_key_record = session.exec(
+        select(ManagerAPIKey).where(ManagerAPIKey.manager_id == user.id)
+    ).first()
+    has_api_key = api_key_record is not None
+
+    locale = user.locale
+    strings = translator.load_locale(locale)
+
+    return request.app.state.templates.TemplateResponse(
+        "manager_inquiries.html",
+        {
+            "request": request,
+            "user": user,
+            "locale": locale,
+            "t": strings,
+            "inquiries": inquiries,
+            "creator_lookup": creator_lookup,
+            "has_api_key": has_api_key,
+            "inquiry_statuses": list(InquiryStatus),
+            "inquiry_categories": list(InquiryCategory),
+        },
+    )
+
+
+@router.post("/manager/inquiry/{inquiry_id}/generate-ai-response")
+def generate_ai_response(
+    inquiry_id: int,
+    request: Request,
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """AI를 사용하여 답변 초안 생성"""
+    from sqlalchemy.orm import selectinload
+
+    # 문의 조회
+    inquiry = session.get(CreatorInquiry, inquiry_id)
+    if not inquiry or inquiry.manager_id != user.id:
+        raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+
+    # API 키 조회
+    api_key_record = session.exec(
+        select(ManagerAPIKey).where(ManagerAPIKey.manager_id == user.id)
+    ).first()
+
+    if not api_key_record:
+        raise HTTPException(
+            status_code=400,
+            detail="Gemini API 키가 설정되지 않았습니다. 먼저 API 키를 등록해주세요."
+        )
+
+    # 크리에이터 정보 조회
+    creator = session.get(User, inquiry.creator_id)
+    if not creator:
+        raise HTTPException(status_code=404, detail="크리에이터를 찾을 수 없습니다.")
+
+    # 크리에이터의 채널 정보 조회 (컨텍스트용)
+    channels = session.exec(
+        select(ChannelAccount)
+        .where(ChannelAccount.owner_id == creator.id)
+    ).all()
+
+    subscription = session.exec(
+        select(Subscription).where(Subscription.user_id == creator.id)
+    ).first()
+
+    # 컨텍스트 데이터 준비
+    context_data = {
+        "subscription": subscription.tier.value if subscription else "free",
+        "channel_count": len(channels),
+        "channels": [
+            {
+                "platform": ch.platform,
+                "account_name": ch.account_name,
+                "followers": ch.followers
+            }
+            for ch in channels
+        ]
+    }
+
+    # AI 서비스 사용
+    try:
+        from ..services.gemini_ai import get_gemini_service
+
+        gemini = get_gemini_service(api_key_record.api_key)
+
+        ai_response = gemini.generate_cs_response(
+            inquiry_subject=inquiry.subject,
+            inquiry_message=inquiry.message,
+            inquiry_category=inquiry.category.value,
+            creator_info={
+                "name": creator.name,
+                "email": creator.email,
+                "organization": creator.organization
+            },
+            context_data=context_data
+        )
+
+        # 문의 업데이트
+        inquiry.ai_draft_response = ai_response
+        inquiry.status = InquiryStatus.AI_DRAFT_READY
+        inquiry.updated_at = datetime.utcnow()
+        session.add(inquiry)
+        session.commit()
+
+        return RedirectResponse(
+            url=f"/manager/inquiries?ai_generated={inquiry_id}",
+            status_code=status.HTTP_303_SEE_OTHER
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI 답변 생성 실패: {str(e)}")
+
+
+@router.post("/manager/inquiry/{inquiry_id}/send-response")
+def send_inquiry_response(
+    inquiry_id: int,
+    request: Request,
+    final_response: str = Form(...),
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """최종 답변 전송 (실제로는 저장만, 이메일 발송은 추후 구현 가능)"""
+    inquiry = session.get(CreatorInquiry, inquiry_id)
+    if not inquiry or inquiry.manager_id != user.id:
+        raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+
+    inquiry.final_response = final_response
+    inquiry.status = InquiryStatus.ANSWERED
+    inquiry.responded_at = datetime.utcnow()
+    inquiry.updated_at = datetime.utcnow()
+
+    session.add(inquiry)
+    session.add(
+        ActivityLog(
+            user_id=user.id,
+            action="inquiry_answered",
+            details=f"문의 #{inquiry_id} 답변 완료"
+        )
+    )
+    session.commit()
+
+    return RedirectResponse(
+        url=f"/manager/inquiries?answered={inquiry_id}",
+        status_code=status.HTTP_303_SEE_OTHER
+    )
+
+
+@router.post("/manager/inquiry/{inquiry_id}/update-status")
+def update_inquiry_status(
+    inquiry_id: int,
+    request: Request,
+    new_status: InquiryStatus = Form(...),
+    user: User = Depends(require_roles(UserRole.MANAGER)),
+    session=Depends(get_session),
+):
+    """문의 상태 업데이트"""
+    inquiry = session.get(CreatorInquiry, inquiry_id)
+    if not inquiry or inquiry.manager_id != user.id:
+        raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+
+    inquiry.status = new_status
+    inquiry.updated_at = datetime.utcnow()
+
+    session.add(inquiry)
+    session.commit()
+
+    return RedirectResponse(
+        url="/manager/inquiries",
+        status_code=status.HTTP_303_SEE_OTHER
     )
