@@ -1,0 +1,75 @@
+{
+  "site": {
+    "name": "Creator Control Center",
+    "short_name": "CCC",
+    "description": "Unified analytics platform for multi-channel creators and managers. Manage and analyze all your social media channels including Instagram, YouTube, TikTok, Twitter/X, and Facebook in one dashboard.",
+    "tagline": "All Your Channels in One Dashboard",
+    "url": "https://creatorcontrol.center",
+    "image": "/static/images/og-image-en.jpg",
+    "locale": "en_US"
+  },
+  "pages": {
+    "home": {
+      "title": "Creator Control Center - Unified Creator Analytics Platform",
+      "description": "Manage all your social media channels including Instagram, YouTube, TikTok, and Twitter in one dashboard. Real-time analytics, AI-powered insights, and automated reporting for creators.",
+      "keywords": "creator analytics, social media management, influencer tools, youtube analytics, instagram analytics, tiktok analytics, unified dashboard, creator platform",
+      "og_type": "website"
+    },
+    "personal": {
+      "title": "Solutions for Individual Creators - Creator Control Center",
+      "description": "Powerful analytics tools for individual creators. Monitor all your channel performance at a glance and grow your channels with data-driven decisions.",
+      "keywords": "individual creator, youtuber tools, instagram analytics, social media growth, content creator tools",
+      "og_type": "website"
+    },
+    "business": {
+      "title": "Solutions for Businesses & Agencies - Creator Control Center",
+      "description": "Integrated management system for agencies and businesses managing multiple creators. Creator approval, performance monitoring, and AI-powered CS automation.",
+      "keywords": "creator agency, influencer management, MCN tools, creator monitoring, agency dashboard, AI customer support",
+      "og_type": "website"
+    },
+    "services": {
+      "title": "Services - Creator Control Center",
+      "description": "Discover all features of Creator Control Center: real-time analytics, multi-channel integration, AI-powered insights, and automated reporting.",
+      "keywords": "creator services, social media analytics tools, AI analytics, automated reports, real-time dashboard",
+      "og_type": "website"
+    },
+    "support": {
+      "title": "Customer Support - Creator Control Center",
+      "description": "Need help with Creator Control Center? Check our FAQs, guides, and customer support information.",
+      "keywords": "creator support, customer service, FAQ, user guide, technical support",
+      "og_type": "website"
+    },
+    "dashboard": {
+      "title": "Dashboard - Creator Control Center",
+      "description": "Monitor and manage all your channel performance in real-time.",
+      "keywords": "creator dashboard, real-time analytics, channel management",
+      "og_type": "website"
+    }
+  },
+  "organization": {
+    "name": "Creator Control Center",
+    "description": "Unified analytics platform for multi-channel creators",
+    "logo": "/static/images/logo.png",
+    "foundingDate": "2024",
+    "contactEmail": "hello@creatorcontrol.center",
+    "sameAs": []
+  },
+  "faq": [
+    {
+      "question": "Which platforms does Creator Control Center support?",
+      "answer": "We support Instagram, YouTube, TikTok, Twitter/X, Facebook, and Meta Ad accounts. You can manage all channels in one unified dashboard."
+    },
+    {
+      "question": "Is there a free plan?",
+      "answer": "Yes, the free plan allows you to manage 1 channel. Upgrade to PRO or ENTERPRISE plans to access more channels and advanced features."
+    },
+    {
+      "question": "What is the AI-powered CS response feature?",
+      "answer": "This is a feature for business customers that uses Gemini AI to automatically generate draft responses to creator inquiries. You can securely register your Gemini API key in the manager dashboard to use this feature."
+    },
+    {
+      "question": "How often is data updated?",
+      "answer": "Data is collected and updated in real-time. You can immediately check the latest performance metrics on your dashboard."
+    }
+  ]
+}

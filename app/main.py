@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import select
@@ -13,6 +13,7 @@ from .models import SocialAccount, User
 from .routers import admin, auth, dashboard, subscriptions
 from .services.localization import translator
 from .services.social_auth import social_auth_service
+from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -48,6 +49,8 @@ async def localization_middleware(request: Request, call_next):
 async def landing(request: Request):
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
+
     login_error_key = request.query_params.get("login_error")
     signup_error_key = request.query_params.get("signup_error")
     signup_success_key = request.query_params.get("signup_success")
@@ -57,6 +60,8 @@ async def landing(request: Request):
             "request": request,
             "locale": locale,
             "t": strings,
+            "seo": seo_service,
+            "page": "home",
             "login_error": strings["auth"].get(login_error_key) if login_error_key else None,
             "signup_error": strings["auth"].get(signup_error_key) if signup_error_key else None,
             "signup_success": strings["auth"].get(signup_success_key) if signup_success_key else None,
@@ -68,9 +73,10 @@ async def landing(request: Request):
 async def services(request: Request):
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
     return app.state.templates.TemplateResponse(
         "services.html",
-        {"request": request, "locale": locale, "t": strings},
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "services"},
     )
 
 
@@ -78,9 +84,10 @@ async def services(request: Request):
 async def personal_plan(request: Request):
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
     return app.state.templates.TemplateResponse(
         "personal.html",
-        {"request": request, "locale": locale, "t": strings},
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "personal"},
     )
 
 
@@ -88,9 +95,10 @@ async def personal_plan(request: Request):
 async def business_plan(request: Request):
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
     return app.state.templates.TemplateResponse(
         "business.html",
-        {"request": request, "locale": locale, "t": strings},
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "business"},
     )
 
 
@@ -106,9 +114,10 @@ async def pricing_redirect(request: Request):
 async def support(request: Request):
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
     return app.state.templates.TemplateResponse(
         "support.html",
-        {"request": request, "locale": locale, "t": strings},
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "support"},
     )
 
 
@@ -143,6 +152,21 @@ async def profile(
         "social_accounts": social_accounts,
     }
     return app.state.templates.TemplateResponse("profile.html", context)
+
+
+@app.get("/sitemap.xml")
+async def sitemap():
+    """동적 sitemap.xml 생성"""
+    sitemap_gen = get_sitemap_generator()
+    xml_content = sitemap_gen.generate_sitemap()
+    return Response(content=xml_content, media_type="application/xml")
+
+
+@app.get("/robots.txt")
+async def robots():
+    """robots.txt 제공"""
+    robots_content = generate_robots_txt()
+    return Response(content=robots_content, media_type="text/plain")
 
 
 app.include_router(auth.router)

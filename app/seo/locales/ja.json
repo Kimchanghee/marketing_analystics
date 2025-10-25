@@ -1,0 +1,75 @@
+{
+  "site": {
+    "name": "Creator Control Center",
+    "short_name": "CCC",
+    "description": "マルチチャンネルクリエイターと管理者のための統合分析プラットフォーム。Instagram、YouTube、TikTok、Twitter/X、Facebookなどすべてのソーシャルメディアチャンネルを一つのダッシュボードで管理・分析できます。",
+    "tagline": "すべてのチャンネルを一つのダッシュボードで",
+    "url": "https://creatorcontrol.center",
+    "image": "/static/images/og-image-ja.jpg",
+    "locale": "ja_JP"
+  },
+  "pages": {
+    "home": {
+      "title": "Creator Control Center - クリエイター統合分析プラットフォーム",
+      "description": "Instagram、YouTube、TikTok、Twitterなどすべてのソーシャルメディアチャンネルを一つのダッシュボードで管理。リアルタイム分析、AI駆動のインサイト、自動レポートを提供します。",
+      "keywords": "クリエイター分析, ソーシャルメディア管理, インフルエンサーツール, YouTube分析, Instagram分析, TikTok分析, 統合ダッシュボード, クリエイタープラットフォーム",
+      "og_type": "website"
+    },
+    "personal": {
+      "title": "個人クリエイター向けソリューション - Creator Control Center",
+      "description": "個人クリエイターのための強力な分析ツール。すべてのチャンネルのパフォーマンスを一目で把握し、データに基づいた意思決定でチャンネルを成長させましょう。",
+      "keywords": "個人クリエイター, YouTuberツール, Instagram分析, ソーシャルメディア成長, コンテンツクリエイターツール",
+      "og_type": "website"
+    },
+    "business": {
+      "title": "企業・エージェンシー向けソリューション - Creator Control Center",
+      "description": "複数のクリエイターを管理する企業やエージェンシーのための統合管理システム。クリエイター承認、パフォーマンス監視、AI駆動のCS自動化を提供します。",
+      "keywords": "クリエイターエージェンシー, インフルエンサー管理, MCNツール, クリエイター監視, エージェンシーダッシュボード, AIカスタマーサポート",
+      "og_type": "website"
+    },
+    "services": {
+      "title": "サービス紹介 - Creator Control Center",
+      "description": "リアルタイム分析、マルチチャンネル統合、AI駆動のインサイト、自動レポートなど、Creator Control Centerのすべての機能をご確認ください。",
+      "keywords": "クリエイターサービス, ソーシャルメディア分析ツール, AI分析, 自動レポート, リアルタイムダッシュボード",
+      "og_type": "website"
+    },
+    "support": {
+      "title": "カスタマーサポート - Creator Control Center",
+      "description": "Creator Control Centerの使用についてサポートが必要ですか？よくある質問、ガイド、カスタマーサポート情報をご確認ください。",
+      "keywords": "クリエイターサポート, カスタマーサービス, FAQ, 使用ガイド, 技術サポート",
+      "og_type": "website"
+    },
+    "dashboard": {
+      "title": "ダッシュボード - Creator Control Center",
+      "description": "すべてのチャンネルのパフォーマンスをリアルタイムで確認・管理できます。",
+      "keywords": "クリエイターダッシュボード, リアルタイム分析, チャンネル管理",
+      "og_type": "website"
+    }
+  },
+  "organization": {
+    "name": "Creator Control Center",
+    "description": "マルチチャンネルクリエイターのための統合分析プラットフォーム",
+    "logo": "/static/images/logo.png",
+    "foundingDate": "2024",
+    "contactEmail": "hello@creatorcontrol.center",
+    "sameAs": []
+  },
+  "faq": [
+    {
+      "question": "Creator Control Centerはどのプラットフォームをサポートしていますか？",
+      "answer": "Instagram、YouTube、TikTok、Twitter/X、Facebook、Meta広告アカウントをサポートしています。すべてのチャンネルを一つのダッシュボードで管理できます。"
+    },
+    {
+      "question": "無料で使用できますか？",
+      "answer": "はい、無料プランで1つのチャンネルを管理できます。PROまたはENTERPRISEプランにアップグレードすると、より多くのチャンネルと高度な機能をご利用いただけます。"
+    },
+    {
+      "question": "AI駆動のCS応答機能とは何ですか？",
+      "answer": "企業向けの機能で、Gemini AIを活用してクリエイターからの問い合わせに対する回答の下書きを自動生成します。管理者ページでGemini APIキーを安全に登録して使用できます。"
+    },
+    {
+      "question": "データはどのくらいの頻度で更新されますか？",
+      "answer": "リアルタイムでデータを収集・更新しています。ダッシュボードで最新のパフォーマンス指標をすぐに確認できます。"
+    }
+  ]
+}

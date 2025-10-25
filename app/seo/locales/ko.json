@@ -1,0 +1,75 @@
+{
+  "site": {
+    "name": "Creator Control Center",
+    "short_name": "CCC",
+    "description": "멀티 채널 크리에이터와 관리자를 위한 통합 분석 플랫폼. 인스타그램, 유튜브, 틱톡, 트위터/X, 페이스북 등 모든 소셜 미디어 채널을 한 곳에서 관리하고 분석하세요.",
+    "tagline": "모든 채널을 하나의 대시보드에서",
+    "url": "https://creatorcontrol.center",
+    "image": "/static/images/og-image-ko.jpg",
+    "locale": "ko_KR"
+  },
+  "pages": {
+    "home": {
+      "title": "Creator Control Center - 크리에이터 통합 분석 플랫폼",
+      "description": "인스타그램, 유튜브, 틱톡, 트위터 등 모든 소셜 미디어 채널을 하나의 대시보드에서 관리하세요. 실시간 분석, AI 기반 인사이트, 자동화된 보고서를 제공합니다.",
+      "keywords": "크리에이터 분석, 소셜 미디어 관리, 인플루언서 도구, 유튜브 분석, 인스타그램 분석, 틱톡 분석, 통합 대시보드, 크리에이터 플랫폼",
+      "og_type": "website"
+    },
+    "personal": {
+      "title": "개인 크리에이터를 위한 솔루션 - Creator Control Center",
+      "description": "개인 크리에이터를 위한 강력한 분석 도구. 모든 채널의 성과를 한눈에 파악하고, 데이터 기반 의사결정으로 채널을 성장시키세요.",
+      "keywords": "개인 크리에이터, 유튜버 도구, 인스타그램 분석, 소셜 미디어 성장, 콘텐츠 크리에이터 도구",
+      "og_type": "website"
+    },
+    "business": {
+      "title": "기업 및 에이전시를 위한 솔루션 - Creator Control Center",
+      "description": "여러 크리에이터를 관리하는 에이전시와 기업을 위한 통합 관리 시스템. 크리에이터 승인, 성과 모니터링, AI 기반 CS 자동화를 제공합니다.",
+      "keywords": "크리에이터 에이전시, 인플루언서 관리, MCN 도구, 크리에이터 모니터링, 에이전시 대시보드, AI 고객 지원",
+      "og_type": "website"
+    },
+    "services": {
+      "title": "서비스 소개 - Creator Control Center",
+      "description": "실시간 분석, 다중 채널 통합, AI 기반 인사이트, 자동화된 보고서 등 Creator Control Center의 모든 기능을 확인하세요.",
+      "keywords": "크리에이터 서비스, 소셜 미디어 분석 도구, AI 분석, 자동화 보고서, 실시간 대시보드",
+      "og_type": "website"
+    },
+    "support": {
+      "title": "고객 지원 - Creator Control Center",
+      "description": "Creator Control Center 사용에 대한 도움이 필요하신가요? 자주 묻는 질문, 가이드, 고객 지원 정보를 확인하세요.",
+      "keywords": "크리에이터 지원, 고객 서비스, FAQ, 사용 가이드, 기술 지원",
+      "og_type": "website"
+    },
+    "dashboard": {
+      "title": "대시보드 - Creator Control Center",
+      "description": "모든 채널의 성과를 실시간으로 확인하고 관리하세요.",
+      "keywords": "크리에이터 대시보드, 실시간 분석, 채널 관리",
+      "og_type": "website"
+    }
+  },
+  "organization": {
+    "name": "Creator Control Center",
+    "description": "멀티 채널 크리에이터를 위한 통합 분석 플랫폼",
+    "logo": "/static/images/logo.png",
+    "foundingDate": "2024",
+    "contactEmail": "hello@creatorcontrol.center",
+    "sameAs": []
+  },
+  "faq": [
+    {
+      "question": "Creator Control Center는 어떤 플랫폼을 지원하나요?",
+      "answer": "인스타그램, 유튜브, 틱톡, 트위터/X, 페이스북, 메타 광고 계정을 지원합니다. 모든 채널을 하나의 대시보드에서 관리할 수 있습니다."
+    },
+    {
+      "question": "무료로 사용할 수 있나요?",
+      "answer": "네, 무료 플랜으로 1개의 채널을 관리할 수 있습니다. PRO와 ENTERPRISE 플랜으로 업그레이드하시면 더 많은 채널과 고급 기능을 이용하실 수 있습니다."
+    },
+    {
+      "question": "AI 기반 CS 답변 기능은 무엇인가요?",
+      "answer": "기업 고객을 위한 기능으로, Gemini AI를 활용하여 크리에이터 문의에 대한 답변 초안을 자동으로 생성합니다. 관리자 페이지에서 Gemini API 키를 안전하게 등록하여 사용할 수 있습니다."
+    },
+    {
+      "question": "데이터는 얼마나 자주 업데이트되나요?",
+      "answer": "실시간으로 데이터를 수집하고 업데이트합니다. 대시보드에서 최신 성과 지표를 즉시 확인할 수 있습니다."
+    }
+  ]
+}
