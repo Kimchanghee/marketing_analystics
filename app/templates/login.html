@@ -18,76 +18,57 @@
     <div class="form-alert error">{{ social_error }}</div>
     {% endif %}
 
-    <!-- 소셜 로그인 버튼 (최상단) -->
+    <!-- 소셜 로그인 버튼 -->
     <div class="social-login-section">
-        <div class="social-button-grid">
-            {% for provider in providers %}
-            <div class="social-provider-wrapper" id="social-{{ provider.value }}">
-                <button class="btn social {{ provider.value }}" type="button" onclick="toggleSocialForm('{{ provider.value }}')">
-                    <span class="social-icon">
-                        {% if provider.value == 'google' %}
-                        <svg viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                            <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                            <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                            <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                        </svg>
-                        {% elif provider.value == 'apple' %}
-                        <svg viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                        </svg>
-                        {% endif %}
-                    </span>
-                    {{ t['auth']['social_buttons'][provider.value] }}
-                </button>
-                <form method="post" action="/login/social" class="social-login-form hidden" id="form-{{ provider.value }}">
-                    <input type="hidden" name="locale" value="{{ locale }}">
-                    <input type="hidden" name="provider" value="{{ provider.value }}">
-                    <label>
-                        {{ t['auth']['provider_account'] }}
-                        <input type="text" name="provider_user_id" placeholder="{{ t['auth']['social_id_placeholder'] }}" required autofocus>
-                    </label>
-                    <div class="social-form-actions">
-                        <button class="btn secondary" type="submit">{{ t['auth']['login_button'] }}</button>
-                        <button class="btn tertiary" type="button" onclick="toggleSocialForm('{{ provider.value }}')">{{ t['auth']['cancel'] }}</button>
-                    </div>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
+        <form method="post" action="/login/social" id="google-login-form">
+            <input type="hidden" name="locale" value="{{ locale }}">
+            <input type="hidden" name="provider" value="google">
+            <input type="hidden" name="provider_user_id" value="demo_google_user">
+            <button class="btn-social btn-social-google" type="submit">
+                <svg class="social-logo" viewBox="0 0 48 48" width="18" height="18">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    <path fill="none" d="M0 0h48v48H0z"/>
+                </svg>
+                Google로 계속하기
+            </button>
+        </form>
+
+        <form method="post" action="/login/social" id="apple-login-form">
+            <input type="hidden" name="locale" value="{{ locale }}">
+            <input type="hidden" name="provider" value="apple">
+            <input type="hidden" name="provider_user_id" value="demo_apple_user">
+            <button class="btn-social btn-social-apple" type="submit">
+                <svg class="social-logo" viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                </svg>
+                Apple로 계속하기
+            </button>
+        </form>
     </div>
-
-    <script>
-    function toggleSocialForm(provider) {
-        const wrapper = document.getElementById('social-' + provider);
-        const form = document.getElementById('form-' + provider);
-        const button = wrapper.querySelector('.btn.social');
-
-        if (form.classList.contains('hidden')) {
-            form.classList.remove('hidden');
-            button.style.display = 'none';
-            form.querySelector('input[type="text"]').focus();
-        } else {
-            form.classList.add('hidden');
-            button.style.display = 'flex';
-        }
-    }
-    </script>
 
     <div class="auth-divider">
-        <span>{{ t['auth']['or_divider'] }}</span>
+        <span>또는</span>
     </div>
 
-    <div class="auth-panels">
-        <div class="auth-panel">
-            <h2>{{ t['auth']['email_login_title'] }}</h2>
-            <form method="post" action="/login">
-                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-                <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>
-                <button class="btn primary" type="submit">{{ t['auth']['login_button'] }}</button>
-            </form>
-            <p class="hint">{{ t['auth']['recover_hint'] }} <a href="/recover">{{ t['auth']['recover_link'] }}</a></p>
-            <p class="hint">{{ t['auth']['signup_hint'] }} <a href="/signup">{{ t['auth']['signup_link'] }}</a></p>
+    <div class="email-login-section">
+        <form method="post" action="/login">
+            <label>
+                {{ t['auth']['email'] }}
+                <input type="email" name="email" required placeholder="이메일 주소">
+            </label>
+            <label>
+                {{ t['auth']['password'] }}
+                <input type="password" name="password" required placeholder="비밀번호">
+            </label>
+            <button class="btn primary full-width" type="submit">{{ t['auth']['login_button'] }}</button>
+        </form>
+        <div class="auth-links">
+            <a href="/recover">{{ t['auth']['recover_link'] }}</a>
+            <span>·</span>
+            <a href="/signup">{{ t['auth']['signup_link'] }}</a>
         </div>
     </div>
 </section>
