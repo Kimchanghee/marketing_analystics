@@ -78,8 +78,14 @@ class ManagerCreatorLink(SQLModel, table=True):
     approved: bool = Field(default=False)
     connected_at: datetime = Field(default_factory=datetime.utcnow)
 
-    manager: User = Relationship(back_populates="managed_creators")
-    creator: User = Relationship(back_populates="managers")
+    manager: User = Relationship(
+        back_populates="managed_creators",
+        sa_relationship_kwargs={"foreign_keys": "[ManagerCreatorLink.manager_id]"}
+    )
+    creator: User = Relationship(
+        back_populates="managers",
+        sa_relationship_kwargs={"foreign_keys": "[ManagerCreatorLink.creator_id]"}
+    )
 
 
 class Subscription(SQLModel, table=True):
