@@ -11,7 +11,7 @@ DEFAULT_DB_PATH = BASE_DIR / "app.db"
 
 class Settings(BaseSettings):
     app_name: str = "Creator Control Center"
-    secret_key: str = Field("super-secret-key", env="APP_SECRET_KEY")
+    secret_key: str = Field("super-secret-key", env="SECRET_KEY")
     database_url: str = Field(f"sqlite:///{DEFAULT_DB_PATH}", env="DATABASE_URL")
     access_token_expire_minutes: int = 60 * 24
     verification_code_length: int = 6
