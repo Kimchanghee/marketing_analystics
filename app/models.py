@@ -37,8 +37,14 @@ class User(SQLModel, table=True):
     password_set_at: Optional[datetime] = None
 
     channels: list["ChannelAccount"] = Relationship(back_populates="owner")
-    managed_creators: list["ManagerCreatorLink"] = Relationship(back_populates="manager")
-    managers: list["ManagerCreatorLink"] = Relationship(back_populates="creator")
+    managed_creators: list["ManagerCreatorLink"] = Relationship(
+        back_populates="manager",
+        sa_relationship_kwargs={"foreign_keys": "ManagerCreatorLink.manager_id"}
+    )
+    managers: list["ManagerCreatorLink"] = Relationship(
+        back_populates="creator",
+        sa_relationship_kwargs={"foreign_keys": "ManagerCreatorLink.creator_id"}
+    )
     payments: list["Payment"] = Relationship(back_populates="user")
     social_accounts: list["SocialAccount"] = Relationship(back_populates="user")
     password_reset_tokens: list["PasswordResetToken"] = Relationship(back_populates="user")
