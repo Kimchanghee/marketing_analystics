@@ -11,7 +11,7 @@ from sqlmodel import select
 
 from ..auth import auth_manager
 from ..config import get_settings
-from ..database import get_session
+from ..database import session_context
 from ..models import PasswordResetToken, User
 
 logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ class AccountRecoveryService:
         hashed = self._hash_token(token)
         expires_at = datetime.utcnow() + self.expiry_delta
 
-        with get_session() as session:
+        with session_context() as session:
             record = PasswordResetToken(
                 user_id=user.id,
                 token_hash=hashed,
@@ -48,7 +48,7 @@ class AccountRecoveryService:
 
     def verify_and_consume_token(self, user: User, token: str) -> bool:
         hashed = self._hash_token(token)
-        with get_session() as session:
+        with session_context() as session:
             record = session.exec(
                 select(PasswordResetToken)
                 .where(PasswordResetToken.user_id == user.id)
@@ -68,7 +68,7 @@ class AccountRecoveryService:
         if not self.verify_and_consume_token(user, token):
             return False
         hashed = auth_manager.hash_password(new_password)
-        with get_session() as session:
+        with session_context() as session:
             db_user = session.exec(select(User).where(User.id == user.id)).first()
             if not db_user:
                 return False
@@ -81,7 +81,7 @@ class AccountRecoveryService:
         return True
 
     def remind_username(self, email: str) -> bool:
-        with get_session() as session:
+        with session_context() as session:
             exists = session.exec(select(User).where(User.email == email)).first()
         if exists:
             logger.info("Username reminder requested for %s", email)

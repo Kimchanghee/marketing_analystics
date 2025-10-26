@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
 from .auth import auth_manager
-from .database import get_session, init_db
+from .database import get_session, init_db, session_context
 from .dependencies import get_current_user
 from .models import SocialAccount, User
 from .routers import admin, auth, dashboard, subscriptions
@@ -34,7 +34,7 @@ async def localization_middleware(request: Request, call_next):
     if token:
         try:
             email = auth_manager.decode_token(token)
-            with get_session() as session:
+            with session_context() as session:
                 user = session.exec(select(User).where(User.email == email)).first()
                 if user:
                     locale = user.locale

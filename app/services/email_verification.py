@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from sqlmodel import select
 
 from ..config import get_settings
-from ..database import get_session
+from ..database import session_context
 from ..models import EmailVerification
 
 logger = logging.getLogger(__name__)
@@ -44,7 +44,7 @@ class EmailVerificationService:
         hashed = self._hash_code(code)
         expires_at = datetime.utcnow() + self.expiry_delta
 
-        with get_session() as session:
+        with session_context() as session:
             record = session.exec(
                 select(EmailVerification).where(EmailVerification.email == email)
             ).first()
@@ -74,7 +74,7 @@ class EmailVerificationService:
         """
 
         hashed = self._hash_code(code)
-        with get_session() as session:
+        with session_context() as session:
             record = session.exec(
                 select(EmailVerification).where(EmailVerification.email == email)
             ).first()
@@ -94,7 +94,7 @@ class EmailVerificationService:
         return True
 
     def clear_code(self, email: str) -> None:
-        with get_session() as session:
+        with session_context() as session:
             record = session.exec(
                 select(EmailVerification).where(EmailVerification.email == email)
             ).first()
