@@ -24,6 +24,9 @@ def get_current_user(request: Request, session=Depends(get_session)) -> User:
 
 def require_roles(*roles: UserRole):
     def role_checker(user: User = Depends(get_current_user)) -> User:
+        # SUPER_ADMIN은 모든 페이지에 접근 가능
+        if user.role == UserRole.SUPER_ADMIN:
+            return user
         if user.role not in roles:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")
         return user

@@ -96,6 +96,27 @@ async def create_test_accounts():
         else:
             print(f"ℹ️ Super Admin 계정이 이미 존재합니다: {admin_email}")
 
+        # 4. 마스터 관리자 계정 (모든 대시보드 접근 가능)
+        master_email = "kckc93@creatorcontrol.center"
+        existing_master = session.exec(select(User).where(User.email == master_email)).first()
+        if not existing_master:
+            master = User(
+                email=master_email,
+                hashed_password=hash_password("Ckdgml9788@"),
+                role=UserRole.SUPER_ADMIN,
+                name="마스터 관리자",
+                organization="Creator Control Center",
+                is_active=True,
+                is_email_verified=True,
+                password_login_enabled=True,
+                locale="ko"
+            )
+            session.add(master)
+            session.commit()
+            print(f"✅ 마스터 관리자 계정 생성 완료: {master_email} / Ckdgml9788@")
+        else:
+            print(f"ℹ️ 마스터 관리자 계정이 이미 존재합니다: {master_email}")
+
     print("\n" + "="*60)
     print("테스트 계정 생성 완료!")
     print("="*60)
@@ -119,6 +140,15 @@ async def create_test_accounts():
     print(f"   접속: http://127.0.0.1:8000/login")
     print(f"   → 로그인 후: http://127.0.0.1:8000/super-admin?admin_token=YOUR_TOKEN")
     print(f"   (주의: .env 파일의 SUPER_ADMIN_ACCESS_TOKEN 필요)")
+
+    print("\n4️⃣ 마스터 관리자 (모든 대시보드 접근 가능)")
+    print(f"   이메일: kckc93@creatorcontrol.center")
+    print(f"   비밀번호: Ckdgml9788@")
+    print(f"   접속: http://127.0.0.1:8000/login")
+    print(f"   → 개인 대시보드: http://127.0.0.1:8000/dashboard")
+    print(f"   → 기업 대시보드: http://127.0.0.1:8000/manager/dashboard")
+    print(f"   → 슈퍼 관리자: http://127.0.0.1:8000/super-admin?admin_token=YOUR_TOKEN")
+    print(f"   ✨ SUPER_ADMIN 권한으로 모든 페이지 접근 가능!")
     print("\n" + "="*60)
 
 
