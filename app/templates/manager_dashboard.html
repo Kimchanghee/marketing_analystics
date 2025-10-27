@@ -661,6 +661,172 @@
 }
 </style>
 
+<!-- AI PD 채팅 섹션 -->
+<section class="ai-pd-section">
+    <h2>🤖 AI PD 비서 - 포트폴리오 분석</h2>
+    <p class="section-desc">관리 중인 크리에이터들의 성과를 분석하고 전략을 제안받으세요</p>
+
+    <div class="ai-chat-container">
+        <div class="chat-messages" id="aiChatMessages">
+            <div class="ai-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p><strong>안녕하세요! AI PD 비서입니다.</strong></p>
+                    <p>관리 중인 크리에이터 포트폴리오를 분석하고 최적화 전략을 제안해드립니다. 궁금한 것을 물어보세요:</p>
+                    <ul class="suggestion-chips">
+                        <li onclick="askAI(this.textContent)">어떤 크리에이터가 가장 좋은 성과를 내고 있나요?</li>
+                        <li onclick="askAI(this.textContent)">전체 포트폴리오의 강점과 약점은?</li>
+                        <li onclick="askAI(this.textContent)">크리에이터별 맞춤 전략을 제안해주세요</li>
+                        <li onclick="askAI(this.textContent)">다음 분기 액션 아이템은?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form id="aiChatForm" class="ai-chat-form">
+            <textarea
+                id="aiQuestionInput"
+                name="question"
+                placeholder="AI에게 질문하세요... (최소 10자)"
+                rows="2"
+                required
+                minlength="10"
+            ></textarea>
+            <button type="submit" class="btn primary" id="aiSendBtn">
+                <span class="btn-text">질문하기</span>
+                <span class="btn-loader" style="display: none;">분석 중...</span>
+            </button>
+        </form>
+    </div>
+</section>
+
+<style>
+.ai-pd-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+}
+
+.ai-pd-section h2 {
+    margin-bottom: 0.5rem;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.ai-chat-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+}
+
+.ai-message,
+.user-message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-message .message-avatar {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.message-content {
+    flex: 1;
+    background: var(--surface-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.message-content p {
+    margin: 0.5rem 0;
+}
+
+.suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.suggestion-chips li {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.suggestion-chips li:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.ai-chat-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.ai-chat-form textarea {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.ai-chat-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.ai-chat-form button {
+    min-width: 120px;
+    white-space: nowrap;
+}
+</style>
+
 <script>
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
@@ -671,5 +837,88 @@ function copyToClipboard(text) {
 function exportCreatorReport(creatorId) {
     window.location.href = `/manager/creator/${creatorId}/export`;
 }
+
+function askAI(question) {
+    document.getElementById('aiQuestionInput').value = question;
+    document.getElementById('aiQuestionInput').focus();
+}
+
+document.getElementById('aiChatForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const questionInput = document.getElementById('aiQuestionInput');
+    const question = questionInput.value.trim();
+    const sendBtn = document.getElementById('aiSendBtn');
+    const btnText = sendBtn.querySelector('.btn-text');
+    const btnLoader = sendBtn.querySelector('.btn-loader');
+    const chatMessages = document.getElementById('aiChatMessages');
+
+    if (question.length < 10) {
+        alert('질문은 최소 10자 이상 입력해주세요.');
+        return;
+    }
+
+    // Disable form
+    sendBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
+    questionInput.disabled = true;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.innerHTML = `
+        <div class="message-avatar">👤</div>
+        <div class="message-content"><p>${question}</p></div>
+    `;
+    chatMessages.appendChild(userMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+        const formData = new FormData();
+        formData.append('question', question);
+
+        const response = await fetch('/ai-pd/ask', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'ai-message';
+            aiMsg.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    ${data.answer.split('\n').map(line => `<p>${line}</p>`).join('')}
+                </div>
+            `;
+            chatMessages.appendChild(aiMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            questionInput.value = '';
+        } else {
+            throw new Error(data.detail || 'Unknown error');
+        }
+    } catch (error) {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'ai-message';
+        errorMsg.innerHTML = `
+            <div class="message-avatar">⚠️</div>
+            <div class="message-content">
+                <p><strong>오류 발생</strong></p>
+                <p>${error.message || 'AI 분석 중 오류가 발생했습니다.'}</p>
+            </div>
+        `;
+        chatMessages.appendChild(errorMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    } finally {
+        sendBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+        questionInput.disabled = false;
+        questionInput.focus();
+    }
+});
 </script>
 {% endblock %}
