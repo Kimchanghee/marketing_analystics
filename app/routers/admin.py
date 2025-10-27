@@ -49,9 +49,9 @@ def verify_admin_token(request: Request):
 @router.get("/super-admin")
 def super_admin_dashboard(
     request: Request,
-    user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
     admin_token: str = Depends(verify_admin_token),
+    user: User = Depends(get_current_user),
 ):
     locale = user.locale
     strings = translator.load_locale(locale)
@@ -124,9 +124,9 @@ def promote_user(
     request: Request,
     email: str = Form(...),
     role: UserRole = Form(...),
-    user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
     admin_token: str = Depends(verify_admin_token),
+    user: User = Depends(get_current_user),
 ):
     target = session.exec(select(User).where(User.email == email)).first()
     if not target:
@@ -149,9 +149,9 @@ def update_user_status(
     request: Request,
     user_id: int = Form(...),
     is_active: bool = Form(...),
-    user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
     admin_token: str = Depends(verify_admin_token),
+    user: User = Depends(get_current_user),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -176,9 +176,9 @@ def update_subscription(
     tier: SubscriptionTier = Form(...),
     max_accounts: int = Form(1),
     active: bool = Form(False),
-    user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
     admin_token: str = Depends(verify_admin_token),
+    user: User = Depends(get_current_user),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -220,9 +220,9 @@ def create_payment(
     description: str | None = Form(None),
     billing_period_start: str | None = Form(None),
     billing_period_end: str | None = Form(None),
-    user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
     admin_token: str = Depends(verify_admin_token),
+    user: User = Depends(get_current_user),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -255,9 +255,9 @@ def update_payment_status(
     request: Request,
     payment_id: int = Form(...),
     status_value: PaymentStatus = Form(...),
-    user: User = Depends(require_roles(UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
     admin_token: str = Depends(verify_admin_token),
+    user: User = Depends(get_current_user),
 ):
     payment = session.get(Payment, payment_id)
     if not payment:
