@@ -57,9 +57,31 @@ def super_admin_dashboard(
     strings = translator.load_locale(locale)
     users = session.exec(select(User).order_by(User.created_at.desc())).all()
     subscriptions = session.exec(select(Subscription)).all()
-    payments = session.exec(select(Payment).order_by(Payment.created_at.desc()).limit(50)).all()
+
+    # 회원 구분: 기업(MANAGER) / 개인(CREATOR)
+    business_users = [u for u in users if u.role == UserRole.MANAGER or u.role == UserRole.ADMIN]
+    personal_users = [u for u in users if u.role == UserRole.CREATOR]
+
+    # 최근 결제 내역 (100개)
+    recent_payments = session.exec(
+        select(Payment).order_by(Payment.created_at.desc()).limit(100)
+    ).all()
+
+    # 결제 통계
+    from sqlalchemy import func
+    total_revenue = session.exec(
+        select(func.sum(Payment.amount)).where(Payment.status == PaymentStatus.PAID)
+    ).first() or 0
+
     user_lookup = {u.id: u for u in users}
-    logs = session.exec(select(ActivityLog).order_by(ActivityLog.created_at.desc()).limit(25)).all()
+
+    # AI API 키 확인 (슈퍼관리자 전용)
+    settings = get_settings()
+    gemini_api_key_set = hasattr(settings, 'gemini_api_key') and settings.gemini_api_key and settings.gemini_api_key != ""
+
+    # AI PD 시스템 프롬프트 가져오기
+    from ..services.ai_pd_service import AIPDService
+    ai_system_prompt = AIPDService.get_system_prompt()
 
     response = request.app.state.templates.TemplateResponse(
         "super_admin.html",
@@ -69,13 +91,19 @@ def super_admin_dashboard(
             "locale": locale,
             "t": strings,
             "users": users,
+            "business_users": business_users,
+            "personal_users": personal_users,
             "subscriptions": {subscription.user_id: subscription for subscription in subscriptions},
-            "logs": logs,
+            "recent_payments": recent_payments,
+            "total_revenue": total_revenue,
+            "payments": list(recent_payments),
+            "logs": [],  # 빈 로그 (템플릿 호환성을 위해)
             "roles": list(UserRole),
             "tiers": list(SubscriptionTier),
             "payment_statuses": list(PaymentStatus),
-            "payments": payments,
             "user_lookup": user_lookup,
+            "gemini_api_key_set": gemini_api_key_set,
+            "ai_system_prompt": ai_system_prompt,
         },
     )
 

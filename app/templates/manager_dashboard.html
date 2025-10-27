@@ -82,39 +82,67 @@
 
             {% if link.creator_id in creator_channels %}
             <div class="creator-channels">
-                <h4>채널 현황 ({{ creator_channels[link.creator_id]|length }}개)</h4>
+                <h4>연결된 채널 ({{ creator_channels[link.creator_id]|length }}개)</h4>
+
+                <!-- Platform Overview Badges -->
+                <div class="platform-badges">
+                    {% for channel in creator_channels[link.creator_id] %}
+                    <span class="platform-badge platform-{{ channel.platform.lower() }}">
+                        {% if channel.platform.lower() == 'youtube' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        {% elif channel.platform.lower() == 'instagram' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        {% elif channel.platform.lower() == 'tiktok' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        {% elif channel.platform.lower() == 'facebook' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        {% elif channel.platform.lower() == 'threads' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 14.5c-.246 2.426-1.756 3.746-4.262 3.746-2.893 0-4.634-1.688-4.634-4.5 0-2.813 1.741-4.5 4.634-4.5.655 0 1.277.098 1.847.273-.413-.36-.98-.543-1.692-.543-1.799 0-2.992 1.138-2.992 3 0 1.863 1.193 3 2.992 3 1.456 0 2.484-.793 2.777-2.14.06-.277.09-.568.09-.874 0-2.205-1.228-3.462-3.376-3.462-2.507 0-4.262 1.688-4.262 4.5 0 2.813 1.755 4.5 4.262 4.5 2.506 0 4.016-1.32 4.262-3.746h1.354z"/></svg>
+                        {% endif %}
+                        {{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}
+                    </span>
+                    {% endfor %}
+                </div>
+
+                <!-- Detailed Channel Cards -->
                 <div class="channel-summary">
                     {% for channel in creator_channels[link.creator_id] %}
-                    <div class="mini-channel-card">
+                    <div class="mini-channel-card platform-{{ channel.platform.lower() }}">
                         <div class="channel-header">
-                            <strong>{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</strong>
-                            <span class="account-name">{{ channel.account_name }}</span>
+                            <div class="platform-info">
+                                <strong class="platform-name">{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</strong>
+                                <span class="account-name">@{{ channel.account_name }}</span>
+                            </div>
                         </div>
                         {% set snapshot = creator_snapshots.get(channel.id) %}
                         {% if snapshot %}
                         <div class="mini-metrics">
                             <div class="metric-item">
-                                <span class="metric-icon">👥</span>
-                                <span class="metric-value">{{ snapshot['followers'] }}</span>
+                                <span class="metric-label">구독자</span>
+                                <span class="metric-value">{{ '{:,}'.format(snapshot['followers']) }}</span>
                             </div>
                             <div class="metric-item">
-                                <span class="metric-icon">📈</span>
-                                <span class="metric-value">{{ snapshot['growth_rate'] }}%</span>
+                                <span class="metric-label">성장률</span>
+                                <span class="metric-value growth">+{{ snapshot['growth_rate'] }}%</span>
                             </div>
                             <div class="metric-item">
-                                <span class="metric-icon">💬</span>
-                                <span class="metric-value">{{ snapshot['engagement_rate'] }}%</span>
+                                <span class="metric-label">참여율</span>
+                                <span class="metric-value engagement">{{ snapshot['engagement_rate'] }}%</span>
                             </div>
                         </div>
-                        {% if snapshot.get('recent_posts') %}
+                        {% if snapshot.get('recent_posts') and snapshot['recent_posts']|length > 0 %}
                         <div class="recent-post-mini">
-                            <p class="post-title">최근: {{ snapshot['recent_posts'][0]['title'][:30] }}...</p>
-                            <p class="post-stats">
-                                👍 {{ snapshot['recent_posts'][0]['likes'] }}
-                                💬 {{ snapshot['recent_posts'][0]['comments'] }}
-                            </p>
+                            <p class="post-label">최근 게시물</p>
+                            <p class="post-title">{{ snapshot['recent_posts'][0]['title'][:40] }}...</p>
+                            <div class="post-stats">
+                                <span>👍 {{ '{:,}'.format(snapshot['recent_posts'][0]['likes']) }}</span>
+                                <span>💬 {{ '{:,}'.format(snapshot['recent_posts'][0]['comments']) }}</span>
+                                <span>👀 {{ '{:,}'.format(snapshot['recent_posts'][0]['impressions']) }}</span>
+                            </div>
                         </div>
                         {% endif %}
+                        {% else %}
+                        <p class="no-data">데이터를 불러오는 중...</p>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -303,6 +331,56 @@
     font-size: 1rem;
 }
 
+/* Platform Badges */
+.platform-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+}
+
+.platform-badge svg {
+    flex-shrink: 0;
+}
+
+.platform-badge.platform-youtube {
+    background: linear-gradient(135deg, #FF0000, #CC0000);
+}
+
+.platform-badge.platform-instagram {
+    background: linear-gradient(135deg, #E1306C, #C13584, #833AB4);
+}
+
+.platform-badge.platform-tiktok {
+    background: linear-gradient(135deg, #000000, #333333);
+}
+
+.platform-badge.platform-facebook {
+    background: linear-gradient(135deg, #1877F2, #0E5BB8);
+}
+
+.platform-badge.platform-threads {
+    background: linear-gradient(135deg, #000000, #444444);
+}
+
+.platform-badge.platform-twitter,
+.platform-badge.platform-x {
+    background: linear-gradient(135deg, #1DA1F2, #0C85D0);
+}
+
 .channel-summary {
     display: flex;
     flex-direction: column;
@@ -311,57 +389,149 @@
 
 .mini-channel-card {
     background: var(--bg);
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.mini-channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.mini-channel-card.platform-youtube::before {
+    background: #FF0000;
+}
+
+.mini-channel-card.platform-instagram::before {
+    background: linear-gradient(to bottom, #E1306C, #C13584, #833AB4);
+}
+
+.mini-channel-card.platform-tiktok::before {
+    background: #000000;
+}
+
+.mini-channel-card.platform-facebook::before {
+    background: #1877F2;
+}
+
+.mini-channel-card.platform-threads::before {
+    background: #000000;
+}
+
+.mini-channel-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary);
 }
 
 .channel-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.platform-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.platform-name {
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
 .account-name {
     font-size: 0.85rem;
     color: var(--text-secondary);
+    font-weight: 400;
 }
 
 .mini-metrics {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .metric-item {
     display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.metric-value.growth {
+    color: #28A745;
+}
+
+.metric-value.engagement {
+    color: #007BFF;
+}
+
+.recent-post-mini {
+    padding: 0.75rem;
+    background: var(--surface-bg);
+    border-radius: 6px;
+}
+
+.post-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.post-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+.post-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.post-stats span {
+    display: inline-flex;
     align-items: center;
     gap: 0.25rem;
 }
 
-.metric-icon {
-    font-size: 1rem;
-}
-
-.metric-value {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.recent-post-mini {
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.post-title {
-    font-size: 0.85rem;
-    margin-bottom: 0.25rem;
-}
-
-.post-stats {
-    font-size: 0.8rem;
+.no-data {
+    text-align: center;
+    padding: 1.5rem;
     color: var(--text-secondary);
+    font-style: italic;
 }
 
 .creator-actions {

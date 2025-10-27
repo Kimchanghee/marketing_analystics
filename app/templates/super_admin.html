@@ -207,5 +207,217 @@
             {% endif %}
         </div>
     </article>
+
+    <!-- AI PD Service Management -->
+    <article class="admin-card ai-pd-card">
+        <div class="admin-card-header">
+            <h2>🤖 AI PD 서비스 관리</h2>
+            <p class="section-subtext">Google Gemini AI 기반 크리에이터 분석 서비스</p>
+        </div>
+
+        <div class="ai-pd-status">
+            {% if gemini_api_key_set %}
+            <div class="status-banner success">
+                <span class="status-icon">✓</span>
+                <div class="status-content">
+                    <strong>Gemini API 키가 설정되어 있습니다</strong>
+                    <p>크리에이터와 매니저가 AI PD 서비스를 사용할 수 있습니다.</p>
+                </div>
+            </div>
+            {% else %}
+            <div class="status-banner warning">
+                <span class="status-icon">⚠</span>
+                <div class="status-content">
+                    <strong>Gemini API 키가 설정되지 않았습니다</strong>
+                    <p>AI PD 서비스를 활성화하려면 환경 변수에 GEMINI_API_KEY를 설정하세요.</p>
+                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn tertiary small">API 키 발급받기 →</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="ai-pd-info">
+            <h3>서비스 기능</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">👤</span>
+                    <div class="feature-content">
+                        <strong>크리에이터용 AI 분석</strong>
+                        <p>개인 채널 성과 분석 및 개선 방안 제안</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">👥</span>
+                    <div class="feature-content">
+                        <strong>매니저용 포트폴리오 분석</strong>
+                        <p>관리 중인 모든 크리에이터 통합 분석 및 전략 제안</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💬</span>
+                    <div class="feature-content">
+                        <strong>AI 답변 초안 생성</strong>
+                        <p>크리에이터 문의에 대한 AI 기반 답변 초안 자동 생성</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔒</span>
+                    <div class="feature-content">
+                        <strong>안전한 API 키 관리</strong>
+                        <p>매니저별 암호화된 Gemini API 키 저장 지원</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">시스템 프롬프트</h3>
+            <div class="prompt-viewer">
+                <pre>{{ ai_system_prompt }}</pre>
+            </div>
+
+            <h3 style="margin-top: 2rem;">API 키 설정 가이드</h3>
+            <ol class="setup-guide">
+                <li>
+                    <strong>환경 변수 설정 (서버 전역 사용)</strong>
+                    <p>서버의 .env 파일 또는 환경 변수에 <code>GEMINI_API_KEY=your_api_key_here</code>를 추가하세요.</p>
+                    <p>이 방법으로 설정하면 모든 사용자가 해당 API 키를 사용합니다 (비용 공유).</p>
+                </li>
+                <li>
+                    <strong>매니저별 API 키 설정 (권장)</strong>
+                    <p>각 매니저가 대시보드에서 자신의 Gemini API 키를 등록할 수 있습니다.</p>
+                    <p>API 키는 암호화되어 데이터베이스에 안전하게 저장되며, 해당 매니저만 사용합니다.</p>
+                </li>
+            </ol>
+
+            <div class="api-links">
+                <a href="/ai-pd" class="btn secondary">AI PD 대시보드 보기</a>
+                <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="btn tertiary">Gemini API 문서</a>
+            </div>
+        </div>
+    </article>
 </section>
+
+<style>
+.ai-pd-card {
+    border-left: 4px solid #667eea;
+}
+
+.status-banner {
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.status-banner.success {
+    background: #D4EDDA;
+    border: 1px solid #C3E6CB;
+}
+
+.status-banner.warning {
+    background: #FFF3CD;
+    border: 1px solid #FFEAA7;
+}
+
+.status-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.status-content {
+    flex: 1;
+}
+
+.status-content strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.status-content p {
+    margin: 0.25rem 0;
+    color: var(--text-secondary);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.feature-content strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.feature-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.prompt-viewer {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-top: 0.5rem;
+}
+
+.prompt-viewer pre {
+    margin: 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.setup-guide {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+.setup-guide li {
+    margin: 1rem 0;
+}
+
+.setup-guide strong {
+    color: var(--primary);
+}
+
+.setup-guide p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+.setup-guide code {
+    background: var(--bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+}
+
+.api-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+</style>
 {% endblock %}

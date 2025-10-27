@@ -168,6 +168,227 @@
         {% endfor %}
     </div>
 </section>
+
+{% if accounts|length > 0 %}
+<section class="analytics-dashboard">
+    <h2>{{ t['dashboard'].get('analytics_overview', '활동 및 성과 분석') }}</h2>
+
+    <div class="analytics-grid">
+        <!-- Activity Timeline Chart -->
+        <div class="chart-card">
+            <h3>{{ t['dashboard'].get('activity_timeline', '최근 활동 타임라인') }}</h3>
+            <canvas id="activityChart"></canvas>
+        </div>
+
+        <!-- Engagement Rate Chart -->
+        <div class="chart-card">
+            <h3>{{ t['dashboard'].get('engagement_trend', '참여율 추세') }}</h3>
+            <canvas id="engagementChart"></canvas>
+        </div>
+
+        <!-- Platform Comparison -->
+        <div class="chart-card">
+            <h3>{{ t['dashboard'].get('platform_comparison', '플랫폼별 비교') }}</h3>
+            <canvas id="platformChart"></canvas>
+        </div>
+
+        <!-- Posts Performance -->
+        <div class="chart-card full-width">
+            <h3>{{ t['dashboard'].get('posts_performance', '게시물 성과 분석') }}</h3>
+            <canvas id="postsChart"></canvas>
+        </div>
+    </div>
+</section>
+
+<script>
+// Prepare data from accounts and snapshots
+const chartData = {
+    platforms: [],
+    followers: [],
+    growthRates: [],
+    engagementRates: [],
+    recentPosts: [],
+    colors: {
+        youtube: 'rgba(255, 0, 0, 0.7)',
+        instagram: 'rgba(225, 48, 108, 0.7)',
+        tiktok: 'rgba(0, 0, 0, 0.7)',
+        facebook: 'rgba(24, 119, 242, 0.7)',
+        threads: 'rgba(0, 0, 0, 0.7)'
+    }
+};
+
+{% for account in accounts %}
+    {% set snapshot = snapshots.get(account.id, {}) %}
+    chartData.platforms.push('{{ account.platform }}');
+    chartData.followers.push({{ snapshot.get('followers', 0) }});
+    chartData.growthRates.push({{ snapshot.get('growth_rate', 0) }});
+    chartData.engagementRates.push({{ snapshot.get('engagement_rate', 0) }});
+
+    {% for post in snapshot.get('recent_posts', [])[:5] %}
+        chartData.recentPosts.push({
+            platform: '{{ account.platform }}',
+            title: '{{ post.get("title", "")[:30] }}...',
+            likes: {{ post.get('likes', 0) }},
+            comments: {{ post.get('comments', 0) }},
+            impressions: {{ post.get('impressions', 0) }}
+        });
+    {% endfor %}
+{% endfor %}
+
+// Activity Timeline Chart
+const activityCtx = document.getElementById('activityChart');
+if (activityCtx) {
+    new Chart(activityCtx, {
+        type: 'line',
+        data: {
+            labels: chartData.platforms,
+            datasets: [{
+                label: '{{ t["dashboard"]["followers"] }}',
+                data: chartData.followers,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+// Engagement Rate Chart
+const engagementCtx = document.getElementById('engagementChart');
+if (engagementCtx) {
+    new Chart(engagementCtx, {
+        type: 'bar',
+        data: {
+            labels: chartData.platforms,
+            datasets: [{
+                label: '{{ t["dashboard"]["engagement"] }} (%)',
+                data: chartData.engagementRates,
+                backgroundColor: chartData.platforms.map(p => chartData.colors[p.toLowerCase()] || 'rgba(54, 162, 235, 0.7)'),
+                borderColor: chartData.platforms.map(p => chartData.colors[p.toLowerCase()] || 'rgb(54, 162, 235)'),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+// Platform Comparison Chart
+const platformCtx = document.getElementById('platformChart');
+if (platformCtx) {
+    new Chart(platformCtx, {
+        type: 'doughnut',
+        data: {
+            labels: chartData.platforms,
+            datasets: [{
+                label: '{{ t["dashboard"]["followers"] }}',
+                data: chartData.followers,
+                backgroundColor: chartData.platforms.map(p => chartData.colors[p.toLowerCase()] || 'rgba(54, 162, 235, 0.7)'),
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'right' }
+            }
+        }
+    });
+}
+
+// Posts Performance Chart
+const postsCtx = document.getElementById('postsChart');
+if (postsCtx && chartData.recentPosts.length > 0) {
+    new Chart(postsCtx, {
+        type: 'bar',
+        data: {
+            labels: chartData.recentPosts.map(p => p.title),
+            datasets: [
+                {
+                    label: '좋아요',
+                    data: chartData.recentPosts.map(p => p.likes),
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                },
+                {
+                    label: '댓글',
+                    data: chartData.recentPosts.map(p => p.comments),
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                },
+                {
+                    label: '조회수',
+                    data: chartData.recentPosts.map(p => p.impressions),
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+</script>
+
+<style>
+.analytics-dashboard {
+    margin: 2rem 0;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.chart-card {
+    background: var(--surface-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.chart-card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.chart-card canvas {
+    max-height: 300px;
+}
+</style>
+{% endif %}
+
 <section class="collaboration">
     <h2>{{ t['dashboard']['collaboration'] }}</h2>
     {% if user.role == 'manager' %}
