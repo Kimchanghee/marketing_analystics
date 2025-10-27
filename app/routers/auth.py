@@ -144,7 +144,14 @@ def login(
     token = auth_manager.create_access_token(user.email)
     session.add(ActivityLog(user_id=user.id, action="login"))
     session.commit()
-    redirect_to = "/dashboard" if user.role != UserRole.SUPER_ADMIN else "/super-admin"
+
+    # SUPER_ADMIN도 일단 /dashboard로 리다이렉트 (모든 페이지 접근 가능)
+    # /super-admin은 admin_token이 필요하므로 수동으로 접속해야 함
+    if user.role == UserRole.MANAGER:
+        redirect_to = "/manager/dashboard"
+    else:
+        redirect_to = "/dashboard"
+
     redirect_response = RedirectResponse(url=redirect_to, status_code=status.HTTP_303_SEE_OTHER)
     auth_manager.set_login_cookie(redirect_response, token)
     return redirect_response
@@ -180,7 +187,14 @@ def social_login(
     token = auth_manager.create_access_token(user.email)
     session.add(ActivityLog(user_id=user.id, action=f"social_login_{provider_enum.value}"))
     session.commit()
-    redirect_to = "/dashboard" if user.role != UserRole.SUPER_ADMIN else "/super-admin"
+
+    # SUPER_ADMIN도 일단 /dashboard로 리다이렉트 (모든 페이지 접근 가능)
+    # /super-admin은 admin_token이 필요하므로 수동으로 접속해야 함
+    if user.role == UserRole.MANAGER:
+        redirect_to = "/manager/dashboard"
+    else:
+        redirect_to = "/dashboard"
+
     redirect_response = RedirectResponse(url=redirect_to, status_code=status.HTTP_303_SEE_OTHER)
     auth_manager.set_login_cookie(redirect_response, token)
     return redirect_response
