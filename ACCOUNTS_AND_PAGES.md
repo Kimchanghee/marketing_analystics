@@ -39,8 +39,10 @@
 
 **접속 방법:**
 1. 로그인: `https://marketing-analystics-573434207823.europe-west1.run.app/login`
-2. 슈퍼 관리자 페이지: `/super-admin?admin_token=YOUR_SUPER_ADMIN_TOKEN`
+2. 로그인 후 자동 리다이렉트: `/dashboard` (모든 페이지 접근 가능 ✅)
+3. 슈퍼 관리자 페이지: `/super-admin?admin_token=YOUR_SUPER_ADMIN_TOKEN`
    - ⚠️ `SUPER_ADMIN_ACCESS_TOKEN` 환경 변수 필요
+   - 직접 URL로 접속해야 함
 
 ---
 
@@ -53,10 +55,12 @@
 
 **접속 방법:**
 1. 로그인: `https://marketing-analystics-573434207823.europe-west1.run.app/login`
-2. **모든 대시보드 접근 가능** (SUPER_ADMIN 권한)
+2. 로그인 후 자동 리다이렉트: `/dashboard`
+3. **모든 대시보드 자유롭게 접근 가능** (SUPER_ADMIN 권한)
    - 개인 대시보드: `/dashboard` ✅
    - 기업 대시보드: `/manager/dashboard` ✅
-   - 슈퍼 관리자: `/super-admin?admin_token=YOUR_TOKEN` ✅
+   - AI PD 대시보드: `/ai-pd` ✅
+   - 슈퍼 관리자: `/super-admin?admin_token=YOUR_TOKEN` ✅ (수동 접속)
 
 ---
 
@@ -287,6 +291,10 @@ python create_test_accounts.py
 - ✅ AI-PD 기능이 슈퍼관리자 페이지에 통합됨
 - ✅ 개인/기업 대시보드에 AI-PD 채팅창 통합 완료
 - ✅ 매니저 대시보드 정상 작동 확인
+- ✅ **SUPER_ADMIN 로그인 오류 수정**: 로그인 후 `/dashboard`로 리다이렉트 (모든 페이지 접근 가능)
+  - MANAGER는 `/manager/dashboard`로 리다이렉트
+  - CREATOR, SUPER_ADMIN 등은 `/dashboard`로 리다이렉트
+  - `/super-admin`은 `admin_token` 필요하므로 수동 접속
 
 ---
 
