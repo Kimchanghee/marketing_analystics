@@ -6,7 +6,8 @@
       "Bash(git push:*)",
       "Bash(gcloud run:*)",
       "Bash(python -c:*)",
-      "Bash(python create_test_accounts.py:*)"
+      "Bash(python create_test_accounts.py:*)",
+      "Bash(gcloud config get-value:*)"
     ],
     "deny": [],
     "ask": []
