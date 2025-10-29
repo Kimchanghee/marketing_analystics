@@ -77,7 +77,29 @@ def login(
 ):
     locale = _determine_locale(request)
     strings = translator.load_locale(locale)
-    user = session.exec(select(User).where(User.email == email)).first()
+
+    # 데이터베이스 연결 확인
+    try:
+        user = session.exec(select(User).where(User.email == email)).first()
+    except Exception as e:
+        # 데이터베이스 연결 실패
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f"Database connection failed during login: {e}", exc_info=True)
+
+        return request.app.state.templates.TemplateResponse(
+            "login.html",
+            _template_context(
+                request,
+                locale,
+                strings,
+                {
+                    "error": "서버 데이터베이스 연결 오류가 발생했습니다. 관리자에게 문의하세요.",
+                    "providers": list(social_auth_service.get_supported_providers()),
+                },
+            ),
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
     if not user or not auth_manager.verify_password(password, user.hashed_password):
         if origin == "landing":
             redirect_url = f"/?lang={locale}&login_error=invalid_credentials"

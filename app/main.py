@@ -76,8 +76,37 @@ async def localization_middleware(request: Request, call_next):
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint for Cloud Run"""
-    return {"status": "healthy"}
+    """Health check endpoint for Cloud Run with database connection check"""
+    health_status = {
+        "status": "healthy",
+        "database": "unknown",
+        "environment": "unknown"
+    }
+
+    # 환경 확인
+    try:
+        from .config import get_settings
+        settings = get_settings()
+        health_status["environment"] = settings.environment
+        health_status["database_configured"] = bool(settings.database_url and "postgresql" in settings.database_url)
+    except Exception as e:
+        logger.error(f"Failed to get settings: {e}")
+        health_status["config_error"] = str(e)
+
+    # 데이터베이스 연결 확인
+    try:
+        from .database import engine
+        from sqlalchemy import text
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        health_status["database"] = "connected"
+    except Exception as e:
+        logger.error(f"Database health check failed: {e}")
+        health_status["database"] = "disconnected"
+        health_status["database_error"] = str(e)
+        health_status["status"] = "unhealthy"
+
+    return health_status
 
 
 @app.get("/")
