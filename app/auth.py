@@ -7,7 +7,11 @@ from passlib.context import CryptContext
 
 from .config import get_settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__truncate_error=False,
+)
 settings = get_settings()
 
 
@@ -30,7 +34,18 @@ class AuthManager:
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         truncated_password = self._truncate_password(plain_password)
-        return pwd_context.verify(truncated_password, hashed_password)
+        try:
+            return pwd_context.verify(truncated_password, hashed_password)
+        except ValueError as exc:
+            # passlib may raise for legacy hashes or edge cases – treat as failure rather than 500
+            if "password cannot be longer than 72 bytes" in str(exc):
+                # best-effort retry with hard truncation for legacy data
+                hard_truncated = truncated_password.encode("utf-8")[:72].decode("utf-8", errors="ignore")
+                try:
+                    return pwd_context.verify(hard_truncated, hashed_password)
+                except ValueError:
+                    return False
+            return False
 
     def hash_password(self, password: str) -> str:
         truncated_password = self._truncate_password(password)
