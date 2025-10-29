@@ -2,7 +2,7 @@
 import asyncio
 from app.database import engine, init_db
 from app.models import User, UserRole, Subscription, SubscriptionTier
-from app.services.auth import hash_password
+from app.auth import auth_manager
 from sqlmodel import Session, select
 
 
@@ -17,7 +17,7 @@ async def create_test_accounts():
         if not existing_creator:
             creator = User(
                 email=creator_email,
-                hashed_password=hash_password("password123"),
+                hashed_password=auth_manager.hash_password("password123"),
                 role=UserRole.CREATOR,
                 name="테스트 크리에이터",
                 organization="개인",
@@ -49,7 +49,7 @@ async def create_test_accounts():
         if not existing_manager:
             manager = User(
                 email=manager_email,
-                hashed_password=hash_password("password123"),
+                hashed_password=auth_manager.hash_password("password123"),
                 role=UserRole.MANAGER,
                 name="테스트 매니저",
                 organization="테스트 기업",
@@ -81,7 +81,7 @@ async def create_test_accounts():
         if not existing_admin:
             admin = User(
                 email=admin_email,
-                hashed_password=hash_password("password123"),
+                hashed_password=auth_manager.hash_password("password123"),
                 role=UserRole.SUPER_ADMIN,
                 name="슈퍼 관리자",
                 organization="Creator Control Center",
@@ -102,7 +102,7 @@ async def create_test_accounts():
         if not existing_master:
             master = User(
                 email=master_email,
-                hashed_password=hash_password("Ckdgml9788@"),
+                hashed_password=auth_manager.hash_password("Ckdgml9788@"),
                 role=UserRole.SUPER_ADMIN,
                 name="마스터 관리자",
                 organization="Creator Control Center",

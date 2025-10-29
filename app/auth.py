@@ -17,11 +17,24 @@ class AuthManager:
         self.algorithm = "HS256"
         self.expire_minutes = settings.access_token_expire_minutes
 
+    def _truncate_password(self, password: str) -> str:
+        """
+        bcrypt는 72바이트까지만 처리할 수 있습니다.
+        긴 비밀번호를 72바이트로 자릅니다.
+        """
+        password_bytes = password.encode('utf-8')
+        if len(password_bytes) <= 72:
+            return password
+        # 72바이트로 자르되, UTF-8 문자가 깨지지 않도록 처리
+        return password_bytes[:72].decode('utf-8', errors='ignore')
+
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        return pwd_context.verify(plain_password, hashed_password)
+        truncated_password = self._truncate_password(plain_password)
+        return pwd_context.verify(truncated_password, hashed_password)
 
     def hash_password(self, password: str) -> str:
-        return pwd_context.hash(password)
+        truncated_password = self._truncate_password(password)
+        return pwd_context.hash(truncated_password)
 
     def create_access_token(self, subject: str, expires_delta: Optional[timedelta] = None) -> str:
         expire = datetime.utcnow() + (expires_delta or timedelta(minutes=self.expire_minutes))
