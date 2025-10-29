@@ -4,25 +4,11 @@ import logging
 
 from fastapi import HTTPException, Request, Response, status
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 
 from .config import get_settings
 
 logger = logging.getLogger(__name__)
-
-# bcrypt 초기화 시 발생할 수 있는 에러 무시
-try:
-    import bcrypt
-    # bcrypt 버전 확인 및 미리 로드
-    logger.info(f"bcrypt loaded successfully")
-except Exception as e:
-    logger.warning(f"bcrypt import warning: {e}")
-
-pwd_context = CryptContext(
-    schemes=["bcrypt"],
-    deprecated="auto",
-    bcrypt__truncate_error=False,
-)
 settings = get_settings()
 
 
@@ -44,31 +30,28 @@ class AuthManager:
         return password_bytes[:72].decode('utf-8', errors='ignore')
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
+        """bcrypt를 직접 사용하여 비밀번호 검증"""
         truncated_password = self._truncate_password(plain_password)
         try:
-            return pwd_context.verify(truncated_password, hashed_password)
-        except (ValueError, Exception) as exc:
-            # passlib may raise for legacy hashes or edge cases – treat as failure rather than 500
-            logger.warning(f"Password verification error: {exc}")
-            if "password cannot be longer than 72 bytes" in str(exc):
-                # best-effort retry with hard truncation for legacy data
-                hard_truncated = truncated_password.encode("utf-8")[:72].decode("utf-8", errors="ignore")
-                try:
-                    return pwd_context.verify(hard_truncated, hashed_password)
-                except Exception as retry_exc:
-                    logger.error(f"Password verification retry failed: {retry_exc}")
-                    return False
-            # bcrypt backend 초기화 에러인 경우, 직접 bcrypt로 검증 시도
-            try:
-                import bcrypt as bcrypt_lib
-                return bcrypt_lib.checkpw(truncated_password.encode('utf-8'), hashed_password.encode('utf-8'))
-            except Exception as bcrypt_exc:
-                logger.error(f"Direct bcrypt verification failed: {bcrypt_exc}")
-                return False
+            # bcrypt는 bytes를 요구함
+            password_bytes = truncated_password.encode('utf-8')
+            hash_bytes = hashed_password.encode('utf-8')
+            return bcrypt.checkpw(password_bytes, hash_bytes)
+        except Exception as exc:
+            logger.error(f"Password verification failed: {exc}")
+            return False
 
     def hash_password(self, password: str) -> str:
+        """bcrypt를 직접 사용하여 비밀번호 해싱"""
         truncated_password = self._truncate_password(password)
-        return pwd_context.hash(truncated_password)
+        try:
+            # bcrypt.gensalt()로 salt 생성, bcrypt.hashpw()로 해싱
+            password_bytes = truncated_password.encode('utf-8')
+            hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+            return hashed.decode('utf-8')
+        except Exception as exc:
+            logger.error(f"Password hashing failed: {exc}")
+            raise
 
     def create_access_token(self, subject: str, expires_delta: Optional[timedelta] = None) -> str:
         expire = datetime.utcnow() + (expires_delta or timedelta(minutes=self.expire_minutes))
