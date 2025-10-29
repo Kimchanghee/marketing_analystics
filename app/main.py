@@ -24,7 +24,12 @@ app.state.templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 @app.on_event("startup")
 def on_startup() -> None:
-    init_db()
+    try:
+        init_db()
+    except Exception as e:
+        # Log the error but don't prevent the app from starting
+        print(f"Warning: Database initialization failed: {e}")
+        print("Application will start but database operations may fail")
 
 
 @app.middleware("http")
@@ -43,6 +48,12 @@ async def localization_middleware(request: Request, call_next):
     request.state.locale = locale
     response = await call_next(request)
     return response
+
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Cloud Run"""
+    return {"status": "healthy"}
 
 
 @app.get("/")

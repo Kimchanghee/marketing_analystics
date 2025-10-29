@@ -31,7 +31,7 @@ router = APIRouter()
 def super_admin_dashboard(
     request: Request,
     session=Depends(get_session),
-    user: User = Depends(require_roles([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     locale = user.locale
     strings = translator.load_locale(locale)
@@ -96,7 +96,7 @@ def promote_user(
     email: str = Form(...),
     role: UserRole = Form(...),
     session=Depends(get_session),
-    user: User = Depends(require_roles([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     target = session.exec(select(User).where(User.email == email)).first()
     if not target:
@@ -120,7 +120,7 @@ def update_user_status(
     user_id: int = Form(...),
     is_active: bool = Form(...),
     session=Depends(get_session),
-    user: User = Depends(require_roles([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -146,7 +146,7 @@ def update_subscription(
     max_accounts: int = Form(1),
     active: bool = Form(False),
     session=Depends(get_session),
-    user: User = Depends(require_roles([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -189,7 +189,7 @@ def create_payment(
     billing_period_start: str | None = Form(None),
     billing_period_end: str | None = Form(None),
     session=Depends(get_session),
-    user: User = Depends(require_roles([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     target = session.get(User, user_id)
     if not target:
@@ -223,7 +223,7 @@ def update_payment_status(
     payment_id: int = Form(...),
     status_value: PaymentStatus = Form(...),
     session=Depends(get_session),
-    user: User = Depends(require_roles([UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     payment = session.get(Payment, payment_id)
     if not payment:
@@ -245,7 +245,7 @@ def update_payment_status(
 @router.get("/manager/dashboard")
 def manager_dashboard(
     request: Request,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """기업 관리자 전용 대시보드"""
@@ -354,7 +354,7 @@ def approve_manager(
 def create_manager_invite(
     request: Request,
     creator_email: str = Form(...),
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """크리에이터 초대 링크 생성"""
@@ -375,7 +375,7 @@ def create_manager_invite(
 def view_creator_detail(
     creator_id: int,
     request: Request,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """특정 크리에이터의 상세 정보 조회"""
@@ -429,7 +429,7 @@ def view_creator_detail(
 
 @router.get("/manager/export/pdf")
 def export_manager_dashboard_pdf(
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """기업 관리자용 통합 PDF 리포트 다운로드"""
@@ -481,7 +481,7 @@ def export_manager_dashboard_pdf(
 @router.get("/manager/creator/{creator_id}/export/csv")
 def export_creator_csv(
     creator_id: int,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """특정 크리에이터의 데이터를 CSV로 내보내기"""
@@ -558,7 +558,7 @@ def export_creator_csv(
 @router.get("/manager/creator/{creator_id}/export/pdf")
 def export_creator_pdf(
     creator_id: int,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """특정 크리에이터의 데이터를 PDF로 내보내기"""
@@ -609,7 +609,7 @@ def export_creator_pdf(
 def save_gemini_api_key(
     request: Request,
     api_key: str = Form(...),
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """Gemini API 키 저장 (암호화)"""
