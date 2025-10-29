@@ -1,11 +1,22 @@
 from datetime import datetime, timedelta
 from typing import Optional
+import logging
 
 from fastapi import HTTPException, Request, Response, status
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 from .config import get_settings
+
+logger = logging.getLogger(__name__)
+
+# bcrypt 초기화 시 발생할 수 있는 에러 무시
+try:
+    import bcrypt
+    # bcrypt 버전 확인 및 미리 로드
+    logger.info(f"bcrypt loaded successfully")
+except Exception as e:
+    logger.warning(f"bcrypt import warning: {e}")
 
 pwd_context = CryptContext(
     schemes=["bcrypt"],
@@ -36,16 +47,24 @@ class AuthManager:
         truncated_password = self._truncate_password(plain_password)
         try:
             return pwd_context.verify(truncated_password, hashed_password)
-        except ValueError as exc:
+        except (ValueError, Exception) as exc:
             # passlib may raise for legacy hashes or edge cases – treat as failure rather than 500
+            logger.warning(f"Password verification error: {exc}")
             if "password cannot be longer than 72 bytes" in str(exc):
                 # best-effort retry with hard truncation for legacy data
                 hard_truncated = truncated_password.encode("utf-8")[:72].decode("utf-8", errors="ignore")
                 try:
                     return pwd_context.verify(hard_truncated, hashed_password)
-                except ValueError:
+                except Exception as retry_exc:
+                    logger.error(f"Password verification retry failed: {retry_exc}")
                     return False
-            return False
+            # bcrypt backend 초기화 에러인 경우, 직접 bcrypt로 검증 시도
+            try:
+                import bcrypt as bcrypt_lib
+                return bcrypt_lib.checkpw(truncated_password.encode('utf-8'), hashed_password.encode('utf-8'))
+            except Exception as bcrypt_exc:
+                logger.error(f"Direct bcrypt verification failed: {bcrypt_exc}")
+                return False
 
     def hash_password(self, password: str) -> str:
         truncated_password = self._truncate_password(password)
