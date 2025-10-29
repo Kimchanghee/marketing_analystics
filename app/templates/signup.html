@@ -1,24 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="auth-card">
-    <h1>{{ t['auth']['signup_title'] }}</h1>
+    <h1>회원가입</h1>
+
     {% if success %}
     <div class="form-alert success">{{ success }}</div>
-    {% endif %}
-    {% if code_status %}
-    <div class="form-alert info">{{ code_status }}</div>
     {% endif %}
     {% if error %}
     <div class="form-alert error">{{ error }}</div>
     {% endif %}
 
-    <!-- 소셜 회원가입 버튼 (최상단) -->
-    {% if not selected_provider %}
+    <!-- 회원 유형 선택 -->
+    <div class="role-selection">
+        <h2>회원 유형을 선택하세요</h2>
+        <div class="role-cards">
+            <label class="role-card">
+                <input type="radio" name="role_type" value="creator" checked>
+                <div class="role-card-content">
+                    <div class="role-icon">👤</div>
+                    <h3>개인 크리에이터</h3>
+                    <p>개인 SNS 채널을 관리하고 분석합니다</p>
+                    <ul class="role-features">
+                        <li>✓ 5개 SNS 채널 연동</li>
+                        <li>✓ 실시간 통계 분석</li>
+                        <li>✓ AI PD 비서</li>
+                    </ul>
+                </div>
+            </label>
+
+            <label class="role-card">
+                <input type="radio" name="role_type" value="manager">
+                <div class="role-card-content">
+                    <div class="role-icon">🏢</div>
+                    <h3>기업 관리자</h3>
+                    <p>여러 크리에이터를 통합 관리합니다</p>
+                    <ul class="role-features">
+                        <li>✓ 다수 크리에이터 관리</li>
+                        <li>✓ 포트폴리오 분석</li>
+                        <li>✓ 팀 협업 기능</li>
+                    </ul>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="auth-divider">
+        <span>소셜 계정으로 간편 가입</span>
+    </div>
+
+    <!-- 소셜 회원가입 -->
     <div class="social-login-section">
-        <h2>{{ t['auth']['social_signup_quick'] }}</h2>
         <div class="social-button-grid">
             {% for provider in providers %}
-            <a class="btn social {{ provider.value }}" href="/signup?lang={{ locale }}&provider={{ provider.value }}&role={{ default_role }}">
+            <a class="btn social {{ provider.value }}" href="/signup?lang={{ locale }}&provider={{ provider.value }}" onclick="setSocialRole(event)">
                 <span class="social-icon">
                     {% if provider.value == 'google' %}
                     <svg viewBox="0 0 24 24" width="20" height="20">
@@ -33,137 +67,215 @@
                     </svg>
                     {% endif %}
                 </span>
-                {{ t['auth']['social_buttons'][provider.value] }}
+                {{ provider.value|capitalize }}로 계속하기
             </a>
             {% endfor %}
         </div>
     </div>
 
     <div class="auth-divider">
-        <span>{{ t['auth']['or_divider'] }}</span>
+        <span>또는 이메일로 가입</span>
     </div>
-    {% endif %}
 
-    <div class="auth-panels">
-        <div class="auth-panel">
-            <h2>{{ t['auth']['verification_request_title'] }}</h2>
-            <form method="post" action="/signup/request-code">
-                <input type="hidden" name="locale" value="{{ locale }}">
-                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-                <button class="btn secondary" type="submit">{{ t['auth']['send_verification'] }}</button>
-            </form>
-            <p class="hint">{{ t['auth']['verification_hint'] }}</p>
+    <!-- 이메일 회원가입 -->
+    <form method="post" action="/signup" class="signup-form" id="signupForm">
+        <input type="hidden" name="role" id="roleInput" value="creator">
+        <input type="hidden" name="locale" value="{{ locale }}">
+
+        <label>
+            이름
+            <input type="text" name="name" required placeholder="이름을 입력하세요">
+        </label>
+
+        <label>
+            이메일
+            <input type="email" name="email" required placeholder="email@example.com">
+        </label>
+
+        <label>
+            비밀번호
+            <input type="password" name="password" required placeholder="8자 이상" minlength="8">
+        </label>
+
+        <label>
+            조직명 (선택)
+            <input type="text" name="organization" placeholder="회사명 또는 팀명">
+        </label>
+
+        <div class="consent-section">
+            <label class="consent-option">
+                <input type="checkbox" name="privacy_agreement" required>
+                <span>개인정보 수집 및 이용에 동의합니다 (필수)</span>
+            </label>
+            <label class="consent-option">
+                <input type="checkbox" name="guidance_agreement" required>
+                <span>서비스 이용약관에 동의합니다 (필수)</span>
+            </label>
         </div>
-        <div class="auth-panel">
-            <h2>{{ t['auth']['consent_title'] }}</h2>
-            <p>{{ t['auth']['consent_description'] }}</p>
-            <ul class="consent-list">
-                <li>{{ t['auth']['consent_privacy_detail'] }}</li>
-                <li>{{ t['auth']['consent_terms_detail'] }}</li>
-                <li>{{ t['auth']['consent_marketing_detail'] }}</li>
-            </ul>
-        </div>
-    </div>
-    <div class="auth-panels">
-        <div class="auth-panel">
-            <h2>{{ t['auth']['email_signup_title'] }}</h2>
-            <form method="post" action="/signup">
-                <label>{{ t['auth']['name'] }}<input type="text" name="name" required></label>
-                <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-                <label>{{ t['auth']['password'] }}<input type="password" name="password" required></label>
-                <label>{{ t['auth']['verification_code'] }}<input type="text" name="verification_code" required></label>
-                <label>{{ t['auth']['role'] }}
-                    <select name="role">
-                        <option value="creator" {% if default_role == 'creator' %}selected{% endif %}>{{ t['roles']['creator'] }}</option>
-                        <option value="manager" {% if default_role == 'manager' %}selected{% endif %}>{{ t['roles']['manager'] }}</option>
-                    </select>
-                </label>
-                <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
-                <label>{{ t['auth']['language'] }}
-                    <select name="locale">
-                        <option value="ko" {% if locale == 'ko' %}selected{% endif %}>한국어</option>
-                        <option value="en" {% if locale == 'en' %}selected{% endif %}>English</option>
-                        <option value="ja" {% if locale == 'ja' %}selected{% endif %}>日本語</option>
-                    </select>
-                </label>
-                <label class="consent-option"><input type="checkbox" name="privacy_agreement" required> {{ t['auth']['consent_privacy'] }}</label>
-                <label class="consent-option"><input type="checkbox" name="guidance_agreement" required> {{ t['auth']['consent_terms'] }}</label>
-                <input type="hidden" name="origin" value="form">
-                <button class="btn primary" type="submit">{{ t['auth']['signup_button'] }}</button>
-            </form>
-        </div>
-        <div class="auth-panel">
-            <h2>{{ t['auth']['social_signup_title'] }}</h2>
-            <p>{{ t['auth']['social_signup_description'] }}</p>
-            {% if selected_provider %}
-            <div class="social-complete">
-                <h3>{{ t['auth']['social_complete_title'] | format(provider=t['auth']['providers'][selected_provider]) }}</h3>
-                <p>{{ t['auth']['social_complete_description'] }}</p>
-                <form method="post" action="/signup/social">
-                    <input type="hidden" name="provider" value="{{ selected_provider }}">
-                    <label>{{ t['auth']['name'] }}<input type="text" name="name" required></label>
-                    <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-                    <label>{{ t['auth']['verification_code'] }}<input type="text" name="verification_code" required></label>
-                    <label>{{ t['auth']['password_optional'] }}<input type="password" name="password"></label>
-                    <label>{{ t['auth']['language'] }}
-                        <select name="locale">
-                            <option value="ko" {% if locale == 'ko' %}selected{% endif %}>한국어</option>
-                            <option value="en" {% if locale == 'en' %}selected{% endif %}>English</option>
-                            <option value="ja" {% if locale == 'ja' %}selected{% endif %}>日本語</option>
-                        </select>
-                    </label>
-                    <label>{{ t['auth']['role'] }}
-                        <select name="role">
-                            <option value="creator" {% if default_role == 'creator' %}selected{% endif %}>{{ t['roles']['creator'] }}</option>
-                            <option value="manager" {% if default_role == 'manager' %}selected{% endif %}>{{ t['roles']['manager'] }}</option>
-                        </select>
-                    </label>
-                    <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
-                    <label class="consent-option"><input type="checkbox" name="privacy_agreement" required> {{ t['auth']['consent_privacy'] }}</label>
-                    <label class="consent-option"><input type="checkbox" name="guidance_agreement" required> {{ t['auth']['consent_terms'] }}</label>
-                    <input type="hidden" name="origin" value="form">
-                    <button class="btn secondary" type="submit">{{ t['auth']['social_signup_button'] }}</button>
-                </form>
-            </div>
-            {% else %}
-            <details class="manual-social">
-                <summary>{{ t['auth']['social_manual_summary'] }}</summary>
-                <p class="hint">{{ t['auth']['social_manual_help'] }}</p>
-                <form method="post" action="/signup/social">
-                    <label>{{ t['auth']['name'] }}<input type="text" name="name" required></label>
-                    <label>{{ t['auth']['email'] }}<input type="email" name="email" required></label>
-                    <label>{{ t['auth']['verification_code'] }}<input type="text" name="verification_code" required></label>
-                    <label>{{ t['auth']['provider'] }}
-                        <select name="provider">
-                            {% for provider in providers %}
-                            <option value="{{ provider.value }}">{{ t['auth']['providers'][provider.value] }}</option>
-                            {% endfor %}
-                        </select>
-                    </label>
-                    <label>{{ t['auth']['provider_account'] }}<input type="text" name="provider_user_id"></label>
-                    <label>{{ t['auth']['password_optional'] }}<input type="password" name="password"></label>
-                    <label>{{ t['auth']['language'] }}
-                        <select name="locale">
-                            <option value="ko" {% if locale == 'ko' %}selected{% endif %}>한국어</option>
-                            <option value="en" {% if locale == 'en' %}selected{% endif %}>English</option>
-                            <option value="ja" {% if locale == 'ja' %}selected{% endif %}>日本語</option>
-                        </select>
-                    </label>
-                    <label>{{ t['auth']['role'] }}
-                        <select name="role">
-                            <option value="creator" {% if default_role == 'creator' %}selected{% endif %}>{{ t['roles']['creator'] }}</option>
-                            <option value="manager" {% if default_role == 'manager' %}selected{% endif %}>{{ t['roles']['manager'] }}</option>
-                        </select>
-                    </label>
-                    <label>{{ t['auth']['organization'] }}<input type="text" name="organization"></label>
-                    <label class="consent-option"><input type="checkbox" name="privacy_agreement" required> {{ t['auth']['consent_privacy'] }}</label>
-                    <label class="consent-option"><input type="checkbox" name="guidance_agreement" required> {{ t['auth']['consent_terms'] }}</label>
-                    <input type="hidden" name="origin" value="form">
-                    <button class="btn tertiary" type="submit">{{ t['auth']['social_signup_button'] }}</button>
-                </form>
-            </details>
-            {% endif %}
-        </div>
-    </div>
+
+        <button class="btn primary large" type="submit">회원가입</button>
+    </form>
+
+    <p class="auth-footer">
+        이미 계정이 있으신가요? <a href="/login">로그인</a>
+    </p>
 </section>
+
+<style>
+.role-selection {
+    margin: 2rem 0;
+}
+
+.role-selection h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.role-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.role-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.role-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.role-card-content {
+    padding: 2rem;
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s;
+    background: var(--card-bg);
+}
+
+.role-card input[type="radio"]:checked + .role-card-content {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.role-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.role-card-content h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.role-card-content p {
+    color: var(--text-secondary);
+    margin: 0.5rem 0 1rem 0;
+    font-size: 0.9rem;
+}
+
+.role-features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    text-align: left;
+}
+
+.role-features li {
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.social-button-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.signup-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.signup-form label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+}
+
+.signup-form input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.consent-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--surface-bg);
+    border-radius: 8px;
+}
+
+.consent-option {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem !important;
+    font-weight: normal !important;
+}
+
+.consent-option input[type="checkbox"] {
+    width: auto !important;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+</style>
+
+<script>
+// 역할 선택 변경 시 hidden input 업데이트
+document.querySelectorAll('input[name="role_type"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        document.getElementById('roleInput').value = this.value;
+    });
+});
+
+// 소셜 로그인 시 역할 정보 포함
+function setSocialRole(event) {
+    const roleType = document.querySelector('input[name="role_type"]:checked').value;
+    const link = event.currentTarget;
+    const url = new URL(link.href);
+    url.searchParams.set('role', roleType);
+    link.href = url.toString();
+}
+</script>
 {% endblock %}

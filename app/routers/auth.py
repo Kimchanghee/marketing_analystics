@@ -275,7 +275,6 @@ def signup(
     locale: str = Form("ko"),
     organization: str | None = Form(None),
     name: str = Form(...),
-    verification_code: str = Form(...),
     privacy_agreement: str | None = Form(None),
     guidance_agreement: str | None = Form(None),
     origin: str | None = Form(None),
@@ -290,7 +289,7 @@ def signup(
                 locale,
                 strings,
                 {
-                    "error": strings["auth"].get("consent_required"),
+                    "error": "개인정보 및 이용약관에 동의해야 합니다.",
                     "providers": list(social_auth_service.get_supported_providers()),
                 },
             ),
@@ -306,22 +305,7 @@ def signup(
                 locale,
                 strings,
                 {
-                    "error": strings["auth"].get("name_required"),
-                    "providers": list(social_auth_service.get_supported_providers()),
-                },
-            ),
-            status_code=status.HTTP_400_BAD_REQUEST,
-        )
-
-    if not email_verification_service.verify_code(email, verification_code):
-        return request.app.state.templates.TemplateResponse(
-            "signup.html",
-            _template_context(
-                request,
-                locale,
-                strings,
-                {
-                    "error": strings["auth"].get("invalid_verification_code"),
+                    "error": "이름을 입력해주세요.",
                     "providers": list(social_auth_service.get_supported_providers()),
                 },
             ),
