@@ -1,7 +1,8 @@
+import logging
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Request
-from fastapi.responses import RedirectResponse, Response
+from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import select
@@ -15,6 +16,10 @@ from .services.localization import translator
 from .services.social_auth import social_auth_service
 from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
 
+# 로깅 설정
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI(title="Creator Control Center")
@@ -22,14 +27,33 @@ app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 app.state.templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    """전역 예외 핸들러 - 모든 에러를 로깅"""
+    logger.error(f"Unhandled exception: {exc}", exc_info=True)
+    logger.error(f"Request URL: {request.url}")
+    logger.error(f"Request method: {request.method}")
+
+    # 사용자에게 친절한 에러 메시지 반환
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": "Internal server error occurred. Please check the logs for more details.",
+            "error": str(exc)
+        }
+    )
+
+
 @app.on_event("startup")
 def on_startup() -> None:
     try:
+        logger.info("Starting database initialization...")
         init_db()
+        logger.info("Database initialization completed successfully")
     except Exception as e:
         # Log the error but don't prevent the app from starting
-        print(f"Warning: Database initialization failed: {e}")
-        print("Application will start but database operations may fail")
+        logger.error(f"Database initialization failed: {e}", exc_info=True)
+        logger.warning("Application will start but database operations may fail")
 
 
 @app.middleware("http")
