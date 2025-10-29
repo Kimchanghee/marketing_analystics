@@ -19,6 +19,12 @@ class Settings(BaseSettings):
     password_reset_token_expiry_minutes: int = 30
     super_admin_access_token: str = Field("Ckdgml9788@", env="SUPER_ADMIN_ACCESS_TOKEN")
     gemini_api_key: str = Field("", env="GEMINI_API_KEY")
+    environment: str = Field("production", env="ENVIRONMENT")  # production or development
+
+    @property
+    def is_production(self) -> bool:
+        """Check if running in production environment (Cloud Run)"""
+        return self.environment.lower() == "production"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

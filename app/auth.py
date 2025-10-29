@@ -39,12 +39,14 @@ class AuthManager:
         return subject
 
     def set_login_cookie(self, response: Response, token: str) -> None:
+        # Cloud Run uses HTTPS, so secure should be True in production
+        is_production = settings.is_production
         response.set_cookie(
             key="session",
             value=token,
             httponly=True,
             max_age=self.expire_minutes * 60,
-            secure=False,
+            secure=is_production,  # True for HTTPS (production), False for local development
             samesite="lax",
         )
 
