@@ -45,8 +45,10 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 
 @app.on_event("startup")
-def on_startup() -> None:
+async def on_startup() -> None:
     import os
+    import asyncio
+
     logger.info("=" * 50)
     logger.info("Application startup beginning")
     logger.info(f"PORT environment variable: {os.getenv('PORT', 'not set')}")
@@ -54,16 +56,21 @@ def on_startup() -> None:
     logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'not set')}")
     logger.info("=" * 50)
 
-    try:
-        logger.info("Starting database initialization...")
-        init_db()
-        logger.info("Database initialization completed successfully")
-    except Exception as e:
-        # Log the error but don't prevent the app from starting
-        logger.error(f"Database initialization failed: {e}", exc_info=True)
-        logger.warning("Application will start but database operations may fail")
+    # Run database initialization in background to not block app startup
+    async def init_db_async():
+        try:
+            logger.info("Starting database initialization...")
+            await asyncio.to_thread(init_db)
+            logger.info("Database initialization completed successfully")
+        except Exception as e:
+            # Log the error but don't prevent the app from starting
+            logger.error(f"Database initialization failed: {e}", exc_info=True)
+            logger.warning("Application will continue but database operations may fail")
 
-    logger.info("Application startup completed")
+    # Start database init in background
+    asyncio.create_task(init_db_async())
+
+    logger.info("Application startup completed (database initialization running in background)")
 
 
 @app.middleware("http")
