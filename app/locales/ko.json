@@ -129,19 +129,19 @@
       "description": "채널 연결과 승인 흐름을 거쳐 보고서를 공유하기까지 필요한 단계를 정리했습니다.",
       "steps": [
         {
-          "label": "Day 1",
-          "title": "채널 연결",
-          "description": "YouTube와 Instagram을 연결하고 기본 지표를 확인합니다."
+          "label": "Minute 1",
+          "title": "접속 즉시 기본 세팅",
+          "description": "계정 로그인과 기본 채널 연동까지 1분 안에 마칩니다."
         },
         {
-          "label": "Day 3",
-          "title": "추가 플랫폼 연동",
-          "description": "TikTok, Facebook, Threads, 메타 광고 계정을 연동해 데이터를 확장합니다."
+          "label": "Minute 3",
+          "title": "데이터 불러오기 완료",
+          "description": "나머지 채널을 추가하고 대시보드 위젯을 구성하면 3분이 됩니다."
         },
         {
-          "label": "Day 7",
-          "title": "보고 및 추천",
-          "description": "AI가 생성한 광고·콘텐츠 제안을 바탕으로 보고서를 공유합니다."
+          "label": "Minute 5",
+          "title": "맞춤 보고서 공유",
+          "description": "AI 추천과 알림 템플릿까지 켜면 5분 이내에 보고서를 공유합니다."
         }
       ]
     },
