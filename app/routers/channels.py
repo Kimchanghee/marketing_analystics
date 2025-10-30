@@ -8,7 +8,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
 
 from ..auth import create_access_token
-from ..config import settings
 from ..database import get_db_session
 from ..dependencies import get_current_user, require_roles
 from ..models import (
@@ -24,57 +23,60 @@ from ..services.localization import load_translations
 router = APIRouter(prefix="/channels", tags=["channels"])
 
 
-# OAuth 설정 (환경변수에서 가져와야 함)
-OAUTH_CONFIGS = {
-    "instagram": {
-        "provider": "facebook",  # Instagram은 Facebook OAuth 사용
-        "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
-        "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
-        "scope": "instagram_basic,instagram_manage_insights,pages_show_list,pages_read_engagement",
-        "client_id": settings.facebook_app_id,
-        "client_secret": settings.facebook_app_secret,
-    },
-    "facebook": {
-        "provider": "facebook",
-        "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
-        "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
-        "scope": "pages_show_list,pages_read_engagement,pages_read_user_content,read_insights",
-        "client_id": settings.facebook_app_id,
-        "client_secret": settings.facebook_app_secret,
-    },
-    "threads": {
-        "provider": "facebook",  # Threads도 Facebook OAuth 사용
-        "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
-        "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
-        "scope": "threads_basic,threads_content_publish,threads_manage_insights",
-        "client_id": settings.facebook_app_id,
-        "client_secret": settings.facebook_app_secret,
-    },
-    "youtube": {
-        "provider": "google",
-        "auth_url": "https://accounts.google.com/o/oauth2/v2/auth",
-        "token_url": "https://oauth2.googleapis.com/token",
-        "scope": "https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly",
-        "client_id": settings.google_client_id,
-        "client_secret": settings.google_client_secret,
-    },
-    "twitter": {
-        "provider": "twitter",
-        "auth_url": "https://twitter.com/i/oauth2/authorize",
-        "token_url": "https://api.twitter.com/2/oauth2/token",
-        "scope": "tweet.read users.read follows.read offline.access",
-        "client_id": settings.twitter_client_id,
-        "client_secret": settings.twitter_client_secret,
-    },
-    "tiktok": {
-        "provider": "tiktok",
-        "auth_url": "https://www.tiktok.com/v2/auth/authorize",
-        "token_url": "https://open.tiktokapis.com/v2/oauth/token/",
-        "scope": "user.info.basic,video.list,video.insights",
-        "client_id": settings.tiktok_client_key,
-        "client_secret": settings.tiktok_client_secret,
-    },
-}
+def get_oauth_configs():
+    """OAuth 설정을 동적으로 가져오기 (환경변수 로드)"""
+    from ..config import settings
+
+    return {
+        "instagram": {
+            "provider": "facebook",
+            "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "scope": "instagram_basic,instagram_manage_insights,pages_show_list,pages_read_engagement",
+            "client_id": settings.facebook_app_id,
+            "client_secret": settings.facebook_app_secret,
+        },
+        "facebook": {
+            "provider": "facebook",
+            "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "scope": "pages_show_list,pages_read_engagement,pages_read_user_content,read_insights",
+            "client_id": settings.facebook_app_id,
+            "client_secret": settings.facebook_app_secret,
+        },
+        "threads": {
+            "provider": "facebook",
+            "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "scope": "threads_basic,threads_content_publish,threads_manage_insights",
+            "client_id": settings.facebook_app_id,
+            "client_secret": settings.facebook_app_secret,
+        },
+        "youtube": {
+            "provider": "google",
+            "auth_url": "https://accounts.google.com/o/oauth2/v2/auth",
+            "token_url": "https://oauth2.googleapis.com/token",
+            "scope": "https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly",
+            "client_id": settings.google_client_id,
+            "client_secret": settings.google_client_secret,
+        },
+        "twitter": {
+            "provider": "twitter",
+            "auth_url": "https://twitter.com/i/oauth2/authorize",
+            "token_url": "https://api.twitter.com/2/oauth2/token",
+            "scope": "tweet.read users.read follows.read offline.access",
+            "client_id": settings.twitter_client_id,
+            "client_secret": settings.twitter_client_secret,
+        },
+        "tiktok": {
+            "provider": "tiktok",
+            "auth_url": "https://www.tiktok.com/v2/auth/authorize",
+            "token_url": "https://open.tiktokapis.com/v2/oauth/token/",
+            "scope": "user.info.basic,video.list,video.insights",
+            "client_id": settings.tiktok_client_key,
+            "client_secret": settings.tiktok_client_secret,
+        },
+    }
 
 
 @router.get("/manage", response_class=HTMLResponse)
@@ -196,6 +198,8 @@ async def connect_channel(
     session: Session = Depends(get_db_session),
 ):
     """OAuth 인증 시작"""
+    OAUTH_CONFIGS = get_oauth_configs()
+
     if platform not in OAUTH_CONFIGS:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -267,6 +271,8 @@ async def oauth_callback(
     session: Session = Depends(get_db_session),
 ):
     """OAuth 콜백 처리"""
+    OAUTH_CONFIGS = get_oauth_configs()
+
     if error:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -590,6 +596,8 @@ async def refresh_channel_token(
     session: Session = Depends(get_db_session),
 ):
     """만료된 토큰 갱신"""
+    OAUTH_CONFIGS = get_oauth_configs()
+
     channel = session.get(ChannelAccount, channel_id)
 
     if not channel:
