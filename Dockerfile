@@ -15,10 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Make startup script executable
-RUN chmod +x start.sh
-
 EXPOSE 8080
 
-# Use startup script that handles PORT environment variable
-CMD ["./start.sh"]
+# Use sh -c to properly expand PORT environment variable
+CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"

@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
 from .auth import auth_manager
-from .database import get_session, init_db, session_context
+from .database import get_session, session_context
 from .dependencies import get_current_user
 from .models import SocialAccount, User
 from .routers import admin, ai_pd, auth, channels, dashboard, subscriptions
@@ -47,7 +47,6 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.on_event("startup")
 async def on_startup() -> None:
     import os
-    import asyncio
 
     logger.info("=" * 50)
     logger.info("Application startup beginning")
@@ -55,22 +54,7 @@ async def on_startup() -> None:
     logger.info(f"DATABASE_URL configured: {'postgresql' in (os.getenv('DATABASE_URL', '') or '')}")
     logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'not set')}")
     logger.info("=" * 50)
-
-    # Run database initialization in background to not block app startup
-    async def init_db_async():
-        try:
-            logger.info("Starting database initialization...")
-            await asyncio.to_thread(init_db)
-            logger.info("Database initialization completed successfully")
-        except Exception as e:
-            # Log the error but don't prevent the app from starting
-            logger.error(f"Database initialization failed: {e}", exc_info=True)
-            logger.warning("Application will continue but database operations may fail")
-
-    # Start database init in background
-    asyncio.create_task(init_db_async())
-
-    logger.info("Application startup completed (database initialization running in background)")
+    logger.info("Application startup completed - database will initialize on first request")
 
 
 @app.middleware("http")
