@@ -577,6 +577,7 @@ a:hover {
     position: relative;
     margin: 3.5rem 0;
     padding: 0 3.25rem;
+    overflow: hidden;
 }
 
 .slider-viewport {
@@ -596,6 +597,7 @@ a:hover {
     display: flex;
     gap: 1.5rem;
     padding: 0 0.5rem;
+    position: relative;
 }
 
 .slider-item {
