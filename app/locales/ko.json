@@ -626,7 +626,7 @@
       ]
     },
     "personas": {
-      "title": "이런 크리에이터에게 잘 맞아요",
+      "title": "사용자 후기",
       "description": "채널 운영 목표에 따라 필요한 기능을 예시로 소개합니다.",
       "goal_label": "주요 목표",
       "needs_label": "필요 기능",
@@ -881,7 +881,7 @@
       ]
     },
     "personas": {
-      "title": "기업 사용자 시나리오",
+      "title": "사용자 후기",
       "description": "팀 역할에 따라 어떤 방식으로 기능을 활용하는지 소개합니다.",
       "goal_label": "주요 목표",
       "needs_label": "필요 기능",
