@@ -79,7 +79,7 @@
             </div>
             <ul class="pricing-features">
                 {% for feature in plan['features'] %}
-                <li>• {{ feature }}</li>
+                <li>??{{ feature }}</li>
                 {% endfor %}
             </ul>
             <a class="btn {% if plan['highlighted'] %}primary{% else %}tertiary{% endif %}"
@@ -120,7 +120,7 @@
     <div class="slider" data-slider>
         <button class="slider-button slider-button-prev" type="button" data-slider-prev
             aria-label="{{ t['business']['personas']['prev'] }}">
-            <span aria-hidden="true">‹</span>
+            <span aria-hidden="true">&larr;</span>
         </button>
         <div class="slider-viewport" data-slider-viewport>
             <div class="slider-track" data-slider-track>
@@ -130,7 +130,7 @@
                         <h3>{{ persona['name'] }}</h3>
                         <span>{{ persona['role'] }}</span>
                     </header>
-                    <blockquote>“{{ persona['quote'] }}”</blockquote>
+                    <blockquote>{{ persona['quote'] }}</blockquote>
                     <dl>
                         <dt>{{ t['business']['personas']['goal_label'] }}</dt>
                         <dd>{{ persona['goal'] }}</dd>
@@ -149,7 +149,7 @@
         </div>
         <button class="slider-button slider-button-next" type="button" data-slider-next
             aria-label="{{ t['business']['personas']['next'] }}">
-            <span aria-hidden="true">›</span>
+            <span aria-hidden="true">&rarr;</span>
         </button>
     </div>
 </section>
