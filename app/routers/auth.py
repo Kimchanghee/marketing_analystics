@@ -355,7 +355,6 @@ def login_page(request: Request):
     strings = translator.load_locale(locale)
     signup_status = request.query_params.get("signup")
     success_key = request.query_params.get("success")
-    login_error_key = request.query_params.get("login_error")
     social_error_key = request.query_params.get("social_error")
     social_success_key = request.query_params.get("social_success")
     recovery_key = request.query_params.get("recovery")
@@ -372,8 +371,6 @@ def login_page(request: Request):
         "social_success": strings["auth"].get(social_success_key) if social_success_key else None,
         "recovery_message": strings["auth"].get(recovery_key) if recovery_key else None,
     }
-    if login_error_key:
-        context["error"] = strings["auth"].get(login_error_key)
     return request.app.state.templates.TemplateResponse(
         "login.html", _template_context(request, locale, strings, context)
     )
