@@ -36,22 +36,22 @@
     "headline": "A clear analytics hub for creators and teams",
     "subheadline": "Compare YouTube, Instagram, TikTok, Facebook, Threads metrics and Meta Ads performance in one place.",
     "hero_highlights": [
-      "Real-time follower, post, and comment reaction summaries",
-      "Hourly view patterns grouped by publish time",
-      "AI guidance powered by the Meta Ads API"
+      "Finish onboarding in under five minutes with automated workflows",
+      "Link channels, approvals, and dashboards in just three guided steps",
+      "Automation delivers reports and alerts the moment you sign in"
     ],
     "cta_creator": "Start free",
     "cta_manager": "Talk to sales",
     "auth_section": {
       "login_title": "Log in instantly",
-      "login_description": "Use your email and password to open the dashboard.",
+      "login_description": "Enter your email and password to review the main boards in under five minutes.",
       "advanced_login": "Contact support for help",
       "signup_title": "Create a new account",
-      "signup_description": "Register a creator or manager workspace in minutes.",
+      "signup_description": "Managers can also build an account and link channels in five minutes.",
       "advanced_signup": "Review plans & pricing"
     },
-    "preview_title": "Live channel insight",
-    "mock_metric": "Weekly trend",
+    "preview_title": "Five-minute channel check",
+    "mock_metric": "Current 5-minute auto report",
     "platforms": {
       "instagram": "Instagram",
       "threads": "Threads",
@@ -125,23 +125,23 @@
       "cta": "See business plan"
     },
     "journey": {
-      "title": "Setup in a single week",
-      "description": "Connect channels, approve clients, and ship reports with these checkpoints.",
+      "title": "Complete setup in five minutes",
+      "description": "Connect channels, approve clients, and ship reports with these minute-by-minute checkpoints.",
       "steps": [
         {
-          "label": "Day 1",
-          "title": "Connect channels",
-          "description": "Link YouTube and Instagram to surface baseline metrics."
+          "label": "Minute 1",
+          "title": "Instant basic setup",
+          "description": "Log in and connect your primary channels within the first minute."
         },
         {
-          "label": "Day 3",
-          "title": "Add more sources",
-          "description": "Connect TikTok, Facebook, Threads, and Meta Ads to broaden coverage."
+          "label": "Minute 3",
+          "title": "Data loading finished",
+          "description": "Add remaining sources and arrange dashboard widgets by minute three."
         },
         {
-          "label": "Day 7",
-          "title": "Share insights",
-          "description": "Send reports with AI-backed recommendations for content and ads."
+          "label": "Minute 5",
+          "title": "Share tailored reports",
+          "description": "Enable AI suggestions and send reports within five minutes of signing in."
         }
       ]
     },
@@ -197,7 +197,7 @@
     ],
     "cta": {
       "title": "Explore the dashboard today",
-      "description": "Use the personal plan for free or start a 7-day business trial.",
+      "description": "Use the personal plan for free or launch a business workspace in under five minutes.",
       "primary": "Start personal plan",
       "secondary": "Book business demo"
     }

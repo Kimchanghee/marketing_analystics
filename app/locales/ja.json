@@ -36,22 +36,22 @@
     "headline": "クリエイターとチームのための実用的なデータハブ",
     "subheadline": "YouTube・Instagram・TikTok・Facebook・Threadsの指標とMeta広告の成果を1画面で比較できます。",
     "hero_highlights": [
-      "フォロワー・投稿・コメント反応をリアルタイムに集約",
-      "投稿時間帯別の視聴数を自動で可視化",
-      "Meta広告APIを活用したAIの運用提案"
+      "すべての手続きを5分以内で完了する自動ワークフロー",
+      "ログインから承認・ダッシュボード設定まで3ステップで完結",
+      "リアルタイムの自動化でレポートとアラートを即座に配信"
     ],
     "cta_creator": "無料で始める",
     "cta_manager": "営業に相談",
     "auth_section": {
       "login_title": "すぐにログイン",
-      "login_description": "メールとパスワードですぐにダッシュボードを開けます。",
+      "login_description": "メールとパスワードを入力すると5分以内に主要ボードを確認できます。",
       "advanced_login": "サポートに問い合わせる",
       "signup_title": "新しいアカウントを作成",
-      "signup_description": "クリエイターまたはマネージャー用のワークスペースを数分で登録。",
+      "signup_description": "マネージャーも5分でアカウントを作成し、チャンネル連携まで完了できます。",
       "advanced_signup": "プランと料金を確認"
     },
-    "preview_title": "リアルタイム指標",
-    "mock_metric": "今週のトレンド",
+    "preview_title": "5分で完了するチャンネル診断",
+    "mock_metric": "現在の5分自動レポート",
     "platforms": {
       "instagram": "Instagram",
       "threads": "Threads",
@@ -125,23 +125,23 @@
       "cta": "企業プランを見る"
     },
     "journey": {
-      "title": "1週間でセットアップ",
-      "description": "チャネル連携から承認、レポート共有までのステップを整理しました。",
+      "title": "5分で完了するセットアップ",
+      "description": "チャンネル連携、承認、レポート共有を各ステップで完了しましょう。",
       "steps": [
         {
-          "label": "Day 1",
-          "title": "チャネル接続",
-          "description": "YouTubeとInstagramを連携し基礎指標を取得します。"
+          "label": "Minute 1",
+          "title": "ログイン直後に基本設定",
+          "description": "ログインして主要チャンネルを1分以内に連携します。"
         },
         {
-          "label": "Day 3",
-          "title": "追加連携",
-          "description": "TikTok・Facebook・Threads・Meta広告を追加して範囲を拡大します。"
+          "label": "Minute 3",
+          "title": "データ取り込み完了",
+          "description": "残りのチャンネルを追加し、ダッシュボードウィジェットを3分で整えます。"
         },
         {
-          "label": "Day 7",
-          "title": "レポート共有",
-          "description": "AIが提案する改善案とともにレポートを共有します。"
+          "label": "Minute 5",
+          "title": "カスタムレポート共有",
+          "description": "AI推奨とアラートを有効にし、5分以内にレポートを共有します。"
         }
       ]
     },
@@ -197,7 +197,7 @@
     ],
     "cta": {
       "title": "ダッシュボードを今すぐ体験",
-      "description": "個人は無料プラン、企業は7日間トライアルで機能を確認できます。",
+      "description": "無料のパーソナルプラン、または5分で始められるビジネスワークスペースをどうぞ。",
       "primary": "個人プランを開始",
       "secondary": "企業に問い合わせ"
     }
