@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 logger.info("Starting application imports...")
 
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -42,6 +42,28 @@ BASE_DIR = Path(__file__).resolve().parent
 logger.info("Creating FastAPI application...")
 app = FastAPI(title="Creator Control Center")
 logger.info("FastAPI application created")
+
+
+def _require_login_redirect(request: Request) -> RedirectResponse | None:
+    locale = getattr(request.state, "locale", "ko")
+    login_url = f"/login?lang={locale}&login_error=login_required&next={request.url.path}"
+
+    token = auth_manager.extract_token(request)
+    if not token:
+        return RedirectResponse(url=login_url, status_code=status.HTTP_303_SEE_OTHER)
+
+    try:
+        email = auth_manager.decode_token(token)
+    except HTTPException:
+        return RedirectResponse(url=login_url, status_code=status.HTTP_303_SEE_OTHER)
+
+    with session_context() as session:
+        user = session.exec(select(User).where(User.email == email)).first()
+
+    if not user or not user.is_active:
+        return RedirectResponse(url=login_url, status_code=status.HTTP_303_SEE_OTHER)
+
+    return None
 
 logger.info("Mounting static files...")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
@@ -174,6 +196,9 @@ async def services(request: Request):
 
 @app.get("/personal")
 async def personal_plan(request: Request):
+    redirect = _require_login_redirect(request)
+    if redirect:
+        return redirect
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
     seo_service = get_seo_service(locale)
@@ -185,6 +210,9 @@ async def personal_plan(request: Request):
 
 @app.get("/business")
 async def business_plan(request: Request):
+    redirect = _require_login_redirect(request)
+    if redirect:
+        return redirect
     locale = getattr(request.state, "locale", "ko")
     strings = translator.load_locale(locale)
     seo_service = get_seo_service(locale)
