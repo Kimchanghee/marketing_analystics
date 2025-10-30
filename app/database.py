@@ -16,20 +16,24 @@ engine = create_engine(
 )
 
 
-def init_db(max_retries: int = 3, retry_delay: int = 2) -> None:
+def init_db(max_retries: int = 2, retry_delay: int = 1) -> None:
     """Initialize database with retry logic for Cloud Run deployments"""
+    import logging
+    logger = logging.getLogger(__name__)
+
     for attempt in range(max_retries):
         try:
+            logger.info(f"Database initialization attempt {attempt + 1}/{max_retries}")
             SQLModel.metadata.create_all(engine)
-            print(f"Database initialized successfully on attempt {attempt + 1}")
+            logger.info(f"Database initialized successfully on attempt {attempt + 1}")
             return
         except Exception as e:
-            print(f"Database initialization attempt {attempt + 1} failed: {e}")
+            logger.error(f"Database initialization attempt {attempt + 1} failed: {e}")
             if attempt < max_retries - 1:
-                print(f"Retrying in {retry_delay} seconds...")
+                logger.info(f"Retrying in {retry_delay} second(s)...")
                 time.sleep(retry_delay)
             else:
-                print("Max retries reached. Database initialization failed.")
+                logger.error("Max retries reached. Database initialization failed.")
                 raise
 
 

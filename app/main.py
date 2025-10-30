@@ -46,6 +46,14 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 @app.on_event("startup")
 def on_startup() -> None:
+    import os
+    logger.info("=" * 50)
+    logger.info("Application startup beginning")
+    logger.info(f"PORT environment variable: {os.getenv('PORT', 'not set')}")
+    logger.info(f"DATABASE_URL configured: {'postgresql' in (os.getenv('DATABASE_URL', '') or '')}")
+    logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'not set')}")
+    logger.info("=" * 50)
+
     try:
         logger.info("Starting database initialization...")
         init_db()
@@ -54,6 +62,8 @@ def on_startup() -> None:
         # Log the error but don't prevent the app from starting
         logger.error(f"Database initialization failed: {e}", exc_info=True)
         logger.warning("Application will start but database operations may fail")
+
+    logger.info("Application startup completed")
 
 
 @app.middleware("http")
