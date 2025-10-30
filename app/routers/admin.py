@@ -340,13 +340,24 @@ def approve_manager(
         .where(ManagerCreatorLink.manager_id == manager.id)
     ).first()
 
-    if not link:
-        link = ManagerCreatorLink(creator_id=creator.id, manager_id=manager.id, approved=approve)
+    if approve:
+        if not link:
+            link = ManagerCreatorLink(
+                creator_id=creator.id,
+                manager_id=manager.id,
+                approved=True,
+                connected_at=datetime.utcnow(),
+            )
+        else:
+            link.approved = True
+            link.connected_at = datetime.utcnow()
+        session.add(link)
+        session.commit()
     else:
-        link.approved = approve
+        if link:
+            session.delete(link)
+            session.commit()
 
-    session.add(link)
-    session.commit()
     return RedirectResponse(url="/manager/dashboard", status_code=status.HTTP_303_SEE_OTHER)
 
 

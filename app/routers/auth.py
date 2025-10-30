@@ -1,18 +1,24 @@
 from __future__ import annotations
 
+import json
 import secrets
-from datetime import datetime
+from datetime import datetime, timedelta
+from typing import Any, Dict, Optional
+from urllib.parse import urlencode
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from pydantic import EmailStr
 from sqlmodel import Session, select
+from jose import jwt as jose_jwt
 
 from ..auth import auth_manager
+from ..config import get_settings
 from ..database import get_session
 from ..dependencies import get_current_user
 from ..models import (
     ActivityLog,
+    SocialAccount,
     SocialProvider,
     Subscription,
     SubscriptionTier,
@@ -23,6 +29,11 @@ from ..services.account_recovery import account_recovery_service
 from ..services.email_verification import email_verification_service
 from ..services.localization import translator
 from ..services.social_auth import social_auth_service
+from ..services.social_oauth import (
+    OAuthError,
+    SocialOAuthNotConfigured,
+    get_oauth_client,
+)
 
 router = APIRouter()
 
@@ -38,6 +49,304 @@ def _template_context(
     if extra:
         context.update(extra)
     return context
+
+
+def _append_query_params(url: str, params: dict[str, str | None]) -> str:
+    filtered = {k: v for k, v in params.items() if v}
+    if not filtered:
+        return url
+    separator = "&" if "?" in url else "?"
+    return f"{url}{separator}{urlencode(filtered)}"
+
+
+def _resolve_role(value: str | None) -> UserRole:
+    if not value:
+        return UserRole.CREATOR
+    try:
+        return UserRole(value)
+    except ValueError:
+        return UserRole.CREATOR
+
+
+def _social_error_redirect(origin: str | None, locale: str, error_key: str) -> RedirectResponse:
+    target = origin or "/login"
+    redirect_url = _append_query_params(target, {"lang": locale, "social_error": error_key})
+    response = RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
+    response.delete_cookie("oauth_state")
+    return response
+
+
+async def _fetch_social_profile(
+    provider: str,
+    client,
+    token: Dict[str, Any],
+    request: Request,
+    form_data: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    profile: Dict[str, Any] = {}
+
+    if provider == "google":
+        resp = await client.get("userinfo", token=token)
+        profile = resp.json()
+        if not profile.get("email") and token.get("id_token"):
+            claims = jose_jwt.get_unverified_claims(token["id_token"])
+            profile.setdefault("sub", claims.get("sub"))
+            profile.setdefault("email", claims.get("email"))
+            if claims.get("name"):
+                profile.setdefault("name", claims.get("name"))
+        return {
+            "id": profile.get("sub") or profile.get("id"),
+            "email": profile.get("email"),
+            "name": profile.get("name")
+            or " ".join(filter(None, [profile.get("given_name"), profile.get("family_name")])).strip()
+            or None,
+            "raw": profile,
+        }
+
+    if provider == "apple":
+        claims: Dict[str, Any] = {}
+        if token.get("id_token"):
+            claims = jose_jwt.get_unverified_claims(token["id_token"])
+        full_name: Optional[str] = None
+        if form_data and form_data.get("user"):
+            try:
+                user_blob = json.loads(form_data.get("user"))
+            except (TypeError, ValueError):
+                user_blob = {}
+            name_data = user_blob.get("name") or {}
+            first_name = name_data.get("firstName")
+            last_name = name_data.get("lastName")
+            full_name = " ".join(filter(None, [first_name, last_name])).strip() or None
+        if not full_name and claims.get("name"):
+            full_name = claims.get("name")
+        return {
+            "id": claims.get("sub"),
+            "email": claims.get("email"),
+            "name": full_name,
+            "raw": claims,
+        }
+
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="unsupported_provider")
+
+
+def _upsert_social_user(
+    *,
+    session: Session,
+    provider: SocialProvider,
+    provider_user_id: str,
+    email: str,
+    name: Optional[str],
+    role: UserRole,
+    locale: str,
+) -> User:
+    social_account = session.exec(
+        select(SocialAccount)
+        .where(SocialAccount.provider == provider)
+        .where(SocialAccount.provider_user_id == provider_user_id)
+    ).first()
+
+    if social_account:
+        user = session.get(User, social_account.user_id)
+        if user:
+            return user
+        session.delete(social_account)
+        session.commit()
+
+    user = session.exec(select(User).where(User.email == email)).first()
+    created_now = False
+    if not user:
+        hashed_password = auth_manager.hash_password(secrets.token_urlsafe(32))
+        user = User(
+            email=email,
+            hashed_password=hashed_password,
+            role=role,
+            locale=locale,
+            organization=None,
+            name=name or email.split("@")[0],
+            is_active=True,
+            is_email_verified=True,
+            password_login_enabled=False,
+            privacy_consent=True,
+            guidance_consent=True,
+            password_set_at=datetime.utcnow(),
+        )
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+
+        subscription = Subscription(
+            user_id=user.id,
+            tier=SubscriptionTier.FREE,
+            max_accounts=1,
+            active=True,
+        )
+        session.add(subscription)
+        session.add(ActivityLog(user_id=user.id, action=f"signup_social_{provider.value}"))
+        session.commit()
+        created_now = True
+    else:
+        if not user.name and name:
+            user.name = name
+            session.add(user)
+        if not user.is_email_verified:
+            user.is_email_verified = True
+            session.add(user)
+        session.commit()
+
+    existing_link = session.exec(
+        select(SocialAccount)
+        .where(SocialAccount.provider == provider)
+        .where(SocialAccount.user_id == user.id)
+    ).first()
+    if not existing_link:
+        social_account = SocialAccount(
+            user_id=user.id,
+            provider=provider,
+            provider_user_id=provider_user_id,
+            metadata_json={},
+        )
+        session.add(social_account)
+        action = "signup" if created_now else "link"
+        session.add(ActivityLog(user_id=user.id, action=f"{action}_{provider.value}"))
+        session.commit()
+
+    return user
+
+
+@router.get("/oauth/{provider}")
+async def start_social_oauth(provider: str, request: Request):
+    locale = _determine_locale(request)
+    action = request.query_params.get("action", "login")
+    origin = request.query_params.get("origin")
+    role_value = request.query_params.get("role", UserRole.CREATOR.value)
+    next_url = request.query_params.get("next")
+
+    try:
+        client = get_oauth_client(provider)
+    except SocialOAuthNotConfigured as exc:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+
+    role = _resolve_role(role_value)
+    state_payload = {
+        "provider": provider,
+        "action": action,
+        "role": role.value,
+        "origin": origin or ("/signup" if action == "signup" else "/login"),
+        "locale": locale,
+        "next": next_url,
+    }
+    state_token = create_access_token(state_payload, expires_delta=timedelta(minutes=10))
+    redirect_uri = request.url_for("social_oauth_callback", provider=provider)
+
+    try:
+        response = await client.authorize_redirect(request, redirect_uri, state=state_token)
+    except OAuthError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+    settings = get_settings()
+    response.set_cookie(
+        "oauth_state",
+        state_token,
+        max_age=600,
+        httponly=True,
+        secure=settings.is_production,
+        samesite="lax",
+    )
+    return response
+
+
+@router.api_route("/oauth/{provider}/callback", methods=["GET", "POST"])
+async def social_oauth_callback(
+    provider: str,
+    request: Request,
+    session: Session = Depends(get_session),
+):
+    form_data: Optional[Dict[str, Any]] = None
+    if request.method == "POST":
+        form = await request.form()
+        form_data = dict(form)
+        # Starlette caches form data so downstream consumers can reuse it
+        request._form = form  # type: ignore[attr-defined]
+
+    try:
+        client = get_oauth_client(provider)
+    except SocialOAuthNotConfigured as exc:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+
+    try:
+        token = await client.authorize_access_token(request)
+    except OAuthError:
+        state_cookie = request.cookies.get("oauth_state")
+        locale = "ko"
+        origin = "/login"
+        if state_cookie:
+            try:
+                state_payload = decode_token(state_cookie)
+                locale = state_payload.get("locale", locale)
+                origin = state_payload.get("origin", origin)
+            except Exception:
+                pass
+        return _social_error_redirect(origin, locale, "social_auth_failed")
+
+    state_value = request.query_params.get("state")
+    if not state_value and form_data:
+        state_value = form_data.get("state")
+    if not state_value:
+        state_value = request.cookies.get("oauth_state")
+
+    if not state_value:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="missing_state")
+
+    state_cookie = request.cookies.get("oauth_state")
+    if state_cookie and state_cookie != state_value:
+        return _social_error_redirect("/login", "ko", "invalid_state")
+
+    try:
+        state_payload = decode_token(state_value)
+    except HTTPException:
+        return _social_error_redirect("/login", "ko", "invalid_state")
+
+    locale = state_payload.get("locale", "ko")
+    origin = state_payload.get("origin", "/login")
+    action = state_payload.get("action", "login")
+    next_url = state_payload.get("next")
+    role = _resolve_role(state_payload.get("role"))
+
+    profile = await _fetch_social_profile(provider, client, token, request, form_data)
+    provider_user_id = profile.get("id")
+    email = profile.get("email")
+    name = profile.get("name")
+
+    if not provider_user_id:
+        return _social_error_redirect(origin, locale, "profile_missing")
+    if not email:
+        return _social_error_redirect(origin, locale, "email_required")
+
+    try:
+        provider_enum = SocialProvider(provider)
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="unsupported_provider")
+
+    user = _upsert_social_user(
+        session=session,
+        provider=provider_enum,
+        provider_user_id=str(provider_user_id),
+        email=email,
+        name=name,
+        role=role,
+        locale=locale,
+    )
+
+    session.add(ActivityLog(user_id=user.id, action=f"login_social_{provider_enum.value}"))
+    session.commit()
+
+    auth_token = auth_manager.create_access_token(user.email)
+    redirect_target = next_url or ("/manager/dashboard" if user.role == UserRole.MANAGER else "/dashboard")
+    response = RedirectResponse(url=redirect_target, status_code=status.HTTP_303_SEE_OTHER)
+    auth_manager.set_login_cookie(response, auth_token)
+    response.delete_cookie("oauth_state")
+
+    return response
 
 
 @router.get("/login")

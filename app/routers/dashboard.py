@@ -3,8 +3,9 @@ import io
 import json
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, Form, HTTPException, Request
-from fastapi.responses import Response, StreamingResponse
+from fastapi import APIRouter, Depends, Form, HTTPException, Request, status
+from fastapi.responses import RedirectResponse, Response, StreamingResponse
+from pydantic import EmailStr
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
 
@@ -56,12 +57,19 @@ def dashboard(request: Request, user: User = Depends(get_current_user), session=
     manager_links = []
     if user.role == UserRole.CREATOR:
         manager_links = session.exec(
-            select(ManagerCreatorLink).where(ManagerCreatorLink.creator_id == user.id)
+            select(ManagerCreatorLink)
+            .where(ManagerCreatorLink.creator_id == user.id)
+            .options(selectinload(ManagerCreatorLink.manager))
         ).all()
     elif user.role == UserRole.MANAGER:
         manager_links = session.exec(
-            select(ManagerCreatorLink).where(ManagerCreatorLink.manager_id == user.id)
+            select(ManagerCreatorLink)
+            .where(ManagerCreatorLink.manager_id == user.id)
+            .options(selectinload(ManagerCreatorLink.creator))
         ).all()
+
+    manager_request_status = request.query_params.get("manager_request")
+    manager_request_error = request.query_params.get("manager_error")
 
     return request.app.state.templates.TemplateResponse(
         "dashboard.html",
@@ -75,8 +83,66 @@ def dashboard(request: Request, user: User = Depends(get_current_user), session=
             "ai_recommendations": ai_recommendations,
             "subscription": subscription,
             "manager_links": manager_links,
+            "manager_request_status": manager_request_status,
+            "manager_request_error": manager_request_error,
             "auth_types": list(AuthType),
         },
+    )
+
+
+@router.post("/manager/request-link")
+def request_manager_link(
+    manager_email: EmailStr = Form(...),
+    user: User = Depends(get_current_user),
+    session=Depends(get_session),
+):
+    if user.role != UserRole.CREATOR:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="only_creators_can_request")
+
+    manager = session.exec(
+        select(User).where(User.email == manager_email).where(User.role.in_([UserRole.MANAGER, UserRole.ADMIN]))
+    ).first()
+    if not manager:
+        return RedirectResponse(
+            url="/dashboard?manager_error=manager_not_found",
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    if manager.id == user.id:
+        return RedirectResponse(
+            url="/dashboard?manager_error=self_request_not_allowed",
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    existing_link = session.exec(
+        select(ManagerCreatorLink)
+        .where(ManagerCreatorLink.creator_id == user.id)
+        .where(ManagerCreatorLink.manager_id == manager.id)
+    ).first()
+
+    if existing_link:
+        if existing_link.approved:
+            return RedirectResponse(
+                url="/dashboard?manager_error=already_linked",
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+        return RedirectResponse(
+            url="/dashboard?manager_error=pending",
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    link = ManagerCreatorLink(
+        creator_id=user.id,
+        manager_id=manager.id,
+        approved=False,
+        connected_at=datetime.utcnow(),
+    )
+    session.add(link)
+    session.commit()
+
+    return RedirectResponse(
+        url="/dashboard?manager_request=success",
+        status_code=status.HTTP_303_SEE_OTHER,
     )
 
 

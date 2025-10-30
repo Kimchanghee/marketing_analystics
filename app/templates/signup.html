@@ -52,7 +52,7 @@
     <div class="social-login-section">
         <div class="social-button-grid">
             {% for provider in providers %}
-            <a class="btn social {{ provider.value }}" href="/signup?lang={{ locale }}&provider={{ provider.value }}" onclick="setSocialRole(event)">
+            <button class="btn social {{ provider.value }}" type="button" data-provider="{{ provider.value }}">
                 <span class="social-icon">
                     {% if provider.value == 'google' %}
                     <svg viewBox="0 0 24 24" width="20" height="20">
@@ -68,7 +68,7 @@
                     {% endif %}
                 </span>
                 {{ provider.value|capitalize }}로 계속하기
-            </a>
+            </button>
             {% endfor %}
         </div>
     </div>
@@ -270,12 +270,18 @@ document.querySelectorAll('input[name="role_type"]').forEach(radio => {
 });
 
 // 소셜 로그인 시 역할 정보 포함
-function setSocialRole(event) {
-    const roleType = document.querySelector('input[name="role_type"]:checked').value;
-    const link = event.currentTarget;
-    const url = new URL(link.href);
-    url.searchParams.set('role', roleType);
-    link.href = url.toString();
-}
+const locale = "{{ locale }}";
+document.querySelectorAll('.social-login-section [data-provider]').forEach(button => {
+    button.addEventListener('click', () => {
+        const roleType = document.querySelector('input[name="role_type"]:checked').value;
+        const params = new URLSearchParams({
+            action: 'signup',
+            role: roleType,
+            origin: `/signup?lang=${locale}`,
+            lang: locale
+        });
+        window.location.href = `/oauth/${button.getAttribute('data-provider')}?${params.toString()}`;
+    });
+});
 </script>
 {% endblock %}

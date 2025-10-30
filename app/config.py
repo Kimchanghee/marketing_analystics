@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     twitter_client_secret: str = Field("", env="TWITTER_CLIENT_SECRET")
     tiktok_client_key: str = Field("", env="TIKTOK_CLIENT_KEY")
     tiktok_client_secret: str = Field("", env="TIKTOK_CLIENT_SECRET")
+    apple_client_id: str = Field("", env="APPLE_CLIENT_ID")
+    apple_team_id: str = Field("", env="APPLE_TEAM_ID")
+    apple_key_id: str = Field("", env="APPLE_KEY_ID")
+    apple_private_key: str = Field("", env="APPLE_PRIVATE_KEY")
 
     @property
     def is_production(self) -> bool:
