@@ -88,3 +88,27 @@ class AuthManager:
 
 
 auth_manager = AuthManager()
+
+
+# Helper functions for backward compatibility and convenience
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+    """
+    Create a JWT token with custom data payload.
+    Used for state tokens in OAuth flows.
+    """
+    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=settings.access_token_expire_minutes))
+    to_encode = data.copy()
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, settings.secret_key, algorithm="HS256")
+
+
+def decode_token(token: str) -> dict:
+    """
+    Decode a JWT token and return the payload.
+    Used for state tokens in OAuth flows.
+    """
+    try:
+        payload = jwt.decode(token, settings.secret_key, algorithms=["HS256"])
+        return payload
+    except JWTError as exc:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token") from exc
