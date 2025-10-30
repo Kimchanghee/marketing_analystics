@@ -601,7 +601,6 @@ a:hover {
 }
 
 .slider-item {
-    flex: 0 0 100%;
     scroll-snap-align: start;
 }
 
@@ -1066,7 +1065,7 @@ a:hover {
 }
 
 .persona-insights .slider-item {
-    flex: 0 0 calc(100% - 0.75rem);
+    flex: 0 0 100%;
 }
 
 .persona-insights .persona-card {
@@ -1376,7 +1375,7 @@ a:hover {
     gap: 1rem;
 }
 
-/* 소셜 로그인 섹션 */
+/* ?�셜 로그???�션 */
 .social-login-section {
     margin: 2rem 0;
     text-align: center;
@@ -1493,7 +1492,7 @@ a:hover {
     letter-spacing: 0.05em;
 }
 
-/* 소셜 로그인 폼 */
+/* ?�셜 로그????*/
 .social-provider-wrapper {
     position: relative;
 }
@@ -2252,7 +2251,7 @@ select:focus {
     }
 }
 
-/* 시간대별 조회수 차트 */
+/* ?�간?��?조회??차트 */
 .hourly-views {
     margin-top: 1.5rem;
     padding: 1rem;
