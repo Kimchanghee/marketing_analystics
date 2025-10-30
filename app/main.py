@@ -1,5 +1,16 @@
 import logging
+import sys
 from pathlib import Path
+
+# 로깅 설정 - as early as possible
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    stream=sys.stdout
+)
+logger = logging.getLogger(__name__)
+
+logger.info("Starting application imports...")
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse, Response
@@ -7,24 +18,40 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
+logger.info("FastAPI imports completed")
+
 from .auth import auth_manager
 from .database import get_session, session_context
 from .dependencies import get_current_user
 from .models import SocialAccount, User
+
+logger.info("Core modules imported")
+
 from .routers import admin, ai_pd, auth, channels, dashboard, subscriptions
+logger.info("Routers imported")
+
 from .services.localization import translator
 from .services.social_auth import social_auth_service
-from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
+logger.info("Services imported")
 
-# 로깅 설정
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
+logger.info("SEO modules imported")
 
 BASE_DIR = Path(__file__).resolve().parent
 
+logger.info("Creating FastAPI application...")
 app = FastAPI(title="Creator Control Center")
+logger.info("FastAPI application created")
+
+logger.info("Mounting static files...")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+logger.info("Static files mounted")
+
+logger.info("Setting up templates...")
 app.state.templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+logger.info("Templates configured")
+
+logger.info("Application initialization complete - ready to accept requests")
 
 
 @app.exception_handler(Exception)

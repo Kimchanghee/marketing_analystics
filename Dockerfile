@@ -15,6 +15,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Test that the app can be imported (catch import errors early)
+RUN python test_import.py
+
 EXPOSE 8080
 
 # Use sh -c to properly expand PORT environment variable
