@@ -21,7 +21,18 @@
     </div>
 </section>
 <section class="channels">
-    <h2>{{ t['dashboard']['your_channels'] }}</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2>{{ t['dashboard']['your_channels'] }}</h2>
+        <a href="/channels/manage" class="btn primary" style="text-decoration: none;">
+            🔗 채널 관리 및 연결
+        </a>
+    </div>
+    <div style="background: #e6f3ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #667eea;">
+        <p style="margin: 0; color: #333;">
+            💡 <strong>새로운 채널 관리 기능:</strong> Instagram, Facebook, YouTube, TikTok, Twitter, Threads를 OAuth로 연결하고 실시간 데이터를 가져올 수 있습니다.
+            <a href="/channels/manage" style="color: #667eea; text-decoration: underline;">채널 관리 페이지로 이동 →</a>
+        </p>
+    </div>
     <form method="post" action="/channels/add" class="channel-form">
         <select name="platform">
             {% for key, label in t['channels'].items() %}

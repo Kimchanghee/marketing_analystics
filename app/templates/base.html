@@ -44,63 +44,151 @@
     <span class="orb orb-3"></span>
 </div>
 <header class="topbar">
-    <div class="logo">
-        <span class="logo-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" focusable="false" role="img">
-                <defs>
-                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#f58529" />
-                        <stop offset="45%" stop-color="#dd2a7b" />
-                        <stop offset="75%" stop-color="#1877f2" />
-                        <stop offset="100%" stop-color="#ff3b30" />
-                    </linearGradient>
-                </defs>
-                <rect x="4" y="4" width="24" height="24" rx="8" fill="url(#logoGradient)" />
-                <path d="M11 21c1.8-3.5 3.5-7 6-10l4 2-3 9z" fill="#f5f8ff" opacity="0.9" />
-                <circle cx="14" cy="13" r="2" fill="#ffe1dd" />
-            </svg>
-        </span>
-        <a href="/">Creator Control Center</a>
-    </div>
-    <nav class="main-nav">
-        <a href="/">{{ t['nav']['home'] }}</a>
-        <a href="/services">{{ t['nav']['services'] }}</a>
-        <a href="/personal">{{ t['nav']['personal'] }}</a>
-        <a href="/business">{{ t['nav']['business'] }}</a>
-        <a href="/support">{{ t['nav']['support'] }}</a>
-    </nav>
-    <div class="topbar-actions">
-        <div class="auth-links">
+    <div class="topbar-container">
+        <div class="topbar-left">
+            <a href="/" class="logo">
+                <span class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" focusable="false" role="img">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f58529" />
+                                <stop offset="45%" stop-color="#dd2a7b" />
+                                <stop offset="75%" stop-color="#1877f2" />
+                                <stop offset="100%" stop-color="#ff3b30" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="4" y="4" width="24" height="24" rx="8" fill="url(#logoGradient)" />
+                        <path d="M11 21c1.8-3.5 3.5-7 6-10l4 2-3 9z" fill="#f5f8ff" opacity="0.9" />
+                        <circle cx="14" cy="13" r="2" fill="#ffe1dd" />
+                    </svg>
+                </span>
+                <span class="logo-text">Creator Control Center</span>
+            </a>
+        </div>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="/" class="nav-link">{{ t['nav']['home'] }}</a>
+            <a href="/services" class="nav-link">{{ t['nav']['services'] }}</a>
+            <a href="/personal" class="nav-link">{{ t['nav']['personal'] }}</a>
+            <a href="/business" class="nav-link">{{ t['nav']['business'] }}</a>
+            <a href="/support" class="nav-link">{{ t['nav']['support'] }}</a>
+        </nav>
+
+        <div class="topbar-right">
             {% if user is defined %}
-                {# 로그인 상태 #}
-                <a class="btn ghost small" href="/dashboard">대시보드</a>
+                <a class="btn-nav" href="/dashboard">{{ t['nav']['dashboard'] }}</a>
+                <a class="btn-nav btn-nav-channels" href="/channels/manage">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M5.5 2A1.5 1.5 0 0 0 4 3.5v9A1.5 1.5 0 0 0 5.5 14h5a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 10.5 2h-5zm3 3a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5zM6 6.5a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3zm4 0a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3z"/>
+                    </svg>
+                    <span class="btn-nav-text">{{ t['nav']['channels'] if 'channels' in t['nav'] else '채널' }}</span>
+                </a>
                 <form method="post" action="/logout" style="display: inline;">
-                    <button class="btn primary small" type="submit">로그아웃</button>
+                    <button class="btn-primary" type="submit">{{ t['profile']['logout'] }}</button>
                 </form>
             {% else %}
-                {# 비로그인 상태 #}
-                <a class="btn ghost small" href="/login">{{ t['auth']['login_button'] }}</a>
-                <a class="btn primary small" href="/signup">{{ t['auth']['signup_button'] }}</a>
+                <a class="btn-nav" href="/login">{{ t['auth']['login_button'] }}</a>
+                <a class="btn-primary" href="/signup">{{ t['auth']['signup_button'] }}</a>
             {% endif %}
-        </div>
-        <button
-            class="theme-toggle"
-            type="button"
-            data-theme-toggle
-            aria-label="{{ t['theme']['toggle_label'] }}"
-            data-light-label="{{ t['theme']['light_label'] }}"
-            data-dark-label="{{ t['theme']['dark_label'] }}"
-        >
-            <span class="theme-icon" aria-hidden="true"></span>
-            <span class="theme-label">{{ t['theme']['light_label'] }}</span>
-        </button>
-        <div class="lang-selector" aria-label="{{ t['nav']['language'] }}">
-            <a href="?lang=ko">🇰🇷</a>
-            <a href="?lang=en">🇺🇸</a>
-            <a href="?lang=ja">🇯🇵</a>
+
+            <button
+                class="theme-toggle-btn"
+                type="button"
+                data-theme-toggle
+                aria-label="{{ t['theme']['toggle_label'] }}"
+                title="{{ t['theme']['toggle_label'] }}"
+            >
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2.5zM10 13a3 3 0 100-6 3 3 0 000 6zm0 1.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM16.25 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zM5.75 10a.75.75 0 01-.75.75H3.5a.75.75 0 010-1.5H5a.75.75 0 01.75.75zM14.834 5.166a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.061a.75.75 0 011.061 0zM7.287 12.713a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0zM14.834 14.834a.75.75 0 01-1.061 0l-1.06-1.061a.75.75 0 111.06-1.06l1.061 1.06a.75.75 0 010 1.061zM7.287 7.287a.75.75 0 01-1.061 0L5.166 6.226a.75.75 0 011.06-1.06l1.061 1.06a.75.75 0 010 1.061z"/>
+                </svg>
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                </svg>
+            </button>
+
+            <div class="lang-selector">
+                <button class="lang-selector-btn" type="button" aria-label="{{ t['nav']['language'] }}" aria-haspopup="true" aria-expanded="false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.5 7.5h3a.5.5 0 010 1h-3a.5.5 0 010-1zm-1 3h5a.5.5 0 010 1h-5a.5.5 0 010-1z"/>
+                        <path d="M10 1a9 9 0 100 18 9 9 0 000-18zm0 1a8 8 0 11-8 8 8 8 0 018-8z"/>
+                    </svg>
+                    <span class="lang-current">{{ locale.upper() }}</span>
+                    <svg class="lang-chevron" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                        <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </button>
+                <div class="lang-dropdown" role="menu">
+                    <a href="?lang=ko" class="lang-option{% if locale == 'ko' %} active{% endif %}" role="menuitem">
+                        <span class="lang-flag">🇰🇷</span>
+                        <span>한국어</span>
+                    </a>
+                    <a href="?lang=en" class="lang-option{% if locale == 'en' %} active{% endif %}" role="menuitem">
+                        <span class="lang-flag">🇺🇸</span>
+                        <span>English</span>
+                    </a>
+                    <a href="?lang=ja" class="lang-option{% if locale == 'ja' %} active{% endif %}" role="menuitem">
+                        <span class="lang-flag">🇯🇵</span>
+                        <span>日本語</span>
+                    </a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" type="button" aria-label="Toggle menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
     </div>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="/" class="mobile-nav-link">{{ t['nav']['home'] }}</a>
+        <a href="/services" class="mobile-nav-link">{{ t['nav']['services'] }}</a>
+        <a href="/personal" class="mobile-nav-link">{{ t['nav']['personal'] }}</a>
+        <a href="/business" class="mobile-nav-link">{{ t['nav']['business'] }}</a>
+        <a href="/support" class="mobile-nav-link">{{ t['nav']['support'] }}</a>
+        {% if user is defined %}
+            <a href="/dashboard" class="mobile-nav-link">{{ t['nav']['dashboard'] }}</a>
+            <a href="/channels/manage" class="mobile-nav-link">채널 관리</a>
+        {% endif %}
+    </div>
 </header>
+
+<script>
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+    }
+
+    // Language dropdown
+    const langBtn = document.querySelector('.lang-selector-btn');
+    const langDropdown = document.querySelector('.lang-dropdown');
+
+    if (langBtn) {
+        langBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            langDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            langBtn.setAttribute('aria-expanded', 'false');
+            langDropdown.classList.remove('active');
+        });
+    }
+});
+</script>
 <main class="content">
     {% block content %}{% endblock %}
 </main>

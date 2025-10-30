@@ -21,6 +21,16 @@ class Settings(BaseSettings):
     gemini_api_key: str = Field("", env="GEMINI_API_KEY")
     environment: str = Field("production", env="ENVIRONMENT")  # production or development
 
+    # OAuth 2.0 설정
+    facebook_app_id: str = Field("", env="FACEBOOK_APP_ID")
+    facebook_app_secret: str = Field("", env="FACEBOOK_APP_SECRET")
+    google_client_id: str = Field("", env="GOOGLE_CLIENT_ID")
+    google_client_secret: str = Field("", env="GOOGLE_CLIENT_SECRET")
+    twitter_client_id: str = Field("", env="TWITTER_CLIENT_ID")
+    twitter_client_secret: str = Field("", env="TWITTER_CLIENT_SECRET")
+    tiktok_client_key: str = Field("", env="TIKTOK_CLIENT_KEY")
+    tiktok_client_secret: str = Field("", env="TIKTOK_CLIENT_SECRET")
+
     @property
     def is_production(self) -> bool:
         """Check if running in production environment (Cloud Run)"""

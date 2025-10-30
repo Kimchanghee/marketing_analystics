@@ -11,7 +11,7 @@ from .auth import auth_manager
 from .database import get_session, init_db, session_context
 from .dependencies import get_current_user
 from .models import SocialAccount, User
-from .routers import admin, ai_pd, auth, dashboard, subscriptions
+from .routers import admin, ai_pd, auth, channels, dashboard, subscriptions
 from .services.localization import translator
 from .services.social_auth import social_auth_service
 from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
@@ -235,6 +235,7 @@ async def robots():
 
 app.include_router(auth.router)
 app.include_router(dashboard.router)
+app.include_router(channels.router)
 app.include_router(admin.router)
 app.include_router(subscriptions.router)
 app.include_router(ai_pd.router)
