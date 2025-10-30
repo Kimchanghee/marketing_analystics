@@ -8,7 +8,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
 
 from ..auth import create_access_token
-from ..database import get_db_session
+from ..database import get_session
 from ..dependencies import get_current_user, require_roles
 from ..models import (
     AuthType,
@@ -83,7 +83,7 @@ def get_oauth_configs():
 async def manage_channels(
     request: Request,
     user: User = Depends(get_current_user),
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_session),
 ):
     """채널 관리 페이지"""
     # 사용자의 현재 채널들 가져오기
@@ -195,7 +195,7 @@ async def connect_channel(
     platform: str,
     request: Request,
     user: User = Depends(get_current_user),
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_session),
 ):
     """OAuth 인증 시작"""
     OAUTH_CONFIGS = get_oauth_configs()
@@ -268,7 +268,7 @@ async def oauth_callback(
     code: Optional[str] = None,
     state: Optional[str] = None,
     error: Optional[str] = None,
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_session),
 ):
     """OAuth 콜백 처리"""
     OAUTH_CONFIGS = get_oauth_configs()
@@ -565,7 +565,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
 async def disconnect_channel(
     channel_id: int,
     user: User = Depends(get_current_user),
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_session),
 ):
     """채널 연결 해제"""
     channel = session.get(ChannelAccount, channel_id)
@@ -593,7 +593,7 @@ async def disconnect_channel(
 async def refresh_channel_token(
     channel_id: int,
     user: User = Depends(get_current_user),
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_session),
 ):
     """만료된 토큰 갱신"""
     OAUTH_CONFIGS = get_oauth_configs()
