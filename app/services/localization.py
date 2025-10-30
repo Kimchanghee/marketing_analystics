@@ -37,3 +37,9 @@ class Translator:
 
 
 translator = Translator()
+
+
+def load_translations(locale: str | None = None) -> Dict[str, Any]:
+    """Return all translations for the requested locale, falling back to default."""
+    target_locale = locale or DEFAULT_LOCALE
+    return translator.load_locale(target_locale)

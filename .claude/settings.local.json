@@ -9,7 +9,8 @@
       "Bash(python create_test_accounts.py:*)",
       "Bash(gcloud config get-value:*)",
       "Bash(gcloud:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
