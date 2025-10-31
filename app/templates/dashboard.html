@@ -47,29 +47,43 @@
         <article class="channel-card">
             <header>
                 <h3>{{ t['channels'][account.platform] if account.platform in t['channels'] else account.platform }}</h3>
+                <span style="color: var(--text-subtle); font-size: 0.75rem;">|</span>
                 <p>{{ account.account_name }}</p>
             </header>
             <div class="channel-card-main">
             {% set snapshot = snapshots.get(account.id) %}
             {% if snapshot %}
             <ul class="metrics">
-                <li>{{ t['dashboard']['followers'] }}: {{ snapshot['followers'] }}</li>
-                <li>{{ t['dashboard']['growth'] }}: {{ snapshot['growth_rate'] }}%</li>
-                <li>{{ t['dashboard']['engagement'] }}: {{ snapshot['engagement_rate'] }}%</li>
-                <li>{{ t['dashboard']['last_post'] }}: {{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</li>
+                <li>
+                    <strong>{{ snapshot['followers'] }}</strong>
+                    <span>{{ t['dashboard']['followers'] }}</span>
+                </li>
+                <li>
+                    <strong style="color: {{ 'var(--success)' if snapshot['growth_rate'] > 0 else 'var(--danger)' }}">{{ snapshot['growth_rate'] }}%</strong>
+                    <span>{{ t['dashboard']['growth'] }}</span>
+                </li>
+                <li>
+                    <strong>{{ snapshot['engagement_rate'] }}%</strong>
+                    <span>{{ t['dashboard']['engagement'] }}</span>
+                </li>
+                <li>
+                    <strong>{{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</strong>
+                    <span>{{ t['dashboard']['last_post'] }}</span>
+                </li>
             </ul>
-            <p class="data-source">
-                {{ t['dashboard']['data_source'] }}:
-                {% if snapshot['source'] == 'api' %}
-                <span class="source api">{{ t['dashboard']['source_api'] }}</span>
-                {% else %}
-                <span class="source mock">{{ t['dashboard']['source_mock'] }}</span>
-                {% endif %}
-                {% if snapshot.get('error') %}
-                <span class="error">{{ snapshot['error'] }}</span>
-                {% endif %}
-            </p>
-            <div class="recent-posts">
+            {% endif %}
+            </div>
+            <div class="channel-card-actions">
+                <button class="btn tertiary toggle-details" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📊 상세</button>
+                <form method="post" action="/channels/remove" style="display: inline;">
+                    <input type="hidden" name="channel_id" value="{{ account.id }}">
+                    <button class="btn tertiary" type="submit" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">🗑️</button>
+                </form>
+            </div>
+            {% if snapshot %}
+            <div class="channel-details" style="display: none; width: 100%; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div class="recent-posts">
                 <h4>{{ t['dashboard']['recent_posts'] }}</h4>
                 {% for post in snapshot['recent_posts'] %}
                 <div class="post">
@@ -112,15 +126,8 @@
                 {% endfor %}
             </div>
             {% endif %}
-            {% endif %}
-            </div>
-            <div class="channel-card-actions">
-                <form method="post" action="/channels/remove">
-                    <input type="hidden" name="channel_id" value="{{ account.id }}">
-                    <button class="btn tertiary" type="submit" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">{{ t['dashboard']['remove'] }}</button>
-                </form>
-            </div>
-            <details class="credential-panel" style="grid-column: 1 / -1; margin-top: 0;">
+                </div>
+                <details class="credential-panel" style="margin-top: 1rem;">
                 <summary>{{ t['dashboard']['credentials_heading'] }}</summary>
                 {% set credential = account.credential %}
                 <p class="credential-status {{ 'ok' if credential else 'warning' }}">
@@ -179,6 +186,8 @@
                     <button class="btn secondary" type="submit">{{ t['dashboard']['save_credentials'] }}</button>
                 </form>
             </details>
+            </div>
+            {% endif %}
         </article>
         {% endfor %}
     </div>
@@ -782,6 +791,23 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
         questionInput.disabled = false;
         questionInput.focus();
     }
+});
+
+// Toggle channel details
+document.querySelectorAll('.toggle-details').forEach(button => {
+    button.addEventListener('click', function() {
+        const card = this.closest('.channel-card');
+        const details = card.querySelector('.channel-details');
+        if (details) {
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                this.textContent = '📊 숨기기';
+            } else {
+                details.style.display = 'none';
+                this.textContent = '📊 상세';
+            }
+        }
+    });
 });
 </script>
 {% endblock %}
