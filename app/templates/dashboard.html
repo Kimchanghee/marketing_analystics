@@ -47,12 +47,9 @@
         <article class="channel-card">
             <header>
                 <h3>{{ t['channels'][account.platform] if account.platform in t['channels'] else account.platform }}</h3>
-                <form method="post" action="/channels/remove">
-                    <input type="hidden" name="channel_id" value="{{ account.id }}">
-                    <button class="link danger" type="submit">{{ t['dashboard']['remove'] }}</button>
-                </form>
+                <p>{{ account.account_name }}</p>
             </header>
-            <p>{{ t['dashboard']['account_label'] }}: {{ account.account_name }}</p>
+            <div class="channel-card-main">
             {% set snapshot = snapshots.get(account.id) %}
             {% if snapshot %}
             <ul class="metrics">
@@ -116,7 +113,14 @@
             </div>
             {% endif %}
             {% endif %}
-            <details class="credential-panel">
+            </div>
+            <div class="channel-card-actions">
+                <form method="post" action="/channels/remove">
+                    <input type="hidden" name="channel_id" value="{{ account.id }}">
+                    <button class="btn tertiary" type="submit" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">{{ t['dashboard']['remove'] }}</button>
+                </form>
+            </div>
+            <details class="credential-panel" style="grid-column: 1 / -1; margin-top: 0;">
                 <summary>{{ t['dashboard']['credentials_heading'] }}</summary>
                 {% set credential = account.credential %}
                 <p class="credential-status {{ 'ok' if credential else 'warning' }}">
