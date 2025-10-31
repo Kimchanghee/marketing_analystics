@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --font-family: 'Poppins', 'Noto Sans KR', 'Noto Sans JP', 'Helvetica Neue', sans-serif;
     --transition-base: 0.3s ease;
     --radius-sm: 0.75rem;
@@ -601,6 +601,7 @@ a:hover {
 }
 
 .slider-item {
+    flex: 0 0 100%;
     scroll-snap-align: start;
 }
 
@@ -1375,7 +1376,7 @@ a:hover {
     gap: 1rem;
 }
 
-/* ?�셜 로그???�션 */
+/* ?뚯뀥 濡쒓렇???뱀뀡 */
 .social-login-section {
     margin: 2rem 0;
     text-align: center;
@@ -1492,7 +1493,7 @@ a:hover {
     letter-spacing: 0.05em;
 }
 
-/* ?�셜 로그????*/
+/* ?뚯뀥 濡쒓렇????*/
 .social-provider-wrapper {
     position: relative;
 }
@@ -2251,7 +2252,7 @@ select:focus {
     }
 }
 
-/* ?�간?��?조회??차트 */
+/* ?쒓컙?蹂?議고쉶??李⑦듃 */
 .hourly-views {
     margin-top: 1.5rem;
     padding: 1rem;
@@ -2320,7 +2321,7 @@ select:focus {
     }
 }
 
-/* AI 추천 카드 */
+/* AI 異붿쿇 移대뱶 */
 .ai-recommendations {
     margin-top: 1.5rem;
     padding: 1rem;
