@@ -10,21 +10,21 @@
   },
   "pages": {
     "home": {
-      "title": "Creator Control Center - Unified Creator Analytics Platform",
-      "description": "Manage all your social media channels including Instagram, YouTube, TikTok, and Twitter in one dashboard. Real-time analytics, AI-powered insights, and automated reporting for creators.",
-      "keywords": "creator analytics, social media management, influencer tools, youtube analytics, instagram analytics, tiktok analytics, unified dashboard, creator platform",
+      "title": "Creator Control Center - All-in-One Social Media Analytics & Management Platform for Content Creators",
+      "description": "Manage all your social media channels including Instagram, YouTube, TikTok, and Twitter in one dashboard. Real-time analytics, AI-powered insights, and automated reporting for creators. The ultimate tool for influencers, YouTubers, and content creators to grow their audience.",
+      "keywords": "creator analytics, social media management platform, influencer marketing tools, youtube channel analytics, instagram insights, tiktok analytics dashboard, content creator tools, multi-channel management, social media dashboard, influencer analytics, creator economy platform, youtube growth tools, instagram engagement metrics, content creator analytics, social media statistics, MCN management system",
       "og_type": "website"
     },
     "personal": {
-      "title": "Solutions for Individual Creators - Creator Control Center",
-      "description": "Powerful analytics tools for individual creators. Monitor all your channel performance at a glance and grow your channels with data-driven decisions.",
-      "keywords": "individual creator, youtuber tools, instagram analytics, social media growth, content creator tools",
+      "title": "Solutions for Individual Creators - YouTube & Instagram Analytics Tools | Creator Control Center",
+      "description": "Powerful analytics tools for individual creators. Monitor all your channel performance at a glance and grow your channels with data-driven decisions. Track subscribers, views, engagement rates, and optimize your content strategy for maximum growth.",
+      "keywords": "individual creator tools, youtuber analytics, instagram analytics tool, social media growth strategy, content creator dashboard, subscriber analytics, view count tracking, engagement metrics, solo creator tools, youtube revenue analytics, influencer growth tools, content optimization platform",
       "og_type": "website"
     },
     "business": {
-      "title": "Solutions for Businesses & Agencies - Creator Control Center",
-      "description": "Integrated management system for agencies and businesses managing multiple creators. Creator approval, performance monitoring, and AI-powered CS automation.",
-      "keywords": "creator agency, influencer management, MCN tools, creator monitoring, agency dashboard, AI customer support",
+      "title": "Solutions for Businesses & Agencies - Multi-Creator Management System | Creator Control Center",
+      "description": "Integrated management system for agencies and businesses managing multiple creators. Creator approval, performance monitoring, and AI-powered CS automation. Streamline your influencer marketing operations and maximize ROI with comprehensive analytics.",
+      "keywords": "creator agency platform, influencer management system, MCN management tools, talent management platform, agency dashboard, AI customer support, multi-creator analytics, influencer marketing agency, creator performance tracking, MCN platform, influencer business tools, talent agency software",
       "og_type": "website"
     },
     "services": {
@@ -57,19 +57,43 @@
   "faq": [
     {
       "question": "Which platforms does Creator Control Center support?",
-      "answer": "We support Instagram, YouTube, TikTok, Twitter/X, Facebook, and Meta Ad accounts. You can manage all channels in one unified dashboard."
+      "answer": "Creator Control Center supports Instagram, YouTube, TikTok, Twitter/X, Facebook, and Meta Ad accounts. You can manage all your social media channels in one unified dashboard, making multi-platform content creation and analytics seamless and efficient."
     },
     {
-      "question": "Is there a free plan?",
-      "answer": "Yes, the free plan allows you to manage 1 channel. Upgrade to PRO or ENTERPRISE plans to access more channels and advanced features."
+      "question": "Is there a free plan available?",
+      "answer": "Yes, the free plan allows you to manage 1 channel with basic analytics. Upgrade to PRO or ENTERPRISE plans to access more channels and advanced features including AI insights, automated reports, and creator management tools."
     },
     {
-      "question": "What is the AI-powered CS response feature?",
-      "answer": "This is a feature for business customers that uses Gemini AI to automatically generate draft responses to creator inquiries. You can securely register your Gemini API key in the manager dashboard to use this feature."
+      "question": "What is the AI-powered customer support feature?",
+      "answer": "This is a feature for business customers that uses Gemini AI to automatically generate draft responses to creator inquiries. You can securely register your Gemini API key in the manager dashboard to use this feature, reducing customer support time by over 80%."
     },
     {
-      "question": "How often is data updated?",
-      "answer": "Data is collected and updated in real-time. You can immediately check the latest performance metrics on your dashboard."
+      "question": "How often is the analytics data updated?",
+      "answer": "Data is collected and updated in real-time. You can immediately check the latest performance metrics on your dashboard with auto-refresh functionality to keep you always up-to-date."
+    },
+    {
+      "question": "What YouTube analytics features do you provide?",
+      "answer": "We provide comprehensive YouTube analytics including subscriber count, view count, likes, comments, watch time, traffic sources, demographics, and more. Additional features include content performance comparison, optimal upload time recommendations, and revenue analytics."
+    },
+    {
+      "question": "What Instagram analytics are available?",
+      "answer": "Our Instagram analytics include follower growth trends, post engagement rates (likes, comments, saves, shares), story views, reels performance, hashtag analysis, and optimal posting times. All insights are visualized for easy understanding."
+    },
+    {
+      "question": "How can MCN agencies use this platform?",
+      "answer": "MCN agencies and talent managers can manage all their creators in one place. Features include creator performance comparison, approval management, revenue distribution data, and consolidated reporting for efficient influencer management."
+    },
+    {
+      "question": "Is my data secure and private?",
+      "answer": "All data is encrypted and stored securely following industry-standard security protocols. We use OAuth authentication to connect with social media accounts and never store passwords. We are fully compliant with GDPR and privacy regulations."
+    },
+    {
+      "question": "Can I connect multiple channels simultaneously?",
+      "answer": "Yes, you can connect multiple channels based on your plan. The free plan supports 1 channel, PRO supports 5 channels, and ENTERPRISE supports unlimited channels. All connected channels' data is integrated for comprehensive performance insights."
+    },
+    {
+      "question": "Do you provide growth insights for creators?",
+      "answer": "Our AI-powered recommendation system provides personalized insights for channel growth. This includes content optimization suggestions, target audience analysis, trending keyword recommendations, upload time optimization, and data-driven growth strategies."
     }
   ]
 }

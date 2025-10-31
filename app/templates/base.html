@@ -7,6 +7,11 @@
     {% if seo is defined and page is defined %}
     {# SEO Meta Tags #}
     <title>{{ seo.get_page_metadata(page)['title'] }}</title>
+
+    {# hreflang Tags for Multilingual SEO #}
+    {{ seo.generate_hreflang_tags(request.url.path if request is defined else '/')|safe }}
+
+    {# Basic Meta Tags #}
     {{ seo.generate_meta_tags(page)|safe }}
 
     {# OpenGraph Tags #}

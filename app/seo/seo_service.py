@@ -70,10 +70,42 @@ class SEOService:
 
         return "\n    ".join(tags)
 
+    def generate_hreflang_tags(self, page_path: str = "/") -> str:
+        """hreflang 태그 생성 (다국어 SEO 최적화)"""
+        base_url = self.seo_data["site"]["url"]
+
+        # 언어별 locale 매핑
+        locale_map = {
+            "ko": "ko-KR",
+            "en": "en-US",
+            "ja": "ja-JP"
+        }
+
+        tags = []
+
+        # 각 언어별 hreflang 태그
+        for lang, locale_code in locale_map.items():
+            url = f"{base_url}{page_path}?lang={lang}"
+            tags.append(f'<link rel="alternate" hreflang="{lang}" href="{url}">')
+            # 지역별 태그도 추가
+            tags.append(f'<link rel="alternate" hreflang="{locale_code}" href="{url}">')
+
+        # x-default (기본 언어)
+        tags.append(f'<link rel="alternate" hreflang="x-default" href="{base_url}{page_path}">')
+
+        return "\n    ".join(tags)
+
     def generate_opengraph_tags(self, page: str = "home", image_url: Optional[str] = None) -> str:
         """OpenGraph meta tags 생성 (소셜 미디어 공유 최적화)"""
         meta = self.get_page_metadata(page)
         image = image_url or meta["image"]
+
+        # 다국어 locale 매핑
+        locale_alternates = {
+            "ko": "ko_KR",
+            "en": "en_US",
+            "ja": "ja_JP"
+        }
 
         tags = [
             f'<meta property="og:type" content="{meta["og_type"]}">',
@@ -82,11 +114,21 @@ class SEOService:
             f'<meta property="og:url" content="{meta["url"]}">',
             f'<meta property="og:site_name" content="{meta["site_name"]}">',
             f'<meta property="og:locale" content="{meta["locale"]}">',
+        ]
+
+        # og:locale:alternate 추가 (다국어 대체)
+        current_locale = meta["locale"]
+        for lang, locale_code in locale_alternates.items():
+            if locale_code != current_locale:
+                tags.append(f'<meta property="og:locale:alternate" content="{locale_code}">')
+
+        tags.extend([
             f'<meta property="og:image" content="{image}">',
             '<meta property="og:image:width" content="1200">',
             '<meta property="og:image:height" content="630">',
             f'<meta property="og:image:alt" content="{meta["title"]}">',
-        ]
+            '<meta property="og:image:type" content="image/jpeg">',
+        ])
 
         return "\n    ".join(tags)
 
@@ -270,14 +312,123 @@ class SEOService:
 
         return "\n    ".join(schemas)
 
+    def generate_video_object_schema(self) -> str:
+        """VideoObject structured data (JSON-LD) 생성 - 크리에이터 플랫폼용"""
+        site = self.seo_data.get("site", {})
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            "name": self.seo_data.get("video", {}).get("name", "Creator Control Center Platform Tour"),
+            "description": self.seo_data.get("video", {}).get("description", site.get("description", "")),
+            "thumbnailUrl": self.seo_data.get("video", {}).get("thumbnail", "/static/images/video-thumbnail.jpg"),
+            "uploadDate": self.seo_data.get("video", {}).get("uploadDate", "2024-01-01"),
+            "contentUrl": self.seo_data.get("video", {}).get("contentUrl", ""),
+            "embedUrl": self.seo_data.get("video", {}).get("embedUrl", ""),
+            "duration": "PT2M30S",
+            "publisher": {
+                "@type": "Organization",
+                "name": "Creator Control Center",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": self.seo_data.get("organization", {}).get("logo", "/static/images/logo.png")
+                }
+            }
+        }
+
+        # contentUrl이 없으면 스키마 생성 안 함
+        if not self.seo_data.get("video", {}).get("contentUrl"):
+            return ""
+
+        return self._json_ld_script(schema)
+
+    def generate_article_schema(self, page: str = "home") -> str:
+        """Article/BlogPosting structured data (JSON-LD) 생성 - E-E-A-T 강화"""
+        meta = self.get_page_metadata(page)
+        site = self.seo_data.get("site", {})
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": meta["title"],
+            "description": meta["description"],
+            "image": meta["image"],
+            "datePublished": "2024-01-01T00:00:00+00:00",
+            "dateModified": datetime.now().strftime("%Y-%m-%dT%H:%M:%S+00:00"),
+            "author": {
+                "@type": "Organization",
+                "name": "Creator Control Center",
+                "url": site.get("url", "")
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Creator Control Center",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": self.seo_data.get("organization", {}).get("logo", "/static/images/logo.png")
+                }
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": meta["url"]
+            },
+            "inLanguage": self.locale
+        }
+
+        return self._json_ld_script(schema)
+
+    def generate_howto_schema(self) -> str:
+        """HowTo structured data (JSON-LD) 생성 - AEO 최적화"""
+        howto_data = self.seo_data.get("howto", {})
+
+        if not howto_data:
+            return ""
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": howto_data.get("name", ""),
+            "description": howto_data.get("description", ""),
+            "image": howto_data.get("image", "/static/images/howto.jpg"),
+            "totalTime": howto_data.get("totalTime", "PT10M"),
+            "supply": [
+                {
+                    "@type": "HowToSupply",
+                    "name": item
+                }
+                for item in howto_data.get("supplies", [])
+            ],
+            "tool": [
+                {
+                    "@type": "HowToTool",
+                    "name": item
+                }
+                for item in howto_data.get("tools", [])
+            ],
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "position": idx + 1,
+                    "name": step.get("name", ""),
+                    "text": step.get("text", ""),
+                    "image": step.get("image", "")
+                }
+                for idx, step in enumerate(howto_data.get("steps", []))
+            ]
+        }
+
+        return self._json_ld_script(schema)
+
     def generate_complete_seo_head(
         self,
         page: str = "home",
+        page_path: str = "/",
         include_faq: bool = False,
         custom_image: Optional[str] = None
     ) -> str:
-        """완전한 SEO head 섹션 생성 (meta tags + structured data)"""
+        """완전한 SEO head 섹션 생성 (meta tags + hreflang + structured data)"""
         components = [
+            self.generate_hreflang_tags(page_path),
             self.generate_meta_tags(page),
             self.generate_opengraph_tags(page, custom_image),
             self.generate_twitter_cards(page, custom_image),
