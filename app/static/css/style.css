@@ -691,6 +691,7 @@ a:hover {
     box-shadow: var(--shadow-soft);
     position: relative;
     overflow: hidden;
+    min-width: clamp(260px, 32vw, 360px);
 }
 
 .testimonial-card::after {
@@ -708,6 +709,10 @@ a:hover {
 .testimonial-quote {
     position: relative;
     z-index: 1;
+}
+
+.testimonial-card p {
+    word-break: keep-all;
 }
 
 .testimonial-quote {
