@@ -45,9 +45,10 @@ class AuthManager:
         """bcrypt를 직접 사용하여 비밀번호 해싱"""
         truncated_password = self._truncate_password(password)
         try:
-            # bcrypt.gensalt()로 salt 생성, bcrypt.hashpw()로 해싱
+            # bcrypt.gensalt(rounds=10)로 salt 생성 - 보안과 성능의 균형
+            # rounds=10: ~50-100ms (기본 12보다 3-4배 빠르면서도 안전)
             password_bytes = truncated_password.encode('utf-8')
-            hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+            hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt(rounds=10))
             return hashed.decode('utf-8')
         except Exception as exc:
             logger.error(f"Password hashing failed: {exc}")
