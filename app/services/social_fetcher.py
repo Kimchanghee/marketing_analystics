@@ -3,6 +3,7 @@ from random import randint, random
 from typing import Any, Dict, List
 
 from ..models import ChannelAccount
+from ..cache import cache
 from .channel_connectors import (
     ChannelConnectorConfigError,
     ChannelConnectorError,
@@ -72,18 +73,32 @@ def _with_metadata(metrics: Dict[str, Any], *, source: str, error: str | None = 
 
 
 def fetch_channel_snapshots(accounts: List[ChannelAccount]) -> Dict[int, Dict[str, Any]]:
+    """채널 스냅샷 가져오기 (5분 캐싱 적용)"""
     snapshots: Dict[int, Dict[str, Any]] = {}
     for account in accounts:
         if account.id is None:
             continue
+
+        # 캐시 키 생성
+        cache_key = f"snapshot:{account.id}:{account.platform}"
+
+        # 캐시에서 조회
+        cached_snapshot = cache.get(cache_key)
+        if cached_snapshot is not None:
+            snapshots[account.id] = cached_snapshot
+            continue
+
+        # 캐시 미스 - 새로 가져오기
         connector = get_connector(account.platform)
         if not connector:
             metrics = generate_mock_metrics(account.account_name)
-            snapshots[account.id] = _with_metadata(
+            snapshot = _with_metadata(
                 metrics,
                 source="mock",
                 error="지원되지 않는 채널입니다.",
             )
+            snapshots[account.id] = snapshot
+            cache.set(cache_key, snapshot, ttl_seconds=300)  # 5분 캐싱
             continue
         try:
             metrics = connector.fetch(account)
@@ -92,19 +107,25 @@ def fetch_channel_snapshots(accounts: List[ChannelAccount]) -> Dict[int, Dict[st
             metrics.setdefault("growth_rate", 0.0)
             metrics.setdefault("engagement_rate", 0.0)
             metrics.setdefault("account", account.account_name)
-            snapshots[account.id] = _with_metadata(metrics, source="api")
+            snapshot = _with_metadata(metrics, source="api")
+            snapshots[account.id] = snapshot
+            cache.set(cache_key, snapshot, ttl_seconds=300)  # 5분 캐싱
         except ChannelConnectorConfigError as exc:
             metrics = generate_mock_metrics(account.account_name)
-            snapshots[account.id] = _with_metadata(
+            snapshot = _with_metadata(
                 metrics,
                 source="mock",
                 error=str(exc),
             )
+            snapshots[account.id] = snapshot
+            cache.set(cache_key, snapshot, ttl_seconds=60)  # 에러는 1분만 캐싱
         except ChannelConnectorError as exc:
             metrics = generate_mock_metrics(account.account_name)
-            snapshots[account.id] = _with_metadata(
+            snapshot = _with_metadata(
                 metrics,
                 source="mock",
                 error=str(exc),
             )
+            snapshots[account.id] = snapshot
+            cache.set(cache_key, snapshot, ttl_seconds=60)  # 에러는 1분만 캐싱
     return snapshots
