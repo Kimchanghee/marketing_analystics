@@ -481,50 +481,50 @@
   },
   "personal": {
     "hero": {
-      "title": "개인 크리에이터 분석을 간편하게",
-      "subtitle": "무료 플랜은 YouTube와 Instagram 각 1계정을 지원하고, 필요할 때 TikTok·Facebook·Threads 분석을 추가할 수 있습니다.",
+      "title": "5개 채널이 연결된 데모 개인 워크스페이스를 바로 확인하세요",
+      "subtitle": "샘플 개인 계정(creator@test.com / password123)으로 로그인하면 YouTube, Instagram, TikTok, Facebook, Threads 지표를 실제처럼 살펴본 뒤 내 채널을 연결할 수 있습니다.",
       "primary_cta": "개인 무료 시작",
       "secondary_cta": "개인 요금제 보기",
-      "visual_title": "오늘의 핵심 지표",
-      "visual_caption": "팔로워, 댓글, 좋아요·싫어요, 시간대별 조회수를 정리한 대시보드 예시입니다.",
-      "visual_alt": "팔로워와 참여 지표가 표시된 개인 크리에이터 대시보드"
+      "visual_title": "샘플 크리에이터 스냅샷",
+      "visual_caption": "데모 데이터로 팔로워, 참여도, 시간대별 조회수가 업데이트되는 5개 채널",
+      "visual_alt": "5개 채널이 연결된 개인용 샘플 대시보드"
     },
     "benefits": {
-      "title": "필수 데이터를 한곳에서",
-      "description": "플랫폼별 팔로워, 게시물, 댓글 반응, 좋아요·싫어요, 시간대별 조회수를 자동으로 불러옵니다.",
+      "title": "개인 샘플 워크스페이스에서 확인할 수 있는 것들",
+      "description": "실제와 가까운 지표를 미리 채워 두어 크리에이터의 일상 업무가 어떤 흐름으로 정리되는지 한눈에 파악할 수 있습니다.",
       "items": [
         {
           "tag": "CHANNELS",
-          "title": "채널 통합",
-          "description": "무료로 YouTube와 Instagram을 유지하고, 플러스 업그레이드로 TikTok·Facebook·Threads까지 비교합니다."
+          "title": "5개 채널 동시 추적",
+          "description": "데모 계정으로 YouTube, Instagram, TikTok, Facebook, Threads를 동시에 비교하고 게시물별 추세까지 살펴볼 수 있습니다."
         },
         {
-          "tag": "REACTIONS",
-          "title": "게시물 반응 분석",
-          "description": "좋아요, 싫어요, 댓글량, 응답 속도를 정리해 어떤 콘텐츠가 반응을 이끌었는지 파악합니다."
+          "tag": "ROUTINES",
+          "title": "주간 리포트 체크리스트",
+          "description": "팔로워 변화, 반응, 시청 시간 인사이트를 몇 분 만에 공유용 슬라이드로 정리하는 절차를 따라 해보세요."
         },
         {
-          "tag": "ADS",
-          "title": "AI 광고 제안",
-          "description": "Meta Ads API 데이터를 바탕으로 확대·축소가 필요한 캠페인에 대한 제안을 확인합니다."
+          "tag": "OFFERS",
+          "title": "스폰서 제안 준비",
+          "description": "시청자 세그먼트별로 저장된 제안, 업셀 아이디어, 추천 사례가 어떻게 연결되는지 미리 확인할 수 있습니다."
         }
       ]
     },
     "plans": {
       "label": "개인 요금제",
       "title": "필요한 범위에 맞춰 선택하세요",
-      "description": "무료로 시작한 뒤 추가 채널과 자동화를 원할 때 업그레이드할 수 있습니다.",
+      "description": "샘플 워크스페이스는 Personal Plus로 구성되어 전체 자동화를 체험할 수 있습니다. 내 채널을 연결할 때 맞는 플랜을 선택하세요.",
       "items": [
         {
           "name": "개인 무료",
-          "description": "YouTube와 Instagram 핵심 지표를 제공",
-          "price": "₩0",
+          "description": "두 개의 기본 채널 지표를 빠르게 확인",
+          "price": "KRW 0",
           "cycle": "항상 무료",
           "features": [
-            "YouTube 1개, Instagram 1개 계정 연동",
-            "게시물·댓글·좋아요·싫어요·시간대별 조회수 요약",
-            "Meta Ads 캠페인 현황 열람",
-            "주간 이메일 리포트"
+            "YouTube 1개와 Instagram 1개 계정 연결",
+            "게시물, 댓글, 좋아요, 싫어요, 시간대별 조회수 자동 요약",
+            "주간 이메일 리포트 템플릿",
+            "샘플 개인 로그인에서도 동일하게 사용"
           ],
           "cta": "무료로 시작",
           "cta_link": "/signup",
@@ -532,14 +532,14 @@
         },
         {
           "name": "개인 플러스",
-          "description": "추가 채널과 확장 중인 AI 추천 제공",
-          "price": "₩9,900",
+          "description": "5개 채널과 AI 추천을 한 번에 운영",
+          "price": "KRW 29,900",
           "cycle": "월 정기 결제",
           "features": [
             "YouTube·Instagram·TikTok·Facebook·Threads 분석",
-            "게시물 및 댓글 비교 리포트",
-            "AI 기반 Meta Ads 제안(로드맵 업데이트 포함)",
-            "CSV/PDF 다운로드와 채팅 지원"
+            "데모 워크스페이스가 사용하는 플랜으로 5개 채널 관리",
+            "AI 기반 Meta Ads 제안과 오디언스 기회 알림",
+            "CSV, PDF 내보내기와 우선 채팅 지원"
           ],
           "cta": "플러스로 업그레이드",
           "cta_link": "/signup",
@@ -570,35 +570,35 @@
       }
     },
     "workflow": {
-      "title": "간단한 3단계 온보딩",
-      "description": "계정을 연결하고 첫 대시보드를 만드는 데 필요한 단계별 안내를 제공해 처음 사용하는 사람도 몇 분 안에 주요 기능을 경험할 수 있도록 돕습니다.",
+      "title": "샘플 계정 활용 방법",
+      "description": "미리 연결된 다섯 개 채널을 살펴본 뒤 내 채널을 자연스럽게 연동하세요.",
       "steps": [
         {
           "label": "Step 1",
-          "title": "기본 채널 연결",
-          "detail": "무료 플랜 가입 후 지침에 따라 YouTube와 Instagram 계정을 각각 연동하면, 초기 데이터가 자동으로 수집되어 지난 30일간의 실적이 즉시 대시보드에 표시됩니다."
+          "title": "데모 계정으로 로그인",
+          "detail": "creator@test.com / password123 계정으로 접속하면 5개 채널이 이미 연결된 상태를 확인할 수 있습니다."
         },
         {
           "label": "Step 2",
-          "title": "추가 플랫폼 선택",
-          "detail": "성장을 가속화하고 싶다면 플러스 플랜으로 전환하여 TikTok·Facebook·Threads 계정을 선택적으로 연결하고, 채널별 맞춤 KPI 템플릿을 적용해 더 정밀한 분석을 진행합니다."
+          "title": "자동화 체크리스트 따라보기",
+          "detail": "준비된 업무 목록을 따라가며 리포트, 내보내기, 알림이 어떻게 작동하는지 체험하세요."
         },
         {
           "label": "Step 3",
-          "title": "광고와 보고서 확인",
-          "detail": "자동으로 생성되는 메타 광고 리포트를 검토한 뒤 AI 추천 조치를 클릭 한 번으로 내보내고, 팀 이메일 혹은 슬랙으로 주간 보고서를 공유하여 후속 액션을 정리합니다."
+          "title": "내 채널 연결",
+          "detail": "준비가 되면 내 계정을 추가하고 동일한 자동화를 그대로 이용하세요."
         }
       ]
     },
     "cta": {
-      "title": "개인 무료 플랜으로 바로 시작하세요",
-      "description": "언제든지 플러스 플랜으로 확장해 추가 채널과 진화하는 AI 지원을 이용할 수 있습니다.",
-      "primary": "무료 가입",
-      "secondary": "문의 남기기"
+      "title": "샘플 데이터로 개인 워크스페이스 체험",
+      "description": "데모 계정을 그대로 사용하거나 내 채널을 연결해도 언제든지 Plus로 업그레이드할 수 있습니다.",
+      "primary": "계정 만들기",
+      "secondary": "샘플 안내 보기"
     },
     "pricing_overview": {
       "title": "개인 요금 안내",
-      "description": "월 정기 결제를 기준으로 구성된 요금제입니다.",
+      "description": "샘플 워크스페이스는 Personal Plus 기준으로 구성되어 있습니다.",
       "columns": [
         "플랜",
         "월간 요금",
@@ -608,40 +608,40 @@
       "rows": [
         {
           "label": "개인 플러스",
-          "monthly": "₩9,900",
-          "annual": "₩108,900 (10% 할인)",
-          "note": "TikTok·Facebook·Threads 연동과 AI 광고 추천 포함"
+          "monthly": "KRW 29,900",
+          "annual": "KRW 329,000 (10% 할인)",
+          "note": "TikTok, Facebook, Threads, AI 광고 제안 포함"
         },
         {
           "label": "개인 무료",
-          "monthly": "₩0",
-          "annual": "₩0",
-          "note": "YouTube·Instagram 기본 지표 제공"
+          "monthly": "KRW 0",
+          "annual": "KRW 0",
+          "note": "YouTube·Instagram 분석은 계속 무료"
         }
       ],
-      "footnote": "연간 결제 금액에는 부가세가 포함되어 있으며, 제공 기능은 구독 기간 동안 순차적으로 개선될 수 있습니다."
+      "footnote": "가격은 부가세 포함이며, 샘플 계정은 Personal Plus 설정으로 제공됩니다."
     },
     "metrics": {
-      "title": "대시보드에서 확인할 수 있는 항목",
-      "description": "대시보드가 제공하는 세부 수준을 보여주는 예시 카드입니다.",
-      "visual_alt": "개인 대시보드의 지표 카드 예시",
-      "source_label": "예시",
-      "source_caption": "개인 워크스페이스 샘플 데이터",
+      "title": "샘플 개인 계정에서 확인할 수 있는 KPI",
+      "description": "데모 계정 데이터가 바로 로드되어 자동화 수준을 직접 확인할 수 있습니다.",
+      "visual_alt": "개인용 샘플 대시보드 카드",
+      "source_label": "샘플",
+      "source_caption": "샘플 개인 워크스페이스 (creator@test.com)",
       "items": [
         {
-          "label": "주간 팔로워 변동",
-          "value": "증감 비교",
-          "description": "YouTube와 Instagram의 주간 증감 추이를 나란히 비교합니다."
+          "label": "연결된 채널",
+          "value": "5",
+          "description": "데모 로그인에 연결된 다섯 개 채널 데이터가 실시간으로 동기화됩니다."
         },
         {
-          "label": "반응 인사이트",
-          "value": "좋아요·싫어요",
-          "description": "게시물별 긍·부정 반응을 간단히 확인합니다."
+          "label": "절약된 수동 보고 시간",
+          "value": "주당 3시간",
+          "description": "주간 리포트 자동화로 스프레드시트 정리 시간을 절약합니다."
         },
         {
-          "label": "시간대별 조회수",
-          "value": "피크 타임",
-          "description": "조회수가 급증하는 시간대를 파악해 업로드 시점을 계획합니다."
+          "label": "참여도 상승률",
+          "value": "+18%",
+          "description": "AI 할 일 목록을 적용한 샘플 TikTok 릴스가 기본 대비 18% 더 높은 반응을 기록했습니다."
         }
       ]
     },
@@ -736,68 +736,68 @@
   },
   "business": {
     "hero": {
-      "title": "기업을 위한 크리에이터 관리 대시보드",
-      "subtitle": "개인이 가입해 승인 요청을 보내면, 관리자는 모든 고객 통계를 한곳에서 확인하고 광고 전략을 조정할 수 있습니다.",
+      "title": "35명의 크리에이터를 관리하는 데모 비즈니스 허브",
+      "subtitle": "샘플 관리자 계정(manager@test.com / password123)으로 로그인하면 35명의 크리에이터 승인, 업무, 캠페인을 실제처럼 점검할 수 있습니다.",
       "primary_cta": "기업 상담 예약",
       "secondary_cta": "기업 요금제 보기",
-      "visual_title": "승인 대기 현황",
-      "visual_caption": "기업 관리자가 승인 요청, 채널 지표, 광고 성과를 함께 확인하는 화면 예시입니다.",
-      "visual_alt": "기업용 대시보드에 승인 상태와 채널 지표가 표시된 모습"
+      "visual_title": "샘플 승인 대기열",
+      "visual_caption": "우선순위, 플랫폼, 광고 상태별로 묶인 35명의 관리 대상 크리에이터",
+      "visual_alt": "승인과 지표를 보여주는 비즈니스용 샘플 대시보드"
     },
     "benefits": {
-      "title": "기업 플랜으로 얻을 수 있는 장점",
-      "description": "고객이 보내는 데이터를 안전하게 승인하고, 팀이 공동으로 콘텐츠와 광고 성과를 관리할 수 있습니다.",
+      "title": "비즈니스 샘플 워크스페이스에서 체험할 수 있는 것들",
+      "description": "35명의 크리에이터 명단이 미리 채워져 있어 승인, 리포트, 협업 흐름을 그대로 따라 할 수 있습니다.",
       "items": [
         {
-          "tag": "APPROVAL",
-          "title": "승인 기반 고객 연결",
-          "description": "고객이 개인 계정으로 가입해 승인 요청을 보내면 바로 통계를 열람할 수 있습니다."
+          "tag": "CREATORS",
+          "title": "35명의 관리 크리에이터",
+          "description": "뷰티, 교육, 게임, 라이프스타일, 브이로그 카테고리 프로필을 즉시 살펴보세요."
         },
         {
-          "tag": "OVERVIEW",
-          "title": "크리에이터 현황 정리",
-          "description": "관리 중인 크리에이터의 팔로워, 게시물, 반응, 시간대별 조회수를 한 화면에 모읍니다."
+          "tag": "APPROVALS",
+          "title": "완결된 승인 히스토리",
+          "description": "대기, 승인, 회수 요청이 실제 업무와 동일한 흐름으로 기록되어 있습니다."
         },
         {
-          "tag": "ADS",
-          "title": "AI 광고 관리",
-          "description": "Meta Ads API와 연동해 캠페인 성과를 확인하고 AI가 제안하는 조치를 검토합니다."
+          "tag": "OPERATIONS",
+          "title": "매니저 업무 보드",
+          "description": "계정 건전성, 캠페인 노트, 인수인계 태스크가 어떤 방식으로 묶이는지 확인하세요."
         }
       ]
     },
     "plans": {
       "label": "기업 요금제",
       "title": "팀 규모에 맞는 두 가지 옵션",
-      "description": "7일 무료 체험 이후 월 단위로 결제하며, 좌석 수에 따라 선택할 수 있습니다.",
+      "description": "샘플 워크스페이스는 Business 100 구성을 사용해 중형 팀의 운영 방식을 보여줍니다. 실제 고객 수에 맞춰 적합한 플랜을 선택하세요.",
       "items": [
         {
           "name": "비즈니스 100",
-          "description": "최대 100명의 고객 통계를 관리",
-          "price": "₩99,000",
+          "description": "최대 100명의 크리에이터를 체계적으로 관리",
+          "price": "KRW 119,000",
           "cycle": "월 정기 결제",
           "features": [
-            "개인 고객 승인 관리",
-            "YouTube·Instagram·TikTok·Facebook·Threads 지표 열람",
-            "메타 광고 캠페인 요약과 AI 추천",
-            "공유 가능한 대시보드와 리포트"
+            "샘플 허브와 동일한 고객 승인 워크플로",
+            "YouTube·Instagram·TikTok·Facebook·Threads 분석과 비교",
+            "Meta Ads 성과 요약과 AI 최적화 제안",
+            "공유 가능한 대시보드, 리포트, 협업 노트"
           ],
-          "cta": "7일 체험 신청",
+          "cta": "7일 체험 시작",
           "cta_link": "/signup?role=manager",
           "highlighted": true,
           "badge": "기본형"
         },
         {
           "name": "비즈니스 1000",
-          "description": "최대 1,000명의 고객과 팀 운영 자동화",
-          "price": "₩499,000",
+          "description": "대규모 팀을 위한 자동화와 권한 관리",
+          "price": "KRW 599,000",
           "cycle": "월 정기 결제",
           "features": [
-            "확장 좌석과 고급 권한",
-            "AI가 고객 활동을 요약해 관리자에게 보고",
-            "AI 기반 CS 답변 초안 제공",
-            "전담 지원과 교육"
+            "확장된 좌석과 세분화된 권한",
+            "매니저용 고객 활동 요약과 알림 자동화",
+            "AI 고객 응대 답변 초안과 후속 조치 추천",
+            "우선 지원과 온보딩 세션"
           ],
-          "cta": "영업팀과 상담",
+          "cta": "영업팀 문의",
           "cta_link": "/support",
           "highlighted": false
         }
@@ -825,35 +825,35 @@
       }
     },
     "workflow": {
-      "title": "고객 데이터를 연결하는 과정",
-      "description": "고객 초대부터 승인, 자동화된 리포트 공유까지의 절차를 세부 단계로 나누어 운영팀이 놓치기 쉬운 포인트를 짚어 줍니다.",
+      "title": "샘플 비즈니스 허브 사용 순서",
+      "description": "미리 채워진 승인과 태스크를 따라 하면서 실제 팀 운영 과정을 체험하세요.",
       "steps": [
         {
           "label": "Phase 1",
-          "title": "고객 초대",
-          "detail": "관리자는 고객별 초대 링크를 생성해 이메일이나 메신저로 전달하고, 고객이 가입을 완료하면 연결 가능한 채널 목록과 필요한 권한을 친절하게 안내합니다."
+          "title": "데모 계정으로 로그인",
+          "detail": "manager@test.com / password123 계정으로 접속하면 35명의 크리에이터가 이미 연결되어 있습니다."
         },
         {
           "label": "Phase 2",
-          "title": "승인 및 검토",
-          "detail": "고객이 채널 권한을 부여하면 승인 대기열에서 계정 정보를 확인하고, 자동으로 수집된 지표를 검토한 뒤 한 번의 클릭으로 승인해 기업 대시보드에 반영합니다."
+          "title": "승인과 성과 점검",
+          "detail": "대기 중인 요청과 채널 지표, 캠페인 노트를 살펴보며 흐름을 이해하세요."
         },
         {
           "label": "Phase 3",
-          "title": "보고와 대응",
-          "detail": "연결이 완료된 고객 데이터는 AI 요약과 함께 주간 보고서로 정리되며, 필요한 경우 전담 지원팀과 협업하여 즉시 액션 플랜을 수립하고 팀 커뮤니케이션 채널로 공유합니다."
+          "title": "팀과 공유하고 적용",
+          "detail": "샘플 리포트와 알림을 확인한 뒤 실제 고객을 초대해 동일한 자동화를 적용하세요."
         }
       ]
     },
     "cta": {
-      "title": "기업 전용 7일 체험을 신청하세요",
-      "description": "체험 기간 동안 최대 5명의 고객을 연결해 모든 기능을 확인할 수 있습니다.",
+      "title": "샘플 크리에이터로 비즈니스 허브를 시험해 보세요",
+      "description": "7일 체험 동안 최대 5명의 실제 고객을 연결하고, 샘플 데이터는 계속 참고할 수 있습니다.",
       "primary": "체험 시작",
-      "secondary": "요금제 비교"
+      "secondary": "플랜 비교"
     },
     "pricing_overview": {
       "title": "기업 요금 안내",
-      "description": "월 단위 요금과 포함 기능을 한눈에 정리했습니다.",
+      "description": "관리할 크리에이터 수에 맞춰 비즈니스 플랜을 선택하세요.",
       "columns": [
         "플랜",
         "월간 요금",
@@ -863,40 +863,40 @@
       "rows": [
         {
           "label": "비즈니스 100",
-          "monthly": "₩99,000",
-          "annual": "₩1,069,000 (10% 할인)",
-          "note": "최대 100명 고객 데이터, 메타 광고 AI 추천 포함"
+          "monthly": "KRW 119,000",
+          "annual": "KRW 1,309,000 (10% 할인)",
+          "note": "최대 100명 관리, Meta Ads AI 추천 포함"
         },
         {
           "label": "비즈니스 1000",
-          "monthly": "₩499,000",
-          "annual": "₩5,389,000 (10% 할인)",
-          "note": "AI 고객 관리 자동화와 CS 초안 지원"
+          "monthly": "KRW 599,000",
+          "annual": "KRW 6,589,000 (10% 할인)",
+          "note": "AI 고객 관리 자동화와 CS 초안 제공"
         }
       ],
-      "footnote": "모든 금액은 부가세 별도이며, 체험 종료 후 월간 결제로 전환됩니다."
+      "footnote": "가격은 부가세 포함. 샘플 비즈니스 허브는 Business 100 구성으로 제공됩니다."
     },
     "metrics": {
-      "title": "파일럿 운영 결과",
-      "description": "2024년 9월 파일럿 팀 3곳에서 확인한 사용 패턴입니다.",
-      "visual_alt": "기업 대시보드의 승인 현황과 광고 카드",
-      "source_label": "파일럿",
-      "source_caption": "Creator Control Center 기업 파일럿 (2024.09)",
+      "title": "샘플 비즈니스 허브 핵심 지표",
+      "description": "데모 비즈니스 계정에서 불러온 주요 수치를 실제 운영처럼 확인할 수 있습니다.",
+      "visual_alt": "승인과 광고 카드를 보여주는 비즈니스 샘플 대시보드",
+      "source_label": "샘플",
+      "source_caption": "샘플 비즈니스 워크스페이스 (manager@test.com)",
       "items": [
         {
-          "label": "평균 승인 고객",
-          "value": "78명",
-          "description": "비즈니스 100 플랜에서 승인 후 관리한 고객 수의 평균입니다."
+          "label": "연결된 크리에이터",
+          "value": "35",
+          "description": "데모 허브에서 승인된 모든 크리에이터를 즉시 검토할 수 있습니다."
         },
         {
-          "label": "광고 조정 요청",
-          "value": "월 12건",
-          "description": "AI 추천을 기반으로 한 광고 예산 조정 요청 건수입니다."
+          "label": "크리에이터별 평균 채널",
+          "value": "3.1개",
+          "description": "각 크리에이터가 1~5개 채널을 연결하도록 구성된 현실적인 포트폴리오입니다."
         },
         {
-          "label": "CS 자동화 활용률",
-          "value": "82%",
-          "description": "비즈니스 1000 파일럿 사용자가 AI CS 초안을 주 1회 이상 사용한 비율입니다."
+          "label": "승인 처리 시간",
+          "value": "12시간",
+          "description": "샘플 워크플로 기준으로 요청이 처리되는 평균 소요 시간입니다."
         }
       ]
     },

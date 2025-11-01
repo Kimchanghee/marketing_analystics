@@ -453,50 +453,50 @@
   },
   "personal": {
     "hero": {
-      "title": "個人クリエイター分析をシンプルに",
-      "subtitle": "フリープランはYouTubeとInstagram各1アカウントに対応。必要になったらTikTok・Facebook・Threadsを追加できます。",
+      "title": "5つのチャネルが接続された個人デモをすぐに体験",
+      "subtitle": "サンプル個人アカウント（creator@test.com / password123）でログインすれば、YouTube・Instagram・TikTok・Facebook・Threadsの指標を自分のチャネルを追加する前に確認できます。",
       "primary_cta": "無料で始める",
       "secondary_cta": "料金を見る",
-      "visual_title": "今日の主要指標",
-      "visual_caption": "フォロワー・コメント・高評価/低評価・時間帯別視聴をまとめたダッシュボード例です。",
-      "visual_alt": "個人クリエイター向け指標が表示されたダッシュボード"
+      "visual_title": "サンプルクリエイターのスナップショット",
+      "visual_caption": "デモデータから更新されるフォロワー・エンゲージメント・時間帯別視聴回数",
+      "visual_alt": "5つのチャネルを接続した個人向けサンプルダッシュボード"
     },
     "benefits": {
-      "title": "必要なデータを1か所で",
-      "description": "プラットフォームごとのフォロワー、投稿、コメント反応、高評価・低評価、時間帯別視聴を自動で取り込みます。",
+      "title": "個人サンプルワークスペースで確認できる内容",
+      "description": "実データに近い指標をあらかじめ用意し、クリエイターの日常業務がどのように整理されるかを体験できます。",
       "items": [
         {
           "tag": "CHANNELS",
-          "title": "チャネル統合",
-          "description": "YouTubeとInstagramは無料で利用し、プラスにアップグレードすればTikTok・Facebook・Threadsも比較可能。"
+          "title": "5つの接続チャネル",
+          "description": "デモログインではYouTube、Instagram、TikTok、Facebook、Threadsをまとめて追跡し、投稿トレンドも比較できます。"
         },
         {
-          "tag": "REACTIONS",
-          "title": "反応分析",
-          "description": "高評価・低評価、コメント数、返信速度から反応の変化を把握。"
+          "tag": "ROUTINES",
+          "title": "週間レポートのチェックリスト",
+          "description": "フォロワー推移・反応・視聴時間インサイトを数分で共有資料にまとめる手順を確認できます。"
         },
         {
-          "tag": "ADS",
-          "title": "AI広告提案",
-          "description": "Meta Ads APIのデータを基に拡大・縮小すべきキャンペーンの示唆を確認。"
+          "tag": "OFFERS",
+          "title": "スポンサー提案の準備",
+          "description": "視聴者セグメント別に保存された提案やアップセル、証言がどのように連携するかをプレビューできます。"
         }
       ]
     },
     "plans": {
       "label": "個人プラン",
       "title": "必要な範囲で選択",
-      "description": "まず無料で始め、追加チャネルや自動化が必要になったらアップグレードできます。",
+      "description": "サンプルワークスペースはPersonal Plusで構成されており、自動化の全体像を試せます。自分のチャネルを接続するときに最適なプランを選びましょう。",
       "items": [
         {
           "name": "個人フリー",
-          "description": "YouTubeとInstagramの基本指標",
-          "price": "₩0",
+          "description": "2つの主要チャネルをすぐに把握",
+          "price": "KRW 0",
           "cycle": "ずっと無料",
           "features": [
-            "YouTube 1件・Instagram 1件を連携",
-            "投稿・コメント・高評価/低評価・時間帯別視聴のサマリー",
-            "Meta Adsキャンペーンの閲覧",
-            "週次メールレポート"
+            "YouTube 1件とInstagram 1件を接続",
+            "投稿・コメント・高評価・低評価・時間帯別視聴の自動サマリー",
+            "週間メールレポートのテンプレート",
+            "サンプル個人ログインでもそのまま利用可能"
           ],
           "cta": "無料で開始",
           "cta_link": "/signup",
@@ -504,16 +504,16 @@
         },
         {
           "name": "個人プラス",
-          "description": "追加チャネルと進化中のAI提案を利用",
-          "price": "₩9,900",
+          "description": "5チャネルとAI提案を一括管理",
+          "price": "KRW 29,900",
           "cycle": "月額",
           "features": [
-            "YouTube・Instagram・TikTok・Facebook・Threadsの分析",
-            "投稿とコメントの比較レポート",
-            "AIによるMeta広告提案（ロードマップ更新を含む）",
-            "CSV/PDFエクスポートとチャットサポート"
+            "YouTube・Instagram・TikTok・Facebook・Threadsを分析",
+            "デモワークスペースが利用するプランで5チャネルを管理",
+            "AIによるMeta Ads提案とオーディエンスの機会アラート",
+            "CSV・PDFエクスポートと優先チャットサポート"
           ],
-          "cta": "プラスにアップグレード",
+          "cta": "Plusにアップグレード",
           "cta_link": "/signup",
           "highlighted": true,
           "badge": "おすすめ"
@@ -542,35 +542,35 @@
       }
     },
     "workflow": {
-      "title": "3ステップのオンボーディング",
-      "description": "アカウント連携、指標確認、レポート共有まで数分で完了します。",
+      "title": "サンプルアカウントの使い方",
+      "description": "接続済みの5チャネルを確認し、自分のデータを段階的に追加しましょう。",
       "steps": [
         {
           "label": "Step 1",
-          "title": "基本チャネルを連携",
-          "detail": "フリープランに合わせてYouTubeとInstagram各1アカウントを認証。"
+          "title": "デモ認証情報でログイン",
+          "detail": "creator@test.com / password123でログインすると、5チャネルが接続されたワークスペースが開きます。"
         },
         {
           "label": "Step 2",
-          "title": "追加プラットフォームを選択",
-          "detail": "必要になったらプラスへアップグレードしTikTok・Facebook・Threadsを追加。"
+          "title": "自動化チェックリストを確認",
+          "detail": "用意されたタスクをたどり、レポート・エクスポート・リマインダーの動きを体験します。"
         },
         {
           "label": "Step 3",
-          "title": "広告とレポートを確認",
-          "detail": "Meta広告の結果とAI提案を確認しレポートを共有。"
+          "title": "自分のチャネルを接続",
+          "detail": "準備ができたら自分のアカウントを追加し、同じ自動化を継続しましょう。"
         }
       ]
     },
     "cta": {
-      "title": "個人フリープランで今すぐ開始",
-      "description": "必要に応じていつでもプラスにアップグレードし、追加チャネルと進化するAI支援を利用できます。",
+      "title": "ライブデモデータで個人ワークスペースを体験",
+      "description": "サンプルアカウントを使い続けても、自分のチャネルを接続しても、いつでもPlusへアップグレードできます。",
       "primary": "アカウント作成",
-      "secondary": "お問い合わせ"
+      "secondary": "サンプルガイドを見る"
     },
     "pricing_overview": {
       "title": "個人料金",
-      "description": "月額課金と年額割引の概要です。",
+      "description": "サンプルワークスペースはPersonal Plusを基準に構成されています。",
       "columns": [
         "プラン",
         "月額",
@@ -579,41 +579,41 @@
       ],
       "rows": [
         {
-          "label": "個人プラス",
-          "monthly": "₩9,900",
-          "annual": "₩108,900 (10%割引)",
-          "note": "TikTok・Facebook・Threads連携とAI広告提案付き"
+          "label": "Personal Plus",
+          "monthly": "KRW 29,900",
+          "annual": "KRW 329,000 (10%割引)",
+          "note": "TikTok・Facebook・Threads・AI広告提案を含む"
         },
         {
-          "label": "個人フリー",
-          "monthly": "₩0",
-          "annual": "₩0",
-          "note": "YouTube・Instagramの主要指標を無料提供"
+          "label": "Personal Free",
+          "monthly": "KRW 0",
+          "annual": "KRW 0",
+          "note": "YouTubeとInstagramの分析は無料のまま"
         }
       ],
-      "footnote": "年額は税込み。提供機能は契約期間中に順次アップデートされる場合があります。"
+      "footnote": "価格はKRW表記です。サンプルアカウントはPersonal Plusで提供されます。"
     },
     "metrics": {
-      "title": "ダッシュボードで確認できる項目",
-      "description": "ダッシュボードで得られる詳細度を示すサンプルカードです。",
-      "visual_alt": "個人ダッシュボードのカード例",
+      "title": "サンプル個人アカウントで確認できるKPI",
+      "description": "デモ個人アカウントのデータが読み込まれ、自動化のレベルを導入前に評価できます。",
+      "visual_alt": "個人向けサンプルダッシュボードのカード",
       "source_label": "サンプル",
-      "source_caption": "個人ワークスペースの例示データ",
+      "source_caption": "サンプル個人ワークスペース (creator@test.com)",
       "items": [
         {
-          "label": "週次フォロワー推移",
-          "value": "増減比較",
-          "description": "YouTubeとInstagramの増減を並べて確認。"
+          "label": "接続チャネル数",
+          "value": "5",
+          "description": "デモログインに接続された5チャネルのデータがリアルタイムで同期されます。"
         },
         {
-          "label": "反応インサイト",
-          "value": "高評価・低評価",
-          "description": "投稿ごとのポジティブ/ネガティブ反応を簡単にチェック。"
+          "label": "削減できる手作業時間",
+          "value": "週3時間",
+          "description": "週間レポートの自動化によってスプレッドシート作業が削減されます。"
         },
         {
-          "label": "時間帯別視聴",
-          "value": "ピーク時間",
-          "description": "視聴が伸びるタイミングを把握し次の投稿計画に活用。"
+          "label": "エンゲージメント向上率",
+          "value": "+18%",
+          "description": "AIタスクリストを適用したサンプルTikTokリールが基準値より18%高い反応を記録しました。"
         }
       ]
     },
@@ -708,68 +708,68 @@
   },
   "business": {
     "hero": {
-      "title": "企業向けクリエイター管理ダッシュボード",
-      "subtitle": "顧客は個人アカウントで登録し承認依頼を送信、管理者はすべての指標を1つのハブで確認できます。",
+      "title": "35名のクリエイターを管理するビジネスデモハブ",
+      "subtitle": "サンプル管理者アカウント（manager@test.com / password123）でログインすると、35名のクリエイターの承認・タスク・キャンペーンを実際のように確認できます。",
       "primary_cta": "デモを予約",
       "secondary_cta": "料金を見る",
-      "visual_title": "承認待ち状況",
-      "visual_caption": "承認キュー・チャネル指標・広告成果を同時に確認できる企業向け画面例です。",
-      "visual_alt": "承認状態と指標が表示された企業ダッシュボード"
+      "visual_title": "サンプル承認キュー",
+      "visual_caption": "優先度・チャネル構成・広告ステータスで分類された35名の管理対象クリエイター",
+      "visual_alt": "承認と指標を表示するビジネス向けサンプルダッシュボード"
     },
     "benefits": {
-      "title": "企業プランのメリット",
-      "description": "顧客データを安全に承認し、管理クリエイター全体の状況と広告運用を把握できます。",
+      "title": "ビジネスサンプルワークスペースで体験できること",
+      "description": "35名のクリエイター名簿がプリセットされており、承認・レポート・コラボレーションの流れをそのまま試せます。",
       "items": [
         {
-          "tag": "APPROVAL",
-          "title": "承認ベースの接続",
-          "description": "顧客が承認依頼を送ると、管理者は統計を閲覧できます。"
+          "tag": "CREATORS",
+          "title": "35名の管理クリエイター",
+          "description": "ビューティー、教育、ゲーム、ライフスタイル、Vlogカテゴリのプロファイルをすぐに確認できます。"
         },
         {
-          "tag": "OVERVIEW",
-          "title": "ポートフォリオ管理",
-          "description": "フォロワー、投稿、反応、時間帯別視聴をまとめて把握できます。"
+          "tag": "APPROVALS",
+          "title": "承認履歴を完全再現",
+          "description": "保留・承認済み・取り消しリクエストが実務と同じ状態で記録されています。"
         },
         {
-          "tag": "ADS",
-          "title": "AI広告運用",
-          "description": "Meta Ads APIと連携し成果とAIが提案するアクションを確認。"
+          "tag": "OPERATIONS",
+          "title": "マネージャータスクボード",
+          "description": "アカウント健全性、キャンペーンメモ、引き継ぎタスクがどのように連携するかを確認できます。"
         }
       ]
     },
     "plans": {
       "label": "企業プラン",
       "title": "規模に合わせた2つの選択肢",
-      "description": "7日間のトライアル後、管理対象人数に応じて月額プランを選択します。",
+      "description": "サンプルワークスペースはBusiness 100構成で、中規模チームの運用方法を示します。管理するクライアント数に合わせて最適なプランを選びましょう。",
       "items": [
         {
           "name": "ビジネス100",
-          "description": "最大100名の顧客を管理",
-          "price": "₩99,000",
+          "description": "最大100クライアントを自動化フローで管理",
+          "price": "KRW 119,000",
           "cycle": "月額",
           "features": [
-            "個人顧客の承認管理",
-            "YouTube・Instagram・TikTok・Facebook・Threadsの指標閲覧",
-            "Meta広告のサマリーとAI提案",
-            "共有可能なダッシュボードとレポート"
+            "サンプルハブと同じクライアント承認ワークフロー",
+            "YouTube・Instagram・TikTok・Facebook・Threadsの分析と比較",
+            "Meta Adsの成果サマリーとAI最適化提案",
+            "共有ダッシュボード、レポート、コラボノート"
           ],
-          "cta": "7日トライアル開始",
+          "cta": "7日間トライアルを開始",
           "cta_link": "/signup?role=manager",
           "highlighted": true,
           "badge": "標準"
         },
         {
           "name": "ビジネス1000",
-          "description": "最大1,000名の顧客と自動化運用",
-          "price": "₩499,000",
+          "description": "1,000クライアントまで拡張する高度な自動化",
+          "price": "KRW 599,000",
           "cycle": "月額",
           "features": [
-            "拡張席数と高度な権限",
-            "AIによる顧客活動サマリー",
-            "AIベースのCS応答ドラフト",
-            "優先サポートとトレーニング"
+            "拡張ユーザーと詳細な権限管理",
+            "マネージャー向けクライアント活動サマリー",
+            "AIによるCS返信ドラフトとフォローアップ提案",
+            "優先サポートとオンボーディングセッション"
           ],
-          "cta": "営業に連絡",
+          "cta": "営業に問い合わせ",
           "cta_link": "/support",
           "highlighted": false
         }
@@ -797,35 +797,35 @@
       }
     },
     "workflow": {
-      "title": "顧客データ連携の流れ",
-      "description": "招待・承認・共有までの手順を紹介します。",
+      "title": "サンプルハブの進め方",
+      "description": "事前に用意された承認とタスクを辿り、ビジネスプロセスをエンドツーエンドで体験しましょう。",
       "steps": [
         {
           "label": "Phase 1",
-          "title": "顧客を招待",
-          "detail": "個人登録リンクを送付し、主要チャネルを接続してもらいます。"
+          "title": "デモ認証情報でログイン",
+          "detail": "manager@test.com / password123でアクセスすると、35名のクリエイターがすでに接続されています。"
         },
         {
           "label": "Phase 2",
-          "title": "承認と確認",
-          "detail": "承認後、企業ダッシュボードで指標を閲覧できます。"
+          "title": "承認と成果を確認",
+          "detail": "保留中のリクエスト、チャネル指標、キャンペーンメモをチェックして流れを理解します。"
         },
         {
           "label": "Phase 3",
-          "title": "レポートと対応",
-          "detail": "AIが提案する広告施策と活動サマリーをチームと共有します。"
+          "title": "チームで共有し適用",
+          "detail": "サンプルのレポートとアラートを試し、その後リアルなクライアントを招待して同じ自動化を適用できます。"
         }
       ]
     },
     "cta": {
-      "title": "企業向け7日トライアルを開始",
-      "description": "トライアル期間中に最大5名の顧客を接続して機能を体験できます。",
-      "primary": "トライアル開始",
+      "title": "ライブサンプルのクリエイターでビジネスハブを試す",
+      "description": "7日間のトライアル中は最大5名の実クライアントを接続でき、サンプルデータはいつでも参照できます。",
+      "primary": "トライアルを開始",
       "secondary": "プランを比較"
     },
     "pricing_overview": {
       "title": "企業料金",
-      "description": "月額コストと含まれる機能を一覧で確認できます。",
+      "description": "管理するクリエイター数に合わせてビジネスプランを選択してください。",
       "columns": [
         "プラン",
         "月額",
@@ -834,41 +834,41 @@
       ],
       "rows": [
         {
-          "label": "ビジネス100",
-          "monthly": "₩99,000",
-          "annual": "₩1,069,000 (10%割引)",
-          "note": "Meta広告AI提案付きで最大100名を管理"
+          "label": "Business 100",
+          "monthly": "KRW 119,000",
+          "annual": "KRW 1,309,000 (10%割引)",
+          "note": "最大100クライアント、Meta Ads AI推奨を含む"
         },
         {
-          "label": "ビジネス1000",
-          "monthly": "₩499,000",
-          "annual": "₩5,389,000 (10%割引)",
-          "note": "AI顧客管理自動化とCSドラフトが含まれる"
+          "label": "Business 1000",
+          "monthly": "KRW 599,000",
+          "annual": "KRW 6,589,000 (10%割引)",
+          "note": "AIによる顧客管理自動化とCSドラフトを提供"
         }
       ],
-      "footnote": "価格は税別。トライアル終了後は月額課金に移行します。"
+      "footnote": "価格はKRW表記です。サンプルビジネスハブはBusiness 100構成で提供しています。"
     },
     "metrics": {
-      "title": "パイロット結果",
-      "description": "2024年9月に実施した3チームの利用傾向です。",
-      "visual_alt": "承認状況と広告カードが並ぶ企業ダッシュボード",
-      "source_label": "パイロット",
-      "source_caption": "Creator Control Center 企業パイロット (2024年9月)",
+      "title": "サンプルビジネスハブの主要指標",
+      "description": "デモビジネスアカウントの数値が読み込まれ、実際の運用前にパフォーマンスを確認できます。",
+      "visual_alt": "承認と広告カードを表示するビジネスサンプルダッシュボード",
+      "source_label": "サンプル",
+      "source_caption": "サンプルビジネスワークスペース (manager@test.com)",
       "items": [
         {
-          "label": "平均承認顧客数",
-          "value": "78名",
-          "description": "ビジネス100プランで管理した平均顧客数。"
+          "label": "接続クリエイター数",
+          "value": "35",
+          "description": "デモハブで承認されたすべてのクリエイターを即座に確認できます。"
         },
         {
-          "label": "広告調整リクエスト",
-          "value": "月12件",
-          "description": "AI提案を基にした広告予算調整の件数。"
+          "label": "クリエイターあたりの平均チャネル",
+          "value": "3.1",
+          "description": "各クリエイターが1〜5チャネルを接続する現実的なポートフォリオです。"
         },
         {
-          "label": "CS自動化利用率",
-          "value": "82%",
-          "description": "ビジネス1000利用企業が週1回以上AI CSドラフトを使用した割合。"
+          "label": "承認処理時間",
+          "value": "12時間",
+          "description": "サンプルワークフローに基づく平均的な処理時間です。"
         }
       ]
     },

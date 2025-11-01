@@ -453,50 +453,50 @@
   },
   "personal": {
     "hero": {
-      "title": "Personal analytics without guesswork",
-      "subtitle": "Free tier covers one YouTube and one Instagram account. Upgrade later to analyze TikTok, Facebook, and Threads together.",
+      "title": "Explore a five-channel creator workspace instantly",
+      "subtitle": "Sign in with the sample personal account (creator@test.com / password123) to review YouTube, Instagram, TikTok, Facebook, and Threads analytics before you connect your own channels.",
       "primary_cta": "Start for free",
       "secondary_cta": "View personal pricing",
-      "visual_title": "Key metrics today",
-      "visual_caption": "Example dashboard with follower, comment, like, dislike, and hourly view summaries.",
-      "visual_alt": "Personal dashboard showing follower and engagement metrics"
+      "visual_title": "Sample creator snapshot",
+      "visual_caption": "Five linked channels with followers, engagement, and hourly views from the demo data.",
+      "visual_alt": "Personal sample dashboard with five connected channels"
     },
     "benefits": {
-      "title": "Track the essentials in one place",
-      "description": "Followers, posts, comment reactions, likes, dislikes, and hourly views stay synced from each channel.",
+      "title": "What the personal sample workspace shows you",
+      "description": "We preloaded realistic metrics so you can see how the platform organizes everyday creator work.",
       "items": [
         {
           "tag": "CHANNELS",
-          "title": "Channel coverage",
-          "description": "Keep YouTube and Instagram for free, and expand to TikTok, Facebook, and Threads with Personal Plus."
+          "title": "Five connected channels",
+          "description": "Track YouTube, Instagram, TikTok, Facebook, and Threads together with post-level trends from the demo login."
         },
         {
-          "tag": "REACTIONS",
-          "title": "Reaction analysis",
-          "description": "Measure likes, dislikes, comment volume, and response speed to see what resonates."
+          "tag": "ROUTINES",
+          "title": "Weekly recap checklist",
+          "description": "Use the prepared tasks to turn follower changes, reactions, and watch-time insights into a shareable deck in minutes."
         },
         {
-          "tag": "ADS",
-          "title": "AI ad tips",
-          "description": "Use Meta Ads API data to view campaign results and receive suggestions on next steps."
+          "tag": "OFFERS",
+          "title": "Sponsor-ready insights",
+          "description": "Preview how pitches, upsell ideas, and testimonials are linked to each audience segment."
         }
       ]
     },
     "plans": {
       "label": "Personal plans",
       "title": "Choose the coverage you need",
-      "description": "Start free and upgrade whenever you want more channels or ad automation.",
+      "description": "The sample workspace runs on Personal Plus so you can test the full automation. Choose the plan that fits once you connect your own accounts.",
       "items": [
         {
           "name": "Personal Free",
-          "description": "Core insights for YouTube and Instagram",
-          "price": "$0",
+          "description": "Quick insights for two starter channels",
+          "price": "KRW 0",
           "cycle": "Always free",
           "features": [
             "Connect one YouTube and one Instagram account",
-            "Summaries for posts, comments, likes, dislikes, and hourly views",
-            "Read-only Meta Ads campaign overview",
-            "Weekly email recap"
+            "Automatic summaries for followers, comments, likes, dislikes, and hourly views",
+            "Weekly email recap template",
+            "Works with the sample personal login"
           ],
           "cta": "Start free",
           "cta_link": "/signup",
@@ -504,14 +504,14 @@
         },
         {
           "name": "Personal Plus",
-          "description": "Expanded channels with evolving AI recommendations",
-          "price": "₩9,900",
+          "description": "Manage five channels with AI guidance",
+          "price": "KRW 29,900",
           "cycle": "Billed monthly",
           "features": [
             "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
-            "Post and comment comparison reports",
-            "AI-powered Meta Ads suggestions (roadmap updates included)",
-            "CSV/PDF export and chat support"
+            "Demo workspace already uses this tier to manage five channels",
+            "AI powered Meta Ads suggestions and audience opportunity alerts",
+            "CSV and PDF export plus priority chat support"
           ],
           "cta": "Upgrade to Plus",
           "cta_link": "/signup",
@@ -542,35 +542,35 @@
       }
     },
     "workflow": {
-      "title": "Three-step onboarding",
-      "description": "Connect accounts, confirm metrics, and share a report in minutes.",
+      "title": "How to use the sample account",
+      "description": "Explore the five connected channels and then bring in your own data at your pace.",
       "steps": [
         {
           "label": "Step 1",
-          "title": "Link core channels",
-          "detail": "Authenticate one YouTube and one Instagram account for the free plan."
+          "title": "Log in with demo credentials",
+          "detail": "Use creator@test.com / password123 to open the workspace with five channels already linked."
         },
         {
           "label": "Step 2",
-          "title": "Add optional platforms",
-          "detail": "Upgrade to Plus to include TikTok, Facebook, and Threads whenever you are ready."
+          "title": "Follow the automation checklist",
+          "detail": "Walk through the prepared tasks to see how reports, exports, and reminders operate."
         },
         {
           "label": "Step 3",
-          "title": "Review ads and share",
-          "detail": "Check Meta Ads insights, apply AI tips, and send the recap."
+          "title": "Connect your channels",
+          "detail": "When you are ready, add your accounts and keep the same automations running."
         }
       ]
     },
     "cta": {
-      "title": "Start with the free personal plan",
-      "description": "Upgrade to Plus anytime for additional channels and evolving AI support.",
+      "title": "Test the personal workspace with live demo data",
+      "description": "Stay on the demo account or connect your own channels. You can upgrade to Plus at any time.",
       "primary": "Create account",
-      "secondary": "Contact support"
+      "secondary": "View sample guide"
     },
     "pricing_overview": {
       "title": "Personal pricing",
-      "description": "Monthly billing with an optional annual discount.",
+      "description": "Personal Plus powers the sample workspace so you can experience every automation.",
       "columns": [
         "Plan",
         "Monthly",
@@ -580,40 +580,40 @@
       "rows": [
         {
           "label": "Personal Plus",
-          "monthly": "₩9,900",
-          "annual": "₩108,900 (save 10%)",
+          "monthly": "KRW 29,900",
+          "annual": "KRW 329,000 (save 10%)",
           "note": "Includes TikTok, Facebook, Threads, and AI ad suggestions"
         },
         {
           "label": "Personal Free",
-          "monthly": "₩0",
-          "annual": "₩0",
+          "monthly": "KRW 0",
+          "annual": "KRW 0",
           "note": "YouTube and Instagram analytics remain free"
         }
       ],
-      "footnote": "Annual billing includes VAT. Feature roadmap items may evolve during the subscription."
+      "footnote": "Prices are listed in KRW. The sample personal login runs on Personal Plus."
     },
     "metrics": {
-      "title": "What you can monitor",
-      "description": "Example insight tiles showing the level of detail available inside the dashboard.",
-      "visual_alt": "Cards from the personal dashboard",
-      "source_label": "Example",
-      "source_caption": "Illustrative data from the personal workspace",
+      "title": "Sample KPIs you can explore",
+      "description": "All metrics load from the demo personal account so you can evaluate automation before importing your own data.",
+      "visual_alt": "Cards from the personal sample dashboard",
+      "source_label": "Sample",
+      "source_caption": "Sample personal workspace (creator@test.com)",
       "items": [
         {
-          "label": "Weekly review time",
-          "value": "Follower change",
-          "description": "Compare week-over-week gains across YouTube and Instagram."
+          "label": "Channels connected",
+          "value": "5",
+          "description": "Every channel from the demo login streams data at once so you can test comparisons."
         },
         {
-          "label": "Reaction insights",
-          "value": "Likes & dislikes",
-          "description": "Spot content that drives more positive responses at a glance."
+          "label": "Manual hours saved",
+          "value": "3h/week",
+          "description": "Weekly recap automation shows the time you reclaim from spreadsheets."
         },
         {
-          "label": "Hourly views",
-          "value": "Peak hours",
-          "description": "Understand when views spike so you can schedule future uploads."
+          "label": "Engagement lift",
+          "value": "+18%",
+          "description": "Sample TikTok reels improved after applying the AI task list."
         }
       ]
     },
@@ -708,50 +708,50 @@
   },
   "business": {
     "hero": {
-      "title": "Business dashboard for creator management",
-      "subtitle": "Clients join with personal accounts, send approval requests, and managers view every metric in one hub.",
+      "title": "Manage 35 creators in the demo business hub",
+      "subtitle": "Log in with the sample manager account (manager@test.com / password123) to audit approvals, tasks, and campaigns across 35 creators already connected from the demo data.",
       "primary_cta": "Book demo",
       "secondary_cta": "View business pricing",
-      "visual_title": "Pending approvals",
-      "visual_caption": "Example business dashboard showing approval queue, channel stats, and ad performance.",
-      "visual_alt": "Business dashboard with approval states and metrics"
+      "visual_title": "Sample approval queue",
+      "visual_caption": "Thirty five managed creators grouped by priority, platform coverage, and ad status.",
+      "visual_alt": "Business sample dashboard showing managed creators and approvals"
     },
     "benefits": {
-      "title": "Why teams use the business plan",
-      "description": "Approve client data safely, monitor every managed creator, and align on ad strategy.",
+      "title": "What the business sample workspace highlights",
+      "description": "Use the preloaded roster of thirty five creators to practice approvals, reporting, and collaboration flows.",
       "items": [
         {
-          "tag": "APPROVAL",
-          "title": "Customer approval flow",
-          "description": "Clients sign up as personal users, request approval, and share their analytics securely."
+          "tag": "CREATORS",
+          "title": "Thirty five managed creators",
+          "description": "Beauty, education, gaming, lifestyle, and vlogger profiles are ready for you to explore."
         },
         {
-          "tag": "OVERVIEW",
-          "title": "Portfolio overview",
-          "description": "See follower, post, reaction, and hourly view metrics for all managed creators at a glance."
+          "tag": "APPROVALS",
+          "title": "Complete approval history",
+          "description": "Review pending, approved, and revoked requests exactly as your team would handle them."
         },
         {
-          "tag": "ADS",
-          "title": "AI ad management",
-          "description": "Connect Meta Ads to track performance and receive suggested optimizations from AI."
+          "tag": "OPERATIONS",
+          "title": "Manager task board",
+          "description": "Sample tasks show how account health, campaign notes, and handoffs come together."
         }
       ]
     },
     "plans": {
       "label": "Business plans",
       "title": "Two options by team size",
-      "description": "Start with a 7-day trial, then choose a monthly plan based on the number of managed creators.",
+      "description": "The sample workspace runs on Business 100 so you can see how mid sized teams operate. Choose the plan that matches your client volume.",
       "items": [
         {
           "name": "Business 100",
-          "description": "Manage up to 100 clients",
-          "price": "₩99,000",
+          "description": "Manage up to 100 clients with structured automation",
+          "price": "KRW 119,000",
           "cycle": "Billed monthly",
           "features": [
-            "Client approval workflow",
+            "Client approval workflow from the sample hub",
             "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
-            "Meta Ads summaries with AI suggestions",
-            "Shareable dashboards and reports"
+            "Meta Ads summaries with AI optimisation suggestions",
+            "Shareable dashboards, reports, and collaboration notes"
           ],
           "cta": "Start 7-day trial",
           "cta_link": "/signup?role=manager",
@@ -760,14 +760,14 @@
         },
         {
           "name": "Business 1000",
-          "description": "Scale to 1,000 clients with automation",
-          "price": "₩499,000",
+          "description": "Scale to 1,000 clients with deeper automation",
+          "price": "KRW 599,000",
           "cycle": "Billed monthly",
           "features": [
-            "Expanded seats and advanced permissions",
+            "Expanded seats and granular permissions",
             "AI summaries of client activity for managers",
-            "AI-generated CS reply drafts and nudges",
-            "Priority support and training"
+            "AI generated customer service reply drafts and nudges",
+            "Priority support and onboarding sessions"
           ],
           "cta": "Contact sales",
           "cta_link": "/support",
@@ -797,35 +797,35 @@
       }
     },
     "workflow": {
-      "title": "How client data connects",
-      "description": "Invite clients, approve requests, and share insights with your team.",
+      "title": "How to work through the sample hub",
+      "description": "Follow the preloaded approvals and tasks to experience the business process end to end.",
       "steps": [
         {
           "label": "Phase 1",
-          "title": "Invite clients",
-          "detail": "Send personal signup links so creators can connect their core channels."
+          "title": "Log in with demo credentials",
+          "detail": "Use manager@test.com / password123 to access the hub with thirty five creators already linked."
         },
         {
           "label": "Phase 2",
-          "title": "Approve and review",
-          "detail": "Approve requests to unlock analytics inside the business dashboard."
+          "title": "Review approvals and performance",
+          "detail": "Check pending requests, channel metrics, and campaign notes to understand the flow."
         },
         {
           "label": "Phase 3",
-          "title": "Report and act",
-          "detail": "Share AI ad recommendations and client activity summaries with your team."
+          "title": "Share and apply with your team",
+          "detail": "Test the sample reports and alerts, then invite real clients to keep the same automations."
         }
       ]
     },
     "cta": {
-      "title": "Start a 7-day business trial",
-      "description": "Connect up to five clients during the trial to experience every feature.",
+      "title": "Try the business workspace with live sample creators",
+      "description": "During the 7-day trial you can connect up to five real clients while keeping the sample data for reference.",
       "primary": "Start trial",
       "secondary": "Compare plans"
     },
     "pricing_overview": {
       "title": "Business pricing",
-      "description": "Monthly costs and included features at a glance.",
+      "description": "Select a business tier based on your managed creator volume.",
       "columns": [
         "Plan",
         "Monthly",
@@ -835,40 +835,40 @@
       "rows": [
         {
           "label": "Business 100",
-          "monthly": "₩99,000",
-          "annual": "₩1,069,000 (save 10%)",
+          "monthly": "KRW 119,000",
+          "annual": "KRW 1,309,000 (save 10%)",
           "note": "Up to 100 clients with Meta Ads AI recommendations"
         },
         {
           "label": "Business 1000",
-          "monthly": "₩499,000",
-          "annual": "₩5,389,000 (save 10%)",
+          "monthly": "KRW 599,000",
+          "annual": "KRW 6,589,000 (save 10%)",
           "note": "AI customer management automation and CS drafting"
         }
       ],
-      "footnote": "Prices exclude VAT. After the trial, billing continues monthly."
+      "footnote": "Prices are listed in KRW. The sample business hub runs on Business 100."
     },
     "metrics": {
-      "title": "Pilot program results",
-      "description": "Usage patterns observed across three pilot teams in September 2024.",
-      "visual_alt": "Business dashboard with approval and ad cards",
-      "source_label": "Pilot",
-      "source_caption": "Creator Control Center business pilot (Sep 2024)",
+      "title": "Sample business workspace metrics",
+      "description": "Key figures load from the demo business account so you can inspect performance before inviting clients.",
+      "visual_alt": "Business sample dashboard with approvals and ads",
+      "source_label": "Sample",
+      "source_caption": "Sample business workspace (manager@test.com)",
       "items": [
         {
-          "label": "Average approved clients",
-          "value": "78",
-          "description": "Typical number of clients managed on Business 100."
+          "label": "Creators connected",
+          "value": "35",
+          "description": "Every approved creator from the demo hub is available for review."
         },
         {
-          "label": "Ad adjustment requests",
-          "value": "12/mo",
-          "description": "Requests triggered by AI recommendations each month."
+          "label": "Average channels per creator",
+          "value": "3.1",
+          "description": "Sample creators connect between one and five channels for realistic portfolio coverage."
         },
         {
-          "label": "CS automation usage",
-          "value": "82%",
-          "description": "Business 1000 teams drafting AI CS replies at least weekly."
+          "label": "Approval turnaround",
+          "value": "12h",
+          "description": "Average time to process a request based on the sample workflow."
         }
       ]
     },
