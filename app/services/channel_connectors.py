@@ -78,7 +78,7 @@ class BaseConnector:
 
 
 class GraphConnector(BaseConnector):
-    api_version = "v18.0"
+    api_version = "v20.0"
 
     @property
     def base_url(self) -> str:

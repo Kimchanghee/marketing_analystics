@@ -46,6 +46,9 @@
 1. Dashboard에서 **Add Product** 클릭
 2. **Instagram Graph API** 선택 및 **Set Up** 클릭
    - 또는 **Instagram Basic Display** (간단한 접근용)
+   - Meta Graph API v20.0 엔드포인트 기준으로 설정
+
+> **참고**: 본 가이드는 2024년 7월 릴리스된 Meta Graph API v20.0을 기준으로 작성했습니다. v18.x~19.x 토큰은 2025년 7월 이후 지원이 종료되므로 새 앱 등록과 검수는 반드시 v20.0으로 진행하세요.
 
 #### Step 3: OAuth 설정
 1. 좌측 메뉴에서 **Instagram Graph API** > **Basic Settings**
@@ -97,7 +100,7 @@ pages_read_engagement
 
 ### 5. 테스트
 ```bash
-curl "https://graph.facebook.com/v18.0/me/accounts?access_token=YOUR_TOKEN"
+curl "https://graph.facebook.com/v20.0/me/accounts?access_token=YOUR_TOKEN"
 ```
 
 ---
@@ -119,6 +122,8 @@ curl "https://graph.facebook.com/v18.0/me/accounts?access_token=YOUR_TOKEN"
    - ✓ Web OAuth Login
    - ✓ Use Strict Mode for Redirect URIs
 
+> **참고**: Facebook Graph API 호출도 v20.0 기준으로 테스트되었습니다. v18.x 토큰은 2025년 중 지원이 종료되므로 호출 URL과 검수 정보도 v20.0으로 맞추어 주세요.
+
 #### Step 3: 권한 설정
 필요한 권한:
 ```
@@ -134,45 +139,48 @@ read_insights
 
 ### 3. 테스트
 ```bash
-curl "https://graph.facebook.com/v18.0/me/accounts?fields=id,name,followers_count&access_token=YOUR_TOKEN"
+curl "https://graph.facebook.com/v20.0/me/accounts?fields=id,name,followers_count&access_token=YOUR_TOKEN"
 ```
 
 ---
 
 ## Threads
 
-### 1. 앱 설정
+### 1. 개요
 
-#### 현재 상태 (2025년 기준)
-- Threads API는 **베타** 단계
-- 제한적으로 제공됨
-- Meta 개발자 플랫폼을 통해 접근
+#### 현재 상태 (2024년 하반기 기준)
+- Meta Threads Graph API가 2024년 7월부터 공개 베타로 제공됩니다.
+- Instagram Graph API와 동일한 Meta 앱에서 Threads API 제품을 추가한 뒤 승인을 받아야 합니다.
+- 프로덕션 사용을 위해서는 Business Verification과 권한 검수가 필수입니다.
 
 #### Step 1: Threads API 신청
 1. [Meta Developers](https://developers.facebook.com/)
-2. 기존 앱에서 **Threads API** 제품 추가 요청
-3. 승인 대기 (수일~수주 소요 가능)
+2. 기존 앱에서 **Add Product** > **Threads API** 선택 후 **Set Up**
+3. 승인 소요: 평균 5~10 영업일 (검수 답변에 따라 변동)
 
 #### Step 2: OAuth 설정
 ```
 https://yourdomain.com/channels/callback/threads
 ```
+> **참고**: Threads API도 Graph API v20.0 엔드포인트를 사용하며, 승인 완료 전까지는 테스트 모드 토큰만 호출할 수 있습니다.
 
-### 2. 필요한 권한
+### 2. 필요 권한
 ```
 threads_basic
 threads_content_publish
 threads_manage_insights
 ```
 
-### 3. 제한 사항
-- Instagram 계정과 연동된 Threads 계정 필요
-- 일부 기능은 아직 미지원
-- API 할당량이 제한적
+### 3. 승인 팁
+- Threads 계정은 Instagram 비즈니스/크리에이터 계정과 연결되어 있어야 합니다.
+- 콘텐츠 정책과 모더레이션 계획을 검수 답변에 포함하세요.
+- 초기에는 읽기 전용 권한만 허용될 수 있으니 대시보드 활용 범위를 명확히 설명합니다.
 
 ---
 
 ## YouTube
+
+> **참고**: 2024년 기준 YouTube Data API는 여전히 v3가 최신이며, Analytics API는 별도 활성화가 필요합니다.
 
 ### 1. Google Cloud 프로젝트 생성
 
@@ -242,23 +250,23 @@ curl "https://www.googleapis.com/youtube/v3/channels?part=statistics&mine=true&a
 
 ## Twitter/X
 
-### 1. Twitter 개발자 계정 생성
+### 1. X 개발자 계정 생성
 
 #### Step 1: 개발자 포털 접근
-1. [Twitter Developer Portal](https://developer.twitter.com/) 로그인
-2. **Sign up** > 개발자 약관 동의
-3. 사용 목적 설명 (간단히 작성)
+1. [X Developer Platform](https://developer.x.com/) 로그인
+2. **Sign Up** > **Apply for access** 메뉴에서 신청
+3. 데이터 사용 목적과 정책 준수 계획을 구체적으로 작성 (비즈니스 사이트 URL 포함)
 
 #### Step 2: 앱 생성
 1. **Projects & Apps** > **Create App**
-2. App name 입력 (고유해야 함)
+2. App name 입력 (고유값 권장)
 3. Environment: **Development** 또는 **Production**
 
 #### Step 3: OAuth 2.0 설정
-1. 생성된 앱 클릭 > **Settings** 탭
+1. 생성한 앱에서 **Settings** 이동
 2. **User authentication settings** > **Set up** 클릭
 3. App permissions:
-   - ✓ Read
+   - Read
 4. Type of App: **Web App, Automated App or Bot**
 5. App info:
    - **Callback URI / Redirect URL**:
@@ -268,7 +276,7 @@ curl "https://www.googleapis.com/youtube/v3/channels?part=statistics&mine=true&a
    - **Website URL**: https://yourdomain.com
 
 #### Step 4: 자격 증명 복사
-1. **Keys and tokens** 탭
+1. **Keys and tokens** 메뉴 이동
 2. **OAuth 2.0 Client ID and Client Secret** 생성
 3. `.env` 파일에 추가:
    ```env
@@ -278,18 +286,21 @@ curl "https://www.googleapis.com/youtube/v3/channels?part=statistics&mine=true&a
 
 ### 2. API Access Level
 
-#### Free Tier (기본)
-- 월 500,000 트윗 읽기
-- 제한적인 사용자 조회
+#### Free (테스트용)
+- 월 1,500건 이하의 POST(쓰기) 요청만 허용, 읽기 엔드포인트는 제공되지 않음
+- 로그인/봇 테스트 용도로만 사용 가능
 
 #### Basic ($100/월)
-- 월 10,000 트윗 읽기
-- 더 많은 엔드포인트 접근
+- 월 50,000건 읽기 + 10,000건 쓰기 한도 (2024년 8월 갱신 기준)
+- tweet.read, users.read, follows.read 엔드포인트 이용 가능
 
-#### Pro ($5,000/월) 이상
-- 전체 API 접근
+#### Pro ($5,000/월 이상)
+- 최대 1,000,000건 이상 읽기, 실시간 웹훅 및 엔터프라이즈 지원 포함
+- SLA와 복수 앱 운영이 필요할 때 권장
 
-### 3. 필요한 스코프
+> **참고**: 최신 한도는 [X Developer Pricing](https://developer.x.com/en/products/x-api)에서 반드시 확인하세요.
+
+### 3. 필요 Scope
 ```
 tweet.read
 users.read
@@ -410,9 +421,9 @@ cat .env | grep CLIENT_ID
 - YouTube Data API v3가 활성화되었는지 확인
 - API 키 할당량 확인
 
-#### Twitter: "You currently have Essential access"
-- 무료 티어의 제한사항 확인
-- 필요시 유료 플랜 업그레이드
+#### Twitter/X: "You currently have Essential access"
+- Free 티어는 읽기 엔드포인트가 제공되지 않으므로 Basic 이상으로 업그레이드 필요
+- 권한 요청 사유와 데이터 사용 범위를 명확히 기재
 
 #### TikTok: "App is still in review"
 - TikTok 앱 심사 완료 대기
@@ -490,7 +501,7 @@ open https://abc123.ngrok.io/channels/manage
 ### 공식 문서
 - [Meta Developers - Instagram API](https://developers.facebook.com/docs/instagram-api)
 - [Google Cloud - YouTube API](https://developers.google.com/youtube/v3)
-- [Twitter API v2](https://developer.twitter.com/en/docs/twitter-api)
+- [X Developer Platform - X API](https://developer.x.com/en/products/x-api)
 - [TikTok for Developers](https://developers.tiktok.com/doc/overview)
 
 ### 유용한 도구
@@ -509,3 +520,4 @@ open https://abc123.ngrok.io/channels/manage
 4. GitHub Issues에 문의
 
 **이메일**: support@yourcompany.com
+

@@ -30,24 +30,24 @@ def get_oauth_configs():
     return {
         "instagram": {
             "provider": "facebook",
-            "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
-            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "auth_url": "https://www.facebook.com/v20.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v20.0/oauth/access_token",
             "scope": "instagram_basic,instagram_manage_insights,pages_show_list,pages_read_engagement",
             "client_id": settings.facebook_app_id,
             "client_secret": settings.facebook_app_secret,
         },
         "facebook": {
             "provider": "facebook",
-            "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
-            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "auth_url": "https://www.facebook.com/v20.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v20.0/oauth/access_token",
             "scope": "pages_show_list,pages_read_engagement,pages_read_user_content,read_insights",
             "client_id": settings.facebook_app_id,
             "client_secret": settings.facebook_app_secret,
         },
         "threads": {
             "provider": "facebook",
-            "auth_url": "https://www.facebook.com/v18.0/dialog/oauth",
-            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "auth_url": "https://www.facebook.com/v20.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v20.0/oauth/access_token",
             "scope": "threads_basic,threads_content_publish,threads_manage_insights",
             "client_id": settings.facebook_app_id,
             "client_secret": settings.facebook_app_secret,
@@ -404,7 +404,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
     if platform in ["instagram", "facebook", "threads"]:
         # Meta 플랫폼
         response = requests.get(
-            "https://graph.facebook.com/v18.0/me",
+            "https://graph.facebook.com/v20.0/me",
             params={"fields": "id,name", "access_token": access_token},
             timeout=10
         )
@@ -413,7 +413,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
         if platform == "instagram":
             # Instagram Business 계정 정보 가져오기
             accounts_response = requests.get(
-                "https://graph.facebook.com/v18.0/me/accounts",
+                "https://graph.facebook.com/v20.0/me/accounts",
                 params={"access_token": access_token},
                 timeout=10
             )
@@ -423,7 +423,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
             for page in accounts:
                 page_id = page.get("id")
                 ig_response = requests.get(
-                    f"https://graph.facebook.com/v18.0/{page_id}",
+                    f"https://graph.facebook.com/v20.0/{page_id}",
                     params={
                         "fields": "instagram_business_account",
                         "access_token": access_token
@@ -436,7 +436,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
 
                     # Instagram 계정 세부 정보
                     ig_detail_response = requests.get(
-                        f"https://graph.facebook.com/v18.0/{ig_account_id}",
+                        f"https://graph.facebook.com/v20.0/{ig_account_id}",
                         params={
                             "fields": "username,followers_count",
                             "access_token": access_token
@@ -463,7 +463,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
         elif platform == "facebook":
             # Facebook 페이지 정보
             accounts_response = requests.get(
-                "https://graph.facebook.com/v18.0/me/accounts",
+                "https://graph.facebook.com/v20.0/me/accounts",
                 params={"access_token": access_token},
                 timeout=10
             )
@@ -475,7 +475,7 @@ async def _fetch_account_info(platform: str, access_token: str, config: Dict[str
 
                 # 페이지 세부 정보
                 page_response = requests.get(
-                    f"https://graph.facebook.com/v18.0/{page_id}",
+                    f"https://graph.facebook.com/v20.0/{page_id}",
                     params={
                         "fields": "name,followers_count,fan_count",
                         "access_token": access_token
