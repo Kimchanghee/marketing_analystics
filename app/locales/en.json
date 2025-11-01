@@ -454,7 +454,7 @@
   "personal": {
     "hero": {
       "title": "Explore a five-channel creator workspace instantly",
-      "subtitle": "Sign in with the sample personal account (creator@test.com / password123) to review YouTube, Instagram, TikTok, Facebook, and Threads analytics before you connect your own channels.",
+      "subtitle": "The sample personal workspace already tracks YouTube, Instagram, TikTok, Facebook, and Threads so you can observe how scheduling checks, reaction trends, and revenue prep reports run before connecting your own channels.",
       "primary_cta": "Start for free",
       "secondary_cta": "View personal pricing",
       "visual_title": "Sample creator snapshot",
@@ -468,7 +468,7 @@
         {
           "tag": "CHANNELS",
           "title": "Five connected channels",
-          "description": "Track YouTube, Instagram, TikTok, Facebook, and Threads together with post-level trends from the demo login."
+          "description": "Track YouTube, Instagram, TikTok, Facebook, and Threads together with post-level trends from the sample dataset."
         },
         {
           "tag": "ROUTINES",
@@ -496,7 +496,7 @@
             "Connect one YouTube and one Instagram account",
             "Automatic summaries for followers, comments, likes, dislikes, and hourly views",
             "Weekly email recap template",
-            "Works with the sample personal login"
+            "Matches the sample personal workspace setup"
           ],
           "cta": "Start free",
           "cta_link": "/signup",
@@ -542,23 +542,23 @@
       }
     },
     "workflow": {
-      "title": "How to use the sample account",
-      "description": "Explore the five connected channels and then bring in your own data at your pace.",
+      "title": "How to study the sample workspace",
+      "description": "Use the preloaded five-channel dataset to inspect how metrics, automations, and deliverables stay reliable.",
       "steps": [
         {
           "label": "Step 1",
-          "title": "Log in with demo credentials",
-          "detail": "Use creator@test.com / password123 to open the workspace with five channels already linked."
+          "title": "Review the five-channel overview",
+          "detail": "See how sample followers, engagement, and watch-time from five channels appear on the dashboard and highlight anomalies automatically."
         },
         {
           "label": "Step 2",
-          "title": "Follow the automation checklist",
-          "detail": "Walk through the prepared tasks to see how reports, exports, and reminders operate."
+          "title": "Inspect the automation trail",
+          "detail": "Follow the prebuilt weekly checklist to validate recap slides, exports, and audience prompts generated from the sample metrics."
         },
         {
           "label": "Step 3",
-          "title": "Connect your channels",
-          "detail": "When you are ready, add your accounts and keep the same automations running."
+          "title": "Translate findings to your accounts",
+          "detail": "Use the annotations and comparison reports in the sample data as a guide for which metrics to monitor once your own channels are connected."
         }
       ]
     },
@@ -598,12 +598,12 @@
       "description": "All metrics load from the demo personal account so you can evaluate automation before importing your own data.",
       "visual_alt": "Cards from the personal sample dashboard",
       "source_label": "Sample",
-      "source_caption": "Sample personal workspace (creator@test.com)",
+      "source_caption": "Sample personal workspace dataset",
       "items": [
         {
           "label": "Channels connected",
           "value": "5",
-          "description": "Every channel from the demo login streams data at once so you can test comparisons."
+          "description": "Every channel from the sample dataset streams data at once so you can test comparisons."
         },
         {
           "label": "Manual hours saved",
@@ -709,7 +709,7 @@
   "business": {
     "hero": {
       "title": "Manage 35 creators in the demo business hub",
-      "subtitle": "Log in with the sample manager account (manager@test.com / password123) to audit approvals, tasks, and campaigns across 35 creators already connected from the demo data.",
+      "subtitle": "The business sample hub already monitors approvals, workload, and campaigns across 35 creators so you can examine how account health is verified and escalations are recorded.",
       "primary_cta": "Book demo",
       "secondary_cta": "View business pricing",
       "visual_title": "Sample approval queue",
@@ -797,23 +797,23 @@
       }
     },
     "workflow": {
-      "title": "How to work through the sample hub",
-      "description": "Follow the preloaded approvals and tasks to experience the business process end to end.",
+      "title": "How to examine the sample hub",
+      "description": "Work through the stored approvals, tasks, and reports to understand the verification process before inviting clients.",
       "steps": [
         {
           "label": "Phase 1",
-          "title": "Log in with demo credentials",
-          "detail": "Use manager@test.com / password123 to access the hub with thirty five creators already linked."
+          "title": "Audit the creator portfolio",
+          "detail": "Check how thirty five sample creators are segmented by priority, platform mix, and approval status across the dashboards."
         },
         {
           "label": "Phase 2",
-          "title": "Review approvals and performance",
-          "detail": "Check pending requests, channel metrics, and campaign notes to understand the flow."
+          "title": "Validate approval evidence",
+          "detail": "Open stored requests, AI notes, and performance cards to see how managers confirm accuracy before acting."
         },
         {
           "label": "Phase 3",
-          "title": "Share and apply with your team",
-          "detail": "Test the sample reports and alerts, then invite real clients to keep the same automations."
+          "title": "Operationalize the playbooks",
+          "detail": "Review sample reports, nudges, and task handoffs to plan how your team will onboard real clients."
         }
       ]
     },
@@ -853,7 +853,7 @@
       "description": "Key figures load from the demo business account so you can inspect performance before inviting clients.",
       "visual_alt": "Business sample dashboard with approvals and ads",
       "source_label": "Sample",
-      "source_caption": "Sample business workspace (manager@test.com)",
+      "source_caption": "Sample business workspace dataset",
       "items": [
         {
           "label": "Creators connected",
