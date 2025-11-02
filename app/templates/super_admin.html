@@ -11,14 +11,26 @@
 </section>
 <section class="admin-panels">
     <article class="admin-card email-service-card">
-        <div class="admin-card-header">
-            <h2>{{ t['super_admin']['email_service'] }}</h2>
-            <p class="section-subtext">
-                {{ t['super_admin']['email_service_description'] }}
-                {% if super_admin_email %}
-                <span class="connected-account">{{ t['super_admin']['email_connected_account'] }} {{ super_admin_email }}</span>
+        <div class="admin-card-header email-header">
+            <div class="header-copy">
+                <h2>{{ t['super_admin']['email_service'] }}</h2>
+                <p class="section-subtext">
+                    {{ t['super_admin']['email_service_description'] }}
+                    {% if super_admin_email %}
+                    <span class="connected-account">{{ t['super_admin']['email_connected_account'] }} {{ super_admin_email }}</span>
+                    {% endif %}
+                </p>
+            </div>
+            {% if email_service_configured %}
+            <div class="header-actions">
+                <form method="get" action="/super-admin">
+                    <button class="btn ghost small" type="submit">{{ t['super_admin']['email_refresh'] }}</button>
+                </form>
+                {% if email_last_refreshed %}
+                <span class="refresh-meta">{{ t['super_admin']['email_last_refreshed'] }} {{ email_last_refreshed }}</span>
                 {% endif %}
-            </p>
+            </div>
+            {% endif %}
         </div>
         {% if not email_service_configured %}
         <div class="status-banner warning">
@@ -60,7 +72,7 @@
                 </div>
                 <label>
                     <span>{{ t['super_admin']['email_body'] }}</span>
-                    <textarea name="body" rows="6" required></textarea>
+                    <textarea name="body" rows="6" required placeholder="{{ t['super_admin']['email_body_placeholder'] }}"></textarea>
                 </label>
                 <div class="form-actions">
                     <button class="btn primary" type="submit">{{ t['super_admin']['email_send'] }}</button>
@@ -396,6 +408,34 @@
 </section>
 
 <style>
+.email-service-card .email-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.email-service-card .header-copy {
+    flex: 1 1 260px;
+}
+
+.email-service-card .header-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.email-service-card .header-actions form {
+    margin: 0;
+}
+
+.email-service-card .refresh-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
 .email-service-card .section-subtext {
     display: flex;
     flex-direction: column;

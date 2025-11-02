@@ -74,6 +74,7 @@ def super_admin_dashboard(
     email_sent = []
     email_error = None
     email_service_configured = False
+    email_last_refreshed = None
 
     try:
         email_service_configured = SuperAdminEmailService.is_configured(settings)
@@ -81,6 +82,7 @@ def super_admin_dashboard(
             email_service = SuperAdminEmailService(settings)
             email_inbox = email_service.fetch_inbox(limit=10)
             email_sent = email_service.fetch_sent(limit=10)
+            email_last_refreshed = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     except (EmailConfigurationError, EmailReceiveError, EmailServiceError) as exc:
         email_error = str(exc)
 
@@ -110,6 +112,7 @@ def super_admin_dashboard(
             "email_inbox": email_inbox,
             "email_sent": email_sent,
             "super_admin_email": settings.super_admin_email,
+            "email_last_refreshed": email_last_refreshed,
         },
     )
 

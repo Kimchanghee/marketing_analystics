@@ -1095,7 +1095,10 @@
     "email_empty": "표시할 메일이 없습니다.",
     "email_from": "보낸 사람:",
     "email_to": "받는 사람:",
-    "email_no_subject": "(제목 없음)"
+    "email_no_subject": "(제목 없음)",
+    "email_refresh": "새로고침",
+    "email_last_refreshed": "마지막 업데이트",
+    "email_body_placeholder": "보낼 내용을 입력하세요..."
   },
   "payments": {
     "title": "결제 내역",

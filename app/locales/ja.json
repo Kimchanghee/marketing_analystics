@@ -1067,7 +1067,10 @@
     "email_empty": "表示できるメールがありません。",
     "email_from": "差出人:",
     "email_to": "宛先:",
-    "email_no_subject": "(件名なし)"
+    "email_no_subject": "(件名なし)",
+    "email_refresh": "再読み込み",
+    "email_last_refreshed": "最終更新",
+    "email_body_placeholder": "メッセージ内容を入力してください..."
   },
   "payments": {
     "title": "決済履歴",
