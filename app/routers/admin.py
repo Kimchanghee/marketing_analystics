@@ -23,6 +23,13 @@ from ..models import (
     UserRole,
 )
 from ..services.localization import translator
+from ..services.super_admin_email import (
+    EmailConfigurationError,
+    EmailServiceError,
+    EmailReceiveError,
+    EmailSendError,
+    SuperAdminEmailService,
+)
 
 router = APIRouter()
 
@@ -63,6 +70,20 @@ def super_admin_dashboard(
     from ..services.ai_pd_service import AIPDService
     ai_system_prompt = AIPDService.get_system_prompt()
 
+    email_inbox = []
+    email_sent = []
+    email_error = None
+    email_service_configured = False
+
+    try:
+        email_service_configured = SuperAdminEmailService.is_configured(settings)
+        if email_service_configured:
+            email_service = SuperAdminEmailService(settings)
+            email_inbox = email_service.fetch_inbox(limit=10)
+            email_sent = email_service.fetch_sent(limit=10)
+    except (EmailConfigurationError, EmailReceiveError, EmailServiceError) as exc:
+        email_error = str(exc)
+
     response = request.app.state.templates.TemplateResponse(
         "super_admin.html",
         {
@@ -84,10 +105,54 @@ def super_admin_dashboard(
             "user_lookup": user_lookup,
             "gemini_api_key_set": gemini_api_key_set,
             "ai_system_prompt": ai_system_prompt,
+            "email_service_configured": email_service_configured,
+            "email_error": email_error,
+            "email_inbox": email_inbox,
+            "email_sent": email_sent,
+            "super_admin_email": settings.super_admin_email,
         },
     )
 
     return response
+
+
+@router.post("/super-admin/email/send")
+def send_super_admin_email(
+    to_address: str = Form(...),
+    subject: str = Form(...),
+    body: str = Form(...),
+    session=Depends(get_session),
+    user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
+):
+    settings = get_settings()
+    if not SuperAdminEmailService.is_configured(settings):
+        raise HTTPException(status_code=400, detail="Email service is not configured.")
+
+    if not to_address.strip():
+        raise HTTPException(status_code=400, detail="Recipient address is required.")
+
+    if not subject.strip():
+        raise HTTPException(status_code=400, detail="Subject is required.")
+
+    try:
+        service = SuperAdminEmailService(settings)
+        service.send_email(to_address=to_address, subject=subject, body=body)
+    except (EmailSendError, EmailServiceError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    session.add(
+        ActivityLog(
+            user_id=user.id,
+            action="super_admin_email_send",
+            details=f"to={to_address} subject={subject[:100]}",
+        )
+    )
+    session.commit()
+
+    return RedirectResponse(
+        url="/super-admin?email_sent=1",
+        status_code=status.HTTP_303_SEE_OTHER,
+    )
 
 
 @router.post("/super-admin/promote")

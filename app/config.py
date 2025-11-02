@@ -34,6 +34,15 @@ class Settings(BaseSettings):
     apple_team_id: str = Field("", env="APPLE_TEAM_ID")
     apple_key_id: str = Field("", env="APPLE_KEY_ID")
     apple_private_key: str = Field("", env="APPLE_PRIVATE_KEY")
+    super_admin_email: str = Field("", env="SUPER_ADMIN_EMAIL")
+    super_admin_email_password: str = Field("", env="SUPER_ADMIN_EMAIL_PASSWORD")
+    smtp_host: str = Field("smtp.gmail.com", env="SMTP_HOST")
+    smtp_port: int = Field(587, env="SMTP_PORT")
+    smtp_use_tls: bool = Field(True, env="SMTP_USE_TLS")
+    imap_host: str = Field("imap.gmail.com", env="IMAP_HOST")
+    imap_port: int = Field(993, env="IMAP_PORT")
+    imap_use_ssl: bool = Field(True, env="IMAP_USE_SSL")
+    imap_sent_folder: str = Field("[Gmail]/Sent Mail", env="IMAP_SENT_FOLDER")
 
     @property
     def is_production(self) -> bool:
