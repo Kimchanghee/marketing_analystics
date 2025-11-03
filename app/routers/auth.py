@@ -476,9 +476,13 @@ def login(
     session.add(ActivityLog(user_id=user.id, action="login"))
     session.commit()
 
-    # SUPER_ADMIN도 일단 /dashboard로 리다이렉트 (모든 페이지 접근 가능)
-    # /super-admin은 admin_token이 필요하므로 수동으로 접속해야 함
-    if user.role == UserRole.MANAGER:
+    # SUPER_ADMIN 사용자는 로그인 후 슈퍼 관리자 콘솔로 이동
+    # admin_token 파라미터를 자동으로 부여해 추가 인증 없이 접근 가능
+    settings = get_settings()
+
+    if user.role == UserRole.SUPER_ADMIN:
+        redirect_to = f"/super-admin?admin_token={settings.super_admin_access_token}"
+    elif user.role == UserRole.MANAGER:
         redirect_to = "/manager/dashboard"
     else:
         redirect_to = "/dashboard"
@@ -519,9 +523,13 @@ def social_login(
     session.add(ActivityLog(user_id=user.id, action=f"social_login_{provider_enum.value}"))
     session.commit()
 
-    # SUPER_ADMIN도 일단 /dashboard로 리다이렉트 (모든 페이지 접근 가능)
-    # /super-admin은 admin_token이 필요하므로 수동으로 접속해야 함
-    if user.role == UserRole.MANAGER:
+    # SUPER_ADMIN 사용자는 로그인 후 슈퍼 관리자 콘솔로 이동
+    # admin_token 파라미터를 자동으로 부여해 추가 인증 없이 접근 가능
+    settings = get_settings()
+
+    if user.role == UserRole.SUPER_ADMIN:
+        redirect_to = f"/super-admin?admin_token={settings.super_admin_access_token}"
+    elif user.role == UserRole.MANAGER:
         redirect_to = "/manager/dashboard"
     else:
         redirect_to = "/dashboard"
@@ -958,3 +966,4 @@ def logout():
     redirect_response = RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
     auth_manager.clear_login_cookie(redirect_response)
     return redirect_response
+
