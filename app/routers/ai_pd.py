@@ -10,7 +10,7 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import select
 
 from ..database import get_session
-from ..dependencies import get_current_user
+from ..dependencies import get_current_user, check_feature_access
 from ..models import (
     ChannelAccount,
     ManagerCreatorLink,
@@ -28,7 +28,8 @@ router = APIRouter()
 def ai_pd_dashboard(
     request: Request,
     user: User = Depends(get_current_user),
-    session=Depends(get_session)
+    session=Depends(get_session),
+    _feature_access: bool = Depends(check_feature_access("ai_pd"))
 ):
     """AI PD dashboard - available for both creators and managers"""
     locale = user.locale

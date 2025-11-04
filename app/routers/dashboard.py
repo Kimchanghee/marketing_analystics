@@ -10,7 +10,7 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import select
 
 from ..database import get_session
-from ..dependencies import get_active_subscription, get_current_user
+from ..dependencies import get_active_subscription, get_current_user, require_roles
 from ..models import (
     AuthType,
     ChannelAccount,
@@ -29,7 +29,7 @@ router = APIRouter()
 
 
 @router.get("/dashboard")
-def dashboard(request: Request, user: User = Depends(get_current_user), session=Depends(get_session)):
+def dashboard(request: Request, user: User = Depends(require_roles(UserRole.CREATOR)), session=Depends(get_session)):
     locale = user.locale
     strings = translator.load_locale(locale)
 
