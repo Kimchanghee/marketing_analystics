@@ -341,7 +341,18 @@ async def social_oauth_callback(
     session.commit()
 
     auth_token = auth_manager.create_access_token(user.email)
-    redirect_target = next_url or ("/manager/dashboard" if user.role == UserRole.MANAGER else "/dashboard")
+
+    # Role별 자동 리다이렉트
+    settings = get_settings()
+    if next_url:
+        redirect_target = next_url
+    elif user.role == UserRole.SUPER_ADMIN:
+        redirect_target = f"/super-admin?admin_token={settings.super_admin_access_token}"
+    elif user.role == UserRole.MANAGER:
+        redirect_target = "/manager/dashboard"
+    else:
+        redirect_target = "/dashboard"
+
     response = RedirectResponse(url=redirect_target, status_code=status.HTTP_303_SEE_OTHER)
     auth_manager.set_login_cookie(response, auth_token)
     response.delete_cookie("oauth_state")
