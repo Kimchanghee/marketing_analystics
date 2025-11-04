@@ -15,7 +15,11 @@
       "Bash(while read f)",
       "Bash(do echo \"=== $f ===\")",
       "Bash(done)",
-      "Bash(python -m py_compile:*)"
+      "Bash(python -m py_compile:*)",
+      "Bash(python:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(pip install:*)"
     ],
     "deny": [],
     "ask": []

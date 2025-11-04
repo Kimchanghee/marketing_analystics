@@ -112,10 +112,15 @@ class SuperAdminEmailService:
             try:
                 if self.settings.smtp_use_tls:
                     server.starttls()
-                server.login(
-                    self.settings.super_admin_email,
-                    self.settings.super_admin_email_password,
-                )
+
+                # 로컬 테스트 서버는 인증을 건너뛰기
+                is_local = self.settings.smtp_host.lower() in ['localhost', '127.0.0.1']
+                if not is_local:
+                    server.login(
+                        self.settings.super_admin_email,
+                        self.settings.super_admin_email_password,
+                    )
+
                 yield server
             finally:
                 server.quit()
