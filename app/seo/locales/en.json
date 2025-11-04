@@ -94,6 +94,66 @@
     {
       "question": "Do you provide growth insights for creators?",
       "answer": "Our AI-powered recommendation system provides personalized insights for channel growth. This includes content optimization suggestions, target audience analysis, trending keyword recommendations, upload time optimization, and data-driven growth strategies."
+    },
+    {
+      "question": "What is AI Performance Director?",
+      "answer": "AI PD acts like a dedicated marketing manager, analyzing all channel data in real-time and telling you exactly what to do next week. It provides 5 core features: content strategy suggestions, ad performance analysis, growth opportunity alerts, weekly action plans, and sentiment analysis."
+    },
+    {
+      "question": "How does Meta Ads optimization work?",
+      "answer": "Through Meta Ads API integration, we monitor ROAS, CPC, and conversion rates in real-time. AI recommends scaling successful campaigns and pausing underperforming ones, detects ad creative fatigue, and alerts you when to replace creatives. This reduces ad management time by 90%."
+    },
+    {
+      "question": "Do I need to install anything?",
+      "answer": "No, it's a web-based service that requires no installation. Simply visit creatorscontrol.com in your browser and start using it immediately. Accessible from mobile, tablet, and desktop devices."
+    },
+    {
+      "question": "What is the pricing?",
+      "answer": "Personal Free plan is permanently free and allows 1 YouTube and 1 Instagram account. Personal Plus is $29.90/month ($329/year) for 5 channels and AI features. Business plans start at $119/month for up to 100 creators."
+    },
+    {
+      "question": "How long does it take to connect an account?",
+      "answer": "With OAuth authentication, you can connect your first account in under 5 minutes. Additional channels take 1-2 minutes each. You never enter passwords directly—everything is done through official platform authentication for security."
     }
-  ]
+  ],
+  "howto": {
+    "name": "Getting Started with Creator Control Center",
+    "description": "Connect your first channel and view dashboard data in 5 minutes",
+    "image": "/static/images/howto-setup.jpg",
+    "totalTime": "PT5M",
+    "supplies": [
+      "Social media accounts (YouTube, Instagram, TikTok, etc.)",
+      "Email address"
+    ],
+    "tools": [
+      "Web browser (Chrome, Safari, Firefox, etc.)"
+    ],
+    "steps": [
+      {
+        "name": "Sign up",
+        "text": "Visit creatorscontrol.com and create a free account with your email and password. Individual creators choose the 'Personal' plan, agencies choose the 'Business' plan.",
+        "image": "/static/images/step-signup.jpg"
+      },
+      {
+        "name": "Connect your first channel",
+        "text": "Click the 'Add Channel' button on your dashboard and select the platform (YouTube, Instagram, etc.) you want to connect. Log in to that platform in the OAuth window that opens and approve the permissions.",
+        "image": "/static/images/step-connect.jpg"
+      },
+      {
+        "name": "Verify data sync",
+        "text": "Within 1-2 minutes after connecting, basic metrics like follower count, recent posts, and engagement rate will appear on your dashboard. Use the 'Refresh' button to fetch the latest data.",
+        "image": "/static/images/step-sync.jpg"
+      },
+      {
+        "name": "Check AI recommendations",
+        "text": "View personalized growth advice in the 'AI Recommendations' section at the bottom of your dashboard. Get optimal upload times, recommended hashtags, and content ideas.",
+        "image": "/static/images/step-ai.jpg"
+      },
+      {
+        "name": "Connect additional channels (optional)",
+        "text": "Based on your plan, connect additional channels to start multi-platform analytics. Compare data from all channels on one screen and generate integrated reports.",
+        "image": "/static/images/step-multi.jpg"
+      }
+    ]
+  }
 }
