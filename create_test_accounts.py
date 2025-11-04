@@ -97,7 +97,7 @@ async def create_test_accounts():
             print(f"ℹ️ Super Admin 계정이 이미 존재합니다: {admin_email}")
 
         # 4. 마스터 관리자 계정 (모든 대시보드 접근 가능)
-        master_email = "admin@creatorscontrol.com"
+        master_email = "kckc93@creatorscontrol.com"
         existing_master = session.exec(select(User).where(User.email == master_email)).first()
         if not existing_master:
             master = User(

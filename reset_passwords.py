@@ -15,7 +15,7 @@ async def reset_passwords():
             ("creator@test.com", "password123"),
             ("manager@test.com", "password123"),
             ("admin@test.com", "password123"),
-            ("admin@creatorscontrol.com", "Ckdgml9788@"),
+            ("kckc93@creatorscontrol.com", "Ckdgml9788@"),
         ]
 
         for email, password in accounts:
@@ -37,7 +37,7 @@ async def reset_passwords():
         print("="*60)
         print("\n이제 다음 계정으로 로그인하세요:")
         print("\n🔐 마스터 관리자:")
-        print("   이메일: admin@creatorscontrol.com")
+        print("   이메일: kckc93@creatorscontrol.com")
         print("   비밀번호: Ckdgml9788@")
         print("\n🔐 일반 슈퍼관리자:")
         print("   이메일: admin@test.com")
