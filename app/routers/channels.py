@@ -19,6 +19,7 @@ from ..models import (
     UserRole,
 )
 from ..services.localization import load_translations
+from ..services.social_fetcher import fetch_channel_snapshots
 
 router = APIRouter(prefix="/channels", tags=["channels"])
 
@@ -108,8 +109,18 @@ async def manage_channels(
         session.add(subscription)
         session.commit()
 
-    # 번역 로드
-    translations = load_translations(user.locale)
+    # 번역 로드 및 실시간 스냅샷 준비
+    strings = load_translations(user.locale)
+    channel_snapshots = fetch_channel_snapshots(channels)
+
+    platform_section = strings.get("channels_manage", {}).get("platforms", {})
+    platform_items = platform_section.get("items", {})
+    platform_order = platform_section.get("order") or list(platform_items.keys())
+    platform_features = platform_section.get("feature_points", [])
+    plan_label = strings.get("subscriptions", {}).get(
+        subscription.tier.value, subscription.tier.value.title()
+    )
+    limit_reached = len(channels) >= subscription.max_accounts
 
     # 각 채널의 연결 상태 확인
     channel_status = []
@@ -175,6 +186,14 @@ async def manage_channels(
         },
     ]
 
+    platforms = [
+        {
+            "id": platform_id,
+            "badge": platform_items.get(platform_id, {}).get("badge", platform_id[:2].upper()),
+        }
+        for platform_id in platform_order
+    ]
+
     return request.app.state.templates.TemplateResponse(
         "channels_manage.html",
         {
@@ -185,7 +204,12 @@ async def manage_channels(
             "subscription": subscription,
             "max_channels": subscription.max_accounts,
             "current_channel_count": len(channels),
-            "translations": translations,
+            "t": strings,
+            "channel_snapshots": channel_snapshots,
+            "platform_order": platform_order,
+            "platform_features": platform_features,
+            "plan_label": plan_label,
+            "limit_reached": limit_reached,
         },
     )
 

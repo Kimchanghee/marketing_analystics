@@ -349,8 +349,250 @@
     "youtube": "YouTube",
     "twitter": "X",
     "tiktok": "TikTok",
-    "facebook": "Facebook",
-    "meta_ads": "Meta Ads"
+  "facebook": "Facebook",
+  "meta_ads": "Meta Ads"
+  },
+  "channels_manage": {
+    "title": "チャネル管理センター",
+    "subtitle": "フォロワー数やエンゲージメント、投稿パターンを中高生でもわかる言葉で確認できます。",
+    "usage": {
+      "plan_label": "{plan} プラン",
+      "summary": "接続済みチャネル {current}/{max} 件を利用中です。",
+      "limit_reached": "このプランで接続できるチャネル数の上限に達しました。",
+      "upgrade": "プランを変更"
+    },
+    "alerts": {
+      "connected": "チャネルを接続しました。",
+      "disconnected": "チャネルの接続を解除しました。"
+    },
+    "connected": {
+      "title": "接続済みチャネル ({count})",
+      "status": {
+        "connected": "ライブ接続",
+        "needs_refresh": "ログイン更新",
+        "disconnected": "未接続"
+      },
+      "source": {
+        "api": "ライブ API データ",
+        "mock": "サンプルデータです。実際のアカウントをつなぐと自動で置き換わります。",
+        "error": "プラットフォームから応答がなかったため保存済みデータを表示します。"
+      },
+      "metrics": {
+        "followers": {
+          "label": "フォロワー",
+          "explain": "このアカウントをフォローしている人数です。"
+        },
+        "engagement": {
+          "label": "エンゲージメント",
+          "explain": "最新投稿に反応したフォロワーの割合です。"
+        },
+        "growth": {
+          "label": "成長率",
+          "explain": "先週と比べたフォロワーの増減率です。"
+        },
+        "last_post": {
+          "label": "最新投稿",
+          "explain": "確認できた最新のコンテンツです。",
+          "no_data": "まだ投稿がありません。"
+        }
+      },
+      "recent_posts": {
+        "title": "最近の投稿",
+        "impressions": "閲覧数",
+        "likes": "いいね",
+        "comments": "コメント",
+        "empty": "最近の投稿はまだありません。"
+      },
+      "hourly_views": {
+        "title": "1日の視聴パターン",
+        "peak": "最も視聴が多い時間: {hour}時ごろ、約 {views} 回。",
+        "off_peak": "静かな時間: {hour}時ごろ。",
+        "no_data": "視聴データが集まったらグラフを表示します。"
+      },
+      "actions": {
+        "open_dashboard": "分析ページを開く",
+        "refresh": "トークンを更新",
+        "disconnect": "接続を解除",
+        "confirm_disconnect": "{account} の接続を解除しますか？再びデータを見るには再ログインが必要です。"
+      },
+      "empty": {
+        "title": "まだ接続されたチャネルはありません",
+        "body": "SNS アカウントをつなぐとフォロワー・反応・視聴パターンを一度に確認できます。"
+      }
+    },
+    "platforms": {
+      "title": "新しいチャネルを追加",
+      "description": "プラットフォームを選んで短いチェックリストを順番に進めてください。専門用語は使っていません。",
+      "feature_points": [
+        "フォロワーと反応のグラフ",
+        "最新投稿のサマリー",
+        "AI が考える学習ヒント",
+        "各指標のやさしい説明"
+      ],
+      "cta": "今すぐ接続",
+      "order": [
+        "instagram",
+        "facebook",
+        "threads",
+        "youtube",
+        "twitter",
+        "tiktok",
+        "meta_ads"
+      ],
+      "items": {
+        "instagram": {
+          "name": "Instagram",
+          "badge": "IG",
+          "summary": "ストーリーズ・リール・フィードをまとめて確認できます。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "Facebookページと連携したビジネスまたはクリエイターアカウントを使います。",
+                "必要であれば先生や管理者に Meta 開発者アカウントの作成をお願いしてください。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`instagram_basic` でプロフィール情報を取得します。",
+                "`instagram_manage_insights` でフォロワーと投稿の数値を読み込みます。"
+              ]
+            }
+          ]
+        },
+        "facebook": {
+          "name": "Facebook",
+          "badge": "FB",
+          "summary": "ページのフォロワー・反応・投稿履歴を確認します。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "接続したい Facebook ページの管理者権限を持っている必要があります。",
+                "Meta から求められる場合に備えて二要素認証を設定しておきましょう。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`pages_show_list` で接続するページを選択します。",
+                "`read_insights` で投稿の指標を読み込みます。"
+              ]
+            }
+          ]
+        },
+        "threads": {
+          "name": "Threads",
+          "badge": "TH",
+          "summary": "Threads の短い投稿や返信の動きを追いかけます。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "Threads アカウントを Instagram と連携してください。",
+                "Instagram と同じ Meta 開発者アプリを利用します。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`threads_basic` でプロフィール情報を取得します。",
+                "`threads_manage_insights` でエンゲージメント指標を読み込みます。"
+              ]
+            }
+          ]
+        },
+        "youtube": {
+          "name": "YouTube",
+          "badge": "YT",
+          "summary": "登録者数、再生回数、人気動画をチェックします。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "チャンネルを所有する Google アカウントでログインしてください。",
+                "Google Cloud コンソールで YouTube Data API を有効化します。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`youtube.readonly` でチャンネル情報を読み込みます。",
+                "`yt-analytics.readonly` で視聴数と視聴時間を確認します。"
+              ]
+            }
+          ]
+        },
+        "twitter": {
+          "name": "Twitter / X",
+          "badge": "X",
+          "summary": "ツイートのリーチ、フォロワー、メンションを把握します。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "Twitter 開発者プロジェクトを申請してください。",
+                "ダッシュボードで OAuth 2.0 キーを作成します。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`tweet.read` でツイートを取得します。",
+                "`users.read` でプロフィールを表示します。",
+                "`follows.read` でフォロワー数を確認します。"
+              ]
+            }
+          ]
+        },
+        "tiktok": {
+          "name": "TikTok",
+          "badge": "TT",
+          "summary": "動画の再生回数、いいね、コメントを確認します。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "TikTok ビジネスアカウントを利用してください。",
+                "TikTok for Developers ポータルにアプリを登録します。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`user.info.basic` でプロフィール情報を取得します。",
+                "`video.list` で投稿済み動画を読み込みます。"
+              ]
+            }
+          ]
+        },
+        "meta_ads": {
+          "name": "Meta Ads",
+          "badge": "AD",
+          "summary": "広告費、クリック数、インプレッションを確認します。",
+          "setup": [
+            {
+              "title": "準備すること",
+              "points": [
+                "Meta 広告アカウント ID（act_ で始まります）を確認してください。",
+                "レポート権限を持つ Ads Manager へのアクセスを依頼してください。"
+              ]
+            },
+            {
+              "title": "許可する権限",
+              "points": [
+                "`ads_read` でキャンペーンの成果を取得します。"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "modal": {
+      "title": "{platform} 接続チェックリスト",
+      "close": "閉じる"
+    }
   },
   "subscriptions": {
     "free": "フリー",
@@ -1070,7 +1312,11 @@
     "email_no_subject": "(件名なし)",
     "email_refresh": "再読み込み",
     "email_last_refreshed": "最終更新",
-    "email_body_placeholder": "メッセージ内容を入力してください..."
+    "email_body_placeholder": "メッセージ内容を入力してください...",
+    "email_send_test": "テストメール送信 ({email})",
+    "email_test_success": "{email} 宛てにテストメールを送信しました。",
+    "email_test_subject": "Creator Control Center テストメール",
+    "email_test_body": "こんにちは。\n管理者 {admin} が管理画面から送信したテストメールです。\nこのメールを受信できれば送信設定は正常です。"
   },
   "payments": {
     "title": "決済履歴",

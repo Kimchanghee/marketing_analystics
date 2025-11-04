@@ -11,6 +11,7 @@
 </section>
 <section class="admin-panels">
     <article class="admin-card email-service-card">
+        {% set test_email = 'k931103@gmail.com' %}
         <div class="admin-card-header email-header">
             <div class="header-copy">
                 <h2>{{ t['super_admin']['email_service'] }}</h2>
@@ -23,6 +24,11 @@
             </div>
             {% if email_service_configured %}
             <div class="header-actions">
+                <form method="post" action="/super-admin/email/send-test">
+                    <button class="btn secondary small" type="submit">
+                        {{ t['super_admin']['email_send_test'].format(email=test_email) }}
+                    </button>
+                </form>
                 <form method="get" action="/super-admin">
                     <button class="btn ghost small" type="submit">{{ t['super_admin']['email_refresh'] }}</button>
                 </form>
@@ -43,15 +49,23 @@
         {% else %}
         {% if request.query_params.get('email_sent') %}
         <div class="status-banner success">
-            <span class="status-icon">✅</span>
+            <span class="status-icon">&#9989;</span>
             <div class="status-content">
                 <strong>{{ t['super_admin']['email_sent_success'] }}</strong>
             </div>
         </div>
         {% endif %}
+        {% if request.query_params.get('email_test') %}
+        <div class="status-banner success">
+            <span class="status-icon">&#9989;</span>
+            <div class="status-content">
+                <strong>{{ t['super_admin']['email_test_success'].format(email=test_email) }}</strong>
+            </div>
+        </div>
+        {% endif %}
         {% if email_error %}
         <div class="status-banner warning">
-            <span class="status-icon">⚠️</span>
+            <span class="status-icon">&#9888;</span>
             <div class="status-content">
                 <strong>{{ t['super_admin']['email_error_title'] }}</strong>
                 <p>{{ email_error }}</p>

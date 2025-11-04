@@ -377,8 +377,250 @@
     "youtube": "유튜브",
     "twitter": "트위터/X",
     "tiktok": "틱톡",
-    "facebook": "페이스북",
-    "meta_ads": "메타 광고"
+  "facebook": "페이스북",
+  "meta_ads": "메타 광고"
+  },
+  "channels_manage": {
+    "title": "채널 관리 센터",
+    "subtitle": "팔로워 수, 참여도, 게시 습관을 중·고등학생도 이해할 수 있는 문장으로 확인하세요.",
+    "usage": {
+      "plan_label": "{plan} 요금제",
+      "summary": "현재 {max}개 중 {current}개의 채널을 사용 중입니다.",
+      "limit_reached": "이 요금제에서 연결할 수 있는 채널 수를 모두 사용했습니다.",
+      "upgrade": "요금제 업그레이드"
+    },
+    "alerts": {
+      "connected": "채널 연결이 완료되었습니다.",
+      "disconnected": "채널 연결을 해제했습니다."
+    },
+    "connected": {
+      "title": "연결된 채널 ({count})",
+      "status": {
+        "connected": "실시간 연결",
+        "needs_refresh": "로그인 새로고침",
+        "disconnected": "미연결"
+      },
+      "source": {
+        "api": "실시간 API 데이터",
+        "mock": "샘플 데이터입니다. 실제 계정을 연결하면 자동으로 바뀝니다.",
+        "error": "플랫폼 응답이 없어 저장된 데이터를 대신 보여 줍니다."
+      },
+      "metrics": {
+        "followers": {
+          "label": "팔로워",
+          "explain": "이 계정을 팔로우한 사람 수입니다."
+        },
+        "engagement": {
+          "label": "참여율",
+          "explain": "가장 최근 게시물에 반응한 팔로워 비율입니다."
+        },
+        "growth": {
+          "label": "성장률",
+          "explain": "지난주와 비교한 팔로워 증감률입니다."
+        },
+        "last_post": {
+          "label": "최근 게시물",
+          "explain": "마지막으로 올린 콘텐츠입니다.",
+          "no_data": "아직 게시물이 없습니다."
+        }
+      },
+      "recent_posts": {
+        "title": "최근 게시물",
+        "impressions": "조회수",
+        "likes": "좋아요",
+        "comments": "댓글",
+        "empty": "최근 게시물이 아직 없습니다."
+      },
+      "hourly_views": {
+        "title": "하루 시간대별 시청 패턴",
+        "peak": "가장 활발한 시간: {hour}시, 약 {views}회 시청.",
+        "off_peak": "가장 조용한 시간: {hour}시.",
+        "no_data": "시청 데이터가 더 모이면 그래프를 보여 드립니다."
+      },
+      "actions": {
+        "open_dashboard": "분석 페이지 열기",
+        "refresh": "토큰 새로고침",
+        "disconnect": "연결 해제",
+        "confirm_disconnect": "{account} 채널 연결을 해제할까요? 다시 데이터를 보려면 다시 로그인해야 합니다."
+      },
+      "empty": {
+        "title": "아직 연결된 채널이 없어요",
+        "body": "SNS 채널을 연결하면 팔로워, 반응, 시청 패턴을 한눈에 볼 수 있습니다."
+      }
+    },
+    "platforms": {
+      "title": "새 채널 추가",
+      "description": "플랫폼을 선택하고 짧은 체크리스트를 따라오세요. 어려운 용어는 쓰지 않았습니다.",
+      "feature_points": [
+        "팔로워·반응 그래프",
+        "최근 게시물 요약",
+        "AI 학습 팁",
+        "지표마다 쉬운 설명"
+      ],
+      "cta": "지금 연결",
+      "order": [
+        "instagram",
+        "facebook",
+        "threads",
+        "youtube",
+        "twitter",
+        "tiktok",
+        "meta_ads"
+      ],
+      "items": {
+        "instagram": {
+          "name": "인스타그램",
+          "badge": "IG",
+          "summary": "스토리, 릴스, 피드를 한 곳에서 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Facebook 페이지와 연결된 비즈니스 또는 크리에이터 계정을 사용하세요.",
+                "필요하면 선생님이나 관리자에게 Meta 개발자 계정 생성을 요청하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`instagram_basic` 권한으로 프로필 기본 정보를 불러옵니다.",
+                "`instagram_manage_insights` 권한으로 팔로워·게시물 통계를 확인합니다."
+              ]
+            }
+          ]
+        },
+        "facebook": {
+          "name": "페이스북",
+          "badge": "FB",
+          "summary": "페이지 팔로워와 반응, 게시 기록을 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "연결하려는 Facebook 페이지에서 관리자 권한을 갖고 있어야 합니다.",
+                "필요하면 Meta에서 요구하는 이중 인증 로그인을 미리 설정하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`pages_show_list` 권한으로 연결할 페이지를 선택합니다.",
+                "`read_insights` 권한으로 게시물 통계를 읽습니다."
+              ]
+            }
+          ]
+        },
+        "threads": {
+          "name": "스레드",
+          "badge": "TH",
+          "summary": "Threads의 짧은 글과 답글 활동을 살펴봅니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Threads 계정을 인스타그램 계정과 연결하세요.",
+                "Instagram과 같은 Meta 개발자 앱을 사용합니다."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`threads_basic` 권한으로 프로필 정보를 가져옵니다.",
+                "`threads_manage_insights` 권한으로 참여 지표를 확인합니다."
+              ]
+            }
+          ]
+        },
+        "youtube": {
+          "name": "유튜브",
+          "badge": "YT",
+          "summary": "구독자, 조회수, 인기 동영상을 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "채널을 소유한 Google 계정으로 로그인하세요.",
+                "Google Cloud 콘솔에서 YouTube Data API를 활성화하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`youtube.readonly` 권한으로 채널 정보를 읽습니다.",
+                "`yt-analytics.readonly` 권한으로 조회수와 시청 시간을 확인합니다."
+              ]
+            }
+          ]
+        },
+        "twitter": {
+          "name": "트위터 / X",
+          "badge": "X",
+          "summary": "트윗 도달, 팔로워 수, 멘션을 추적합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Twitter 개발자 프로젝트를 신청하세요.",
+                "대시보드에서 OAuth 2.0 키를 생성하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`tweet.read` 권한으로 트윗을 불러옵니다.",
+                "`users.read` 권한으로 프로필을 표시합니다.",
+                "`follows.read` 권한으로 팔로워 수를 확인합니다."
+              ]
+            }
+          ]
+        },
+        "tiktok": {
+          "name": "틱톡",
+          "badge": "TT",
+          "summary": "동영상 조회수, 좋아요, 댓글을 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "TikTok 비즈니스 계정을 사용하세요.",
+                "TikTok for Developers 포털에 앱을 등록하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`user.info.basic` 권한으로 프로필 정보를 확인합니다.",
+                "`video.list` 권한으로 업로드한 동영상을 불러옵니다."
+              ]
+            }
+          ]
+        },
+        "meta_ads": {
+          "name": "메타 광고",
+          "badge": "AD",
+          "summary": "광고 집행 비용, 클릭 수, 노출수를 살펴봅니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Meta 광고 계정 ID(act_로 시작)를 확인하세요.",
+                "보고 권한이 있는 Ads Manager 접근 권한을 요청하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`ads_read` 권한으로 캠페인 성과를 불러옵니다."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "modal": {
+      "title": "{platform} 연결 체크리스트",
+      "close": "닫기"
+    }
   },
   "subscriptions": {
     "free": "무료",
@@ -1098,7 +1340,11 @@
     "email_no_subject": "(제목 없음)",
     "email_refresh": "새로고침",
     "email_last_refreshed": "마지막 업데이트",
-    "email_body_placeholder": "보낼 내용을 입력하세요..."
+    "email_body_placeholder": "보낼 내용을 입력하세요...",
+    "email_send_test": "테스트 메일 보내기 ({email})",
+    "email_test_success": "{email} 주소로 테스트 메일을 보냈습니다.",
+    "email_test_subject": "Creator Control Center 테스트 메일",
+    "email_test_body": "안녕하세요.\n관리자 {admin}가 관리자 페이지에서 보낸 테스트 메일입니다.\n이 메일을 받으셨다면 발신 설정이 정상입니다."
   },
   "payments": {
     "title": "결제 내역",

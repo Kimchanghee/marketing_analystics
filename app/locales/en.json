@@ -349,8 +349,250 @@
     "youtube": "YouTube",
     "twitter": "Twitter / X",
     "tiktok": "TikTok",
-    "facebook": "Facebook",
-    "meta_ads": "Meta Ads"
+  "facebook": "Facebook",
+  "meta_ads": "Meta Ads"
+  },
+  "channels_manage": {
+    "title": "Channel control center",
+    "subtitle": "Check real follower numbers, engagement, and posting habits with clear explanations.",
+    "usage": {
+      "plan_label": "{plan} plan",
+      "summary": "You are using {current} of {max} connected channels.",
+      "limit_reached": "You reached the maximum number of channels for this plan.",
+      "upgrade": "Upgrade plan"
+    },
+    "alerts": {
+      "connected": "The channel is now connected.",
+      "disconnected": "The channel has been disconnected."
+    },
+    "connected": {
+      "title": "Connected channels ({count})",
+      "status": {
+        "connected": "Live connection",
+        "needs_refresh": "Refresh login",
+        "disconnected": "Disconnected"
+      },
+      "source": {
+        "api": "Live API data",
+        "mock": "Sample data (connect the real account to replace this).",
+        "error": "We reused cached data because the platform did not answer."
+      },
+      "metrics": {
+        "followers": {
+          "label": "Followers",
+          "explain": "People who chose to follow this account."
+        },
+        "engagement": {
+          "label": "Engagement",
+          "explain": "Percent of followers who reacted to the newest post."
+        },
+        "growth": {
+          "label": "Growth",
+          "explain": "Follower change compared with last week."
+        },
+        "last_post": {
+          "label": "Latest post",
+          "explain": "The most recent piece of content we could find.",
+          "no_data": "No posts yet."
+        }
+      },
+      "recent_posts": {
+        "title": "Recent posts",
+        "impressions": "Views",
+        "likes": "Likes",
+        "comments": "Comments",
+        "empty": "No recent posts available."
+      },
+      "hourly_views": {
+        "title": "Daily viewing pattern",
+        "peak": "Peak time: {hour}:00 with about {views} views.",
+        "off_peak": "Quiet time: {hour}:00.",
+        "no_data": "We need more viewing data before we can draw this chart."
+      },
+      "actions": {
+        "open_dashboard": "Open analytics",
+        "refresh": "Refresh token",
+        "disconnect": "Disconnect",
+        "confirm_disconnect": "Disconnect {account}? You will need to log in again to restore the data."
+      },
+      "empty": {
+        "title": "No channels yet",
+        "body": "Connect a social platform to start tracking followers, reactions, and viewing patterns."
+      }
+    },
+    "platforms": {
+      "title": "Add a new channel",
+      "description": "Choose a platform and follow the short checklist. Every step uses student-friendly words.",
+      "feature_points": [
+        "Follower and reaction charts",
+        "Recent post summaries",
+        "AI generated study tips",
+        "Simple explanations for each metric"
+      ],
+      "cta": "Connect now",
+      "order": [
+        "instagram",
+        "facebook",
+        "threads",
+        "youtube",
+        "twitter",
+        "tiktok",
+        "meta_ads"
+      ],
+      "items": {
+        "instagram": {
+          "name": "Instagram",
+          "badge": "IG",
+          "summary": "Stories, Reels, and feed posts in one place.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Use a Business or Creator account linked to a Facebook Page.",
+                "Ask your teacher or admin for a Meta developer account if needed."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`instagram_basic` for profile basics.",
+                "`instagram_manage_insights` for follower and post numbers."
+              ]
+            }
+          ]
+        },
+        "facebook": {
+          "name": "Facebook",
+          "badge": "FB",
+          "summary": "Page followers, reactions, and post history.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Be a manager of the Facebook Page you want to connect.",
+                "Make sure two-factor login is ready if Meta asks for it."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`pages_show_list` to pick your page.",
+                "`read_insights` to read post metrics."
+              ]
+            }
+          ]
+        },
+        "threads": {
+          "name": "Threads",
+          "badge": "TH",
+          "summary": "Short text posts and replies from Instagram Threads.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Link your Threads account to Instagram.",
+                "Use the same Meta developer app as Instagram."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`threads_basic` for profile info.",
+                "`threads_manage_insights` for engagement numbers."
+              ]
+            }
+          ]
+        },
+        "youtube": {
+          "name": "YouTube",
+          "badge": "YT",
+          "summary": "Subscribers, views, and top videos.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Log in with the Google account that owns the channel.",
+                "Enable the YouTube Data API in Google Cloud."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`youtube.readonly` for channel details.",
+                "`yt-analytics.readonly` for view and watch time stats."
+              ]
+            }
+          ]
+        },
+        "twitter": {
+          "name": "Twitter / X",
+          "badge": "X",
+          "summary": "Tweet reach, followers, and mentions.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Apply for a Twitter developer project.",
+                "Create OAuth 2.0 keys in the dashboard."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`tweet.read` to load tweets.",
+                "`users.read` to display the profile.",
+                "`follows.read` for follower counts."
+              ]
+            }
+          ]
+        },
+        "tiktok": {
+          "name": "TikTok",
+          "badge": "TT",
+          "summary": "Video views, likes, and comments.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Use a TikTok Business account.",
+                "Register your app in the TikTok for Developers portal."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`user.info.basic` for the profile.",
+                "`video.list` to see uploaded videos."
+              ]
+            }
+          ]
+        },
+        "meta_ads": {
+          "name": "Meta Ads",
+          "badge": "AD",
+          "summary": "Ad spend, clicks, and impressions.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Get the Meta Ad Account ID (starts with `act_`).",
+                "Ask for Ads Manager access with reporting rights."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`ads_read` to read campaign performance."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "modal": {
+      "title": "{platform} connection checklist",
+      "close": "Close"
+    }
   },
   "subscriptions": {
     "free": "Free",
@@ -1064,6 +1306,10 @@
     "email_subject": "Subject",
     "email_body": "Message",
     "email_body_placeholder": "Write your message here...",
+    "email_send_test": "Send test email ({email})",
+    "email_test_success": "Sent a test email to {email}.",
+    "email_test_subject": "Creator Control Center test email",
+    "email_test_body": "Hello,\nThis is a test email sent from the admin console by {admin}.\nIf you can read this, email delivery is working.",
     "email_send": "Send email",
     "email_inbox": "Inbox",
     "email_sent": "Sent mail",

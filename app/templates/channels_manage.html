@@ -1,343 +1,412 @@
 {% extends "base.html" %}
+{% set manage = t['channels_manage'] %}
 
-{% block title %}채널 관리 - {{ translations.common.app_name }}{% endblock %}
+{% block title %}{{ manage['title'] }} - {{ t['app']['title'] }}{% endblock %}
 
 {% block extra_head %}
 <style>
-    .channels-container {
-        max-width: 1200px;
+    .channels-page {
+        max-width: 1120px;
         margin: 0 auto;
-        padding: 2rem;
+        padding: 2rem 1.5rem 3rem;
     }
 
     .page-header {
-        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .page-header h1 {
-        font-size: 2rem;
+        font-size: 2.1rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
+        margin: 0;
+        color: #1f2933;
     }
 
-    .subscription-info {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin-bottom: 2rem;
+    .page-header p {
+        font-size: 1rem;
+        color: #4b5563;
+        margin: 0;
+        max-width: 720px;
+    }
+
+    .subscription-card {
+        background: linear-gradient(135deg, #eff3ff 0%, #e0f2ff 100%);
+        border-radius: 16px;
+        padding: 1.5rem 2rem;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .subscription-info .info-text {
-        font-size: 1.1rem;
-    }
-
-    .subscription-info .upgrade-btn {
-        background: white;
-        color: #667eea;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .subscription-info .upgrade-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .connected-channels {
-        margin-bottom: 3rem;
-    }
-
-    .section-title {
-        font-size: 1.5rem;
-        font-weight: 600;
+        flex-direction: column;
+        gap: 0.75rem;
         margin-bottom: 1.5rem;
-        display: flex;
+    }
+
+    .plan-chip {
+        display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-    }
-
-    .channel-card {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: all 0.3s ease;
-    }
-
-    .channel-card:hover {
-        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    }
-
-    .channel-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .channel-icon {
-        font-size: 2rem;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    }
-
-    .channel-details h3 {
-        font-size: 1.2rem;
+        background: rgba(37, 99, 235, 0.12);
+        color: #1d4ed8;
         font-weight: 600;
-        margin-bottom: 0.25rem;
+        font-size: 0.85rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
     }
 
-    .channel-details p {
-        color: #666;
-        font-size: 0.9rem;
+    .usage-text {
+        font-size: 1rem;
+        color: #1f2933;
         margin: 0;
     }
 
-    .channel-stats {
-        display: flex;
-        gap: 1.5rem;
-        margin-top: 0.5rem;
+    .limit-text {
+        font-size: 0.95rem;
+        color: #b45309;
+        margin: 0;
     }
 
-    .stat-item {
+    .subscription-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .alert {
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    .alert.success {
+        background: #ecfdf5;
+        color: #047857;
+    }
+
+    .alert.neutral {
+        background: #f1f5f9;
+        color: #1f2937;
+    }
+
+    .section-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1rem;
+    }
+
+    .section-heading h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2933;
+        margin: 0;
+    }
+
+    .channel-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 1.75rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .channel-header {
         display: flex;
         flex-direction: column;
+        gap: 0.75rem;
     }
 
-    .stat-label {
-        font-size: 0.75rem;
-        color: #999;
+    .channel-title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .channel-title h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+        word-break: break-word;
+    }
+
+    .channel-subtitle {
+        font-size: 0.95rem;
+        color: #6b7280;
+        margin: 0;
         text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
 
-    .stat-value {
-        font-size: 1rem;
+    .status-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.8rem;
         font-weight: 600;
-        color: #333;
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+    }
+
+    .status-live {
+        background: rgba(16, 185, 129, 0.12);
+        color: #047857;
+    }
+
+    .status-refresh {
+        background: rgba(245, 158, 11, 0.15);
+        color: #b45309;
+    }
+
+    .status-off {
+        background: rgba(148, 163, 184, 0.15);
+        color: #475569;
+    }
+
+    .source-pill {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem;
+        border-radius: 8px;
+        background: #f8fafc;
+        color: #475569;
+    }
+
+    .source-pill.api {
+        background: rgba(59, 130, 246, 0.12);
+        color: #1d4ed8;
+    }
+
+    .source-note {
+        font-size: 0.8rem;
+        color: #ef4444;
+        margin: 0;
+    }
+
+    .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+
+    .metric-card {
+        background: #f8fafc;
+        border-radius: 14px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .metric-card h4 {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .metric-card strong {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .metric-card p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    .channel-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .recent-posts {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .recent-posts table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .recent-posts th,
+    .recent-posts td {
+        padding: 0.65rem 0.85rem;
+        text-align: left;
+        font-size: 0.88rem;
+    }
+
+    .recent-posts th {
+        background: #f8fafc;
+        color: #475569;
+        font-weight: 600;
+    }
+
+    .recent-posts td {
+        color: #1f2937;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .recent-empty {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+        color: #6b7280;
+        text-align: center;
+    }
+
+    .view-pattern {
+        border-left: 4px solid #3b82f6;
+        background: #f3f4ff;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        color: #1e293b;
     }
 
     .channel-actions {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.75rem;
+        flex-wrap: wrap;
     }
 
-    .btn {
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-    .btn-primary {
-        background: #667eea;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background: #5568d3;
-    }
-
-    .btn-success {
-        background: #48bb78;
-        color: white;
-    }
-
-    .btn-warning {
-        background: #f6ad55;
-        color: white;
-    }
-
-    .btn-danger {
-        background: #f56565;
-        color: white;
-    }
-
-    .btn-secondary {
-        background: #e2e8f0;
-        color: #4a5568;
-    }
-
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
+    .btn.small {
         font-size: 0.85rem;
-        font-weight: 500;
+        padding: 0.45rem 0.9rem;
+        border-radius: 8px;
     }
 
-    .status-connected {
-        background: #c6f6d5;
-        color: #22543d;
+    .btn.secondary {
+        background: #1d4ed8;
+        color: #ffffff;
     }
 
-    .status-disconnected {
-        background: #fed7d7;
-        color: #742a2a;
+    .btn.outline {
+        background: transparent;
+        border: 1px solid #1d4ed8;
+        color: #1d4ed8;
     }
 
-    .status-refresh-needed {
-        background: #feebc8;
-        color: #7c2d12;
+    .btn.danger {
+        background: #dc2626;
+        color: #ffffff;
     }
 
-    .platforms-grid {
+    .empty-card {
+        background: #f8fafc;
+        border-radius: 14px;
+        padding: 1.75rem;
+        text-align: center;
+        color: #475569;
+        font-size: 0.95rem;
+    }
+
+    .platform-section {
+        margin-top: 2.5rem;
+    }
+
+    .platform-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
     }
 
     .platform-card {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 1.25rem;
+        box-shadow: 0 16px 32px rgba(15, 23, 42, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
         cursor: pointer;
-        border: 2px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .platform-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        border-color: #667eea;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
     }
 
-    .platform-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .platform-icon {
-        font-size: 2.5rem;
-    }
-
-    .platform-name {
-        font-size: 1.3rem;
-        font-weight: 600;
-    }
-
-    .platform-description {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-
-    .platform-features {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 1rem 0;
-    }
-
-    .platform-features li {
-        font-size: 0.85rem;
-        color: #666;
-        margin-bottom: 0.5rem;
-        padding-left: 1.5rem;
-        position: relative;
-    }
-
-    .platform-features li:before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        color: #48bb78;
-        font-weight: bold;
-    }
-
-    .setup-instructions {
-        background: #f7fafc;
-        border-left: 4px solid #667eea;
-        padding: 1rem;
-        margin-top: 1rem;
-        border-radius: 4px;
-        font-size: 0.9rem;
-    }
-
-    .setup-instructions h4 {
-        margin-top: 0;
-        font-size: 1rem;
-        color: #667eea;
-    }
-
-    .setup-instructions ol {
-        margin: 0.5rem 0;
-        padding-left: 1.5rem;
-    }
-
-    .setup-instructions li {
-        margin-bottom: 0.5rem;
-    }
-
-    .setup-instructions code {
-        background: #edf2f7;
-        padding: 0.2rem 0.4rem;
-        border-radius: 3px;
-        font-size: 0.85rem;
-    }
-
-    .setup-instructions a {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .setup-instructions a:hover {
-        text-decoration: underline;
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        overflow-y: auto;
-    }
-
-    .modal.active {
+    .platform-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: #e0e7ff;
+        color: #312e81;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-weight: 700;
+        font-size: 0.95rem;
     }
 
-    .modal-content {
-        background-color: white;
-        margin: 2rem auto;
-        padding: 2rem;
-        border-radius: 12px;
-        max-width: 600px;
-        width: 90%;
+    .platform-card h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .platform-card p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #4b5563;
+        min-height: 40px;
+    }
+
+    .platform-features {
+        list-style: disc;
+        margin: 0;
+        padding-left: 1.2rem;
+        color: #475569;
+        font-size: 0.85rem;
+        flex: 1;
+    }
+
+    .platform-features li + li {
+        margin-top: 0.35rem;
+    }
+
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        z-index: 1000;
+    }
+
+    .modal.open {
+        display: flex;
+    }
+
+    .modal-card {
+        background: #ffffff;
+        border-radius: 16px;
+        max-width: 520px;
+        width: 100%;
+        padding: 1.5rem;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
         max-height: 80vh;
         overflow-y: auto;
     }
@@ -346,463 +415,374 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
-    }
-
-    .modal-header h2 {
-        margin: 0;
-        font-size: 1.5rem;
-    }
-
-    .close-btn {
-        font-size: 2rem;
-        font-weight: 300;
-        color: #999;
-        cursor: pointer;
-        border: none;
-        background: none;
-        padding: 0;
-        line-height: 1;
-    }
-
-    .close-btn:hover {
-        color: #333;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 3rem;
-        color: #999;
-    }
-
-    .empty-state-icon {
-        font-size: 4rem;
+        gap: 1rem;
         margin-bottom: 1rem;
     }
 
-    @media (max-width: 768px) {
-        .channels-container {
-            padding: 1rem;
+    .modal-header h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1f2933;
+    }
+
+    .close-btn {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #64748b;
+    }
+
+    .setup-group {
+        margin-bottom: 1rem;
+    }
+
+    .setup-group h4 {
+        margin: 0 0 0.4rem 0;
+        font-size: 1rem;
+        color: #1f2937;
+    }
+
+    .setup-group ul {
+        margin: 0;
+        padding-left: 1.1rem;
+        color: #4b5563;
+        font-size: 0.9rem;
+    }
+
+    .setup-group li + li {
+        margin-top: 0.3rem;
+    }
+
+    @media (max-width: 720px) {
+        .channels-page {
+            padding: 1.5rem 1rem 2.5rem;
         }
 
-        .platforms-grid {
-            grid-template-columns: 1fr;
+        .subscription-card {
+            padding: 1.25rem 1.5rem;
         }
 
         .channel-card {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
+            padding: 1.25rem;
         }
 
         .channel-actions {
-            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
         }
 
-        .btn {
-            flex: 1;
+        .btn.small {
+            width: 100%;
+            text-align: center;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="channels-container">
-    <div class="page-header">
-        <h1>🔗 소셜 미디어 채널 관리</h1>
-        <p>모든 소셜 미디어 계정을 연결하고 데이터를 한곳에서 관리하세요</p>
-    </div>
+<div class="channels-page">
+    <section class="page-header">
+        <h1>{{ manage['title'] }}</h1>
+        <p>{{ manage['subtitle'] }}</p>
+    </section>
 
-    <div class="subscription-info">
-        <div class="info-text">
-            <strong>현재 구독:</strong> {{ subscription.tier.value.upper() }} 플랜
-            ({{ current_channel_count }} / {{ max_channels }}개 채널 사용 중)
-        </div>
-        {% if current_channel_count >= max_channels %}
-        <a href="/pricing" class="upgrade-btn">플랜 업그레이드</a>
+    <section class="subscription-card">
+        <span class="plan-chip">{{ manage['usage']['plan_label'].format(plan=plan_label) }}</span>
+        <p class="usage-text">{{ manage['usage']['summary'].format(current=current_channel_count, max=max_channels) }}</p>
+        {% if limit_reached %}
+        <p class="limit-text">{{ manage['usage']['limit_reached'] }}</p>
         {% endif %}
-    </div>
+        <div class="subscription-actions">
+            {% if limit_reached %}
+            <a class="btn secondary small" href="/pricing">{{ manage['usage']['upgrade'] }}</a>
+            {% endif %}
+        </div>
+    </section>
 
     {% if request.query_params.get('success') == 'true' %}
-    <div style="background: #c6f6d5; color: #22543d; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-        ✓ 채널이 성공적으로 연결되었습니다!
-    </div>
+    <div class="alert success">{{ manage['alerts']['connected'] }}</div>
+    {% elif request.query_params.get('disconnected') == 'true' %}
+    <div class="alert neutral">{{ manage['alerts']['disconnected'] }}</div>
     {% endif %}
 
-    <!-- 연결된 채널 -->
-    <div class="connected-channels">
-        <h2 class="section-title">
-            <span>✅</span>
-            <span>연결된 채널 ({{ current_channel_count }}개)</span>
-        </h2>
+    <section class="connected-section">
+        <div class="section-heading">
+            <h2>{{ manage['connected']['title'].format(count=current_channel_count) }}</h2>
+        </div>
 
         {% if channels %}
             {% for item in channels %}
-            <div class="channel-card">
-                <div class="channel-info">
-                    <div class="channel-icon">
-                        {% if item.channel.platform == 'instagram' %}📷
-                        {% elif item.channel.platform == 'facebook' %}📘
-                        {% elif item.channel.platform == 'threads' %}🧵
-                        {% elif item.channel.platform == 'youtube' %}▶️
-                        {% elif item.channel.platform == 'twitter' %}🐦
-                        {% elif item.channel.platform == 'tiktok' %}🎵
-                        {% else %}📱{% endif %}
-                    </div>
-                    <div class="channel-details">
-                        <h3>{{ item.channel.account_name }}</h3>
-                        <p>{{ item.channel.platform.upper() }}</p>
-
-                        {% if item.is_connected %}
-                            {% if item.needs_refresh %}
-                            <span class="status-badge status-refresh-needed">⚠️ 토큰 갱신 필요</span>
+                {% set channel = item.channel %}
+                {% set snapshot = channel_snapshots.get(channel.id) or {} %}
+                {% set followers = snapshot.get('followers', channel.followers) %}
+                {% set growth = snapshot.get('growth_rate', channel.growth_rate) %}
+                {% set engagement = snapshot.get('engagement_rate', channel.engagement_rate) %}
+                {% set last_title = snapshot.get('last_post_title') or channel.last_post_title %}
+                {% set last_date = snapshot.get('last_post_date') or channel.last_post_date %}
+                {% set last_label = last_date|string %}
+                {% set source_key = snapshot.get('source', 'mock') %}
+                {% set source_text = manage['connected']['source'].get(source_key, '') %}
+                <article class="channel-card">
+                    <div class="channel-header">
+                        <div class="channel-title">
+                            <h3>{{ channel.account_name }}</h3>
+                            <p class="channel-subtitle">{{ t['channels'].get(channel.platform, channel.platform.upper()) }}</p>
+                        </div>
+                        <div class="status-row">
+                            {% if item.is_connected %}
+                                {% if item.needs_refresh %}
+                                <span class="status-chip status-refresh">{{ manage['connected']['status']['needs_refresh'] }}</span>
+                                {% else %}
+                                <span class="status-chip status-live">{{ manage['connected']['status']['connected'] }}</span>
+                                {% endif %}
                             {% else %}
-                            <span class="status-badge status-connected">● 연결됨</span>
+                                <span class="status-chip status-off">{{ manage['connected']['status']['disconnected'] }}</span>
                             {% endif %}
-                        {% else %}
-                        <span class="status-badge status-disconnected">● 연결 안됨</span>
+                            {% if source_text %}
+                            <span class="source-pill {{ source_key }}">{{ source_text }}</span>
+                            {% endif %}
+                        </div>
+                        {% if snapshot.get('error') %}
+                        <p class="source-note">{{ snapshot.get('error') }}</p>
                         {% endif %}
-
-                        <div class="channel-stats">
-                            <div class="stat-item">
-                                <span class="stat-label">팔로워</span>
-                                <span class="stat-value">{{ "{:,}".format(item.channel.followers) }}</span>
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <h4>{{ manage['connected']['metrics']['followers']['label'] }}</h4>
+                                <strong>{{ "{:,}".format((followers or 0)|int) }}</strong>
+                                <p>{{ manage['connected']['metrics']['followers']['explain'] }}</p>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-label">참여율</span>
-                                <span class="stat-value">{{ "%.1f"|format(item.channel.engagement_rate) }}%</span>
+                            <div class="metric-card">
+                                <h4>{{ manage['connected']['metrics']['engagement']['label'] }}</h4>
+                                <strong>{{ "%.1f"|format(engagement or 0) }}%</strong>
+                                <p>{{ manage['connected']['metrics']['engagement']['explain'] }}</p>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-label">성장률</span>
-                                <span class="stat-value">{{ "%.1f"|format(item.channel.growth_rate) }}%</span>
+                            <div class="metric-card">
+                                <h4>{{ manage['connected']['metrics']['growth']['label'] }}</h4>
+                                <strong>{{ "%.1f"|format(growth or 0) }}%</strong>
+                                <p>{{ manage['connected']['metrics']['growth']['explain'] }}</p>
+                            </div>
+                            <div class="metric-card">
+                                <h4>{{ manage['connected']['metrics']['last_post']['label'] }}</h4>
+                                {% if last_title %}
+                                <strong>{{ last_label[:10] if last_label else "—" }}</strong>
+                                <p>{{ last_title }}</p>
+                                {% else %}
+                                <strong>—</strong>
+                                <p>{{ manage['connected']['metrics']['last_post']['no_data'] }}</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="channel-actions">
-                    {% if item.needs_refresh %}
-                    <button class="btn btn-warning" onclick="refreshToken({{ item.channel.id }})">
-                        🔄 갱신
-                    </button>
-                    {% endif %}
-                    <a href="/dashboard" class="btn btn-primary">
-                        📊 대시보드
-                    </a>
-                    <button class="btn btn-danger" onclick="disconnectChannel({{ item.channel.id }}, '{{ item.channel.account_name }}')">
-                        🔌 연결 해제
-                    </button>
-                </div>
-            </div>
+                    <div class="channel-details">
+                        <div class="recent-posts">
+                            {% set posts = snapshot.get('recent_posts', []) %}
+                            {% if posts %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>{{ manage['connected']['recent_posts']['title'] }}</th>
+                                        <th>{{ manage['connected']['recent_posts']['impressions'] }}</th>
+                                        <th>{{ manage['connected']['recent_posts']['likes'] }}</th>
+                                        <th>{{ manage['connected']['recent_posts']['comments'] }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for post in posts[:3] %}
+                                    <tr>
+                                        <td>{{ post.get('title') or '-' }}</td>
+                                        <td>{{ "{:,}".format((post.get('impressions') or 0)|int) }}</td>
+                                        <td>{{ "{:,}".format((post.get('likes') or 0)|int) }}</td>
+                                        <td>{{ "{:,}".format((post.get('comments') or 0)|int) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                            <div class="recent-empty">{{ manage['connected']['recent_posts']['empty'] }}</div>
+                            {% endif %}
+                        </div>
+
+                        {% set hourly_views = snapshot.get('hourly_views', []) %}
+                        {% if hourly_views %}
+                            {% set stats = namespace(peak=None, trough=None) %}
+                            {% for point in hourly_views %}
+                                {% if stats.peak is none or point['views'] > stats.peak['views'] %}
+                                    {% set stats.peak = point %}
+                                {% endif %}
+                                {% if stats.trough is none or point['views'] < stats.trough['views'] %}
+                                    {% set stats.trough = point %}
+                                {% endif %}
+                            {% endfor %}
+                            <div class="view-pattern">
+                                <div>{{ manage['connected']['hourly_views']['peak'].format(hour=("%02d"|format(stats.peak['hour'])), views="{:,}".format(stats.peak['views'])) }}</div>
+                                {% if stats.trough %}
+                                <div>{{ manage['connected']['hourly_views']['off_peak'].format(hour=("%02d"|format(stats.trough['hour']))) }}</div>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="view-pattern">
+                                {{ manage['connected']['hourly_views']['no_data'] }}
+                            </div>
+                        {% endif %}
+
+                        <div class="channel-actions">
+                            <a class="btn secondary small" href="/dashboard">{{ manage['connected']['actions']['open_dashboard'] }}</a>
+                            {% if item.needs_refresh %}
+                            <button class="btn outline small" type="button" onclick="refreshToken({{ channel.id }})">{{ manage['connected']['actions']['refresh'] }}</button>
+                            {% endif %}
+                            <button class="btn danger small" type="button" data-account="{{ channel.account_name }}" onclick="disconnectChannel({{ channel.id }}, this.dataset.account)">{{ manage['connected']['actions']['disconnect'] }}</button>
+                        </div>
+                    </div>
+                </article>
             {% endfor %}
         {% else %}
-        <div class="empty-state">
-            <div class="empty-state-icon">📭</div>
-            <p>아직 연결된 채널이 없습니다.<br>아래에서 첫 채널을 연결해보세요!</p>
+        <div class="empty-card">
+            <strong>{{ manage['connected']['empty']['title'] }}</strong>
+            <p>{{ manage['connected']['empty']['body'] }}</p>
         </div>
         {% endif %}
-    </div>
+    </section>
 
-    <!-- 채널 추가 -->
-    <div class="add-channels">
-        <h2 class="section-title">
-            <span>➕</span>
-            <span>새 채널 추가</span>
-        </h2>
-
-        <div class="platforms-grid">
+    <section class="platform-section">
+        <div class="section-heading">
+            <h2>{{ manage['platforms']['title'] }}</h2>
+        </div>
+        <p style="color:#4b5563; margin-bottom:1.25rem;">{{ manage['platforms']['description'] }}</p>
+        <div class="platform-grid">
             {% for platform in platforms %}
-            <div class="platform-card" onclick="showSetupInstructions('{{ platform.id }}')">
-                <div class="platform-header">
-                    <span class="platform-icon">{{ platform.icon }}</span>
-                    <span class="platform-name">{{ platform.name }}</span>
+                {% set info = manage['platforms']['items'].get(platform.id, {}) %}
+                <div class="platform-card" data-platform="{{ platform.id }}" onclick="showSetupInstructions('{{ platform.id }}')">
+                    <span class="platform-badge">{{ platform.badge }}</span>
+                    <h3>{{ info.get('name', platform.id|capitalize) }}</h3>
+                    <p>{{ info.get('summary', '') }}</p>
+                    <ul class="platform-features">
+                        {% for feature in manage['platforms']['feature_points'] %}
+                        <li>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn secondary small" type="button" onclick="event.stopPropagation(); connectPlatform('{{ platform.id }}')">
+                        {{ manage['platforms']['cta'] }}
+                    </button>
                 </div>
-                <p class="platform-description">{{ platform.description }}</p>
-                <ul class="platform-features">
-                    <li>게시물 및 댓글 데이터</li>
-                    <li>팔로워/구독자 통계</li>
-                    <li>참여도 분석</li>
-                    <li>AI 기반 인사이트</li>
-                </ul>
-                <button class="btn btn-primary" style="width: 100%;" onclick="event.stopPropagation(); connectPlatform('{{ platform.id }}')">
-                    연결하기
-                </button>
-            </div>
             {% endfor %}
         </div>
-    </div>
+    </section>
 </div>
 
-<!-- 설정 안내 모달 -->
-<div id="setupModal" class="modal">
-    <div class="modal-content">
+<div class="modal" id="setupModal">
+    <div class="modal-card">
         <div class="modal-header">
-            <h2 id="modalTitle">채널 연결 방법</h2>
-            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h3 id="modalTitle">{{ manage['modal']['title'].format(platform='') }}</h3>
+            <button class="close-btn" type="button" onclick="closeModal()">&times;</button>
         </div>
-        <div id="modalBody">
-            <!-- 동적으로 채워짐 -->
-        </div>
+        <div id="modalBody"></div>
     </div>
 </div>
 
 <script>
-const setupInstructions = {
-    instagram: {
-        title: '📷 Instagram 연결 방법',
-        content: `
-            <div class="setup-instructions">
-                <h4>1. Meta 개발자 계정 필요</h4>
-                <p>Instagram API는 Facebook(Meta) 개발자 플랫폼을 통해 제공됩니다.</p>
+const manageTexts = {{ manage | tojson }};
+const platformInstructions = manageTexts.platforms.items || {};
+const modalTitleTemplate = manageTexts.modal.title;
+const modalCloseLabel = manageTexts.modal.close;
+const usageLimitMessage = manageTexts.usage.limit_reached;
+const limitReached = {{ 'true' if limit_reached else 'false' }};
+const actionTexts = manageTexts.connected.actions;
+const alertTexts = manageTexts.alerts;
 
-                <h4>2. 필수 설정</h4>
-                <ol>
-                    <li><a href="https://developers.facebook.com/" target="_blank">Meta 개발자 센터</a>에서 앱 생성</li>
-                    <li>Instagram Basic Display 또는 Instagram Graph API 제품 추가</li>
-                    <li>Instagram Business 또는 Creator 계정으로 전환 필요</li>
-                    <li>Facebook 페이지와 Instagram 계정 연결</li>
-                </ol>
-
-                <h4>3. 필요한 권한</h4>
-                <ul>
-                    <li><code>instagram_basic</code> - 기본 프로필 정보</li>
-                    <li><code>instagram_manage_insights</code> - 인사이트 데이터</li>
-                    <li><code>pages_show_list</code> - 페이지 목록</li>
-                    <li><code>pages_read_engagement</code> - 참여도 데이터</li>
-                </ul>
-
-                <h4>4. 환경 변수 설정</h4>
-                <p>관리자가 <code>.env</code> 파일에 다음을 설정해야 합니다:</p>
-                <pre><code>FACEBOOK_APP_ID=your_app_id
-FACEBOOK_APP_SECRET=your_app_secret</code></pre>
-            </div>
-        `
-    },
-    facebook: {
-        title: '📘 Facebook 연결 방법',
-        content: `
-            <div class="setup-instructions">
-                <h4>1. Meta 개발자 계정 필요</h4>
-                <p>Facebook Page API를 사용합니다.</p>
-
-                <h4>2. 필수 설정</h4>
-                <ol>
-                    <li><a href="https://developers.facebook.com/" target="_blank">Meta 개발자 센터</a>에서 앱 생성</li>
-                    <li>Facebook Login 제품 추가</li>
-                    <li>관리자 권한이 있는 Facebook 페이지 필요</li>
-                </ol>
-
-                <h4>3. 필요한 권한</h4>
-                <ul>
-                    <li><code>pages_show_list</code> - 페이지 목록</li>
-                    <li><code>pages_read_engagement</code> - 참여도</li>
-                    <li><code>pages_read_user_content</code> - 콘텐츠 읽기</li>
-                    <li><code>read_insights</code> - 인사이트</li>
-                </ul>
-
-                <h4>4. 환경 변수 설정</h4>
-                <pre><code>FACEBOOK_APP_ID=your_app_id
-FACEBOOK_APP_SECRET=your_app_secret</code></pre>
-            </div>
-        `
-    },
-    threads: {
-        title: '🧵 Threads 연결 방법',
-        content: `
-            <div class="setup-instructions">
-                <h4>1. Meta 개발자 계정 필요</h4>
-                <p>Threads API는 Facebook(Meta) 플랫폼의 일부입니다.</p>
-
-                <h4>2. 필수 설정</h4>
-                <ol>
-                    <li><a href="https://developers.facebook.com/" target="_blank">Meta 개발자 센터</a>에서 앱 생성</li>
-                    <li>Threads API 제품 추가 (베타)</li>
-                    <li>Instagram 계정과 연동된 Threads 계정 필요</li>
-                </ol>
-
-                <h4>3. 필요한 권한</h4>
-                <ul>
-                    <li><code>threads_basic</code> - 기본 프로필</li>
-                    <li><code>threads_content_publish</code> - 콘텐츠</li>
-                    <li><code>threads_manage_insights</code> - 인사이트</li>
-                </ul>
-
-                <p><strong>참고:</strong> Threads API는 현재 제한적으로 제공되며, 별도 승인이 필요할 수 있습니다.</p>
-            </div>
-        `
-    },
-    youtube: {
-        title: '▶️ YouTube 연결 방법',
-        content: `
-            <div class="setup-instructions">
-                <h4>1. Google Cloud 프로젝트 필요</h4>
-                <p>YouTube Data API v3를 사용합니다.</p>
-
-                <h4>2. 필수 설정</h4>
-                <ol>
-                    <li><a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a>에서 프로젝트 생성</li>
-                    <li>YouTube Data API v3 활성화</li>
-                    <li>OAuth 2.0 클라이언트 ID 생성 (웹 애플리케이션)</li>
-                    <li>승인된 리디렉션 URI 추가: <code>https://yourdomain.com/channels/callback/youtube</code></li>
-                </ol>
-
-                <h4>3. 필요한 스코프</h4>
-                <ul>
-                    <li><code>youtube.readonly</code> - 채널 및 동영상 데이터 읽기</li>
-                    <li><code>yt-analytics.readonly</code> - 분석 데이터 읽기</li>
-                </ul>
-
-                <h4>4. 환경 변수 설정</h4>
-                <pre><code>GOOGLE_CLIENT_ID=your_client_id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your_client_secret</code></pre>
-            </div>
-        `
-    },
-    twitter: {
-        title: '🐦 Twitter/X 연결 방법',
-        content: `
-            <div class="setup-instructions">
-                <h4>1. Twitter 개발자 계정 필요</h4>
-                <p>Twitter API v2를 사용합니다.</p>
-
-                <h4>2. 필수 설정</h4>
-                <ol>
-                    <li><a href="https://developer.twitter.com/" target="_blank">Twitter Developer Portal</a>에서 앱 생성</li>
-                    <li>OAuth 2.0 설정 (Type: Web App, Public Client)</li>
-                    <li>Callback URL 추가: <code>https://yourdomain.com/channels/callback/twitter</code></li>
-                    <li>Essential 또는 Elevated Access 필요 (무료 제한 있음)</li>
-                </ol>
-
-                <h4>3. 필요한 스코프</h4>
-                <ul>
-                    <li><code>tweet.read</code> - 트윗 읽기</li>
-                    <li><code>users.read</code> - 사용자 정보</li>
-                    <li><code>follows.read</code> - 팔로워 정보</li>
-                    <li><code>offline.access</code> - 리프레시 토큰</li>
-                </ul>
-
-                <h4>4. 환경 변수 설정</h4>
-                <pre><code>TWITTER_CLIENT_ID=your_client_id
-TWITTER_CLIENT_SECRET=your_client_secret</code></pre>
-
-                <p><strong>주의:</strong> Twitter API는 무료 티어에서 제한이 있습니다.</p>
-            </div>
-        `
-    },
-    tiktok: {
-        title: '🎵 TikTok 연결 방법',
-        content: `
-            <div class="setup-instructions">
-                <h4>1. TikTok for Developers 계정 필요</h4>
-                <p>TikTok API는 승인 프로세스가 필요합니다.</p>
-
-                <h4>2. 필수 설정</h4>
-                <ol>
-                    <li><a href="https://developers.tiktok.com/" target="_blank">TikTok for Developers</a>에서 앱 생성</li>
-                    <li>앱 심사 및 승인 대기 (시간 소요)</li>
-                    <li>Login Kit 제품 추가</li>
-                    <li>Redirect URL 설정: <code>https://yourdomain.com/channels/callback/tiktok</code></li>
-                </ol>
-
-                <h4>3. 필요한 스코프</h4>
-                <ul>
-                    <li><code>user.info.basic</code> - 기본 프로필</li>
-                    <li><code>video.list</code> - 동영상 목록</li>
-                    <li><code>video.insights</code> - 분석 데이터</li>
-                </ul>
-
-                <h4>4. 환경 변수 설정</h4>
-                <pre><code>TIKTOK_CLIENT_KEY=your_client_key
-TIKTOK_CLIENT_SECRET=your_client_secret</code></pre>
-
-                <p><strong>중요:</strong> TikTok API 접근은 비즈니스 계정에만 제한될 수 있습니다.</p>
-            </div>
-        `
-    }
-};
+const modal = document.getElementById('setupModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
 
 function showSetupInstructions(platform) {
-    const modal = document.getElementById('setupModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-
-    const instructions = setupInstructions[platform];
-    if (instructions) {
-        modalTitle.textContent = instructions.title;
-        modalBody.innerHTML = instructions.content;
-        modal.classList.add('active');
+    const info = platformInstructions[platform];
+    if (!info) {
+        return;
     }
+    const title = modalTitleTemplate.replace('{platform}', info.name || platform);
+    modalTitle.textContent = title;
+
+    const steps = info.setup || [];
+    let html = '';
+    steps.forEach(step => {
+        html += '<div class="setup-group">';
+        html += `<h4>${step.title}</h4>`;
+        if (step.points && step.points.length) {
+            html += '<ul>';
+            step.points.forEach(point => {
+                html += `<li>${point}</li>`;
+            });
+            html += '</ul>';
+        }
+        html += '</div>';
+    });
+    if (!html) {
+        html = `<p>${manageTexts.platforms.description}</p>`;
+    }
+    modalBody.innerHTML = html;
+    modal.classList.add('open');
 }
 
 function closeModal() {
-    const modal = document.getElementById('setupModal');
-    modal.classList.remove('active');
+    modal.classList.remove('open');
 }
 
-// 모달 외부 클릭시 닫기
-window.onclick = function(event) {
-    const modal = document.getElementById('setupModal');
+window.addEventListener('click', (event) => {
     if (event.target === modal) {
         closeModal();
     }
-}
+});
 
 function connectPlatform(platform) {
-    {% if current_channel_count >= max_channels %}
-    alert('채널 연결 한도에 도달했습니다. 구독 플랜을 업그레이드하세요.');
-    window.location.href = '/pricing';
-    {% else %}
-    window.location.href = '/channels/connect/' + platform;
-    {% endif %}
-}
-
-async function disconnectChannel(channelId, accountName) {
-    if (!confirm(`정말로 "${accountName}" 채널 연결을 해제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.`)) {
+    if (limitReached === 'true') {
+        alert(usageLimitMessage);
+        window.location.href = '/pricing';
         return;
     }
-
-    try {
-        const response = await fetch(`/channels/disconnect/${channelId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert('채널 연결이 해제되었습니다.');
-            window.location.reload();
-        } else {
-            alert('오류: ' + (data.detail || '채널 연결 해제에 실패했습니다.'));
-        }
-    } catch (error) {
-        alert('네트워크 오류가 발생했습니다.');
-        console.error(error);
-    }
+    window.location.href = `/channels/connect/${platform}`;
 }
 
-async function refreshToken(channelId) {
-    try {
-        const response = await fetch(`/channels/refresh/${channelId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const data = await response.json();
-
+function disconnectChannel(channelId, accountName) {
+    const message = actionTexts.confirm_disconnect.replace('{account}', accountName || '');
+    if (!confirm(message)) {
+        return;
+    }
+    fetch(`/channels/disconnect/${channelId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(async response => {
+        const data = await response.json().catch(() => ({}));
         if (response.ok) {
-            alert('토큰이 갱신되었습니다.');
+            alert(alertTexts.disconnected);
+            window.location.href = window.location.pathname + '?disconnected=true';
+        } else {
+            alert(data.detail || 'Request failed');
+        }
+    }).catch(() => {
+        alert('Network error');
+    });
+}
+
+function refreshToken(channelId) {
+    fetch(`/channels/refresh/${channelId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(async response => {
+        const data = await response.json().catch(() => ({}));
+        if (response.ok) {
+            alert(actionTexts.refresh);
             window.location.reload();
         } else {
-            alert('오류: ' + (data.detail || '토큰 갱신에 실패했습니다.'));
+            alert(data.detail || 'Request failed');
         }
-    } catch (error) {
-        alert('네트워크 오류가 발생했습니다.');
-        console.error(error);
-    }
+    }).catch(() => {
+        alert('Network error');
+    });
 }
 </script>
 {% endblock %}
