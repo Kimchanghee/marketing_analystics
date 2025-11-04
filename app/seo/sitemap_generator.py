@@ -12,7 +12,7 @@ from xml.etree import ElementTree as ET
 class SitemapGenerator:
     """Sitemap.xml 생성기"""
 
-    def __init__(self, base_url: str = "https://creatorcontrol.center"):
+    def __init__(self, base_url: str = "https://creatorscontrol.com"):
         self.base_url = base_url.rstrip("/")
         self.xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9"
         self.xmlns_xhtml = "http://www.w3.org/1999/xhtml"
@@ -136,7 +136,7 @@ class SitemapGenerator:
         return url_elem
 
 
-def generate_robots_txt(base_url: str = "https://creatorcontrol.center") -> str:
+def generate_robots_txt(base_url: str = "https://creatorscontrol.com") -> str:
     """robots.txt 생성"""
     robots_txt = f"""# robots.txt for Creator Control Center
 # https://www.robotstxt.org/
@@ -177,6 +177,6 @@ Allow: /
     return robots_txt
 
 
-def get_sitemap_generator(base_url: str = "https://creatorcontrol.center") -> SitemapGenerator:
+def get_sitemap_generator(base_url: str = "https://creatorscontrol.com") -> SitemapGenerator:
     """Sitemap 생성기 인스턴스 반환"""
     return SitemapGenerator(base_url=base_url)
