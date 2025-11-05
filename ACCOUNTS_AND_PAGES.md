@@ -48,7 +48,7 @@
 
 ### 4️⃣ 마스터 관리자 (모든 페이지 접근 가능)
 ```
-이메일: kckc93@creatorcontrol.center
+이메일: kckc93@creatorscontrol.com
 비밀번호: Ckdgml9788@
 역할: SUPER_ADMIN
 ```
@@ -103,11 +103,18 @@
 - OAuth2 방식
 - User/Password 방식
 
-#### AI 질문 예시:
+#### 🤖 AI PD 비서 (PRO 이상):
+- **유료 기능**: PRO 또는 ENTERPRISE 구독 필요
+- **위치**: 개인 대시보드 하단에 통합
+- **기능**: 채널 성과 분석, 성장 전략 제안, 실시간 AI 상담
+
+**AI 질문 예시:**
 - "어떤 플랫폼에 더 집중해야 할까요?"
 - "최근 게시물 반응이 좋은 이유는?"
 - "구독자를 늘리는 방법을 알려주세요"
 - "참여율을 개선하려면?"
+
+**FREE 사용자**: 업그레이드 안내 메시지 표시
 
 ---
 
@@ -142,11 +149,18 @@
 | `/manager/invite` | 크리에이터 초대 링크 생성 |
 | `/manager/creator/{id}` | 크리에이터 상세 정보 |
 
-#### AI PD 비서 (매니저용):
+#### 🤖 AI PD 비서 - 포트폴리오 분석 (PRO 이상):
+- **유료 기능**: PRO 또는 ENTERPRISE 구독 필요
+- **위치**: 기업 대시보드 하단에 통합
+- **기능**: 포트폴리오 분석, 크리에이터별 성과 비교, 전략적 인사이트
+
+**AI 질문 예시:**
 - "어떤 크리에이터가 가장 좋은 성과를 내고 있나요?"
 - "전체 포트폴리오의 강점과 약점은?"
 - "크리에이터별 맞춤 전략을 제안해주세요"
 - "다음 분기 액션 아이템은?"
+
+**FREE 사용자**: 업그레이드 안내 메시지 표시
 
 ---
 
@@ -186,23 +200,33 @@
 
 ---
 
-### 🤖 AI PD 전용 대시보드 (모든 역할)
-**기본 URL:** `/ai-pd`
+### 🤖 AI PD 비서 (유료 기능 - PRO+)
+**위치:** 개인/기업 대시보드에 통합됨
 
-#### 크리에이터용:
-- 개인 채널 성과 분석
-- 총 구독자 통계
-- 평균 참여율
-- 실시간 AI 채팅
+⚠️ **중요**: `/ai-pd` 별도 대시보드는 제거되었습니다. AI PD 기능은 각 대시보드에 완전히 통합되어 있습니다.
 
-#### 매니저용:
-- 포트폴리오 전체 분석
-- 관리 크리에이터 통계
-- 전체 채널 및 구독자 통계
-- 전략적 인사이트
+#### 접근 권한:
+- **FREE 사용자**: ❌ 사용 불가 (업그레이드 안내 표시)
+- **PRO 사용자**: ✅ 사용 가능
+- **ENTERPRISE 사용자**: ✅ 사용 가능
+- **SUPER_ADMIN**: ✅ 항상 사용 가능
+
+#### 크리에이터용 (개인 대시보드):
+- ✅ 개인 채널 성과 분석
+- ✅ 실시간 AI 상담 채팅
+- ✅ 맞춤형 성장 전략 제안
+- ✅ 데이터 기반 인사이트
+- 📍 위치: `/dashboard` 하단
+
+#### 매니저용 (기업 대시보드):
+- ✅ 포트폴리오 전체 분석
+- ✅ 크리에이터별 성과 비교
+- ✅ 전략적 인사이트 제공
+- ✅ 포트폴리오 최적화 가이드
+- 📍 위치: `/manager/dashboard` 하단
 
 #### API 엔드포인트:
-- `POST /ai-pd/ask`: AI에게 질문하기
+- `POST /ai-pd/ask`: AI에게 질문하기 (PRO+ 구독 필요)
 
 ---
 
@@ -222,8 +246,9 @@ SUPER_ADMIN = "super_admin"  # 슈퍼 관리자
 | `/dashboard` | ✅ | ❌ | ✅ |
 | `/manager/dashboard` | ❌ | ✅ | ✅ |
 | `/super-admin` | ❌ | ❌ | ✅ (token 필요) |
-| `/ai-pd` | ✅ | ✅ | ✅ |
 | `/profile` | ✅ | ✅ | ✅ |
+
+**주의**: `/ai-pd` 별도 페이지는 제거됨 - AI PD는 각 대시보드에 통합되어 있으며 PRO+ 구독 필요
 
 ---
 
@@ -268,9 +293,8 @@ JWT_SECRET=your-jwt-secret
 ### 주요 페이지 링크:
 - 🏠 홈: https://marketing-analystics-573434207823.europe-west1.run.app/
 - 🔐 로그인: https://marketing-analystics-573434207823.europe-west1.run.app/login
-- 👤 개인 대시보드: https://marketing-analystics-573434207823.europe-west1.run.app/dashboard
-- 🏢 기업 대시보드: https://marketing-analystics-573434207823.europe-west1.run.app/manager/dashboard
-- 🤖 AI PD: https://marketing-analystics-573434207823.europe-west1.run.app/ai-pd
+- 👤 개인 대시보드: https://marketing-analystics-573434207823.europe-west1.run.app/dashboard (AI PD 통합)
+- 🏢 기업 대시보드: https://marketing-analystics-573434207823.europe-west1.run.app/manager/dashboard (AI PD 통합)
 - 👑 슈퍼 관리자: https://marketing-analystics-573434207823.europe-west1.run.app/super-admin?admin_token=TOKEN
 
 ---
@@ -286,9 +310,16 @@ python create_test_accounts.py
 
 ## 📝 주요 업데이트 내역
 
-### 최근 수정 (2025-10-27)
+### 최근 수정 (2025-11-05)
+- ✅ **AI PD 유료화**: PRO 이상 구독 필요 (FREE 사용자는 업그레이드 안내 표시)
+- ✅ **`/ai-pd` 별도 대시보드 제거**: AI PD 기능은 개인/기업 대시보드에 완전 통합
+- ✅ **구독 체크 강화**: `/ai-pd/ask` 엔드포인트에 구독 확인 추가
+- ✅ 개인 대시보드에 AI PD 유료 기능 UI 추가
+- ✅ 기업 대시보드에 AI PD 유료 기능 UI 추가
+- ✅ 기업 관리자 대시보드에 구독 정보 전달 추가
+
+### 이전 수정 (2025-10-27)
 - ✅ 슈퍼관리자 권한 오류 수정 (`admin_token`만으로 접근 가능)
-- ✅ AI-PD 기능이 슈퍼관리자 페이지에 통합됨
 - ✅ 개인/기업 대시보드에 AI-PD 채팅창 통합 완료
 - ✅ 매니저 대시보드 정상 작동 확인
 - ✅ **SUPER_ADMIN 로그인 오류 수정**: 로그인 후 `/dashboard`로 리다이렉트 (모든 페이지 접근 가능)

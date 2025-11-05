@@ -543,11 +543,12 @@ if (postsCtx && chartData.recentPosts.length > 0) {
 </section>
 
 
-<!-- AI PD 채팅 섹션 -->
+<!-- AI PD 채팅 섹션 (유료 기능) -->
 <section class="ai-pd-section">
-    <h2>🤖 AI PD 비서</h2>
+    <h2>🤖 AI PD 비서 <span class="premium-badge">PRO</span></h2>
     <p class="section-desc">채널 성과를 분석하고 개선 방안을 제안받으세요</p>
 
+    {% if subscription.tier.value in ['pro', 'enterprise'] %}
     <div class="ai-chat-container">
         <div class="chat-messages" id="aiChatMessages">
             <div class="ai-message">
@@ -580,6 +581,32 @@ if (postsCtx && chartData.recentPosts.length > 0) {
             </button>
         </form>
     </div>
+    {% else %}
+    <div class="upgrade-notice">
+        <div class="upgrade-icon">🔒</div>
+        <h3>AI PD 비서는 PRO 이상 구독자만 이용할 수 있습니다</h3>
+        <p>AI 기반 성과 분석 및 맞춤 전략을 받아보세요!</p>
+        <div class="upgrade-benefits">
+            <div class="benefit-item">
+                <span class="benefit-icon">✨</span>
+                <span>실시간 AI 채널 분석</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">📊</span>
+                <span>맞춤형 성장 전략 제안</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🎯</span>
+                <span>데이터 기반 인사이트</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💡</span>
+                <span>콘텐츠 최적화 가이드</span>
+            </div>
+        </div>
+        <a href="/personal" class="btn primary upgrade-btn">PRO로 업그레이드 하기</a>
+    </div>
+    {% endif %}
 </section>
 
 <style>
@@ -593,11 +620,72 @@ if (postsCtx && chartData.recentPosts.length > 0) {
 
 .ai-pd-section h2 {
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.premium-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
 }
 
 .section-desc {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
+}
+
+.upgrade-notice {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.upgrade-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.upgrade-notice h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.upgrade-notice p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.benefit-icon {
+    font-size: 1.25rem;
+}
+
+.upgrade-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
 }
 
 .ai-chat-container {

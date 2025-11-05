@@ -1,7 +1,10 @@
 """AI PD (Personal Development) Router
 
 Provides AI-powered analysis and feedback for creators and managers.
-This is a premium feature that requires valid API keys.
+This is a PREMIUM feature that requires PRO or ENTERPRISE subscription.
+
+Note: The /ai-pd dashboard route has been removed.
+AI PD features are now fully integrated into the creator and manager dashboards.
 """
 from typing import Dict, List
 
@@ -18,98 +21,12 @@ from ..models import (
     UserRole,
 )
 from ..services.ai_pd_service import ai_pd_service
-from ..services.localization import translator
 from ..services.social_fetcher import fetch_channel_snapshots
 
 router = APIRouter()
 
 
-@router.get("/ai-pd")
-def ai_pd_dashboard(
-    request: Request,
-    user: User = Depends(get_current_user),
-    session=Depends(get_session),
-    _feature_access: bool = Depends(check_feature_access("ai_pd"))
-):
-    """AI PD dashboard - available for both creators and managers"""
-    locale = user.locale
-    strings = translator.load_locale(locale)
-
-    # Determine user type and fetch relevant data
-    if user.role == UserRole.CREATOR:
-        # Get creator's channels
-        channels = session.exec(
-            select(ChannelAccount)
-            .where(ChannelAccount.owner_id == user.id)
-            .options(selectinload(ChannelAccount.credential))
-        ).all()
-        snapshots = fetch_channel_snapshots(channels)
-
-        template_data = {
-            "request": request,
-            "user": user,
-            "locale": locale,
-            "t": strings,
-            "user_type": "creator",
-            "channels": channels,
-            "snapshots": snapshots,
-            "total_followers": sum(s.get('followers', 0) for s in snapshots.values()),
-            "avg_engagement": sum(s.get('engagement_rate', 0) for s in snapshots.values()) / len(snapshots) if snapshots else 0,
-        }
-
-    elif user.role in [UserRole.MANAGER, UserRole.ADMIN]:
-        # Get managed creators
-        links = session.exec(
-            select(ManagerCreatorLink)
-            .where(ManagerCreatorLink.manager_id == user.id)
-            .where(ManagerCreatorLink.approved == True)
-        ).all()
-
-        creator_ids = [link.creator_id for link in links]
-        creators = session.exec(
-            select(User).where(User.id.in_(creator_ids))
-        ).all() if creator_ids else []
-
-        # Get all channels for all creators
-        all_channels: Dict[int, List[ChannelAccount]] = {}
-        all_snapshots: Dict[int, Dict[int, Dict]] = {}
-        total_channels = 0
-        total_followers = 0
-
-        for creator in creators:
-            channels = session.exec(
-                select(ChannelAccount)
-                .where(ChannelAccount.owner_id == creator.id)
-                .options(selectinload(ChannelAccount.credential))
-            ).all()
-            all_channels[creator.id] = list(channels)
-            snapshots = fetch_channel_snapshots(channels)
-            all_snapshots[creator.id] = snapshots
-
-            total_channels += len(channels)
-            total_followers += sum(s.get('followers', 0) for s in snapshots.values())
-
-        template_data = {
-            "request": request,
-            "user": user,
-            "locale": locale,
-            "t": strings,
-            "user_type": "manager",
-            "creators": creators,
-            "all_channels": all_channels,
-            "all_snapshots": all_snapshots,
-            "total_creators": len(creators),
-            "total_channels": total_channels,
-            "total_followers": total_followers,
-        }
-
-    else:
-        raise HTTPException(status_code=403, detail="AI PD 서비스는 크리에이터와 매니저만 이용할 수 있습니다.")
-
-    return request.app.state.templates.TemplateResponse(
-        "ai_pd_dashboard.html",
-        template_data
-    )
+# /ai-pd 대시보드는 제거됨 - AI PD 기능은 개인/기업 대시보드에 통합되어 있습니다.
 
 
 @router.post("/ai-pd/ask")
@@ -117,9 +34,10 @@ def ask_ai_pd(
     request: Request,
     question: str = Form(...),
     user: User = Depends(get_current_user),
-    session=Depends(get_session)
+    session=Depends(get_session),
+    _feature_access: bool = Depends(check_feature_access("ai_pd"))
 ):
-    """Ask AI PD a question about performance and get insights"""
+    """Ask AI PD a question about performance and get insights (PRO+ subscription required)"""
     if not question or len(question.strip()) < 10:
         raise HTTPException(status_code=400, detail="질문은 최소 10자 이상 입력해주세요.")
 

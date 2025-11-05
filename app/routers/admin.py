@@ -410,6 +410,14 @@ def manager_dashboard(
     api_key_record = session.exec(select(ManagerAPIKey).where(ManagerAPIKey.manager_id == user.id)).first()
     has_api_key = api_key_record is not None
 
+    # 관리자 구독 정보
+    subscription = session.exec(select(Subscription).where(Subscription.user_id == user.id)).first()
+    if not subscription:
+        subscription = Subscription(user_id=user.id, tier=SubscriptionTier.ENTERPRISE, max_accounts=20)
+        session.add(subscription)
+        session.commit()
+        session.refresh(subscription)
+
     return request.app.state.templates.TemplateResponse(
         "manager_dashboard.html",
         {
@@ -426,6 +434,7 @@ def manager_dashboard(
             "total_channels": total_channels,
             "creator_snapshots": creator_snapshots,
             "has_api_key": has_api_key,
+            "subscription": subscription,
         },
     )
 
