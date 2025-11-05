@@ -573,6 +573,23 @@
                                 <p>{{ manage['connected']['metrics']['last_post']['no_data'] }}</p>
                                 {% endif %}
                             </div>
+                            {% if channel.platform == 'youtube' and snapshot.get('revenue') %}
+                            {% set revenue = snapshot['revenue'] %}
+                            {% if not revenue.get('error') %}
+                            <div class="metric-card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b;">
+                                <h4 style="color: #92400e;">💰 예상 수익 (28일)</h4>
+                                <strong style="color: #92400e;">
+                                    ${{ "%.2f"|format(revenue.get('estimated_revenue', 0)) }}
+                                </strong>
+                                <p style="color: #92400e; font-size: 0.75rem;">
+                                    광고: ${{ "%.2f"|format(revenue.get('estimated_ad_revenue', 0)) }}
+                                    {% if revenue.get('estimated_red_partner_revenue', 0) > 0 %}
+                                    | Premium: ${{ "%.2f"|format(revenue.get('estimated_red_partner_revenue', 0)) }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="channel-details">

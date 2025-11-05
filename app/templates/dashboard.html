@@ -70,6 +70,15 @@
                     <strong>{{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</strong>
                     <span>{{ t['dashboard']['last_post'] }}</span>
                 </li>
+                {% if account.platform == 'youtube' and snapshot.get('revenue') %}
+                {% set revenue = snapshot['revenue'] %}
+                {% if not revenue.get('error') %}
+                <li style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px; padding: 0.5rem;">
+                    <strong style="color: #92400e;">💰 ${{ "%.2f"|format(revenue.get('estimated_revenue', 0)) }}</strong>
+                    <span style="color: #92400e; font-size: 0.75rem;">28일 예상 수익</span>
+                </li>
+                {% endif %}
+                {% endif %}
             </ul>
             {% endif %}
             </div>

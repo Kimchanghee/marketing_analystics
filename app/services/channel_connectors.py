@@ -221,6 +221,8 @@ class YouTubeConnector(BaseConnector):
         if not api_key:
             raise ChannelConnectorConfigError("YouTube API Key 또는 OAuth 토큰이 필요합니다.")
         identifier = (credential.identifier or account.account_name).lstrip("@")
+
+        # 채널 기본 정보 가져오기
         params = {
             "part": "statistics,snippet",
             "forUsername": identifier,
@@ -236,10 +238,14 @@ class YouTubeConnector(BaseConnector):
             items = data.get("items", [])
         if not items:
             raise ChannelConnectorError("채널 정보를 찾을 수 없습니다.")
+
         channel_data = items[0]
+        channel_id = channel_data.get("id")
         statistics = channel_data.get("statistics", {})
         snippet = channel_data.get("snippet", {})
         followers = int(statistics.get("subscriberCount", 0))
+
+        # 최근 업로드 동영상 가져오기
         uploads_playlist = snippet.get("relatedPlaylists", {}).get("uploads")
         recent_posts: List[Dict[str, Any]] = []
         if uploads_playlist:
@@ -263,6 +269,12 @@ class YouTubeConnector(BaseConnector):
                         "comments": int(statistics.get("commentCount", 0)),
                     }
                 )
+
+        # YouTube Analytics API로 수익 정보 가져오기 (OAuth 토큰이 있는 경우)
+        revenue_data = None
+        if credential.auth_type.value == "oauth2" and credential.access_token:
+            revenue_data = self._fetch_revenue_data(channel_id, credential.access_token)
+
         last_post = recent_posts[0] if recent_posts else {}
         engagement_rate = 0.0
         if followers and statistics.get("viewCount"):
@@ -270,7 +282,8 @@ class YouTubeConnector(BaseConnector):
                 (int(statistics.get("viewCount", 0)) / max(followers, 1)) * 100,
                 2,
             )
-        return {
+
+        result = {
             "account": snippet.get("title", identifier),
             "followers": followers,
             "growth_rate": float(credential.metadata_json.get("growth_rate", 0.0)),
@@ -279,6 +292,64 @@ class YouTubeConnector(BaseConnector):
             "last_post_title": last_post.get("title"),
             "recent_posts": recent_posts,
         }
+
+        # 수익 정보 추가
+        if revenue_data:
+            result["revenue"] = revenue_data
+
+        return result
+
+    def _fetch_revenue_data(self, channel_id: str, access_token: str) -> Optional[Dict[str, Any]]:
+        """YouTube Analytics API로 예상 수익 정보 가져오기"""
+        try:
+            from datetime import datetime, timedelta
+
+            # 지난 28일간의 데이터 가져오기
+            end_date = datetime.utcnow()
+            start_date = end_date - timedelta(days=28)
+
+            params = {
+                "ids": f"channel=={channel_id}",
+                "startDate": start_date.strftime("%Y-%m-%d"),
+                "endDate": end_date.strftime("%Y-%m-%d"),
+                "metrics": "estimatedRevenue,estimatedAdRevenue,estimatedRedPartnerRevenue",
+                "dimensions": "",
+            }
+
+            headers = {"Authorization": f"Bearer {access_token}"}
+
+            # YouTube Analytics API 엔드포인트
+            response = self._http_get(
+                "https://youtubeanalytics.googleapis.com/v2/reports",
+                params=params,
+                headers=headers,
+            )
+
+            data = response.json()
+
+            # 수익 데이터 파싱
+            if "rows" in data and len(data["rows"]) > 0:
+                row = data["rows"][0]
+                column_headers = data.get("columnHeaders", [])
+
+                revenue_info = {}
+                for i, header in enumerate(column_headers):
+                    if i < len(row):
+                        revenue_info[header["name"]] = row[i]
+
+                return {
+                    "estimated_revenue": revenue_info.get("estimatedRevenue", 0),
+                    "estimated_ad_revenue": revenue_info.get("estimatedAdRevenue", 0),
+                    "estimated_red_partner_revenue": revenue_info.get("estimatedRedPartnerRevenue", 0),
+                    "period_days": 28,
+                    "currency": "USD",  # YouTube는 기본적으로 USD로 반환
+                }
+
+            return None
+
+        except Exception as e:
+            # 수익 정보를 가져오지 못해도 다른 정보는 계속 표시
+            return {"error": f"수익 정보를 가져올 수 없습니다: {str(e)}"}
 
 
 class TwitterConnector(BaseConnector):
