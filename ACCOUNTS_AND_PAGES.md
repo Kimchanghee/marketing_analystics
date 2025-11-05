@@ -18,7 +18,7 @@
 
 ### 2️⃣ 기업 관리자 (Manager)
 ```
-이메일: manager@test.com
+이메일: manager@test.c  om
 비밀번호: password123
 역할: MANAGER
 구독: ENTERPRISE (최대 20개 채널)
@@ -317,6 +317,9 @@ python create_test_accounts.py
 - ✅ 개인 대시보드에 AI PD 유료 기능 UI 추가
 - ✅ 기업 대시보드에 AI PD 유료 기능 UI 추가
 - ✅ 기업 관리자 대시보드에 구독 정보 전달 추가
+- ✅ **SUPER_ADMIN 로그인 리다이렉트 수정**: `/dashboard`로 이동 (404 에러 수정)
+  - `/super-admin`은 수동으로 접속해야 함 (admin_token 필요)
+  - 로그인 후 자동으로 슈퍼 관리자 페이지로 이동하지 않음
 
 ### 이전 수정 (2025-10-27)
 - ✅ 슈퍼관리자 권한 오류 수정 (`admin_token`만으로 접근 가능)

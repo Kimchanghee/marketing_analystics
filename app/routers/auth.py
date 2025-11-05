@@ -343,14 +343,14 @@ async def social_oauth_callback(
     auth_token = auth_manager.create_access_token(user.email)
 
     # Role별 자동 리다이렉트
-    settings = get_settings()
+    # SUPER_ADMIN은 /dashboard로 이동 (모든 페이지 접근 가능)
+    # /super-admin은 수동으로 접속해야 함
     if next_url:
         redirect_target = next_url
-    elif user.role == UserRole.SUPER_ADMIN:
-        redirect_target = f"/super-admin?admin_token={settings.super_admin_access_token}"
     elif user.role == UserRole.MANAGER:
         redirect_target = "/manager/dashboard"
     else:
+        # CREATOR, SUPER_ADMIN 등은 모두 /dashboard로
         redirect_target = "/dashboard"
 
     response = RedirectResponse(url=redirect_target, status_code=status.HTTP_303_SEE_OTHER)
@@ -487,15 +487,13 @@ def login(
     session.add(ActivityLog(user_id=user.id, action="login"))
     session.commit()
 
-    # SUPER_ADMIN 사용자는 로그인 후 슈퍼 관리자 콘솔로 이동
-    # admin_token 파라미터를 자동으로 부여해 추가 인증 없이 접근 가능
-    settings = get_settings()
-
-    if user.role == UserRole.SUPER_ADMIN:
-        redirect_to = f"/super-admin?admin_token={settings.super_admin_access_token}"
-    elif user.role == UserRole.MANAGER:
+    # 역할별 리다이렉트
+    # SUPER_ADMIN은 /dashboard로 이동 (모든 페이지 접근 가능)
+    # /super-admin은 수동으로 접속해야 함 (admin_token 필요)
+    if user.role == UserRole.MANAGER:
         redirect_to = "/manager/dashboard"
     else:
+        # CREATOR, SUPER_ADMIN 등은 모두 /dashboard로
         redirect_to = "/dashboard"
 
     redirect_response = RedirectResponse(url=redirect_to, status_code=status.HTTP_303_SEE_OTHER)
@@ -534,15 +532,13 @@ def social_login(
     session.add(ActivityLog(user_id=user.id, action=f"social_login_{provider_enum.value}"))
     session.commit()
 
-    # SUPER_ADMIN 사용자는 로그인 후 슈퍼 관리자 콘솔로 이동
-    # admin_token 파라미터를 자동으로 부여해 추가 인증 없이 접근 가능
-    settings = get_settings()
-
-    if user.role == UserRole.SUPER_ADMIN:
-        redirect_to = f"/super-admin?admin_token={settings.super_admin_access_token}"
-    elif user.role == UserRole.MANAGER:
+    # 역할별 리다이렉트
+    # SUPER_ADMIN은 /dashboard로 이동 (모든 페이지 접근 가능)
+    # /super-admin은 수동으로 접속해야 함 (admin_token 필요)
+    if user.role == UserRole.MANAGER:
         redirect_to = "/manager/dashboard"
     else:
+        # CREATOR, SUPER_ADMIN 등은 모두 /dashboard로
         redirect_to = "/dashboard"
 
     redirect_response = RedirectResponse(url=redirect_to, status_code=status.HTTP_303_SEE_OTHER)
