@@ -35,7 +35,13 @@ UI_DIR = BASE_DIR.parent / "ui"
 
 app = FastAPI(title="Creator Control Center")
 app.mount("/static", StaticFiles(directory=UI_DIR / "static"), name="static")
-app.state.templates = Jinja2Templates(directory=str(UI_DIR / "templates"))
+
+# 템플릿 디렉토리 설정 (호환성을 위해 여러 경로 지원)
+template_dirs = [
+    str(UI_DIR),  # 루트 (components, layouts, pages 접근)
+    str(UI_DIR / "templates"),  # 레거시 templates 폴더 (호환성)
+]
+app.state.templates = Jinja2Templates(directory=template_dirs)
 
 
 @app.exception_handler(Exception)

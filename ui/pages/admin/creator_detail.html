@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="creator-detail-header">
+    <div class="back-nav">
+        <a href="/manager/dashboard" class="btn tertiary">← 관리자 대시보드로 돌아가기</a>
+    </div>
+    <h1>{{ creator.name or creator.email }}의 상세 정보</h1>
+    <div class="creator-meta">
+        <p><strong>이메일:</strong> {{ creator.email }}</p>
+        <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
+        <p><strong>역할:</strong> {{ t['roles'][creator.role.value] }}</p>
+        {% if subscription %}
+        <p><strong>구독 플랜:</strong> {{ t['subscriptions'][subscription.tier.value] }}</p>
+        <p><strong>최대 채널 수:</strong> {{ subscription.max_accounts }}</p>
+        <p><strong>현재 채널 수:</strong> {{ channels|length }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="channels-overview">
+    <div class="section-header">
+        <h2>채널 목록 ({{ channels|length }}개)</h2>
+        <div class="export-actions">
+            <a href="/manager/creator/{{ creator.id }}/export/csv" class="btn secondary" download>CSV 다운로드</a>
+            <a href="/manager/creator/{{ creator.id }}/export/pdf" class="btn secondary" download>PDF 다운로드</a>
+        </div>
+    </div>
+
+    {% if channels %}
+    <div class="detail-channel-grid">
+        {% for channel in channels %}
+        <article class="detail-channel-card">
+            <header>
+                <h3>{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</h3>
+                <span class="platform-badge">{{ channel.platform }}</span>
+            </header>
+
+            <div class="channel-account-info">
+                <p><strong>{{ t['dashboard']['account_label'] }}:</strong> {{ channel.account_name }}</p>
+            </div>
+
+            {% set snapshot = snapshots.get(channel.id) %}
+            {% if snapshot %}
+            <div class="detailed-metrics">
+                <div class="metric-group">
+                    <h4>기본 지표</h4>
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['followers'] }}</span>
+                            <span class="metric-value">{{ snapshot['followers'] }}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['growth'] }}</span>
+                            <span class="metric-value">{{ snapshot['growth_rate'] }}%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['engagement'] }}</span>
+                            <span class="metric-value">{{ snapshot['engagement_rate'] }}%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['last_post'] }}</span>
+                            <span class="metric-value">{{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if snapshot.get('recent_posts') %}
+                <div class="metric-group">
+                    <h4>{{ t['dashboard']['recent_posts'] }}</h4>
+                    <div class="posts-list">
+                        {% for post in snapshot['recent_posts'] %}
+                        <div class="post-item">
+                            <div class="post-header">
+                                <strong>{{ post['title'] }}</strong>
+                                <span class="post-date">{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
+                            </div>
+                            <div class="post-stats">
+                                <span>👍 {{ post['likes'] }}</span>
+                                <span>💬 {{ post['comments'] }}</span>
+                                <span>👀 {{ post['impressions'] }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if snapshot.get('hourly_views') %}
+                <div class="metric-group">
+                    <h4>{{ t['dashboard']['hourly_views_title'] }}</h4>
+                    <div class="hourly-chart-large">
+                        {% set max_views = snapshot['hourly_views']|map(attribute='views')|max %}
+                        {% for data in snapshot['hourly_views'] %}
+                        <div class="hour-bar">
+                            <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%"
+                                 title="{{ data['hour'] }}시: {{ data['views'] }} 조회"></div>
+                            <span class="hour-label">{{ data['hour'] }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <p class="data-source-info">
+                    {{ t['dashboard']['data_source'] }}:
+                    {% if snapshot['source'] == 'api' %}
+                    <span class="source api">{{ t['dashboard']['source_api'] }}</span>
+                    {% else %}
+                    <span class="source mock">{{ t['dashboard']['source_mock'] }}</span>
+                    {% endif %}
+                </p>
+            </div>
+            {% else %}
+            <p class="no-data">데이터를 불러올 수 없습니다.</p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">이 크리에이터는 아직 채널을 연결하지 않았습니다.</p>
+    {% endif %}
+</section>
+
+<style>
+.creator-detail-header {
+    margin-bottom: 2rem;
+}
+
+.back-nav {
+    margin-bottom: 1rem;
+}
+
+.creator-meta {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-top: 1rem;
+}
+
+.creator-meta p {
+    margin: 0.5rem 0;
+}
+
+.channels-overview {
+    margin-top: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.export-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.detail-channel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.detail-channel-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.detail-channel-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.platform-badge {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.channel-account-info {
+    margin-bottom: 1.5rem;
+}
+
+.detailed-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.metric-group h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.metric {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-item {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.post-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.post-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.hourly-chart-large {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.25rem;
+    height: 200px;
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.hour-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.bar {
+    width: 100%;
+    background: var(--primary);
+    border-radius: 4px 4px 0 0;
+    transition: background 0.2s;
+}
+
+.bar:hover {
+    background: var(--primary-dark, #0056b3);
+}
+
+.hour-label {
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    color: var(--text-secondary);
+}
+
+.data-source-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.source {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.source.api {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.source.mock {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.no-data, .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+</style>
+{% endblock %}

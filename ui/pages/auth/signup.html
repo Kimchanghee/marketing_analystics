@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-card">
+    <h1>회원가입</h1>
+
+    {% if success %}
+    <div class="form-alert success">{{ success }}</div>
+    {% endif %}
+    {% if error %}
+    <div class="form-alert error">{{ error }}</div>
+    {% endif %}
+
+    <!-- 회원 유형 선택 -->
+    <div class="role-selection">
+        <h2>회원 유형을 선택하세요</h2>
+        <div class="role-cards">
+            <label class="role-card">
+                <input type="radio" name="role_type" value="creator" checked>
+                <div class="role-card-content">
+                    <div class="role-icon">👤</div>
+                    <h3>개인 크리에이터</h3>
+                    <p>개인 SNS 채널을 관리하고 분석합니다</p>
+                    <ul class="role-features">
+                        <li>✓ 5개 SNS 채널 연동</li>
+                        <li>✓ 실시간 통계 분석</li>
+                        <li>✓ AI PD 비서</li>
+                    </ul>
+                </div>
+            </label>
+
+            <label class="role-card">
+                <input type="radio" name="role_type" value="manager">
+                <div class="role-card-content">
+                    <div class="role-icon">🏢</div>
+                    <h3>기업 관리자</h3>
+                    <p>여러 크리에이터를 통합 관리합니다</p>
+                    <ul class="role-features">
+                        <li>✓ 다수 크리에이터 관리</li>
+                        <li>✓ 포트폴리오 분석</li>
+                        <li>✓ 팀 협업 기능</li>
+                    </ul>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="auth-divider">
+        <span>소셜 계정으로 간편 가입</span>
+    </div>
+
+    <!-- 소셜 회원가입 -->
+    <div class="social-login-section">
+        <div class="social-button-grid">
+            {% for provider in providers %}
+            <button class="btn social {{ provider.value }}" type="button" data-provider="{{ provider.value }}">
+                <span class="social-icon">
+                    {% if provider.value == 'google' %}
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    {% elif provider.value == 'apple' %}
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                    </svg>
+                    {% endif %}
+                </span>
+                {{ provider.value|capitalize }}로 계속하기
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="auth-divider">
+        <span>또는 이메일로 가입</span>
+    </div>
+
+    <!-- 이메일 회원가입 -->
+    <form method="post" action="/signup" class="signup-form" id="signupForm">
+        <input type="hidden" name="role" id="roleInput" value="creator">
+        <input type="hidden" name="locale" value="{{ locale }}">
+
+        <label>
+            이름
+            <input type="text" name="name" required placeholder="이름을 입력하세요">
+        </label>
+
+        <label>
+            이메일
+            <input type="email" name="email" required placeholder="email@example.com">
+        </label>
+
+        <label>
+            비밀번호
+            <input type="password" name="password" required placeholder="8자 이상" minlength="8">
+        </label>
+
+        <label>
+            조직명 (선택)
+            <input type="text" name="organization" placeholder="회사명 또는 팀명">
+        </label>
+
+        <div class="consent-section">
+            <label class="consent-option">
+                <input type="checkbox" name="privacy_agreement" required>
+                <span>개인정보 수집 및 이용에 동의합니다 (필수)</span>
+            </label>
+            <label class="consent-option">
+                <input type="checkbox" name="guidance_agreement" required>
+                <span>서비스 이용약관에 동의합니다 (필수)</span>
+            </label>
+        </div>
+
+        <button class="btn primary large" type="submit">회원가입</button>
+    </form>
+
+    <p class="auth-footer">
+        이미 계정이 있으신가요? <a href="/login">로그인</a>
+    </p>
+</section>
+
+<style>
+.role-selection {
+    margin: 2rem 0;
+}
+
+.role-selection h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.role-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.role-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.role-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.role-card-content {
+    padding: 2rem;
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s;
+    background: var(--card-bg);
+}
+
+.role-card input[type="radio"]:checked + .role-card-content {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.role-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.role-card-content h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.role-card-content p {
+    color: var(--text-secondary);
+    margin: 0.5rem 0 1rem 0;
+    font-size: 0.9rem;
+}
+
+.role-features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    text-align: left;
+}
+
+.role-features li {
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.social-button-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.signup-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.signup-form label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+}
+
+.signup-form input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.consent-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--surface-bg);
+    border-radius: 8px;
+}
+
+.consent-option {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem !important;
+    font-weight: normal !important;
+}
+
+.consent-option input[type="checkbox"] {
+    width: auto !important;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+</style>
+
+<script>
+// 역할 선택 변경 시 hidden input 업데이트
+document.querySelectorAll('input[name="role_type"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        document.getElementById('roleInput').value = this.value;
+    });
+});
+
+// 소셜 로그인 시 역할 정보 포함
+const locale = "{{ locale }}";
+document.querySelectorAll('.social-login-section [data-provider]').forEach(button => {
+    button.addEventListener('click', () => {
+        const roleType = document.querySelector('input[name="role_type"]:checked').value;
+        const params = new URLSearchParams({
+            action: 'signup',
+            role: roleType,
+            origin: `/signup?lang=${locale}`,
+            lang: locale
+        });
+        window.location.href = `/oauth/${button.getAttribute('data-provider')}?${params.toString()}`;
+    });
+});
+</script>
+{% endblock %}

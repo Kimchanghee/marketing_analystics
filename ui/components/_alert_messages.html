@@ -1,0 +1,21 @@
+<!-- 알림 메시지 컴포넌트 -->
+{% if success %}
+<div class="form-alert success">{{ success }}</div>
+{% endif %}
+
+{% if social_success %}
+<div class="form-alert success">{{ social_success }}</div>
+{% endif %}
+
+{% if recovery_message %}
+<div class="form-alert info">{{ recovery_message }}</div>
+{% endif %}
+
+{% if error %}
+<div class="form-alert error">{{ error }}</div>
+{% endif %}
+
+{% if social_error %}
+<div class="form-alert error">{{ social_error }}</div>
+{% endif %}
+

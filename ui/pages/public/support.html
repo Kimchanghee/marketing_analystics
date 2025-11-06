@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>{{ t['support']['hero']['title'] }}</h1>
+        <p>{{ t['support']['hero']['subtitle'] }}</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="mailto:{{ t['support']['contact']['email'] }}">{{ t['support']['hero']['primary_cta'] }}</a>
+            <a class="btn secondary" href="/business#business-plans">{{ t['support']['hero']['secondary_cta'] }}</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="dashboard-preview">
+            <h3>{{ t['support']['hero']['visual_title'] }}</h3>
+            <ul>
+                {% for item in t['support']['hero']['visual_points'] %}
+                <li>
+                    <span class="platform">{{ item['label'] }}</span>
+                    <span class="metric">{{ item['value'] }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="support-grid">
+    {% for card in t['support']['cards'] %}
+    <article class="support-card">
+        <h3>{{ card['title'] }}</h3>
+        <p>{{ card['description'] }}</p>
+        <ul class="section-list">
+            {% for item in card['items'] %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+    {% endfor %}
+</section>
+<section class="journey-steps">
+    <div class="section-header">
+        <h2>{{ t['support']['contact']['title'] }}</h2>
+        <p>{{ t['support']['contact']['description'] }}</p>
+    </div>
+    <article class="journey-step">
+        <span>{{ t['support']['contact']['email_label'] }}</span>
+        <h3>{{ t['support']['contact']['email'] }}</h3>
+        <p>{{ t['support']['contact']['response'] }}</p>
+    </article>
+    <article class="journey-step">
+        <span>{{ t['support']['contact']['office_label'] }}</span>
+        <h3>{{ t['support']['contact']['office_hours'] }}</h3>
+        <p>{{ t['support']['contact']['office_description'] }}</p>
+    </article>
+</section>
+<section class="cta-banner">
+    <div>
+        <h2>{{ t['support']['cta']['title'] }}</h2>
+        <p>{{ t['support']['cta']['description'] }}</p>
+    </div>
+    <div class="hero-actions">
+        <a class="btn primary" href="mailto:{{ t['support']['contact']['email'] }}">{{ t['support']['cta']['primary'] }}</a>
+        <a class="btn tertiary" href="/services">{{ t['support']['cta']['secondary'] }}</a>
+    </div>
+</section>
+{% endblock %}

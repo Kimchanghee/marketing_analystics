@@ -1,0 +1,94 @@
+<!-- 요금제 카드 컴포넌트 -->
+<!-- 사용 예: {% include 'components/_pricing_card.html' with plan='free' %} -->
+
+{% set plans = {
+    'free': {
+        'name': 'FREE',
+        'icon': '🆓',
+        'price': '무료',
+        'channels': '1개 채널',
+        'features': [
+            '기본 대시보드',
+            '채널 1개 연동',
+            '기본 통계 분석',
+            '이메일 지원'
+        ],
+        'disabled_features': [
+            'AI 추천',
+            'AI PD 비서',
+            '데이터 내보내기'
+        ],
+        'cta': '무료 시작',
+        'cta_link': '/signup'
+    },
+    'pro': {
+        'name': 'PRO',
+        'icon': '💎',
+        'price': '₩29,000/월',
+        'channels': '5개 채널',
+        'features': [
+            '모든 FREE 기능',
+            '채널 5개 연동',
+            'AI 추천 기능',
+            'AI PD 비서',
+            '고급 분석',
+            '데이터 내보내기',
+            '우선 지원'
+        ],
+        'disabled_features': [
+            'API 접근',
+            '무제한 채널'
+        ],
+        'cta': 'PRO 시작',
+        'cta_link': '/signup?plan=pro',
+        'popular': true
+    },
+    'enterprise': {
+        'name': 'ENTERPRISE',
+        'icon': '🏢',
+        'price': '문의',
+        'channels': '무제한',
+        'features': [
+            '모든 PRO 기능',
+            '무제한 채널',
+            'API 접근',
+            '팀 협업',
+            '전담 지원',
+            '커스텀 개발',
+            '온프레미스 옵션'
+        ],
+        'disabled_features': [],
+        'cta': '상담 문의',
+        'cta_link': '/support'
+    }
+} %}
+
+{% set plan_data = plans[plan] %}
+
+<div class="pricing-card {% if plan_data.popular %}popular{% endif %}">
+    {% if plan_data.popular %}
+    <div class="popular-badge">인기</div>
+    {% endif %}
+    
+    <div class="pricing-header">
+        <div class="plan-icon">{{ plan_data.icon }}</div>
+        <h3 class="plan-name">{{ plan_data.name }}</h3>
+        <div class="plan-price">{{ plan_data.price }}</div>
+        <div class="plan-channels">{{ plan_data.channels }}</div>
+    </div>
+    
+    <ul class="pricing-features">
+        {% for feature in plan_data.features %}
+        <li class="feature-enabled">✓ {{ feature }}</li>
+        {% endfor %}
+        
+        {% for feature in plan_data.disabled_features %}
+        <li class="feature-disabled">✗ {{ feature }}</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{{ plan_data.cta_link }}" class="btn {% if plan_data.popular %}primary{% else %}secondary{% endif %} pricing-cta">
+        {{ plan_data.cta }}
+    </a>
+</div>
+

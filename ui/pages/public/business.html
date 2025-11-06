@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>{{ t['business']['hero']['title'] }}</h1>
+        <p>{{ t['business']['hero']['subtitle'] }}</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="/signup?role=manager">{{ t['business']['hero']['primary_cta'] }}</a>
+            <a class="btn secondary" href="#business-plans">{{ t['business']['hero']['secondary_cta'] }}</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <figure class="dashboard-figure">
+            <img src="/static/img/business-analytics.svg" alt="{{ t['business']['hero']['visual_alt'] }}">
+            <figcaption>
+                <strong>{{ t['business']['hero']['visual_title'] }}</strong>
+                <span>{{ t['business']['hero']['visual_caption'] }}</span>
+            </figcaption>
+        </figure>
+    </div>
+</section>
+<section class="subscription-overview data-section">
+    <div class="section-header">
+        <h2>{{ t['business']['pricing_overview']['title'] }}</h2>
+        <p>{{ t['business']['pricing_overview']['description'] }}</p>
+    </div>
+    {% set columns = t['business']['pricing_overview']['columns'] %}
+    <div class="pricing-table">
+        <div class="pricing-row pricing-row-header">
+            {% for column in columns %}
+            <span>{{ column }}</span>
+            {% endfor %}
+        </div>
+        {% for row in t['business']['pricing_overview']['rows'] %}
+        <div class="pricing-row">
+            <div data-column="{{ columns[0] }}">
+                <strong>{{ row['label'] }}</strong>
+            </div>
+            <div data-column="{{ columns[1] }}">{{ row['monthly'] }}</div>
+            <div data-column="{{ columns[2] }}">{{ row['annual'] }}</div>
+            <div class="pricing-note" data-column="{{ columns[3] }}">{{ row['note'] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    <p class="pricing-footnote">{{ t['business']['pricing_overview']['footnote'] }}</p>
+</section>
+<section class="section-header">
+    <h2>{{ t['business']['benefits']['title'] }}</h2>
+    <p>{{ t['business']['benefits']['description'] }}</p>
+</section>
+<section class="feature-grid">
+    {% for benefit in t['business']['benefits']['items'] %}
+    <article class="feature-card">
+        <strong>{{ benefit['tag'] }}</strong>
+        <h3>{{ benefit['title'] }}</h3>
+        <p>{{ benefit['description'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section id="business-plans" class="plan-category">
+    <div class="plan-category-header">
+        <span class="plan-category-label">{{ t['business']['plans']['label'] }}</span>
+        <h2>{{ t['business']['plans']['title'] }}</h2>
+        <p>{{ t['business']['plans']['description'] }}</p>
+    </div>
+    <div class="pricing-grid">
+        {% for plan in t['business']['plans']['items'] %}
+        <article class="pricing-card{% if plan['highlighted'] %} highlight{% endif %}">
+            {% if plan.get('badge') %}
+            <span class="plan-badge">{{ plan['badge'] }}</span>
+            {% endif %}
+            <div>
+                <h3>{{ plan['name'] }}</h3>
+                <p>{{ plan['description'] }}</p>
+            </div>
+            <div class="plan-price-row">
+                <span class="pricing-price">{{ plan['price'] }}</span>
+                <span class="pricing-cycle">{{ plan['cycle'] }}</span>
+            </div>
+            <ul class="pricing-features">
+                {% for feature in plan['features'] %}
+                <li>??{{ feature }}</li>
+                {% endfor %}
+            </ul>
+            <a class="btn {% if plan['highlighted'] %}primary{% else %}tertiary{% endif %}"
+                href="{{ plan.get('cta_link', '/support') }}">{{ plan['cta'] }}</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<section class="metrics-showcase data-section">
+    <div class="metrics-layout">
+        <div class="metrics-intro">
+            <h2>{{ t['business']['metrics']['title'] }}</h2>
+            <p>{{ t['business']['metrics']['description'] }}</p>
+        </div>
+        <figure class="metrics-figure">
+            <img src="/static/img/business-insights-snapshot.svg" alt="{{ t['business']['metrics']['visual_alt'] }}">
+            <figcaption>
+                <strong>{{ t['business']['metrics']['source_label'] }}</strong>
+                <span>{{ t['business']['metrics']['source_caption'] }}</span>
+            </figcaption>
+        </figure>
+    </div>
+    <div class="metrics-grid">
+        {% for metric in t['business']['metrics']['items'] %}
+        <article class="metric-card">
+            <span class="metric-value">{{ metric['value'] }}</span>
+            <h3>{{ metric['label'] }}</h3>
+            <p>{{ metric['description'] }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<section class="persona-insights data-section">
+    <div class="section-header">
+        <h2>{{ t['business']['personas']['title'] }}</h2>
+        <p>{{ t['business']['personas']['description'] }}</p>
+    </div>
+    <div class="slider" data-slider>
+        <button class="slider-button slider-button-prev" type="button" data-slider-prev
+            aria-label="{{ t['business']['personas']['prev'] }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" />
+            </svg>
+        </button>
+        <div class="slider-viewport" data-slider-viewport>
+            <div class="slider-track" data-slider-track>
+                {% for persona in t['business']['personas']['items'] %}
+                <article class="persona-card slider-item">
+                    <header>
+                        <h3>{{ persona['name'] }}</h3>
+                        <span>{{ persona['role'] }}</span>
+                    </header>
+                    <blockquote>{{ persona['quote'] }}</blockquote>
+                    <dl>
+                        <dt>{{ t['business']['personas']['goal_label'] }}</dt>
+                        <dd>{{ persona['goal'] }}</dd>
+                    </dl>
+                    <div class="persona-needs">
+                        <span>{{ t['business']['personas']['needs_label'] }}</span>
+                        <ul>
+                            {% for need in persona['needs'] %}
+                            <li>{{ need }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        <button class="slider-button slider-button-next" type="button" data-slider-next
+            aria-label="{{ t['business']['personas']['next'] }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" />
+            </svg>
+        </button>
+    </div>
+</section>
+<section class="journey-steps plan-comparison">
+    <div class="section-header">
+        <h2>{{ t['business']['plans']['comparison']['title'] }}</h2>
+        <p>{{ t['business']['plans']['comparison']['description'] }}</p>
+    </div>
+    {% for item in t['business']['plans']['comparison']['items'] %}
+    <article class="journey-step">
+        <span>{{ item['label'] }}</span>
+        <h3>{{ item['title'] }}</h3>
+        <p>{{ item['detail'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section class="journey-steps">
+    <div class="section-header">
+        <h2>{{ t['business']['workflow']['title'] }}</h2>
+        <p>{{ t['business']['workflow']['description'] }}</p>
+    </div>
+    {% for step in t['business']['workflow']['steps'] %}
+    <article class="journey-step">
+        <span>{{ step['label'] }}</span>
+        <h3>{{ step['title'] }}</h3>
+        <p>{{ step['detail'] }}</p>
+    </article>
+    {% endfor %}
+</section>
+<section class="cta-banner">
+    <div>
+        <h2>{{ t['business']['cta']['title'] }}</h2>
+        <p>{{ t['business']['cta']['description'] }}</p>
+    </div>
+    <div class="hero-actions">
+        <a class="btn primary" href="/support">{{ t['business']['cta']['primary'] }}</a>
+        <a class="btn tertiary" href="#business-plans">{{ t['business']['cta']['secondary'] }}</a>
+    </div>
+</section>
+{% endblock %}

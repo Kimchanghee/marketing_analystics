@@ -1,0 +1,19 @@
+<!-- 대시보드 전용 레이아웃 -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <aside class="dashboard-sidebar">
+        {% block sidebar %}
+        <!-- 사이드바 내용 -->
+        {% endblock %}
+    </aside>
+    
+    <main class="dashboard-main">
+        {% block dashboard_content %}
+        <!-- 대시보드 내용이 여기에 들어감 -->
+        {% endblock %}
+    </main>
+</div>
+{% endblock %}
+

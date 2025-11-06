@@ -1,0 +1,901 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-header">
+    <h1>{{ t['dashboard']['welcome'] }} {{ user.email }}</h1>
+    <div class="subscription">
+        <span>{{ t['dashboard']['current_plan'] }}: {{ t['subscriptions'][subscription.tier.value] }}</span>
+        <form method="post" action="/subscriptions/change">
+            <label>{{ t['dashboard']['upgrade_prompt'] }}
+                <select name="tier">
+                    <option value="free">{{ t['subscriptions']['free'] }}</option>
+                    <option value="pro">{{ t['subscriptions']['pro'] }}</option>
+                    <option value="enterprise">{{ t['subscriptions']['enterprise'] }}</option>
+                </select>
+            </label>
+            <button class="btn secondary" type="submit">{{ t['dashboard']['update_plan'] }}</button>
+        </form>
+    </div>
+    <div class="export-actions">
+        <a href="/dashboard/export/csv" class="btn tertiary" download>{{ t['dashboard']['export_csv'] }}</a>
+        <a href="/dashboard/export/json" class="btn tertiary" download>{{ t['dashboard']['export_json'] }}</a>
+    </div>
+</section>
+<section class="channels">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2>{{ t['dashboard']['your_channels'] }}</h2>
+        <a href="/channels/manage" class="btn primary" style="text-decoration: none;">
+            🔗 채널 관리 및 연결
+        </a>
+    </div>
+    <div style="background: #e6f3ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #667eea;">
+        <p style="margin: 0; color: #333;">
+            💡 <strong>새로운 채널 관리 기능:</strong> Instagram, Facebook, YouTube, TikTok, Twitter, Threads를 OAuth로 연결하고 실시간 데이터를 가져올 수 있습니다.
+            <a href="/channels/manage" style="color: #667eea; text-decoration: underline;">채널 관리 페이지로 이동 →</a>
+        </p>
+    </div>
+    <form method="post" action="/channels/add" class="channel-form">
+        <select name="platform">
+            {% for key, label in t['channels'].items() %}
+            <option value="{{ key }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="account_name" placeholder="{{ t['dashboard']['account_placeholder'] }}" required>
+        <button class="btn primary" type="submit">{{ t['dashboard']['add_channel'] }}</button>
+    </form>
+    <div class="channel-grid">
+        {% for account in accounts %}
+        <article class="channel-card">
+            <header>
+                <h3>{{ t['channels'][account.platform] if account.platform in t['channels'] else account.platform }}</h3>
+                <span style="color: var(--text-subtle); font-size: 0.75rem;">|</span>
+                <p>{{ account.account_name }}</p>
+            </header>
+            <div class="channel-card-main">
+            {% set snapshot = snapshots.get(account.id) %}
+            {% if snapshot %}
+            <ul class="metrics">
+                <li>
+                    <strong>{{ snapshot['followers'] }}</strong>
+                    <span>{{ t['dashboard']['followers'] }}</span>
+                </li>
+                <li>
+                    <strong style="color: {{ 'var(--success)' if snapshot['growth_rate'] > 0 else 'var(--danger)' }}">{{ snapshot['growth_rate'] }}%</strong>
+                    <span>{{ t['dashboard']['growth'] }}</span>
+                </li>
+                <li>
+                    <strong>{{ snapshot['engagement_rate'] }}%</strong>
+                    <span>{{ t['dashboard']['engagement'] }}</span>
+                </li>
+                <li>
+                    <strong>{{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</strong>
+                    <span>{{ t['dashboard']['last_post'] }}</span>
+                </li>
+            </ul>
+            {% endif %}
+            </div>
+            <div class="channel-card-actions">
+                <button class="btn tertiary toggle-details" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📊 상세</button>
+                <form method="post" action="/channels/remove" style="display: inline;">
+                    <input type="hidden" name="channel_id" value="{{ account.id }}">
+                    <button class="btn tertiary" type="submit" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">🗑️</button>
+                </form>
+            </div>
+            {% if snapshot %}
+            <div class="channel-details" style="display: none; width: 100%; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div class="recent-posts">
+                <h4>{{ t['dashboard']['recent_posts'] }}</h4>
+                {% for post in snapshot['recent_posts'] %}
+                <div class="post">
+                    <div>
+                        <strong>{{ post['title'] }}</strong>
+                        <span>{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
+                    </div>
+                    <div class="post-metrics">
+                        <span>👍 {{ post['likes'] }}</span>
+                        <span>💬 {{ post['comments'] }}</span>
+                        <span>👀 {{ post['impressions'] }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if snapshot.get('hourly_views') %}
+            <div class="hourly-views">
+                <h4>{{ t['dashboard']['hourly_views_title'] }}</h4>
+                <div class="hourly-chart">
+                    {% set max_views = snapshot['hourly_views']|map(attribute='views')|max %}
+                    {% for data in snapshot['hourly_views'] %}
+                    <div class="hour-bar">
+                        <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%" title="{{ data['hour'] }}시: {{ data['views'] }} 조회"></div>
+                        <span class="hour-label">{{ data['hour'] }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% set platform_recs = ai_recommendations.get(account.platform, []) %}
+            {% if platform_recs %}
+            <div class="ai-recommendations">
+                <h4>{{ t['dashboard']['ai_recommendations_title'] }}</h4>
+                {% for rec in platform_recs %}
+                <div class="recommendation-card priority-{{ rec['priority'] }}">
+                    <span class="rec-badge">{{ rec['type'] }}</span>
+                    <strong class="rec-action">{{ rec['action'] }}</strong>
+                    <p class="rec-reason">{{ rec['reason'] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+                </div>
+                <details class="credential-panel" style="margin-top: 1rem;">
+                <summary>{{ t['dashboard']['credentials_heading'] }}</summary>
+                {% set credential = account.credential %}
+                <p class="credential-status {{ 'ok' if credential else 'warning' }}">
+                    {{ t['dashboard']['credentials_status'] }}:
+                    {% if credential %}
+                    {{ t['dashboard']['credentials_present'] }}
+                    {% else %}
+                    {{ t['dashboard']['credentials_missing'] }}
+                    {% endif %}
+                </p>
+                <form method="post" action="/channels/credentials" class="credential-form">
+                    <input type="hidden" name="channel_id" value="{{ account.id }}">
+                    <label>
+                        {{ t['dashboard']['auth_type_label'] }}
+                        <select name="auth_type">
+                            {% for auth in auth_types %}
+                            <option value="{{ auth.value }}" {% if credential and credential.auth_type == auth %}selected{% endif %}>
+                                {{ t['dashboard']['auth_type_labels'][auth.value] }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        {{ t['dashboard']['identifier_label'] }}
+                        <input type="text" name="identifier" value="{{ credential.identifier if credential and credential.identifier else '' }}" placeholder="{{ t['dashboard']['placeholder_identifier'] }}">
+                    </label>
+                    <label>
+                        {{ t['dashboard']['access_token_label'] }}
+                        <input type="password" name="access_token" placeholder="{{ t['dashboard']['placeholder_token'] }}">
+                        {% if credential and credential.as_dict().get('has_access_token') %}
+                        <small>{{ t['dashboard']['credential_hint'] }}</small>
+                        {% endif %}
+                    </label>
+                    <label>
+                        {{ t['dashboard']['secret_label'] }}
+                        <input type="password" name="secret" placeholder="{{ t['dashboard']['placeholder_secret'] }}">
+                        {% if credential and credential.as_dict().get('has_secret') %}
+                        <small>{{ t['dashboard']['credential_hint'] }}</small>
+                        {% endif %}
+                    </label>
+                    <label>
+                        {{ t['dashboard']['refresh_token_label'] }}
+                        <input type="password" name="refresh_token" placeholder="{{ t['dashboard']['placeholder_token'] }}">
+                        {% if credential and credential.as_dict().get('has_refresh_token') %}
+                        <small>{{ t['dashboard']['credential_hint'] }}</small>
+                        {% endif %}
+                    </label>
+                    <label>
+                        {{ t['dashboard']['expires_at_label'] }}
+                        <input type="text" name="expires_at" value="{{ credential.expires_at.isoformat() if credential and credential.expires_at else '' }}" placeholder="YYYY-MM-DDTHH:MM:SS">
+                    </label>
+                    <label>
+                        {{ t['dashboard']['metadata_label'] }}
+                        <textarea name="metadata" placeholder="{{ t['dashboard']['placeholder_metadata'] }}">{% if credential %}{{ credential.metadata_json | tojson(indent=2) }}{% endif %}</textarea>
+                    </label>
+                    <button class="btn secondary" type="submit">{{ t['dashboard']['save_credentials'] }}</button>
+                </form>
+            </details>
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+{% if accounts|length > 0 %}
+<section class="analytics-dashboard">
+    <h2>{{ t['dashboard'].get('analytics_overview', '활동 및 성과 분석') }}</h2>
+
+    <div class="analytics-grid">
+        <!-- Activity Timeline Chart -->
+        <div class="chart-card">
+            <h3>{{ t['dashboard'].get('activity_timeline', '최근 활동 타임라인') }}</h3>
+            <canvas id="activityChart"></canvas>
+        </div>
+
+        <!-- Engagement Rate Chart -->
+        <div class="chart-card">
+            <h3>{{ t['dashboard'].get('engagement_trend', '참여율 추세') }}</h3>
+            <canvas id="engagementChart"></canvas>
+        </div>
+
+        <!-- Platform Comparison -->
+        <div class="chart-card">
+            <h3>{{ t['dashboard'].get('platform_comparison', '플랫폼별 비교') }}</h3>
+            <canvas id="platformChart"></canvas>
+        </div>
+
+        <!-- Posts Performance -->
+        <div class="chart-card full-width">
+            <h3>{{ t['dashboard'].get('posts_performance', '게시물 성과 분석') }}</h3>
+            <canvas id="postsChart"></canvas>
+        </div>
+    </div>
+</section>
+
+<script>
+// Prepare data from accounts and snapshots
+const chartData = {
+    platforms: [],
+    followers: [],
+    growthRates: [],
+    engagementRates: [],
+    recentPosts: [],
+    colors: {
+        youtube: 'rgba(255, 0, 0, 0.7)',
+        instagram: 'rgba(225, 48, 108, 0.7)',
+        tiktok: 'rgba(0, 0, 0, 0.7)',
+        facebook: 'rgba(24, 119, 242, 0.7)',
+        threads: 'rgba(0, 0, 0, 0.7)'
+    }
+};
+
+{% for account in accounts %}
+    {% set snapshot = snapshots.get(account.id, {}) %}
+    chartData.platforms.push('{{ account.platform }}');
+    chartData.followers.push({{ snapshot.get('followers', 0) }});
+    chartData.growthRates.push({{ snapshot.get('growth_rate', 0) }});
+    chartData.engagementRates.push({{ snapshot.get('engagement_rate', 0) }});
+
+    {% for post in snapshot.get('recent_posts', [])[:5] %}
+        chartData.recentPosts.push({
+            platform: '{{ account.platform }}',
+            title: '{{ post.get("title", "")[:30] }}...',
+            likes: {{ post.get('likes', 0) }},
+            comments: {{ post.get('comments', 0) }},
+            impressions: {{ post.get('impressions', 0) }}
+        });
+    {% endfor %}
+{% endfor %}
+
+// Activity Timeline Chart
+const activityCtx = document.getElementById('activityChart');
+if (activityCtx) {
+    new Chart(activityCtx, {
+        type: 'line',
+        data: {
+            labels: chartData.platforms,
+            datasets: [{
+                label: '{{ t["dashboard"]["followers"] }}',
+                data: chartData.followers,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+// Engagement Rate Chart
+const engagementCtx = document.getElementById('engagementChart');
+if (engagementCtx) {
+    new Chart(engagementCtx, {
+        type: 'bar',
+        data: {
+            labels: chartData.platforms,
+            datasets: [{
+                label: '{{ t["dashboard"]["engagement"] }} (%)',
+                data: chartData.engagementRates,
+                backgroundColor: chartData.platforms.map(p => chartData.colors[p.toLowerCase()] || 'rgba(54, 162, 235, 0.7)'),
+                borderColor: chartData.platforms.map(p => chartData.colors[p.toLowerCase()] || 'rgb(54, 162, 235)'),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+// Platform Comparison Chart
+const platformCtx = document.getElementById('platformChart');
+if (platformCtx) {
+    new Chart(platformCtx, {
+        type: 'doughnut',
+        data: {
+            labels: chartData.platforms,
+            datasets: [{
+                label: '{{ t["dashboard"]["followers"] }}',
+                data: chartData.followers,
+                backgroundColor: chartData.platforms.map(p => chartData.colors[p.toLowerCase()] || 'rgba(54, 162, 235, 0.7)'),
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'right' }
+            }
+        }
+    });
+}
+
+// Posts Performance Chart
+const postsCtx = document.getElementById('postsChart');
+if (postsCtx && chartData.recentPosts.length > 0) {
+    new Chart(postsCtx, {
+        type: 'bar',
+        data: {
+            labels: chartData.recentPosts.map(p => p.title),
+            datasets: [
+                {
+                    label: '좋아요',
+                    data: chartData.recentPosts.map(p => p.likes),
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                },
+                {
+                    label: '댓글',
+                    data: chartData.recentPosts.map(p => p.comments),
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                },
+                {
+                    label: '조회수',
+                    data: chartData.recentPosts.map(p => p.impressions),
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+</script>
+
+<style>
+.analytics-dashboard {
+    margin: 2rem 0;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.chart-card {
+    background: var(--surface-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.chart-card h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.chart-card canvas {
+    max-height: 300px;
+}
+.manager-request-form {
+    margin: 1rem 0 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.manager-request-form label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-weight: 600;
+}
+
+.manager-request-form input[type="email"] {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.manager-request-form .btn {
+    min-width: 160px;
+}
+
+.manager-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.manager-link-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--surface-primary);
+    box-shadow: var(--card-shadow);
+}
+
+.manager-link-list .link-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.manager-link-list .link-email {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.link-status {
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.link-status.approved {
+    color: #1f8a4c;
+}
+
+.link-status.pending {
+    color: var(--text-secondary);
+}
+</style>
+{% endif %}
+
+<section class="collaboration">
+    <h2>{{ t['dashboard']['collaboration'] }}</h2>
+    {% if user.role == 'manager' %}
+    <p>{{ t['dashboard']['manager_hint'] }}</p>
+    {% if manager_links %}
+    <ul class="manager-link-list">
+        {% for link in manager_links %}
+        <li>
+            <div class="link-info">
+                <strong>{{ link.creator.name or link.creator.email }}</strong>
+                <span class="link-email">{{ link.creator.email }}</span>
+            </div>
+            <span class="link-status {{ 'approved' if link.approved else 'pending' }}">
+                {{ t['dashboard']['link_status']['approved'] if link.approved else t['dashboard']['link_status']['pending'] }}
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="hint">{{ t['dashboard']['manager_empty'] }}</p>
+    {% endif %}
+    {% else %}
+    <p>{{ t['dashboard']['creator_hint'] }}</p>
+    {% if manager_request_status == 'success' %}
+    <div class="form-alert success">{{ t['dashboard']['manager_request_success'] }}</div>
+    {% elif manager_request_error %}
+    <div class="form-alert error">
+        {{ t['dashboard']['manager_request_errors'].get(manager_request_error, t['dashboard']['manager_request_errors']['unknown']) }}
+    </div>
+    {% endif %}
+    <form method="post" action="/manager/request-link" class="manager-request-form">
+        <label>
+            {{ t['dashboard']['manager_request_label'] }}
+            <input type="email" name="manager_email" placeholder="manager@example.com" required>
+        </label>
+        <button class="btn primary" type="submit">{{ t['dashboard']['manager_request_button'] }}</button>
+    </form>
+    {% if manager_links %}
+    <ul class="manager-link-list">
+        {% for link in manager_links %}
+        <li>
+            <div class="link-info">
+                <strong>{{ link.manager.name or link.manager.email }}</strong>
+                <span class="link-email">{{ link.manager.email }}</span>
+            </div>
+            <span class="link-status {{ 'approved' if link.approved else 'pending' }}">
+                {{ t['dashboard']['link_status']['approved'] if link.approved else t['dashboard']['link_status']['pending'] }}
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="hint">{{ t['dashboard']['manager_empty_for_creator'] }}</p>
+    {% endif %}
+    {% endif %}
+</section>
+
+
+<!-- AI PD 채팅 섹션 (유료 기능) -->
+<section class="ai-pd-section">
+    <h2>🤖 AI PD 비서 <span class="premium-badge">PRO</span></h2>
+    <p class="section-desc">채널 성과를 분석하고 개선 방안을 제안받으세요</p>
+
+    {% if subscription.tier.value in ['pro', 'enterprise'] %}
+    <div class="ai-chat-container">
+        <div class="chat-messages" id="aiChatMessages">
+            <div class="ai-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p><strong>안녕하세요! AI PD 비서입니다.</strong></p>
+                    <p>당신의 채널 데이터를 분석하고 성장 전략을 제안해드립니다. 궁금한 것을 물어보세요:</p>
+                    <ul class="suggestion-chips">
+                        <li onclick="askAI(this.textContent)">어떤 플랫폼에 더 집중해야 할까요?</li>
+                        <li onclick="askAI(this.textContent)">최근 게시물 반응이 좋은 이유는?</li>
+                        <li onclick="askAI(this.textContent)">구독자를 늘리는 방법을 알려주세요</li>
+                        <li onclick="askAI(this.textContent)">참여율을 개선하려면?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form id="aiChatForm" class="ai-chat-form">
+            <textarea
+                id="aiQuestionInput"
+                name="question"
+                placeholder="AI에게 질문하세요... (최소 10자)"
+                rows="2"
+                required
+                minlength="10"
+            ></textarea>
+            <button type="submit" class="btn primary" id="aiSendBtn">
+                <span class="btn-text">질문하기</span>
+                <span class="btn-loader" style="display: none;">분석 중...</span>
+            </button>
+        </form>
+    </div>
+    {% else %}
+    <div class="upgrade-notice">
+        <div class="upgrade-icon">🔒</div>
+        <h3>AI PD 비서는 PRO 이상 구독자만 이용할 수 있습니다</h3>
+        <p>AI 기반 성과 분석 및 맞춤 전략을 받아보세요!</p>
+        <div class="upgrade-benefits">
+            <div class="benefit-item">
+                <span class="benefit-icon">✨</span>
+                <span>실시간 AI 채널 분석</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">📊</span>
+                <span>맞춤형 성장 전략 제안</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🎯</span>
+                <span>데이터 기반 인사이트</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💡</span>
+                <span>콘텐츠 최적화 가이드</span>
+            </div>
+        </div>
+        <a href="/personal" class="btn primary upgrade-btn">PRO로 업그레이드 하기</a>
+    </div>
+    {% endif %}
+</section>
+
+<style>
+.ai-pd-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+}
+
+.ai-pd-section h2 {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.premium-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-notice {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.upgrade-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.upgrade-notice h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.upgrade-notice p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.benefit-icon {
+    font-size: 1.25rem;
+}
+
+.upgrade-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+}
+
+.ai-chat-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+}
+
+.ai-message,
+.user-message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-message .message-avatar {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.message-content {
+    flex: 1;
+    background: var(--surface-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.message-content p {
+    margin: 0.5rem 0;
+}
+
+.suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.suggestion-chips li {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.suggestion-chips li:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.ai-chat-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.ai-chat-form textarea {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.ai-chat-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.ai-chat-form button {
+    min-width: 120px;
+    white-space: nowrap;
+}
+</style>
+
+<script>
+function askAI(question) {
+    document.getElementById('aiQuestionInput').value = question;
+    document.getElementById('aiQuestionInput').focus();
+}
+
+document.getElementById('aiChatForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const questionInput = document.getElementById('aiQuestionInput');
+    const question = questionInput.value.trim();
+    const sendBtn = document.getElementById('aiSendBtn');
+    const btnText = sendBtn.querySelector('.btn-text');
+    const btnLoader = sendBtn.querySelector('.btn-loader');
+    const chatMessages = document.getElementById('aiChatMessages');
+
+    if (question.length < 10) {
+        alert('질문은 최소 10자 이상 입력해주세요.');
+        return;
+    }
+
+    // Disable form
+    sendBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
+    questionInput.disabled = true;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.innerHTML = `
+        <div class="message-avatar">👤</div>
+        <div class="message-content"><p>${question}</p></div>
+    `;
+    chatMessages.appendChild(userMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+        const formData = new FormData();
+        formData.append('question', question);
+
+        const response = await fetch('/ai-pd/ask', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'ai-message';
+            aiMsg.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    ${data.answer.split('\n').map(line => `<p>${line}</p>`).join('')}
+                </div>
+            `;
+            chatMessages.appendChild(aiMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            questionInput.value = '';
+        } else {
+            throw new Error(data.detail || 'Unknown error');
+        }
+    } catch (error) {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'ai-message';
+        errorMsg.innerHTML = `
+            <div class="message-avatar">⚠️</div>
+            <div class="message-content">
+                <p><strong>오류 발생</strong></p>
+                <p>${error.message || 'AI 분석 중 오류가 발생했습니다.'}</p>
+            </div>
+        `;
+        chatMessages.appendChild(errorMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    } finally {
+        sendBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+        questionInput.disabled = false;
+        questionInput.focus();
+    }
+});
+
+// Toggle channel details
+document.querySelectorAll('.toggle-details').forEach(button => {
+    button.addEventListener('click', function() {
+        const card = this.closest('.channel-card');
+        const details = card.querySelector('.channel-details');
+        if (details) {
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                this.textContent = '📊 숨기기';
+            } else {
+                details.style.display = 'none';
+                this.textContent = '📊 상세';
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

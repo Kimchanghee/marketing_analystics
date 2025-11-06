@@ -1,0 +1,1022 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-header">
+    <h1>기업 관리자 대시보드</h1>
+    <div class="manager-stats">
+        <div class="stat-card">
+            <span class="stat-value">{{ approved_creators|length }}</span>
+            <span class="stat-label">승인된 크리에이터</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ pending_approvals|length }}</span>
+            <span class="stat-label">승인 대기 중</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ total_channels }}</span>
+            <span class="stat-label">총 관리 채널</span>
+        </div>
+    </div>
+</section>
+
+{% if pending_approvals %}
+<section class="approval-queue">
+    <h2>승인 대기 큐</h2>
+    <div class="approval-grid">
+        {% for link in pending_approvals %}
+        {% set creator = creator_lookup[link.creator_id] %}
+        <article class="approval-card">
+            <header>
+                <h3>{{ creator.name or creator.email }}</h3>
+                <span class="badge pending">승인 대기</span>
+            </header>
+            <div class="creator-info">
+                <p><strong>이메일:</strong> {{ creator.email }}</p>
+                <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
+                <p><strong>요청일:</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
+                {% if link.creator_id in creator_subscriptions %}
+                {% set sub = creator_subscriptions[link.creator_id] %}
+                <p><strong>구독 플랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
+                <p><strong>채널 수:</strong> {{ creator_channel_counts.get(link.creator_id, 0) }} / {{ sub.max_accounts }}</p>
+                {% endif %}
+            </div>
+            <div class="approval-actions">
+                <form method="post" action="/manager/approve" style="display: inline;">
+                    <input type="hidden" name="creator_email" value="{{ creator.email }}">
+                    <input type="hidden" name="manager_email" value="{{ user.email }}">
+                    <input type="hidden" name="approve" value="true">
+                    <button class="btn primary" type="submit">승인</button>
+                </form>
+                <form method="post" action="/manager/approve" style="display: inline;">
+                    <input type="hidden" name="creator_email" value="{{ creator.email }}">
+                    <input type="hidden" name="manager_email" value="{{ user.email }}">
+                    <input type="hidden" name="approve" value="false">
+                    <button class="btn tertiary" type="submit">거절</button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="managed-creators">
+    <h2>관리 중인 크리에이터</h2>
+    {% if approved_creators %}
+    <div class="creator-grid">
+        {% for link in approved_creators %}
+        {% set creator = creator_lookup[link.creator_id] %}
+        <article class="creator-card">
+            <header>
+                <h3>{{ creator.name or creator.email }}</h3>
+                <span class="badge approved">승인됨</span>
+            </header>
+            <div class="creator-summary">
+                <p><strong>이메일:</strong> {{ creator.email }}</p>
+                <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
+                <p><strong>연결일:</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
+                {% if link.creator_id in creator_subscriptions %}
+                {% set sub = creator_subscriptions[link.creator_id] %}
+                <p><strong>구독 플랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
+                {% endif %}
+            </div>
+
+            {% if link.creator_id in creator_channels %}
+            <div class="creator-channels">
+                <h4>연결된 채널 ({{ creator_channels[link.creator_id]|length }}개)</h4>
+
+                <!-- Platform Overview Badges -->
+                <div class="platform-badges">
+                    {% for channel in creator_channels[link.creator_id] %}
+                    <span class="platform-badge platform-{{ channel.platform.lower() }}">
+                        {% if channel.platform.lower() == 'youtube' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        {% elif channel.platform.lower() == 'instagram' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        {% elif channel.platform.lower() == 'tiktok' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        {% elif channel.platform.lower() == 'facebook' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        {% elif channel.platform.lower() == 'threads' %}
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 14.5c-.246 2.426-1.756 3.746-4.262 3.746-2.893 0-4.634-1.688-4.634-4.5 0-2.813 1.741-4.5 4.634-4.5.655 0 1.277.098 1.847.273-.413-.36-.98-.543-1.692-.543-1.799 0-2.992 1.138-2.992 3 0 1.863 1.193 3 2.992 3 1.456 0 2.484-.793 2.777-2.14.06-.277.09-.568.09-.874 0-2.205-1.228-3.462-3.376-3.462-2.507 0-4.262 1.688-4.262 4.5 0 2.813 1.755 4.5 4.262 4.5 2.506 0 4.016-1.32 4.262-3.746h1.354z"/></svg>
+                        {% endif %}
+                        {{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}
+                    </span>
+                    {% endfor %}
+                </div>
+
+                <!-- Detailed Channel Cards -->
+                <div class="channel-summary">
+                    {% for channel in creator_channels[link.creator_id] %}
+                    <div class="mini-channel-card platform-{{ channel.platform.lower() }}">
+                        <div class="channel-header">
+                            <div class="platform-info">
+                                <strong class="platform-name">{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</strong>
+                                <span class="account-name">@{{ channel.account_name }}</span>
+                            </div>
+                        </div>
+                        {% set snapshot = creator_snapshots.get(channel.id) %}
+                        {% if snapshot %}
+                        <div class="mini-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">구독자</span>
+                                <span class="metric-value">{{ '{:,}'.format(snapshot['followers']) }}</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">성장률</span>
+                                <span class="metric-value growth">+{{ snapshot['growth_rate'] }}%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">참여율</span>
+                                <span class="metric-value engagement">{{ snapshot['engagement_rate'] }}%</span>
+                            </div>
+                        </div>
+                        {% if snapshot.get('recent_posts') and snapshot['recent_posts']|length > 0 %}
+                        <div class="recent-post-mini">
+                            <p class="post-label">최근 게시물</p>
+                            <p class="post-title">{{ snapshot['recent_posts'][0]['title'][:40] }}...</p>
+                            <div class="post-stats">
+                                <span>👍 {{ '{:,}'.format(snapshot['recent_posts'][0]['likes']) }}</span>
+                                <span>💬 {{ '{:,}'.format(snapshot['recent_posts'][0]['comments']) }}</span>
+                                <span>👀 {{ '{:,}'.format(snapshot['recent_posts'][0]['impressions']) }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% else %}
+                        <p class="no-data">데이터를 불러오는 중...</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="creator-actions">
+                <a href="/manager/creator/{{ creator.id }}" class="btn secondary">상세 보기</a>
+                <button class="btn tertiary" onclick="exportCreatorReport({{ creator.id }})">리포트 내보내기</button>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">아직 승인된 크리에이터가 없습니다.</p>
+    {% endif %}
+</section>
+
+<section class="manager-tools">
+    <h2>관리 도구</h2>
+    <div class="tool-grid">
+        <div class="tool-card">
+            <h3>🤖 AI 기능 설정 (Gemini API)</h3>
+            <p>AI 기반 CS 답변 기능을 사용하려면 Gemini API 키를 등록하세요. API 키는 암호화되어 안전하게 저장됩니다.</p>
+            {% if has_api_key %}
+            <div class="api-key-status success">
+                <span class="status-icon">✓</span>
+                <span>Gemini API 키가 등록되어 있습니다.</span>
+            </div>
+            <p class="api-key-info">AI 답변 초안 생성 기능을 사용할 수 있습니다. <a href="/manager/inquiries">문의 관리 페이지</a>에서 확인하세요.</p>
+            <div class="api-key-actions">
+                <button class="btn secondary" onclick="document.getElementById('update-api-key-form').style.display='block'">API 키 변경</button>
+                <form method="post" action="/manager/api-key/delete" style="display: inline;" onsubmit="return confirm('정말 API 키를 삭제하시겠습니까?');">
+                    <button class="btn tertiary" type="submit">API 키 삭제</button>
+                </form>
+            </div>
+            <form id="update-api-key-form" method="post" action="/manager/api-key/save" class="api-key-form" style="display: none; margin-top: 1rem;">
+                <input type="password" name="api_key" placeholder="새 Gemini API 키 입력" required>
+                <button class="btn primary" type="submit">API 키 업데이트</button>
+                <button class="btn tertiary" type="button" onclick="document.getElementById('update-api-key-form').style.display='none'">취소</button>
+            </form>
+            {% else %}
+            <div class="api-key-status warning">
+                <span class="status-icon">⚠</span>
+                <span>Gemini API 키가 등록되지 않았습니다.</span>
+            </div>
+            <p class="api-key-info">
+                API 키를 등록하면 크리에이터 문의에 대한 AI 답변 초안을 자동으로 생성할 수 있습니다.<br>
+                <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a>에서 무료로 API 키를 발급받을 수 있습니다.
+            </p>
+            <form method="post" action="/manager/api-key/save" class="api-key-form">
+                <input type="password" name="api_key" placeholder="Gemini API 키 입력" required>
+                <button class="btn primary" type="submit">API 키 등록</button>
+            </form>
+            {% endif %}
+        </div>
+
+        <div class="tool-card">
+            <h3>크리에이터 초대</h3>
+            <p>새로운 크리에이터를 초대하여 연결 요청을 보낼 수 있습니다.</p>
+            <form method="post" action="/manager/invite" class="invite-form">
+                <input type="email" name="creator_email" placeholder="크리에이터 이메일" required>
+                <button class="btn primary" type="submit">초대 링크 생성</button>
+            </form>
+            {% if invite_link %}
+            <div class="invite-result">
+                <p><strong>초대 링크:</strong></p>
+                <input type="text" readonly value="{{ invite_link }}" onclick="this.select()">
+                <button class="btn tertiary" onclick="copyToClipboard('{{ invite_link }}')">복사</button>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="tool-card">
+            <h3>통합 리포트</h3>
+            <p>모든 승인된 크리에이터의 통합 리포트를 생성합니다.</p>
+            <div class="export-actions">
+                <a href="/manager/export/csv" class="btn secondary" download>CSV 다운로드</a>
+                <a href="/manager/export/pdf" class="btn secondary" download>PDF 다운로드</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.manager-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.approval-queue, .managed-creators, .manager-tools {
+    margin-bottom: 3rem;
+}
+
+.approval-grid, .creator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.approval-card, .creator-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.approval-card header, .creator-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge.pending {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.badge.approved {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.creator-info, .creator-summary {
+    margin-bottom: 1rem;
+}
+
+.creator-info p, .creator-summary p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.approval-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.creator-channels {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.creator-channels h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+/* Platform Badges */
+.platform-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+}
+
+.platform-badge svg {
+    flex-shrink: 0;
+}
+
+.platform-badge.platform-youtube {
+    background: linear-gradient(135deg, #FF0000, #CC0000);
+}
+
+.platform-badge.platform-instagram {
+    background: linear-gradient(135deg, #E1306C, #C13584, #833AB4);
+}
+
+.platform-badge.platform-tiktok {
+    background: linear-gradient(135deg, #000000, #333333);
+}
+
+.platform-badge.platform-facebook {
+    background: linear-gradient(135deg, #1877F2, #0E5BB8);
+}
+
+.platform-badge.platform-threads {
+    background: linear-gradient(135deg, #000000, #444444);
+}
+
+.platform-badge.platform-twitter,
+.platform-badge.platform-x {
+    background: linear-gradient(135deg, #1DA1F2, #0C85D0);
+}
+
+.channel-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.mini-channel-card {
+    background: var(--bg);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 80px;
+}
+
+.mini-channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.mini-channel-card.platform-youtube::before {
+    background: #FF0000;
+}
+
+.mini-channel-card.platform-instagram::before {
+    background: linear-gradient(to bottom, #E1306C, #C13584, #833AB4);
+}
+
+.mini-channel-card.platform-tiktok::before {
+    background: #000000;
+}
+
+.mini-channel-card.platform-facebook::before {
+    background: #1877F2;
+}
+
+.mini-channel-card.platform-threads::before {
+    background: #000000;
+}
+
+.mini-channel-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary);
+}
+
+.channel-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 120px;
+}
+
+.platform-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.platform-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.account-name {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.mini-metrics {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex: 1;
+}
+
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.metric-value.growth {
+    color: #28A745;
+}
+
+.metric-value.engagement {
+    color: #007BFF;
+}
+
+.recent-post-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 180px;
+    max-width: 220px;
+}
+
+.post-label {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.post-title {
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.3;
+    color: var(--text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.post-stats {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.post-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.no-data {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.creator-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.tool-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.tool-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.tool-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.invite-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.invite-form input[type="email"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.invite-result {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.invite-result input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.export-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+/* API 키 관리 스타일 */
+.api-key-status {
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.api-key-status.success {
+    background: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+}
+
+.api-key-status.warning {
+    background: #FFF3CD;
+    color: #856404;
+    border: 1px solid #FFEAA7;
+}
+
+.status-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.api-key-info {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 1rem 0;
+    line-height: 1.5;
+}
+
+.api-key-info a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.api-key-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.api-key-form input[type="password"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.api-key-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+</style>
+
+<!-- AI PD 채팅 섹션 (유료 기능) -->
+<section class="ai-pd-section">
+    <h2>🤖 AI PD 비서 - 포트폴리오 분석 <span class="premium-badge">PRO</span></h2>
+    <p class="section-desc">관리 중인 크리에이터들의 성과를 분석하고 전략을 제안받으세요</p>
+
+    {% if subscription.tier.value in ['pro', 'enterprise'] %}
+    <div class="ai-chat-container">
+        <div class="chat-messages" id="aiChatMessages">
+            <div class="ai-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p><strong>안녕하세요! AI PD 비서입니다.</strong></p>
+                    <p>관리 중인 크리에이터 포트폴리오를 분석하고 최적화 전략을 제안해드립니다. 궁금한 것을 물어보세요:</p>
+                    <ul class="suggestion-chips">
+                        <li onclick="askAI(this.textContent)">어떤 크리에이터가 가장 좋은 성과를 내고 있나요?</li>
+                        <li onclick="askAI(this.textContent)">전체 포트폴리오의 강점과 약점은?</li>
+                        <li onclick="askAI(this.textContent)">크리에이터별 맞춤 전략을 제안해주세요</li>
+                        <li onclick="askAI(this.textContent)">다음 분기 액션 아이템은?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form id="aiChatForm" class="ai-chat-form">
+            <textarea
+                id="aiQuestionInput"
+                name="question"
+                placeholder="AI에게 질문하세요... (최소 10자)"
+                rows="2"
+                required
+                minlength="10"
+            ></textarea>
+            <button type="submit" class="btn primary" id="aiSendBtn">
+                <span class="btn-text">질문하기</span>
+                <span class="btn-loader" style="display: none;">분석 중...</span>
+            </button>
+        </form>
+    </div>
+    {% else %}
+    <div class="upgrade-notice">
+        <div class="upgrade-icon">🔒</div>
+        <h3>AI PD 비서는 PRO 이상 구독자만 이용할 수 있습니다</h3>
+        <p>AI 기반 포트폴리오 분석 및 맞춤 전략을 받아보세요!</p>
+        <div class="upgrade-benefits">
+            <div class="benefit-item">
+                <span class="benefit-icon">✨</span>
+                <span>실시간 AI 포트폴리오 분석</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">📊</span>
+                <span>크리에이터별 성과 비교</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🎯</span>
+                <span>전략적 인사이트 제공</span>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💡</span>
+                <span>포트폴리오 최적화 가이드</span>
+            </div>
+        </div>
+        <a href="/business" class="btn primary upgrade-btn">ENTERPRISE로 업그레이드 하기</a>
+    </div>
+    {% endif %}
+</section>
+
+<style>
+.ai-pd-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+}
+
+.ai-pd-section h2 {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.premium-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-notice {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.upgrade-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.upgrade-notice h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.upgrade-notice p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.upgrade-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.benefit-icon {
+    font-size: 1.25rem;
+}
+
+.upgrade-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+}
+
+.ai-chat-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+}
+
+.ai-message,
+.user-message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-message .message-avatar {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.message-content {
+    flex: 1;
+    background: var(--surface-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.message-content p {
+    margin: 0.5rem 0;
+}
+
+.suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.suggestion-chips li {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.suggestion-chips li:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.ai-chat-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.ai-chat-form textarea {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.ai-chat-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.ai-chat-form button {
+    min-width: 120px;
+    white-space: nowrap;
+}
+</style>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('초대 링크가 클립보드에 복사되었습니다.');
+    });
+}
+
+function exportCreatorReport(creatorId) {
+    window.location.href = `/manager/creator/${creatorId}/export`;
+}
+
+function askAI(question) {
+    document.getElementById('aiQuestionInput').value = question;
+    document.getElementById('aiQuestionInput').focus();
+}
+
+document.getElementById('aiChatForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const questionInput = document.getElementById('aiQuestionInput');
+    const question = questionInput.value.trim();
+    const sendBtn = document.getElementById('aiSendBtn');
+    const btnText = sendBtn.querySelector('.btn-text');
+    const btnLoader = sendBtn.querySelector('.btn-loader');
+    const chatMessages = document.getElementById('aiChatMessages');
+
+    if (question.length < 10) {
+        alert('질문은 최소 10자 이상 입력해주세요.');
+        return;
+    }
+
+    // Disable form
+    sendBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline-block';
+    questionInput.disabled = true;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.innerHTML = `
+        <div class="message-avatar">👤</div>
+        <div class="message-content"><p>${question}</p></div>
+    `;
+    chatMessages.appendChild(userMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+        const formData = new FormData();
+        formData.append('question', question);
+
+        const response = await fetch('/ai-pd/ask', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'ai-message';
+            aiMsg.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    ${data.answer.split('\n').map(line => `<p>${line}</p>`).join('')}
+                </div>
+            `;
+            chatMessages.appendChild(aiMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            questionInput.value = '';
+        } else {
+            throw new Error(data.detail || 'Unknown error');
+        }
+    } catch (error) {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'ai-message';
+        errorMsg.innerHTML = `
+            <div class="message-avatar">⚠️</div>
+            <div class="message-content">
+                <p><strong>오류 발생</strong></p>
+                <p>${error.message || 'AI 분석 중 오류가 발생했습니다.'}</p>
+            </div>
+        `;
+        chatMessages.appendChild(errorMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    } finally {
+        sendBtn.disabled = false;
+        btnText.style.display = 'inline-block';
+        btnLoader.style.display = 'none';
+        questionInput.disabled = false;
+        questionInput.focus();
+    }
+});
+</script>
+{% endblock %}

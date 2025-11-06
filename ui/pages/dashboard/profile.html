@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="profile-card">
+    <h1>{{ t['profile']['title'] }}</h1>
+    {% if social_success %}
+    <div class="form-alert success">{{ social_success }}</div>
+    {% endif %}
+    {% if credentials_success %}
+    <div class="form-alert success">{{ credentials_success }}</div>
+    {% endif %}
+    {% if credentials_error %}
+    <div class="form-alert error">{{ credentials_error }}</div>
+    {% endif %}
+    {% if social_error %}
+    <div class="form-alert error">{{ social_error }}</div>
+    {% endif %}
+    {% if code_status %}
+    <div class="form-alert info">{{ code_status }}</div>
+    {% endif %}
+    <dl>
+        <dt>{{ t['auth']['name'] }}</dt>
+        <dd>{{ user.name or '-' }}</dd>
+        <dt>{{ t['auth']['email'] }}</dt>
+        <dd>{{ user.email }} {% if user.is_email_verified %}<span class="badge success">{{ t['auth']['verified'] }}</span>{% else %}<span class="badge muted">{{ t['auth']['not_verified'] }}</span>{% endif %}</dd>
+        <dt>{{ t['auth']['language'] }}</dt>
+        <dd>{{ user.locale }}</dd>
+        <dt>{{ t['auth']['role'] }}</dt>
+        <dd>{{ t['roles'][user.role.value] }}</dd>
+        <dt>{{ t['auth']['organization'] }}</dt>
+        <dd>{{ user.organization or '-' }}</dd>
+    </dl>
+    <div class="profile-section">
+        <h2>{{ t['auth']['social_accounts_title'] }}</h2>
+        {% if social_accounts %}
+        <ul class="social-account-list">
+            {% for account in social_accounts %}
+            <li>{{ t['auth']['providers'][account.provider.value] }} · {{ account.provider_user_id }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="hint">{{ t['auth']['no_social_accounts'] }}</p>
+        {% endif %}
+        <form method="post" action="/social/link">
+            <label>{{ t['auth']['provider'] }}
+                <select name="provider">
+                    {% for provider in providers %}
+                    <option value="{{ provider.value }}">{{ t['auth']['providers'][provider.value] }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>{{ t['auth']['provider_account'] }}<input type="text" name="provider_user_id" required></label>
+            <button class="btn secondary" type="submit">{{ t['auth']['link_provider'] }}</button>
+        </form>
+        <p class="hint">{{ t['auth']['social_link_hint'] }}</p>
+    </div>
+    <div class="profile-section">
+        <h2>{{ t['auth']['password_management_title'] }}</h2>
+        <p class="hint">{{ t['auth']['password_management_hint'] }}</p>
+        <form method="post" action="/signup/request-code" class="inline-form">
+            <input type="hidden" name="email" value="{{ user.email }}">
+            <input type="hidden" name="locale" value="{{ locale }}">
+            <input type="hidden" name="origin" value="profile">
+            <button class="btn tertiary" type="submit">{{ t['auth']['send_verification'] }}</button>
+            <span>{{ t['auth']['profile_verification_hint'] }}</span>
+        </form>
+        <p class="hint">{{ t['auth']['social_link_profile_hint'] }}</p>
+        <form method="post" action="/credentials/set-password">
+            <label>{{ t['auth']['new_password'] }}<input type="password" name="new_password" required></label>
+            <label>{{ t['auth']['verification_code'] }}<input type="text" name="verification_code" required></label>
+            <button class="btn primary" type="submit">{{ t['auth']['update_password_button'] }}</button>
+        </form>
+    </div>
+    <form method="post" action="/logout">
+        <button class="btn danger" type="submit">{{ t['profile']['logout'] }}</button>
+    </form>
+</section>
+{% endblock %}

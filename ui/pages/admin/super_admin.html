@@ -1,0 +1,695 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <h1>{{ t['super_admin']['title'] }}</h1>
+        <p>{{ t['super_admin']['description'] }}</p>
+    </div>
+    <div class="dashboard-meta">
+        <span class="status-badge">{{ t['super_admin']['total_members'] }} {{ users|length }}</span>
+    </div>
+</section>
+<section class="admin-panels">
+    <article class="admin-card email-service-card">
+        {% set test_email = 'k931103@gmail.com' %}
+        <div class="admin-card-header email-header">
+            <div class="header-copy">
+                <h2>{{ t['super_admin']['email_service'] }}</h2>
+                <p class="section-subtext">
+                    {{ t['super_admin']['email_service_description'] }}
+                    {% if super_admin_email %}
+                    <span class="connected-account">{{ t['super_admin']['email_connected_account'] }} {{ super_admin_email }}</span>
+                    {% endif %}
+                </p>
+            </div>
+            {% if email_service_configured %}
+            <div class="header-actions">
+                <form method="post" action="/super-admin/email/send-test">
+                    <button class="btn secondary small" type="submit">
+                        {{ t['super_admin']['email_send_test'].format(email=test_email) }}
+                    </button>
+                </form>
+                <form method="get" action="/super-admin">
+                    <button class="btn ghost small" type="submit">{{ t['super_admin']['email_refresh'] }}</button>
+                </form>
+                {% if email_last_refreshed %}
+                <span class="refresh-meta">{{ t['super_admin']['email_last_refreshed'] }} {{ email_last_refreshed }}</span>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% if not email_service_configured %}
+        <div class="status-banner warning">
+            <span class="status-icon">⚠️</span>
+            <div class="status-content">
+                <strong>{{ t['super_admin']['email_config_warning'] }}</strong>
+                <p>{{ t['super_admin']['email_config_hint'] }}</p>
+            </div>
+        </div>
+        {% else %}
+        {% if request.query_params.get('email_sent') %}
+        <div class="status-banner success">
+            <span class="status-icon">&#9989;</span>
+            <div class="status-content">
+                <strong>{{ t['super_admin']['email_sent_success'] }}</strong>
+            </div>
+        </div>
+        {% endif %}
+        {% if request.query_params.get('email_test') %}
+        <div class="status-banner success">
+            <span class="status-icon">&#9989;</span>
+            <div class="status-content">
+                <strong>{{ t['super_admin']['email_test_success'].format(email=test_email) }}</strong>
+            </div>
+        </div>
+        {% endif %}
+        {% if email_error %}
+        <div class="status-banner warning">
+            <span class="status-icon">&#9888;</span>
+            <div class="status-content">
+                <strong>{{ t['super_admin']['email_error_title'] }}</strong>
+                <p>{{ email_error }}</p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="email-layout">
+            <form class="email-compose" method="post" action="/super-admin/email/send">
+                <div class="form-row">
+                    <label>
+                        <span>{{ t['super_admin']['email_recipient'] }}</span>
+                        <input type="email" name="to_address" placeholder="recipient@example.com" required>
+                    </label>
+                    <label>
+                        <span>{{ t['super_admin']['email_subject'] }}</span>
+                        <input type="text" name="subject" required>
+                    </label>
+                </div>
+                <label>
+                    <span>{{ t['super_admin']['email_body'] }}</span>
+                    <textarea name="body" rows="6" required placeholder="{{ t['super_admin']['email_body_placeholder'] }}"></textarea>
+                </label>
+                <div class="form-actions">
+                    <button class="btn primary" type="submit">{{ t['super_admin']['email_send'] }}</button>
+                </div>
+            </form>
+            <div class="email-columns">
+                <section>
+                    <h3>{{ t['super_admin']['email_inbox'] }}</h3>
+                    <ul class="mail-list">
+                        {% if email_inbox %}
+                        {% for mail in email_inbox %}
+                        <li class="mail-item">
+                            <div class="mail-meta">
+                                <strong>{{ mail.subject or t['super_admin']['email_no_subject'] }}</strong>
+                                <span>{{ mail.date }}</span>
+                            </div>
+                            <p class="mail-address">{{ t['super_admin']['email_from'] }} {{ mail.sender }}</p>
+                            <p class="mail-snippet">{{ mail.snippet }}</p>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li class="empty">{{ t['super_admin']['email_empty'] }}</li>
+                        {% endif %}
+                    </ul>
+                </section>
+                <section>
+                    <h3>{{ t['super_admin']['email_sent'] }}</h3>
+                    <ul class="mail-list">
+                        {% if email_sent %}
+                        {% for mail in email_sent %}
+                        <li class="mail-item">
+                            <div class="mail-meta">
+                                <strong>{{ mail.subject or t['super_admin']['email_no_subject'] }}</strong>
+                                <span>{{ mail.date }}</span>
+                            </div>
+                            <p class="mail-address">{{ t['super_admin']['email_to'] }} {{ mail.recipient }}</p>
+                            <p class="mail-snippet">{{ mail.snippet }}</p>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li class="empty">{{ t['super_admin']['email_empty'] }}</li>
+                        {% endif %}
+                    </ul>
+                </section>
+            </div>
+        </div>
+        {% endif %}
+    </article>
+    <article class="admin-card">
+        <h2>{{ t['super_admin']['users'] }}</h2>
+        <div class="admin-table-wrapper">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>{{ t['super_admin']['email'] }}</th>
+                        <th>{{ t['super_admin']['status'] }}</th>
+                        <th>{{ t['super_admin']['role'] }}</th>
+                        <th>{{ t['super_admin']['plan'] }}</th>
+                        <th>{{ t['super_admin']['created'] }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    {% set subscription = subscriptions.get(u.id) %}
+                    <tr>
+                        <td>
+                            <div class="user-identity">
+                                <strong>{{ u.email }}</strong>
+                                <span class="subtext">{{ t['roles'][u.role.value] }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-pill {{ 'is-inactive' if not u.is_active }}">
+                                {{ t['super_admin']['status_active'] if u.is_active else t['super_admin']['status_inactive'] }}
+                            </span>
+                            <form class="inline-form" method="post" action="/super-admin/status">
+                                <input type="hidden" name="user_id" value="{{ u.id }}">
+                                <input type="hidden" name="is_active" value="{{ 'false' if u.is_active else 'true' }}">
+                                <button class="btn small {{ 'danger' if u.is_active else 'success' }}" type="submit">
+                                    {{ t['super_admin']['deactivate'] if u.is_active else t['super_admin']['activate'] }}
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="inline-form" method="post" action="/super-admin/promote">
+                                <input type="hidden" name="email" value="{{ u.email }}">
+                                <select name="role">
+                                    {% for role in roles %}
+                                    <option value="{{ role.value }}" {% if role == u.role %}selected{% endif %}>{{ t['roles'][role.value] }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn ghost small" type="submit">{{ t['super_admin']['update_role'] }}</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="inline-form" method="post" action="/super-admin/subscription">
+                                <input type="hidden" name="user_id" value="{{ u.id }}">
+                                <select name="tier">
+                                    {% for tier in tiers %}
+                                    <option value="{{ tier.value }}" {% if subscription and subscription.tier == tier %}selected{% endif %}>
+                                        {{ t['subscriptions'][tier.value] }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <label class="inline-number">
+                                    <span>{{ t['super_admin']['max_accounts'] }}</span>
+                                    <input type="number" min="1" name="max_accounts" value="{{ subscription.max_accounts if subscription else 1 }}">
+                                </label>
+                                <label class="inline-checkbox">
+                                    <input type="checkbox" name="active" value="true" {% if subscription and subscription.active %}checked{% endif %}>
+                                    <span>{{ t['super_admin']['subscription_active'] }}</span>
+                                </label>
+                                <button class="btn primary small" type="submit">{{ t['super_admin']['save'] }}</button>
+                            </form>
+                        </td>
+                        <td>{{ u.created_at.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+    <article class="admin-card">
+        <h2>{{ t['super_admin']['activity'] }}</h2>
+        <ul class="activity-feed">
+            {% for log in logs %}
+            <li>
+                <span class="activity-time">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                <span class="activity-description">{{ log.action }} — {{ log.details or t['super_admin']['no_details'] }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </article>
+    <article class="admin-card">
+        <div class="admin-card-header">
+            <h2>{{ t['super_admin']['payments'] }}</h2>
+            <p class="section-subtext">{{ t['super_admin']['payments_description'] }}</p>
+        </div>
+        <form class="admin-form" method="post" action="/super-admin/payment/create">
+            <div class="form-row">
+                <label>
+                    <span>{{ t['payments']['fields']['user'] }}</span>
+                    <select name="user_id" required>
+                        {% for u in users %}
+                        <option value="{{ u.id }}">{{ u.email }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>
+                    <span>{{ t['payments']['fields']['amount'] }}</span>
+                    <input type="number" name="amount" min="0" step="0.01" required>
+                </label>
+                <label>
+                    <span>{{ t['payments']['fields']['currency'] }}</span>
+                    <input type="text" name="currency" value="KRW" maxlength="3" required>
+                </label>
+                <label>
+                    <span>{{ t['payments']['fields']['status'] }}</span>
+                    <select name="status_value">
+                        {% for status in payment_statuses %}
+                        <option value="{{ status.value }}">{{ t['payments']['status'][status.value] }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>{{ t['payments']['fields']['period_start'] }}</span>
+                    <input type="date" name="billing_period_start">
+                </label>
+                <label>
+                    <span>{{ t['payments']['fields']['period_end'] }}</span>
+                    <input type="date" name="billing_period_end">
+                </label>
+                <label class="form-row-wide">
+                    <span>{{ t['payments']['fields']['description'] }}</span>
+                    <input type="text" name="description" placeholder="{{ t['payments']['fields']['description'] }}">
+                </label>
+            </div>
+            <div class="form-actions">
+                <button class="btn primary" type="submit">{{ t['payments']['actions']['create'] }}</button>
+            </div>
+        </form>
+        <div class="admin-table-wrapper">
+            {% if payments %}
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>{{ t['payments']['fields']['user'] }}</th>
+                        <th>{{ t['payments']['fields']['amount'] }}</th>
+                        <th>{{ t['payments']['fields']['status'] }}</th>
+                        <th>{{ t['payments']['fields']['period_start'] }} / {{ t['payments']['fields']['period_end'] }}</th>
+                        <th>{{ t['payments']['fields']['description'] }}</th>
+                        <th>{{ t['super_admin']['created'] }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    {% set payment_user = user_lookup.get(payment.user_id) %}
+                    <tr>
+                        <td>#{{ payment.id }}</td>
+                        <td>
+                            {% if payment_user %}
+                            <div class="user-identity">
+                                <strong>{{ payment_user.email }}</strong>
+                                <span class="subtext">{{ t['roles'][payment_user.role.value] }}</span>
+                            </div>
+                            {% else %}
+                            <span class="subtext">{{ payment.user_id }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ '%.2f'|format(payment.amount) }} {{ payment.currency }}</td>
+                        <td>
+                            <span class="status-pill">{{ t['payments']['status'][payment.status.value] }}</span>
+                        </td>
+                        <td>
+                            <div class="stacked">
+                                <span>{{ payment.billing_period_start.strftime('%Y-%m-%d') if payment.billing_period_start else '—' }}</span>
+                                <span>{{ payment.billing_period_end.strftime('%Y-%m-%d') if payment.billing_period_end else '—' }}</span>
+                            </div>
+                        </td>
+                        <td>{{ payment.description or '—' }}</td>
+                        <td>{{ payment.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <form class="inline-form" method="post" action="/super-admin/payment/status">
+                                <input type="hidden" name="payment_id" value="{{ payment.id }}">
+                                <select name="status_value">
+                                    {% for status in payment_statuses %}
+                                    <option value="{{ status.value }}" {% if status == payment.status %}selected{% endif %}>{{ t['payments']['status'][status.value] }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn ghost small" type="submit">{{ t['payments']['actions']['update'] }}</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="empty-state">{{ t['payments']['empty'] }}</p>
+            {% endif %}
+        </div>
+    </article>
+
+    <!-- AI PD Service Management -->
+    <article class="admin-card ai-pd-card">
+        <div class="admin-card-header">
+            <h2>🤖 AI PD 서비스 관리</h2>
+            <p class="section-subtext">Google Gemini AI 기반 크리에이터 분석 서비스</p>
+        </div>
+
+        <div class="ai-pd-status">
+            {% if gemini_api_key_set %}
+            <div class="status-banner success">
+                <span class="status-icon">✓</span>
+                <div class="status-content">
+                    <strong>Gemini API 키가 설정되어 있습니다</strong>
+                    <p>크리에이터와 매니저가 AI PD 서비스를 사용할 수 있습니다.</p>
+                </div>
+            </div>
+            {% else %}
+            <div class="status-banner warning">
+                <span class="status-icon">⚠</span>
+                <div class="status-content">
+                    <strong>Gemini API 키가 설정되지 않았습니다</strong>
+                    <p>AI PD 서비스를 활성화하려면 환경 변수에 GEMINI_API_KEY를 설정하세요.</p>
+                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn tertiary small">API 키 발급받기 →</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="ai-pd-info">
+            <h3>서비스 기능</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">👤</span>
+                    <div class="feature-content">
+                        <strong>크리에이터용 AI 분석</strong>
+                        <p>개인 채널 성과 분석 및 개선 방안 제안</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">👥</span>
+                    <div class="feature-content">
+                        <strong>매니저용 포트폴리오 분석</strong>
+                        <p>관리 중인 모든 크리에이터 통합 분석 및 전략 제안</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💬</span>
+                    <div class="feature-content">
+                        <strong>AI 답변 초안 생성</strong>
+                        <p>크리에이터 문의에 대한 AI 기반 답변 초안 자동 생성</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔒</span>
+                    <div class="feature-content">
+                        <strong>안전한 API 키 관리</strong>
+                        <p>매니저별 암호화된 Gemini API 키 저장 지원</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">시스템 프롬프트</h3>
+            <div class="prompt-viewer">
+                <pre>{{ ai_system_prompt }}</pre>
+            </div>
+
+            <h3 style="margin-top: 2rem;">API 키 설정 가이드</h3>
+            <ol class="setup-guide">
+                <li>
+                    <strong>환경 변수 설정 (서버 전역 사용)</strong>
+                    <p>서버의 .env 파일 또는 환경 변수에 <code>GEMINI_API_KEY=your_api_key_here</code>를 추가하세요.</p>
+                    <p>이 방법으로 설정하면 모든 사용자가 해당 API 키를 사용합니다 (비용 공유).</p>
+                </li>
+                <li>
+                    <strong>매니저별 API 키 설정 (권장)</strong>
+                    <p>각 매니저가 대시보드에서 자신의 Gemini API 키를 등록할 수 있습니다.</p>
+                    <p>API 키는 암호화되어 데이터베이스에 안전하게 저장되며, 해당 매니저만 사용합니다.</p>
+                </li>
+            </ol>
+
+            <div class="api-links">
+                <p class="info-text">💡 AI PD 기능은 개인/기업 대시보드에 통합되어 있습니다.</p>
+                <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="btn tertiary">Gemini API 문서</a>
+            </div>
+        </div>
+    </article>
+</section>
+
+<style>
+.email-service-card .email-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.email-service-card .header-copy {
+    flex: 1 1 260px;
+}
+
+.email-service-card .header-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.email-service-card .header-actions form {
+    margin: 0;
+}
+
+.email-service-card .refresh-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.email-service-card .section-subtext {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.email-service-card .connected-account {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.email-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.email-compose {
+    flex: 1 1 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg);
+}
+
+.email-compose .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.email-compose label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1 1 200px;
+}
+
+.email-compose textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.email-columns {
+    flex: 1 1 320px;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.email-columns section h3 {
+    margin-bottom: 0.75rem;
+}
+
+.mail-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mail-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm, none);
+}
+
+.mail-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.mail-meta strong {
+    font-size: 0.95rem;
+}
+
+.mail-meta span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.mail-address {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0.25rem 0;
+}
+
+.mail-snippet {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.mail-list .empty {
+    padding: 1rem;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.ai-pd-card {
+    border-left: 4px solid #667eea;
+}
+
+.status-banner {
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.status-banner.success {
+    background: #D4EDDA;
+    border: 1px solid #C3E6CB;
+}
+
+.status-banner.warning {
+    background: #FFF3CD;
+    border: 1px solid #FFEAA7;
+}
+
+.status-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.status-content {
+    flex: 1;
+}
+
+.status-content strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.status-content p {
+    margin: 0.25rem 0;
+    color: var(--text-secondary);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.feature-content strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.feature-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.prompt-viewer {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-top: 0.5rem;
+}
+
+.prompt-viewer pre {
+    margin: 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.setup-guide {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+.setup-guide li {
+    margin: 1rem 0;
+}
+
+.setup-guide strong {
+    color: var(--primary);
+}
+
+.setup-guide p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+.setup-guide code {
+    background: var(--bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+}
+
+.api-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+</style>
+{% endblock %}
