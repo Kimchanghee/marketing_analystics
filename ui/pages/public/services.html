@@ -1,69 +1,94 @@
 {% extends "layouts/base.html" %}
 {% block content %}
-<section class="hero">
-    <div class="hero-text">
-        <h1>{{ t['service']['hero']['title'] }}</h1>
-        <p>{{ t['service']['hero']['subtitle'] }}</p>
-        <div class="hero-actions">
-            <a class="btn primary" href="/signup">{{ t['service']['hero']['primary_cta'] }}</a>
-            <a class="btn secondary" href="/personal#personal-plans">{{ t['service']['hero']['secondary_cta'] }}</a>
+<section class="hero-section">
+    <div class="hero-wrapper">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ t['service']['hero']['title'] }}</h1>
+            <p class="hero-subtitle">{{ t['service']['hero']['subtitle'] }}</p>
+            <div class="hero-cta-group">
+                <a class="btn primary" href="/signup">{{ t['service']['hero']['primary_cta'] }}</a>
+                <a class="btn secondary" href="/personal#personal-plans">{{ t['service']['hero']['secondary_cta'] }}</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>{{ t['service']['hero']['visual_title'] }}</h3>
+                </div>
+                <div class="metrics-preview">
+                    {% for item in t['service']['hero']['visual_points'] %}
+                    <div class="metric-item">
+                        <span class="metric-label">{{ item['label'] }}</span>
+                        <span class="metric-value">{{ item['value'] }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
-    <div class="hero-visual">
-        <div class="dashboard-preview">
-            <h3>{{ t['service']['hero']['visual_title'] }}</h3>
-            <ul>
-                {% for item in t['service']['hero']['visual_points'] %}
-                <li>
-                    <span class="platform">{{ item['label'] }}</span>
-                    <span class="metric">{{ item['value'] }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+</section>
+
+<section class="features-section">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>{{ t['service']['pillars_title'] }}</h2>
+            <p>{{ t['service']['pillars_description'] }}</p>
+        </div>
+        <div class="features-grid">
+            {% for pillar in t['service']['pillars'] %}
+            <article class="feature-card">
+                <span class="feature-badge">{{ pillar['tagline'] }}</span>
+                <div class="feature-body">
+                    <h3>{{ pillar['title'] }}</h3>
+                    <p>{{ pillar['description'] }}</p>
+                    <ul class="highlights-list">
+                        {% for point in pillar['bullets'] %}
+                        <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </article>
+            {% endfor %}
         </div>
     </div>
 </section>
-<section>
-    <div class="section-header">
-        <h2>{{ t['service']['pillars_title'] }}</h2>
-        <p>{{ t['service']['pillars_description'] }}</p>
-    </div>
-    <div class="feature-grid">
-        {% for pillar in t['service']['pillars'] %}
-        <article class="feature-card">
-            <strong>{{ pillar['tagline'] }}</strong>
-            <h3>{{ pillar['title'] }}</h3>
-            <p>{{ pillar['description'] }}</p>
-            <ul class="section-list">
-                {% for point in pillar['bullets'] %}
-                <li>{{ point }}</li>
-                {% endfor %}
-            </ul>
-        </article>
-        {% endfor %}
+
+<section class="journey-section">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>{{ t['service']['outcomes']['title'] }}</h2>
+            <p>{{ t['service']['outcomes']['description'] }}</p>
+        </div>
+        <div class="journey-timeline">
+            {% for outcome in t['service']['outcomes']['items'] %}
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg viewBox="0 0 28 28" focusable="false">
+                        <circle cx="14" cy="14" r="12" fill="currentColor" opacity="0.18"/>
+                        <path d="m11 15 2.5 2.5L18 11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="timeline-content">
+                    <span class="step-number">{{ outcome['label'] }}</span>
+                    <h3>{{ outcome['title'] }}</h3>
+                    <p>{{ outcome['detail'] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </section>
-<section class="journey-steps">
-    <div class="section-header">
-        <h2>{{ t['service']['outcomes']['title'] }}</h2>
-        <p>{{ t['service']['outcomes']['description'] }}</p>
-    </div>
-    {% for outcome in t['service']['outcomes']['items'] %}
-    <article class="journey-step">
-        <span>{{ outcome['label'] }}</span>
-        <h3>{{ outcome['title'] }}</h3>
-        <p>{{ outcome['detail'] }}</p>
-    </article>
-    {% endfor %}
-</section>
-<section class="cta-banner">
-    <div>
-        <h2>{{ t['service']['cta']['title'] }}</h2>
-        <p>{{ t['service']['cta']['description'] }}</p>
-    </div>
-    <div class="hero-actions">
-        <a class="btn primary" href="/signup">{{ t['service']['cta']['primary'] }}</a>
-        <a class="btn tertiary" href="/support">{{ t['service']['cta']['secondary'] }}</a>
+
+<section class="final-cta-section">
+    <div class="section-container">
+        <div class="cta-content">
+            <h2>{{ t['service']['cta']['title'] }}</h2>
+            <p>{{ t['service']['cta']['description'] }}</p>
+            <div class="cta-buttons">
+                <a class="btn primary" href="/signup">{{ t['service']['cta']['primary'] }}</a>
+                <a class="btn secondary" href="/support">{{ t['service']['cta']['secondary'] }}</a>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

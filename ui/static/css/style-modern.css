@@ -19,6 +19,8 @@
   --accent-soft-glow: rgba(79, 70, 229, 0.18);
   --brand-blend-soft: #fbe6eb;
   --brand-blend-glow: rgba(230, 57, 70, 0.12);
+  --badge-background: rgba(230, 57, 70, 0.12);
+  --badge-color: var(--accent-instagram-pink);
 }
 
 [data-theme="light"] {
@@ -39,6 +41,8 @@
   --card-shadow: 0 26px 52px rgba(221, 42, 123, 0.16), 0 16px 32px rgba(24, 119, 242, 0.12);
   --chip-accent: var(--accent-instagram-purple);
   --feature-accent: var(--accent-youtube);
+  --badge-background: rgba(230, 57, 70, 0.12);
+  --badge-color: var(--accent);
 }
 
 [data-theme="dark"] {
@@ -61,6 +65,8 @@
   --card-shadow: 0 30px 60px rgba(2, 6, 23, 0.7);
   --chip-accent: var(--accent-instagram-purple);
   --feature-accent: var(--accent-youtube);
+  --badge-background: rgba(255, 122, 24, 0.18);
+  --badge-color: var(--accent);
 }
 
 * {
@@ -145,6 +151,24 @@ body {
 .hero-visual {
   position: relative;
   height: 100%;
+}
+
+.hero-caption {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: var(--text-secondary);
+}
+
+.hero-caption .caption-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hero-caption .caption-subtitle {
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .dashboard-card {
@@ -300,6 +324,21 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--badge-background);
+  color: var(--badge-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: fit-content;
 }
 
 .feature-card:hover {
@@ -772,6 +811,22 @@ body {
   color: var(--text-secondary);
   margin: 0 0 2rem;
   line-height: 1.6;
+}
+
+.showcase-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--text-secondary);
+}
+
+.showcase-meta .meta-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.showcase-meta .meta-caption {
+  font-size: 0.875rem;
 }
 
 .showcase-image {

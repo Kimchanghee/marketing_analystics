@@ -16,45 +16,33 @@
     {% if seo is defined and page is defined %}
     {# SEO Meta Tags #}
     <title>{{ seo.get_page_metadata(page)['title'] }}</title>
-
-    {# hreflang Tags for Multilingual SEO #}
     {{ seo.generate_hreflang_tags(request.url.path if request is defined else '/')|safe }}
-
-    {# Basic Meta Tags #}
     {{ seo.generate_meta_tags(page)|safe }}
-
-    {# OpenGraph Tags #}
     {{ seo.generate_opengraph_tags(page)|safe }}
-
-    {# Twitter Cards #}
     {{ seo.generate_twitter_cards(page)|safe }}
-
-    {# Structured Data (JSON-LD) #}
     {{ seo.generate_all_schemas(page, include_faq=(page == 'support'))|safe }}
     {% else %}
     <title>{{ t['app']['title'] }}</title>
     {% endif %}
 
-    {# Performance Optimization: Resource Hints #}
+    {# Performance Optimization #}
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com">
 
-    {# Critical CSS #}
+    {# Updated to modern CSS with improved styling #}
     <link rel="preload" href="/static/css/style.css" as="style">
     <link rel="stylesheet" href="/static/css/style.css">
-    
-    {# Modern Design System from v0 #}
     <link rel="stylesheet" href="/static/css/style-modern.css">
 
     {# Optimized Font Loading #}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+    
     <script>
         (function () {
             const storageKey = 'ccc-theme';
@@ -69,23 +57,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-<div class="ambient-orbs" aria-hidden="true">
-    <span class="orb orb-1"></span>
-    <span class="orb orb-2"></span>
-    <span class="orb orb-3"></span>
-</div>
 <header class="topbar">
     <div class="topbar-container">
         <div class="topbar-left">
+            {# Modern logo with improved styling #}
             <a href="/" class="logo">
                 <span class="logo-mark" aria-hidden="true">
                     <svg viewBox="0 0 32 32" focusable="false" role="img">
                         <defs>
                             <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#f58529" />
-                                <stop offset="45%" stop-color="#dd2a7b" />
-                                <stop offset="75%" stop-color="#1877f2" />
-                                <stop offset="100%" stop-color="#ff3b30" />
+                                <stop offset="0%" stop-color="#ff7a18" />
+                                <stop offset="45%" stop-color="#e63946" />
+                                <stop offset="75%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="#ef4444" />
                             </linearGradient>
                         </defs>
                         <rect x="4" y="4" width="24" height="24" rx="8" fill="url(#logoGradient)" />
@@ -97,6 +81,7 @@
             </a>
         </div>
 
+        {# Simplified and modern navigation menu #}
         <nav class="main-nav" id="mainNav">
             <a href="/" class="nav-link">{{ t['nav']['home'] }}</a>
             <a href="/services" class="nav-link">{{ t['nav']['services'] }}</a>
@@ -115,13 +100,14 @@
                     <span class="btn-nav-text">{{ t['nav']['channels'] if 'channels' in t['nav'] else '채널' }}</span>
                 </a>
                 <form method="post" action="/logout" style="display: inline;">
-                    <button class="btn-primary" type="submit">{{ t['profile']['logout'] }}</button>
+                    <button class="btn primary" type="submit">{{ t['profile']['logout'] }}</button>
                 </form>
             {% else %}
                 <a class="btn-nav" href="/login">{{ t['auth']['login_button'] }}</a>
-                <a class="btn-primary" href="/signup">{{ t['auth']['signup_button'] }}</a>
+                <a class="btn primary" href="/signup">{{ t['auth']['signup_button'] }}</a>
             {% endif %}
 
+            {# Improved theme toggle button #}
             <button
                 class="theme-toggle-btn"
                 type="button"
@@ -137,6 +123,7 @@
                 </svg>
             </button>
 
+            {# Modern language selector with improved styling #}
             <div class="lang-selector">
                 <button class="lang-selector-btn" type="button" aria-label="{{ t['nav']['language'] }}" aria-haspopup="true" aria-expanded="false">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -164,6 +151,7 @@
                 </div>
             </div>
 
+            {# Modern mobile menu button #}
             <button class="mobile-menu-btn" type="button" aria-label="Toggle menu" aria-expanded="false">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -172,6 +160,7 @@
         </div>
     </div>
 
+    {# Improved mobile navigation #}
     <div class="mobile-nav" id="mobileNav">
         <a href="/" class="mobile-nav-link">{{ t['nav']['home'] }}</a>
         <a href="/services" class="mobile-nav-link">{{ t['nav']['services'] }}</a>
@@ -220,9 +209,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
 <main class="content">
     {% block content %}{% endblock %}
 </main>
+
+{# Modern footer with improved layout and styling #}
 <footer class="footer">
     <div class="footer-inner">
         <div class="footer-brand">
