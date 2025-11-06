@@ -1,6 +1,7 @@
-{% extends "layouts/base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% block content %}
-<section class="dashboard-header">
+<div class="dashboard-shell">
+<section class="dashboard-panel dashboard-header">
     <div>
         <h1>{{ t['super_admin']['title'] }}</h1>
         <p>{{ t['super_admin']['description'] }}</p>
@@ -9,7 +10,7 @@
         <span class="status-badge">{{ t['super_admin']['total_members'] }} {{ users|length }}</span>
     </div>
 </section>
-<section class="admin-panels">
+<section class="dashboard-panel admin-panels">
     <article class="admin-card email-service-card">
         {% set test_email = 'k931103@gmail.com' %}
         <div class="admin-card-header email-header">
@@ -40,7 +41,7 @@
         </div>
         {% if not email_service_configured %}
         <div class="status-banner warning">
-            <span class="status-icon">?�️</span>
+            <span class="status-icon">? ï¸</span>
             <div class="status-content">
                 <strong>{{ t['super_admin']['email_config_warning'] }}</strong>
                 <p>{{ t['super_admin']['email_config_hint'] }}</p>
@@ -306,11 +307,11 @@
                         </td>
                         <td>
                             <div class="stacked">
-                                <span>{{ payment.billing_period_start.strftime('%Y-%m-%d') if payment.billing_period_start else '?? }}</span>
-                                <span>{{ payment.billing_period_end.strftime('%Y-%m-%d') if payment.billing_period_end else '?? }}</span>
+                                <span>{{ payment.billing_period_start.strftime('%Y-%m-%d') if payment.billing_period_start else 'N/A' }}</span>
+                                <span>{{ payment.billing_period_end.strftime('%Y-%m-%d') if payment.billing_period_end else 'N/A' }}</span>
                             </div>
                         </td>
-                        <td>{{ payment.description or '?? }}</td>
+                        <td>{{ payment.description or 'N/A' }}</td>
                         <td>{{ payment.created_at.strftime('%Y-%m-%d') }}</td>
                         <td>
                             <form class="inline-form" method="post" action="/super-admin/payment/status">
@@ -336,8 +337,8 @@
     <!-- AI PD Service Management -->
     <article class="admin-card ai-pd-card">
         <div class="admin-card-header">
-            <h2>?�� AI PD ?�비??관�?/h2>
-            <p class="section-subtext">Google Gemini AI 기반 ?�리?�이??분석 ?�비??/p>
+            <h2>?¤ AI PD ?ë¹??ê´ë¦?/h2>
+            <p class="section-subtext">Google Gemini AI ê¸°ë° ?¬ë¦¬?ì´??ë¶ì ?ë¹??/p>
         </div>
 
         <div class="ai-pd-status">
@@ -345,77 +346,77 @@
             <div class="status-banner success">
                 <span class="status-icon">??/span>
                 <div class="status-content">
-                    <strong>Gemini API ?��? ?�정?�어 ?�습?�다</strong>
-                    <p>?�리?�이?��? 매니?�가 AI PD ?�비?��? ?�용?????�습?�다.</p>
+                    <strong>Gemini API ?¤ê? ?¤ì ?ì´ ?ìµ?ë¤</strong>
+                    <p>?¬ë¦¬?ì´?°ì? ë§¤ë?ê° AI PD ?ë¹?¤ë? ?¬ì©?????ìµ?ë¤.</p>
                 </div>
             </div>
             {% else %}
             <div class="status-banner warning">
                 <span class="status-icon">??/span>
                 <div class="status-content">
-                    <strong>Gemini API ?��? ?�정?��? ?�았?�니??/strong>
-                    <p>AI PD ?�비?��? ?�성?�하?�면 ?�경 변?�에 GEMINI_API_KEY�??�정?�세??</p>
-                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn tertiary small">API ??발급받기 ??/a>
+                    <strong>Gemini API ?¤ê? ?¤ì ?ì? ?ì?µë??/strong>
+                    <p>AI PD ?ë¹?¤ë? ?ì±?í?¤ë©´ ?ê²½ ë³?ì GEMINI_API_KEYë¥??¤ì ?ì¸??</p>
+                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn tertiary small">API ??ë°ê¸ë°ê¸° ??/a>
                 </div>
             </div>
             {% endif %}
         </div>
 
         <div class="ai-pd-info">
-            <h3>?�비??기능</h3>
+            <h3>?ë¹??ê¸°ë¥</h3>
             <div class="feature-grid">
                 <div class="feature-item">
-                    <span class="feature-icon">?��</span>
+                    <span class="feature-icon">?¤</span>
                     <div class="feature-content">
-                        <strong>?�리?�이?�용 AI 분석</strong>
-                        <p>개인 채널 ?�과 분석 �?개선 방안 ?�안</p>
+                        <strong>?¬ë¦¬?ì´?°ì© AI ë¶ì</strong>
+                        <p>ê°ì¸ ì±ë ?±ê³¼ ë¶ì ë°?ê°ì  ë°©ì ?ì</p>
                     </div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">?��</span>
+                    <span class="feature-icon">?¥</span>
                     <div class="feature-content">
-                        <strong>매니?�???�트?�리??분석</strong>
-                        <p>관�?중인 모든 ?�리?�이???�합 분석 �??�략 ?�안</p>
+                        <strong>ë§¤ë????¬í¸?´ë¦¬??ë¶ì</strong>
+                        <p>ê´ë¦?ì¤ì¸ ëª¨ë  ?¬ë¦¬?ì´???µí© ë¶ì ë°??ëµ ?ì</p>
                     </div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">?��</span>
+                    <span class="feature-icon">?¬</span>
                     <div class="feature-content">
-                        <strong>AI ?��? 초안 ?�성</strong>
-                        <p>?�리?�이??문의???�??AI 기반 ?��? 초안 ?�동 ?�성</p>
+                        <strong>AI ?µë? ì´ì ?ì±</strong>
+                        <p>?¬ë¦¬?ì´??ë¬¸ì?????AI ê¸°ë° ?µë? ì´ì ?ë ?ì±</p>
                     </div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">?��</span>
+                    <span class="feature-icon">?</span>
                     <div class="feature-content">
-                        <strong>?�전??API ??관�?/strong>
-                        <p>매니?��??�호?�된 Gemini API ???�??지??/p>
+                        <strong>?ì ??API ??ê´ë¦?/strong>
+                        <p>ë§¤ë?ë³??í¸?ë Gemini API ?????ì§??/p>
                     </div>
                 </div>
             </div>
 
-            <h3 style="margin-top: 2rem;">?�스???�롬?�트</h3>
+            <h3 class="spaced-heading">?ì¤???ë¡¬?í¸</h3>
             <div class="prompt-viewer">
                 <pre>{{ ai_system_prompt }}</pre>
             </div>
 
-            <h3 style="margin-top: 2rem;">API ???�정 가?�드</h3>
+            <h3 class="spaced-heading">API ???¤ì  ê°?´ë</h3>
             <ol class="setup-guide">
                 <li>
-                    <strong>?�경 변???�정 (?�버 ?�역 ?�용)</strong>
-                    <p>?�버??.env ?�일 ?�는 ?�경 변?�에 <code>GEMINI_API_KEY=your_api_key_here</code>�?추�??�세??</p>
-                    <p>??방법?�로 ?�정?�면 모든 ?�용?��? ?�당 API ?��? ?�용?�니??(비용 공유).</p>
+                    <strong>?ê²½ ë³???¤ì  (?ë² ?ì­ ?¬ì©)</strong>
+                    <p>?ë²??.env ?ì¼ ?ë ?ê²½ ë³?ì <code>GEMINI_API_KEY=your_api_key_here</code>ë¥?ì¶ê??ì¸??</p>
+                    <p>??ë°©ë²?¼ë¡ ?¤ì ?ë©´ ëª¨ë  ?¬ì©?ê? ?´ë¹ API ?¤ë? ?¬ì©?©ë??(ë¹ì© ê³µì ).</p>
                 </li>
                 <li>
-                    <strong>매니?��?API ???�정 (권장)</strong>
-                    <p>�?매니?�가 ?�?�보?�에???�신??Gemini API ?��? ?�록?????�습?�다.</p>
-                    <p>API ?�는 ?�호?�되???�이?�베?�스???�전?�게 ?�?�되�? ?�당 매니?��??�용?�니??</p>
+                    <strong>ë§¤ë?ë³?API ???¤ì  (ê¶ì¥)</strong>
+                    <p>ê°?ë§¤ë?ê° ??ë³´?ì???ì ??Gemini API ?¤ë? ?±ë¡?????ìµ?ë¤.</p>
+                    <p>API ?¤ë ?í¸?ë???°ì´?°ë² ?´ì¤???ì ?ê² ??¥ëë©? ?´ë¹ ë§¤ë?ë§??¬ì©?©ë??</p>
                 </li>
             </ol>
 
             <div class="api-links">
-                <p class="info-text">?�� AI PD 기능?� 개인/기업 ?�?�보?�에 ?�합?�어 ?�습?�다.</p>
-                <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="btn tertiary">Gemini API 문서</a>
+                <p class="info-text">?¡ AI PD ê¸°ë¥? ê°ì¸/ê¸°ì ??ë³´?ì ?µí©?ì´ ?ìµ?ë¤.</p>
+                <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="btn tertiary">Gemini API ë¬¸ì</a>
             </div>
         </div>
     </article>
@@ -692,4 +693,8 @@
     margin-top: 2rem;
 }
 </style>
+</div>
+
+</div>
 {% endblock %}
+

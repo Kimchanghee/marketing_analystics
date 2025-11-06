@@ -1,6 +1,7 @@
-{% extends "layouts/base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% block content %}
-<section class="dashboard-header">
+<div class="dashboard-shell">
+<section class="dashboard-panel dashboard-header">
     <h1>{{ t['dashboard']['welcome'] }} {{ user.email }}</h1>
     <div class="subscription">
         <span>{{ t['dashboard']['current_plan'] }}: {{ t['subscriptions'][subscription.tier.value] }}</span>
@@ -20,17 +21,17 @@
         <a href="/dashboard/export/json" class="btn tertiary" download>{{ t['dashboard']['export_json'] }}</a>
     </div>
 </section>
-<section class="channels">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+<section class="dashboard-panel channels">
+    <div class="section-heading">
         <h2>{{ t['dashboard']['your_channels'] }}</h2>
-        <a href="/channels/manage" class="btn primary" style="text-decoration: none;">
-            ?�� 채널 관�?�??�결
+        <a href="/channels/manage" class="btn primary">
+            ?ÂÂ Ã¬Â±ÂÃ«ÂÂ ÃªÂ´ÂÃ«Â¦?Ã«Â°??Â°ÃªÂ²Â°
         </a>
     </div>
-    <div style="background: #e6f3ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #667eea;">
-        <p style="margin: 0; color: #333;">
-            ?�� <strong>?�로??채널 관�?기능:</strong> Instagram, Facebook, YouTube, TikTok, Twitter, Threads�?OAuth�??�결?�고 ?�시�??�이?��? 가?�올 ???�습?�다.
-            <a href="/channels/manage" style="color: #667eea; text-decoration: underline;">채널 관�??�이지�??�동 ??/a>
+    <div class="dashboard-banner">
+        <p>
+            ?ÂÂ¡ <strong>?ÂÃ«Â¡Â??Ã¬Â±ÂÃ«ÂÂ ÃªÂ´ÂÃ«Â¦?ÃªÂ¸Â°Ã«ÂÂ¥:</strong> Instagram, Facebook, YouTube, TikTok, Twitter, ThreadsÃ«Â¥?OAuthÃ«Â¡??Â°ÃªÂ²Â°?ÂÃªÂ³Â  ?Â¤Ã¬ÂÂÃªÂ°??Â°Ã¬ÂÂ´?Â°Ã«? ÃªÂ°Â?Â¸Ã¬ÂÂ¬ ???ÂÃ¬ÂÂµ?ÂÃ«ÂÂ¤.
+            <a href="/channels/manage" class="link-accent">Ã¬Â±ÂÃ«ÂÂ ÃªÂ´ÂÃ«Â¦??ÂÃ¬ÂÂ´Ã¬Â§ÂÃ«Â¡??Â´Ã«ÂÂ ??/a>
         </p>
     </div>
     <form method="post" action="/channels/add" class="channel-form">
@@ -47,7 +48,7 @@
         <article class="channel-card">
             <header>
                 <h3>{{ t['channels'][account.platform] if account.platform in t['channels'] else account.platform }}</h3>
-                <span style="color: var(--text-subtle); font-size: 0.75rem;">|</span>
+                <span class="channel-separator">|</span>
                 <p>{{ account.account_name }}</p>
             </header>
             <div class="channel-card-main">
@@ -59,7 +60,7 @@
                     <span>{{ t['dashboard']['followers'] }}</span>
                 </li>
                 <li>
-                    <strong style="color: {{ 'var(--success)' if snapshot['growth_rate'] > 0 else 'var(--danger)' }}">{{ snapshot['growth_rate'] }}%</strong>
+                    <strong class="{{ 'metric-positive' if snapshot['growth_rate'] > 0 else 'metric-negative' }}">{{ snapshot['growth_rate'] }}%</strong>
                     <span>{{ t['dashboard']['growth'] }}</span>
                 </li>
                 <li>
@@ -74,15 +75,15 @@
             {% endif %}
             </div>
             <div class="channel-card-actions">
-                <button class="btn tertiary toggle-details" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">?�� ?�세</button>
-                <form method="post" action="/channels/remove" style="display: inline;">
+                <button class="btn tertiary btn-compact toggle-details" type="button" aria-expanded="false">?ÂÂ ?ÂÃ¬ÂÂ¸</button>
+                <form method="post" action="/channels/remove" class="channel-remove-form">
                     <input type="hidden" name="channel_id" value="{{ account.id }}">
-                    <button class="btn tertiary" type="submit" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">?���?/button>
+                    <button class="btn tertiary btn-compact" type="submit">?ÂÂÃ¯Â¸?/button>
                 </form>
             </div>
             {% if snapshot %}
-            <div class="channel-details" style="display: none; width: 100%; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color);">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+            <div class="channel-details">
+                <div class="channel-details-grid">
                     <div class="recent-posts">
                 <h4>{{ t['dashboard']['recent_posts'] }}</h4>
                 {% for post in snapshot['recent_posts'] %}
@@ -92,8 +93,8 @@
                         <span>{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
                     </div>
                     <div class="post-metrics">
-                        <span>?�� {{ post['likes'] }}</span>
-                        <span>?�� {{ post['comments'] }}</span>
+                        <span>?ÂÂ {{ post['likes'] }}</span>
+                        <span>?ÂÂ¬ {{ post['comments'] }}</span>
                         <span>?? {{ post['impressions'] }}</span>
                     </div>
                 </div>
@@ -106,7 +107,7 @@
                     {% set max_views = snapshot['hourly_views']|map(attribute='views')|max %}
                     {% for data in snapshot['hourly_views'] %}
                     <div class="hour-bar">
-                        <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%" title="{{ data['hour'] }}?? {{ data['views'] }} 조회"></div>
+                        <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%" title="{{ data['hour'] }}?? {{ data['views'] }} Ã¬Â¡Â°Ã­ÂÂ"></div>
                         <span class="hour-label">{{ data['hour'] }}</span>
                     </div>
                     {% endfor %}
@@ -127,7 +128,7 @@
             </div>
             {% endif %}
                 </div>
-                <details class="credential-panel" style="margin-top: 1rem;">
+                <details class="credential-panel">
                 <summary>{{ t['dashboard']['credentials_heading'] }}</summary>
                 {% set credential = account.credential %}
                 <p class="credential-status {{ 'ok' if credential else 'warning' }}">
@@ -194,31 +195,31 @@
 </section>
 
 {% if accounts|length > 0 %}
-<section class="analytics-dashboard">
-    <h2>{{ t['dashboard'].get('analytics_overview', '?�동 �??�과 분석') }}</h2>
+<section class="dashboard-panel analytics-dashboard">
+    <h2>{{ t['dashboard'].get('analytics_overview', 'Analytics overview') }}</h2>
 
     <div class="analytics-grid">
         <!-- Activity Timeline Chart -->
         <div class="chart-card">
-            <h3>{{ t['dashboard'].get('activity_timeline', '최근 ?�동 ?�?�라??) }}</h3>
+            <h3>{{ t['dashboard'].get('activity_timeline', 'Recent activity timeline') }}</h3>
             <canvas id="activityChart"></canvas>
         </div>
 
         <!-- Engagement Rate Chart -->
         <div class="chart-card">
-            <h3>{{ t['dashboard'].get('engagement_trend', '참여??추세') }}</h3>
+            <h3>{{ t['dashboard'].get('engagement_trend', 'Engagement trend') }}</h3>
             <canvas id="engagementChart"></canvas>
         </div>
 
         <!-- Platform Comparison -->
         <div class="chart-card">
-            <h3>{{ t['dashboard'].get('platform_comparison', '?�랫?�별 비교') }}</h3>
+            <h3>{{ t['dashboard'].get('platform_comparison', 'Platform comparison') }}</h3>
             <canvas id="platformChart"></canvas>
         </div>
 
         <!-- Posts Performance -->
         <div class="chart-card full-width">
-            <h3>{{ t['dashboard'].get('posts_performance', '게시�??�과 분석') }}</h3>
+            <h3>{{ t['dashboard'].get('posts_performance', 'Posts performance') }}</h3>
             <canvas id="postsChart"></canvas>
         </div>
     </div>
@@ -348,17 +349,17 @@ if (postsCtx && chartData.recentPosts.length > 0) {
             labels: chartData.recentPosts.map(p => p.title),
             datasets: [
                 {
-                    label: '좋아??,
+                    label: 'Ã¬Â¢ÂÃ¬ÂÂ??,
                     data: chartData.recentPosts.map(p => p.likes),
                     backgroundColor: 'rgba(255, 99, 132, 0.7)'
                 },
                 {
-                    label: '?��?',
+                    label: '?ÂÃª?',
                     data: chartData.recentPosts.map(p => p.comments),
                     backgroundColor: 'rgba(54, 162, 235, 0.7)'
                 },
                 {
-                    label: '조회??,
+                    label: 'Ã¬Â¡Â°Ã­ÂÂ??,
                     data: chartData.recentPosts.map(p => p.impressions),
                     backgroundColor: 'rgba(75, 192, 192, 0.7)'
                 }
@@ -485,7 +486,7 @@ if (postsCtx && chartData.recentPosts.length > 0) {
 </style>
 {% endif %}
 
-<section class="collaboration">
+<section class="dashboard-panel collaboration">
     <h2>{{ t['dashboard']['collaboration'] }}</h2>
     {% if user.role == 'manager' %}
     <p>{{ t['dashboard']['manager_hint'] }}</p>
@@ -543,24 +544,24 @@ if (postsCtx && chartData.recentPosts.length > 0) {
 </section>
 
 
-<!-- AI PD 채팅 ?�션 (?�료 기능) -->
-<section class="ai-pd-section">
-    <h2>?�� AI PD 비서 <span class="premium-badge">PRO</span></h2>
-    <p class="section-desc">채널 ?�과�?분석?�고 개선 방안???�안받으?�요</p>
+<!-- AI PD Ã¬Â±ÂÃ­ÂÂ ?Â¹Ã¬ÂÂ (?Â Ã«Â£Â ÃªÂ¸Â°Ã«ÂÂ¥) -->
+<section class="dashboard-panel ai-pd-section">
+    <h2>?Â¤Â AI PD Ã«Â¹ÂÃ¬ÂÂ <span class="premium-badge">PRO</span></h2>
+    <p class="section-desc">Ã¬Â±ÂÃ«ÂÂ ?Â±ÃªÂ³Â¼Ã«Â¥?Ã«Â¶ÂÃ¬ÂÂ?ÂÃªÂ³Â  ÃªÂ°ÂÃ¬ÂÂ  Ã«Â°Â©Ã¬ÂÂ???ÂÃ¬ÂÂÃ«Â°ÂÃ¬ÂÂ¼?Â¸Ã¬ÂÂ</p>
 
     {% if subscription.tier.value in ['pro', 'enterprise'] %}
     <div class="ai-chat-container">
         <div class="chat-messages" id="aiChatMessages">
             <div class="ai-message">
-                <div class="message-avatar">?��</div>
+                <div class="message-avatar">?Â¤Â</div>
                 <div class="message-content">
-                    <p><strong>?�녕?�세?? AI PD 비서?�니??</strong></p>
-                    <p>?�신??채널 ?�이?��? 분석?�고 ?�장 ?�략???�안?�드립니?? 궁금??것을 물어보세??</p>
+                    <p><strong>?ÂÃ«ÂÂ?ÂÃ¬ÂÂ¸?? AI PD Ã«Â¹ÂÃ¬ÂÂ?ÂÃ«ÂÂ??</strong></p>
+                    <p>?Â¹Ã¬ÂÂ ??Ã¬Â±ÂÃ«ÂÂ ?Â°Ã¬ÂÂ´?Â°Ã«? Ã«Â¶ÂÃ¬ÂÂ?ÂÃªÂ³Â  ?Â±Ã¬ÂÂ¥ ?ÂÃ«ÂÂµ???ÂÃ¬ÂÂ?Â´Ã«ÂÂÃ«Â¦Â½Ã«ÂÂ?? ÃªÂ¶ÂÃªÂ¸Â??ÃªÂ²ÂÃ¬ÂÂ Ã«Â¬Â¼Ã¬ÂÂ´Ã«Â³Â´Ã¬ÂÂ¸??</p>
                     <ul class="suggestion-chips">
-                        <li onclick="askAI(this.textContent)">?�떤 ?�랫?�에 ??집중?�야 ?�까??</li>
-                        <li onclick="askAI(this.textContent)">최근 게시�?반응??좋�? ?�유??</li>
-                        <li onclick="askAI(this.textContent)">구독?��? ?�리??방법???�려주세??/li>
-                        <li onclick="askAI(this.textContent)">참여?�을 개선?�려�?</li>
+                        <li onclick="askAI(this.textContent)">?Â´Ã«ÂÂ¤ ?ÂÃ«ÂÂ«?Â¼Ã¬ÂÂ ??Ã¬Â§ÂÃ¬Â¤Â?Â´Ã¬ÂÂ¼ ?Â ÃªÂ¹Â??</li>
+                        <li onclick="askAI(this.textContent)">Ã¬ÂµÂÃªÂ·Â¼ ÃªÂ²ÂÃ¬ÂÂÃ«Â¬?Ã«Â°ÂÃ¬ÂÂ??Ã¬Â¢ÂÃ¬? ?Â´Ã¬ÂÂ ??</li>
+                        <li onclick="askAI(this.textContent)">ÃªÂµÂ¬Ã«ÂÂ?ÂÃ«? ?ÂÃ«Â¦Â¬??Ã«Â°Â©Ã«Â²Â???ÂÃ«Â Â¤Ã¬Â£Â¼Ã¬ÂÂ¸??/li>
+                        <li onclick="askAI(this.textContent)">Ã¬Â°Â¸Ã¬ÂÂ¬?Â¨Ã¬ÂÂ ÃªÂ°ÂÃ¬ÂÂ ?ÂÃ«Â Â¤Ã«Â©?</li>
                     </ul>
                 </div>
             </div>
@@ -570,41 +571,41 @@ if (postsCtx && chartData.recentPosts.length > 0) {
             <textarea
                 id="aiQuestionInput"
                 name="question"
-                placeholder="AI?�게 질문?�세??.. (최소 10??"
+                placeholder="AI?ÂÃªÂ²Â Ã¬Â§ÂÃ«Â¬Â¸?ÂÃ¬ÂÂ¸??.. (Ã¬ÂµÂÃ¬ÂÂ 10??"
                 rows="2"
                 required
                 minlength="10"
             ></textarea>
             <button type="submit" class="btn primary" id="aiSendBtn">
-                <span class="btn-text">질문?�기</span>
-                <span class="btn-loader" style="display: none;">분석 �?..</span>
+                <span class="btn-text">Ã¬Â§ÂÃ«Â¬Â¸?ÂÃªÂ¸Â°</span>
+                <span class="btn-loader">Ã«Â¶ÂÃ¬ÂÂ Ã¬Â¤?..</span>
             </button>
         </form>
     </div>
     {% else %}
     <div class="upgrade-notice">
-        <div class="upgrade-icon">?��</div>
-        <h3>AI PD 비서??PRO ?�상 구독?�만 ?�용?????�습?�다</h3>
-        <p>AI 기반 ?�과 분석 �?맞춤 ?�략??받아보세??</p>
+        <div class="upgrade-icon">?ÂÂ</div>
+        <h3>AI PD Ã«Â¹ÂÃ¬ÂÂ??PRO ?Â´Ã¬ÂÂ ÃªÂµÂ¬Ã«ÂÂ?ÂÃ«Â§Â ?Â´Ã¬ÂÂ©?????ÂÃ¬ÂÂµ?ÂÃ«ÂÂ¤</h3>
+        <p>AI ÃªÂ¸Â°Ã«Â°Â ?Â±ÃªÂ³Â¼ Ã«Â¶ÂÃ¬ÂÂ Ã«Â°?Ã«Â§ÂÃ¬Â¶Â¤ ?ÂÃ«ÂÂµ??Ã«Â°ÂÃ¬ÂÂÃ«Â³Â´Ã¬ÂÂ¸??</p>
         <div class="upgrade-benefits">
             <div class="benefit-item">
                 <span class="benefit-icon">??/span>
-                <span>?�시�?AI 채널 분석</span>
+                <span>?Â¤Ã¬ÂÂÃªÂ°?AI Ã¬Â±ÂÃ«ÂÂ Ã«Â¶ÂÃ¬ÂÂ</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">?��</span>
-                <span>맞춤???�장 ?�략 ?�안</span>
+                <span class="benefit-icon">?ÂÂ</span>
+                <span>Ã«Â§ÂÃ¬Â¶Â¤???Â±Ã¬ÂÂ¥ ?ÂÃ«ÂÂµ ?ÂÃ¬ÂÂ</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">?��</span>
-                <span>?�이??기반 ?�사?�트</span>
+                <span class="benefit-icon">?ÂÂ¯</span>
+                <span>?Â°Ã¬ÂÂ´??ÃªÂ¸Â°Ã«Â°Â ?Â¸Ã¬ÂÂ¬?Â´Ã­ÂÂ¸</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">?��</span>
-                <span>콘텐�?최적??가?�드</span>
+                <span class="benefit-icon">?ÂÂ¡</span>
+                <span>Ã¬Â½ÂÃ­ÂÂÃ¬Â¸?Ã¬ÂµÂÃ¬Â Â??ÃªÂ°Â?Â´Ã«ÂÂ</span>
             </div>
         </div>
-        <a href="/personal" class="btn primary upgrade-btn">PRO�??�그?�이???�기</a>
+        <a href="/personal" class="btn primary upgrade-btn">PROÃ«Â¡??ÂÃªÂ·Â¸?ÂÃ¬ÂÂ´???ÂÃªÂ¸Â°</a>
     </div>
     {% endif %}
 </section>
@@ -814,7 +815,7 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
     const chatMessages = document.getElementById('aiChatMessages');
 
     if (question.length < 10) {
-        alert('질문?� 최소 10???�상 ?�력?�주?�요.');
+        alert('Ã¬Â§ÂÃ«Â¬Â¸?Â Ã¬ÂµÂÃ¬ÂÂ 10???Â´Ã¬ÂÂ ?ÂÃ«Â Â¥?Â´Ã¬Â£Â¼?Â¸Ã¬ÂÂ.');
         return;
     }
 
@@ -828,7 +829,7 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
     const userMsg = document.createElement('div');
     userMsg.className = 'user-message';
     userMsg.innerHTML = `
-        <div class="message-avatar">?��</div>
+        <div class="message-avatar">?ÂÂ¤</div>
         <div class="message-content"><p>${question}</p></div>
     `;
     chatMessages.appendChild(userMsg);
@@ -849,7 +850,7 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
             const aiMsg = document.createElement('div');
             aiMsg.className = 'ai-message';
             aiMsg.innerHTML = `
-                <div class="message-avatar">?��</div>
+                <div class="message-avatar">?Â¤Â</div>
                 <div class="message-content">
                     ${data.answer.split('\n').map(line => `<p>${line}</p>`).join('')}
                 </div>
@@ -864,10 +865,10 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
         const errorMsg = document.createElement('div');
         errorMsg.className = 'ai-message';
         errorMsg.innerHTML = `
-            <div class="message-avatar">?�️</div>
+            <div class="message-avatar">?Â Ã¯Â¸Â</div>
             <div class="message-content">
-                <p><strong>?�류 발생</strong></p>
-                <p>${error.message || 'AI 분석 �??�류가 발생?�습?�다.'}</p>
+                <p><strong>?Â¤Ã«Â¥Â Ã«Â°ÂÃ¬ÂÂ</strong></p>
+                <p>${error.message || 'AI Ã«Â¶ÂÃ¬ÂÂ Ã¬Â¤??Â¤Ã«Â¥ÂÃªÂ°Â Ã«Â°ÂÃ¬ÂÂ?ÂÃ¬ÂÂµ?ÂÃ«ÂÂ¤.'}</p>
             </div>
         `;
         chatMessages.appendChild(errorMsg);
@@ -883,19 +884,22 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
 
 // Toggle channel details
 document.querySelectorAll('.toggle-details').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         const card = this.closest('.channel-card');
-        const details = card.querySelector('.channel-details');
-        if (details) {
-            if (details.style.display === 'none') {
-                details.style.display = 'block';
-                this.textContent = '?�� ?�기�?;
-            } else {
-                details.style.display = 'none';
-                this.textContent = '?�� ?�세';
-            }
-        }
-    });
-});
+        if (!card):
+            return
+        const details = card.querySelector('.channel-details')
+        if (!details):
+            return
+        const isOpen = details.classList.toggle('is-open')
+        card.classList.toggle('is-open', isOpen)
+        this.textContent = '채널 접기' if isOpen else '채널 상세'
+        this.setAttribute('aria-expanded', str(isOpen))
+    })
+})
 </script>
+</div>
 {% endblock %}
+
+
+
