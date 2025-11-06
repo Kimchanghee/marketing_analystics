@@ -31,10 +31,11 @@ from .services.social_auth import social_auth_service
 from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
 
 BASE_DIR = Path(__file__).resolve().parent
+UI_DIR = BASE_DIR.parent / "ui"
 
 app = FastAPI(title="Creator Control Center")
-app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
-app.state.templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+app.mount("/static", StaticFiles(directory=UI_DIR / "static"), name="static")
+app.state.templates = Jinja2Templates(directory=str(UI_DIR / "templates"))
 
 
 @app.exception_handler(Exception)
