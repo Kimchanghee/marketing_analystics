@@ -1,28 +1,28 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 {% block content %}
 <section class="creator-detail-header">
     <div class="back-nav">
-        <a href="/manager/dashboard" class="btn tertiary">← 관리자 대시보드로 돌아가기</a>
+        <a href="/manager/dashboard" class="btn tertiary">??관리자 ?�?�보?�로 ?�아가�?/a>
     </div>
-    <h1>{{ creator.name or creator.email }}의 상세 정보</h1>
+    <h1>{{ creator.name or creator.email }}???�세 ?�보</h1>
     <div class="creator-meta">
-        <p><strong>이메일:</strong> {{ creator.email }}</p>
+        <p><strong>?�메??</strong> {{ creator.email }}</p>
         <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
-        <p><strong>역할:</strong> {{ t['roles'][creator.role.value] }}</p>
+        <p><strong>??��:</strong> {{ t['roles'][creator.role.value] }}</p>
         {% if subscription %}
-        <p><strong>구독 플랜:</strong> {{ t['subscriptions'][subscription.tier.value] }}</p>
-        <p><strong>최대 채널 수:</strong> {{ subscription.max_accounts }}</p>
-        <p><strong>현재 채널 수:</strong> {{ channels|length }}</p>
+        <p><strong>구독 ?�랜:</strong> {{ t['subscriptions'][subscription.tier.value] }}</p>
+        <p><strong>최�? 채널 ??</strong> {{ subscription.max_accounts }}</p>
+        <p><strong>?�재 채널 ??</strong> {{ channels|length }}</p>
         {% endif %}
     </div>
 </section>
 
 <section class="channels-overview">
     <div class="section-header">
-        <h2>채널 목록 ({{ channels|length }}개)</h2>
+        <h2>채널 목록 ({{ channels|length }}�?</h2>
         <div class="export-actions">
-            <a href="/manager/creator/{{ creator.id }}/export/csv" class="btn secondary" download>CSV 다운로드</a>
-            <a href="/manager/creator/{{ creator.id }}/export/pdf" class="btn secondary" download>PDF 다운로드</a>
+            <a href="/manager/creator/{{ creator.id }}/export/csv" class="btn secondary" download>CSV ?�운로드</a>
+            <a href="/manager/creator/{{ creator.id }}/export/pdf" class="btn secondary" download>PDF ?�운로드</a>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
             {% if snapshot %}
             <div class="detailed-metrics">
                 <div class="metric-group">
-                    <h4>기본 지표</h4>
+                    <h4>기본 지??/h4>
                     <div class="metric-grid">
                         <div class="metric">
                             <span class="metric-label">{{ t['dashboard']['followers'] }}</span>
@@ -75,9 +75,9 @@
                                 <span class="post-date">{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
                             </div>
                             <div class="post-stats">
-                                <span>👍 {{ post['likes'] }}</span>
-                                <span>💬 {{ post['comments'] }}</span>
-                                <span>👀 {{ post['impressions'] }}</span>
+                                <span>?�� {{ post['likes'] }}</span>
+                                <span>?�� {{ post['comments'] }}</span>
+                                <span>?? {{ post['impressions'] }}</span>
                             </div>
                         </div>
                         {% endfor %}
@@ -93,7 +93,7 @@
                         {% for data in snapshot['hourly_views'] %}
                         <div class="hour-bar">
                             <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%"
-                                 title="{{ data['hour'] }}시: {{ data['views'] }} 조회"></div>
+                                 title="{{ data['hour'] }}?? {{ data['views'] }} 조회"></div>
                             <span class="hour-label">{{ data['hour'] }}</span>
                         </div>
                         {% endfor %}
@@ -111,13 +111,13 @@
                 </p>
             </div>
             {% else %}
-            <p class="no-data">데이터를 불러올 수 없습니다.</p>
+            <p class="no-data">?�이?��? 불러?????�습?�다.</p>
             {% endif %}
         </article>
         {% endfor %}
     </div>
     {% else %}
-    <p class="empty-state">이 크리에이터는 아직 채널을 연결하지 않았습니다.</p>
+    <p class="empty-state">???�리?�이?�는 ?�직 채널???�결?��? ?�았?�니??</p>
     {% endif %}
 </section>
 

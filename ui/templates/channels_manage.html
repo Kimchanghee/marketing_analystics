@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 {% set manage = t['channels_manage'] %}
 
 {% block title %}{{ manage['title'] }} - {{ t['app']['title'] }}{% endblock %}
@@ -566,10 +566,10 @@
                             <div class="metric-card">
                                 <h4>{{ manage['connected']['metrics']['last_post']['label'] }}</h4>
                                 {% if last_title %}
-                                <strong>{{ last_label[:10] if last_label else "—" }}</strong>
+                                <strong>{{ last_label[:10] if last_label else "?? }}</strong>
                                 <p>{{ last_title }}</p>
                                 {% else %}
-                                <strong>—</strong>
+                                <strong>??/strong>
                                 <p>{{ manage['connected']['metrics']['last_post']['no_data'] }}</p>
                                 {% endif %}
                             </div>

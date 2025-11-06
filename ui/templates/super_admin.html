@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 {% block content %}
 <section class="dashboard-header">
     <div>
@@ -40,7 +40,7 @@
         </div>
         {% if not email_service_configured %}
         <div class="status-banner warning">
-            <span class="status-icon">⚠️</span>
+            <span class="status-icon">?�️</span>
             <div class="status-content">
                 <strong>{{ t['super_admin']['email_config_warning'] }}</strong>
                 <p>{{ t['super_admin']['email_config_hint'] }}</p>
@@ -215,7 +215,7 @@
             {% for log in logs %}
             <li>
                 <span class="activity-time">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
-                <span class="activity-description">{{ log.action }} — {{ log.details or t['super_admin']['no_details'] }}</span>
+                <span class="activity-description">{{ log.action }} ??{{ log.details or t['super_admin']['no_details'] }}</span>
             </li>
             {% endfor %}
         </ul>
@@ -306,11 +306,11 @@
                         </td>
                         <td>
                             <div class="stacked">
-                                <span>{{ payment.billing_period_start.strftime('%Y-%m-%d') if payment.billing_period_start else '—' }}</span>
-                                <span>{{ payment.billing_period_end.strftime('%Y-%m-%d') if payment.billing_period_end else '—' }}</span>
+                                <span>{{ payment.billing_period_start.strftime('%Y-%m-%d') if payment.billing_period_start else '?? }}</span>
+                                <span>{{ payment.billing_period_end.strftime('%Y-%m-%d') if payment.billing_period_end else '?? }}</span>
                             </div>
                         </td>
-                        <td>{{ payment.description or '—' }}</td>
+                        <td>{{ payment.description or '?? }}</td>
                         <td>{{ payment.created_at.strftime('%Y-%m-%d') }}</td>
                         <td>
                             <form class="inline-form" method="post" action="/super-admin/payment/status">
@@ -336,85 +336,85 @@
     <!-- AI PD Service Management -->
     <article class="admin-card ai-pd-card">
         <div class="admin-card-header">
-            <h2>🤖 AI PD 서비스 관리</h2>
-            <p class="section-subtext">Google Gemini AI 기반 크리에이터 분석 서비스</p>
+            <h2>?�� AI PD ?�비??관�?/h2>
+            <p class="section-subtext">Google Gemini AI 기반 ?�리?�이??분석 ?�비??/p>
         </div>
 
         <div class="ai-pd-status">
             {% if gemini_api_key_set %}
             <div class="status-banner success">
-                <span class="status-icon">✓</span>
+                <span class="status-icon">??/span>
                 <div class="status-content">
-                    <strong>Gemini API 키가 설정되어 있습니다</strong>
-                    <p>크리에이터와 매니저가 AI PD 서비스를 사용할 수 있습니다.</p>
+                    <strong>Gemini API ?��? ?�정?�어 ?�습?�다</strong>
+                    <p>?�리?�이?��? 매니?�가 AI PD ?�비?��? ?�용?????�습?�다.</p>
                 </div>
             </div>
             {% else %}
             <div class="status-banner warning">
-                <span class="status-icon">⚠</span>
+                <span class="status-icon">??/span>
                 <div class="status-content">
-                    <strong>Gemini API 키가 설정되지 않았습니다</strong>
-                    <p>AI PD 서비스를 활성화하려면 환경 변수에 GEMINI_API_KEY를 설정하세요.</p>
-                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn tertiary small">API 키 발급받기 →</a>
+                    <strong>Gemini API ?��? ?�정?��? ?�았?�니??/strong>
+                    <p>AI PD ?�비?��? ?�성?�하?�면 ?�경 변?�에 GEMINI_API_KEY�??�정?�세??</p>
+                    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn tertiary small">API ??발급받기 ??/a>
                 </div>
             </div>
             {% endif %}
         </div>
 
         <div class="ai-pd-info">
-            <h3>서비스 기능</h3>
+            <h3>?�비??기능</h3>
             <div class="feature-grid">
                 <div class="feature-item">
-                    <span class="feature-icon">👤</span>
+                    <span class="feature-icon">?��</span>
                     <div class="feature-content">
-                        <strong>크리에이터용 AI 분석</strong>
-                        <p>개인 채널 성과 분석 및 개선 방안 제안</p>
+                        <strong>?�리?�이?�용 AI 분석</strong>
+                        <p>개인 채널 ?�과 분석 �?개선 방안 ?�안</p>
                     </div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">👥</span>
+                    <span class="feature-icon">?��</span>
                     <div class="feature-content">
-                        <strong>매니저용 포트폴리오 분석</strong>
-                        <p>관리 중인 모든 크리에이터 통합 분석 및 전략 제안</p>
+                        <strong>매니?�???�트?�리??분석</strong>
+                        <p>관�?중인 모든 ?�리?�이???�합 분석 �??�략 ?�안</p>
                     </div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">💬</span>
+                    <span class="feature-icon">?��</span>
                     <div class="feature-content">
-                        <strong>AI 답변 초안 생성</strong>
-                        <p>크리에이터 문의에 대한 AI 기반 답변 초안 자동 생성</p>
+                        <strong>AI ?��? 초안 ?�성</strong>
+                        <p>?�리?�이??문의???�??AI 기반 ?��? 초안 ?�동 ?�성</p>
                     </div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">🔒</span>
+                    <span class="feature-icon">?��</span>
                     <div class="feature-content">
-                        <strong>안전한 API 키 관리</strong>
-                        <p>매니저별 암호화된 Gemini API 키 저장 지원</p>
+                        <strong>?�전??API ??관�?/strong>
+                        <p>매니?��??�호?�된 Gemini API ???�??지??/p>
                     </div>
                 </div>
             </div>
 
-            <h3 style="margin-top: 2rem;">시스템 프롬프트</h3>
+            <h3 style="margin-top: 2rem;">?�스???�롬?�트</h3>
             <div class="prompt-viewer">
                 <pre>{{ ai_system_prompt }}</pre>
             </div>
 
-            <h3 style="margin-top: 2rem;">API 키 설정 가이드</h3>
+            <h3 style="margin-top: 2rem;">API ???�정 가?�드</h3>
             <ol class="setup-guide">
                 <li>
-                    <strong>환경 변수 설정 (서버 전역 사용)</strong>
-                    <p>서버의 .env 파일 또는 환경 변수에 <code>GEMINI_API_KEY=your_api_key_here</code>를 추가하세요.</p>
-                    <p>이 방법으로 설정하면 모든 사용자가 해당 API 키를 사용합니다 (비용 공유).</p>
+                    <strong>?�경 변???�정 (?�버 ?�역 ?�용)</strong>
+                    <p>?�버??.env ?�일 ?�는 ?�경 변?�에 <code>GEMINI_API_KEY=your_api_key_here</code>�?추�??�세??</p>
+                    <p>??방법?�로 ?�정?�면 모든 ?�용?��? ?�당 API ?��? ?�용?�니??(비용 공유).</p>
                 </li>
                 <li>
-                    <strong>매니저별 API 키 설정 (권장)</strong>
-                    <p>각 매니저가 대시보드에서 자신의 Gemini API 키를 등록할 수 있습니다.</p>
-                    <p>API 키는 암호화되어 데이터베이스에 안전하게 저장되며, 해당 매니저만 사용합니다.</p>
+                    <strong>매니?��?API ???�정 (권장)</strong>
+                    <p>�?매니?�가 ?�?�보?�에???�신??Gemini API ?��? ?�록?????�습?�다.</p>
+                    <p>API ?�는 ?�호?�되???�이?�베?�스???�전?�게 ?�?�되�? ?�당 매니?��??�용?�니??</p>
                 </li>
             </ol>
 
             <div class="api-links">
-                <p class="info-text">💡 AI PD 기능은 개인/기업 대시보드에 통합되어 있습니다.</p>
+                <p class="info-text">?�� AI PD 기능?� 개인/기업 ?�?�보?�에 ?�합?�어 ?�습?�다.</p>
                 <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="btn tertiary">Gemini API 문서</a>
             </div>
         </div>

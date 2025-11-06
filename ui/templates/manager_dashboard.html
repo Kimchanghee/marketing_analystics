@@ -1,42 +1,42 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 {% block content %}
 <section class="dashboard-header">
-    <h1>기업 관리자 대시보드</h1>
+    <h1>기업 관리자 ?�?�보??/h1>
     <div class="manager-stats">
         <div class="stat-card">
             <span class="stat-value">{{ approved_creators|length }}</span>
-            <span class="stat-label">승인된 크리에이터</span>
+            <span class="stat-label">?�인???�리?�이??/span>
         </div>
         <div class="stat-card">
             <span class="stat-value">{{ pending_approvals|length }}</span>
-            <span class="stat-label">승인 대기 중</span>
+            <span class="stat-label">?�인 ?��?�?/span>
         </div>
         <div class="stat-card">
             <span class="stat-value">{{ total_channels }}</span>
-            <span class="stat-label">총 관리 채널</span>
+            <span class="stat-label">�?관�?채널</span>
         </div>
     </div>
 </section>
 
 {% if pending_approvals %}
 <section class="approval-queue">
-    <h2>승인 대기 큐</h2>
+    <h2>?�인 ?��???/h2>
     <div class="approval-grid">
         {% for link in pending_approvals %}
         {% set creator = creator_lookup[link.creator_id] %}
         <article class="approval-card">
             <header>
                 <h3>{{ creator.name or creator.email }}</h3>
-                <span class="badge pending">승인 대기</span>
+                <span class="badge pending">?�인 ?��?/span>
             </header>
             <div class="creator-info">
-                <p><strong>이메일:</strong> {{ creator.email }}</p>
+                <p><strong>?�메??</strong> {{ creator.email }}</p>
                 <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
-                <p><strong>요청일:</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
+                <p><strong>?�청??</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
                 {% if link.creator_id in creator_subscriptions %}
                 {% set sub = creator_subscriptions[link.creator_id] %}
-                <p><strong>구독 플랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
-                <p><strong>채널 수:</strong> {{ creator_channel_counts.get(link.creator_id, 0) }} / {{ sub.max_accounts }}</p>
+                <p><strong>구독 ?�랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
+                <p><strong>채널 ??</strong> {{ creator_channel_counts.get(link.creator_id, 0) }} / {{ sub.max_accounts }}</p>
                 {% endif %}
             </div>
             <div class="approval-actions">
@@ -44,7 +44,7 @@
                     <input type="hidden" name="creator_email" value="{{ creator.email }}">
                     <input type="hidden" name="manager_email" value="{{ user.email }}">
                     <input type="hidden" name="approve" value="true">
-                    <button class="btn primary" type="submit">승인</button>
+                    <button class="btn primary" type="submit">?�인</button>
                 </form>
                 <form method="post" action="/manager/approve" style="display: inline;">
                     <input type="hidden" name="creator_email" value="{{ creator.email }}">
@@ -60,7 +60,7 @@
 {% endif %}
 
 <section class="managed-creators">
-    <h2>관리 중인 크리에이터</h2>
+    <h2>관�?중인 ?�리?�이??/h2>
     {% if approved_creators %}
     <div class="creator-grid">
         {% for link in approved_creators %}
@@ -68,21 +68,21 @@
         <article class="creator-card">
             <header>
                 <h3>{{ creator.name or creator.email }}</h3>
-                <span class="badge approved">승인됨</span>
+                <span class="badge approved">?�인??/span>
             </header>
             <div class="creator-summary">
-                <p><strong>이메일:</strong> {{ creator.email }}</p>
+                <p><strong>?�메??</strong> {{ creator.email }}</p>
                 <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
-                <p><strong>연결일:</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
+                <p><strong>?�결??</strong> {{ link.connected_at.strftime('%Y-%m-%d') if link.connected_at else '-' }}</p>
                 {% if link.creator_id in creator_subscriptions %}
                 {% set sub = creator_subscriptions[link.creator_id] %}
-                <p><strong>구독 플랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
+                <p><strong>구독 ?�랜:</strong> {{ t['subscriptions'][sub.tier.value] }}</p>
                 {% endif %}
             </div>
 
             {% if link.creator_id in creator_channels %}
             <div class="creator-channels">
-                <h4>연결된 채널 ({{ creator_channels[link.creator_id]|length }}개)</h4>
+                <h4>?�결??채널 ({{ creator_channels[link.creator_id]|length }}�?</h4>
 
                 <!-- Platform Overview Badges -->
                 <div class="platform-badges">
@@ -118,31 +118,31 @@
                         {% if snapshot %}
                         <div class="mini-metrics">
                             <div class="metric-item">
-                                <span class="metric-label">구독자</span>
+                                <span class="metric-label">구독??/span>
                                 <span class="metric-value">{{ '{:,}'.format(snapshot['followers']) }}</span>
                             </div>
                             <div class="metric-item">
-                                <span class="metric-label">성장률</span>
+                                <span class="metric-label">?�장�?/span>
                                 <span class="metric-value growth">+{{ snapshot['growth_rate'] }}%</span>
                             </div>
                             <div class="metric-item">
-                                <span class="metric-label">참여율</span>
+                                <span class="metric-label">참여??/span>
                                 <span class="metric-value engagement">{{ snapshot['engagement_rate'] }}%</span>
                             </div>
                         </div>
                         {% if snapshot.get('recent_posts') and snapshot['recent_posts']|length > 0 %}
                         <div class="recent-post-mini">
-                            <p class="post-label">최근 게시물</p>
+                            <p class="post-label">최근 게시�?/p>
                             <p class="post-title">{{ snapshot['recent_posts'][0]['title'][:40] }}...</p>
                             <div class="post-stats">
-                                <span>👍 {{ '{:,}'.format(snapshot['recent_posts'][0]['likes']) }}</span>
-                                <span>💬 {{ '{:,}'.format(snapshot['recent_posts'][0]['comments']) }}</span>
-                                <span>👀 {{ '{:,}'.format(snapshot['recent_posts'][0]['impressions']) }}</span>
+                                <span>?�� {{ '{:,}'.format(snapshot['recent_posts'][0]['likes']) }}</span>
+                                <span>?�� {{ '{:,}'.format(snapshot['recent_posts'][0]['comments']) }}</span>
+                                <span>?? {{ '{:,}'.format(snapshot['recent_posts'][0]['impressions']) }}</span>
                             </div>
                         </div>
                         {% endif %}
                         {% else %}
-                        <p class="no-data">데이터를 불러오는 중...</p>
+                        <p class="no-data">?�이?��? 불러?�는 �?..</p>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -151,66 +151,66 @@
             {% endif %}
 
             <div class="creator-actions">
-                <a href="/manager/creator/{{ creator.id }}" class="btn secondary">상세 보기</a>
-                <button class="btn tertiary" onclick="exportCreatorReport({{ creator.id }})">리포트 내보내기</button>
+                <a href="/manager/creator/{{ creator.id }}" class="btn secondary">?�세 보기</a>
+                <button class="btn tertiary" onclick="exportCreatorReport({{ creator.id }})">리포???�보?�기</button>
             </div>
         </article>
         {% endfor %}
     </div>
     {% else %}
-    <p class="empty-state">아직 승인된 크리에이터가 없습니다.</p>
+    <p class="empty-state">?�직 ?�인???�리?�이?��? ?�습?�다.</p>
     {% endif %}
 </section>
 
 <section class="manager-tools">
-    <h2>관리 도구</h2>
+    <h2>관�??�구</h2>
     <div class="tool-grid">
         <div class="tool-card">
-            <h3>🤖 AI 기능 설정 (Gemini API)</h3>
-            <p>AI 기반 CS 답변 기능을 사용하려면 Gemini API 키를 등록하세요. API 키는 암호화되어 안전하게 저장됩니다.</p>
+            <h3>?�� AI 기능 ?�정 (Gemini API)</h3>
+            <p>AI 기반 CS ?��? 기능???�용?�려�?Gemini API ?��? ?�록?�세?? API ?�는 ?�호?�되???�전?�게 ?�?�됩?�다.</p>
             {% if has_api_key %}
             <div class="api-key-status success">
-                <span class="status-icon">✓</span>
-                <span>Gemini API 키가 등록되어 있습니다.</span>
+                <span class="status-icon">??/span>
+                <span>Gemini API ?��? ?�록?�어 ?�습?�다.</span>
             </div>
-            <p class="api-key-info">AI 답변 초안 생성 기능을 사용할 수 있습니다. <a href="/manager/inquiries">문의 관리 페이지</a>에서 확인하세요.</p>
+            <p class="api-key-info">AI ?��? 초안 ?�성 기능???�용?????�습?�다. <a href="/manager/inquiries">문의 관�??�이지</a>?�서 ?�인?�세??</p>
             <div class="api-key-actions">
-                <button class="btn secondary" onclick="document.getElementById('update-api-key-form').style.display='block'">API 키 변경</button>
-                <form method="post" action="/manager/api-key/delete" style="display: inline;" onsubmit="return confirm('정말 API 키를 삭제하시겠습니까?');">
-                    <button class="btn tertiary" type="submit">API 키 삭제</button>
+                <button class="btn secondary" onclick="document.getElementById('update-api-key-form').style.display='block'">API ??변�?/button>
+                <form method="post" action="/manager/api-key/delete" style="display: inline;" onsubmit="return confirm('?�말 API ?��? ??��?�시겠습?�까?');">
+                    <button class="btn tertiary" type="submit">API ????��</button>
                 </form>
             </div>
             <form id="update-api-key-form" method="post" action="/manager/api-key/save" class="api-key-form" style="display: none; margin-top: 1rem;">
-                <input type="password" name="api_key" placeholder="새 Gemini API 키 입력" required>
-                <button class="btn primary" type="submit">API 키 업데이트</button>
+                <input type="password" name="api_key" placeholder="??Gemini API ???�력" required>
+                <button class="btn primary" type="submit">API ???�데?�트</button>
                 <button class="btn tertiary" type="button" onclick="document.getElementById('update-api-key-form').style.display='none'">취소</button>
             </form>
             {% else %}
             <div class="api-key-status warning">
-                <span class="status-icon">⚠</span>
-                <span>Gemini API 키가 등록되지 않았습니다.</span>
+                <span class="status-icon">??/span>
+                <span>Gemini API ?��? ?�록?��? ?�았?�니??</span>
             </div>
             <p class="api-key-info">
-                API 키를 등록하면 크리에이터 문의에 대한 AI 답변 초안을 자동으로 생성할 수 있습니다.<br>
-                <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a>에서 무료로 API 키를 발급받을 수 있습니다.
+                API ?��? ?�록?�면 ?�리?�이??문의???�??AI ?��? 초안???�동?�로 ?�성?????�습?�다.<br>
+                <a href="https://aistudio.google.com/apikey" target="_blank">Google AI Studio</a>?�서 무료�?API ?��? 발급받을 ???�습?�다.
             </p>
             <form method="post" action="/manager/api-key/save" class="api-key-form">
-                <input type="password" name="api_key" placeholder="Gemini API 키 입력" required>
-                <button class="btn primary" type="submit">API 키 등록</button>
+                <input type="password" name="api_key" placeholder="Gemini API ???�력" required>
+                <button class="btn primary" type="submit">API ???�록</button>
             </form>
             {% endif %}
         </div>
 
         <div class="tool-card">
-            <h3>크리에이터 초대</h3>
-            <p>새로운 크리에이터를 초대하여 연결 요청을 보낼 수 있습니다.</p>
+            <h3>?�리?�이??초�?</h3>
+            <p>?�로???�리?�이?��? 초�??�여 ?�결 ?�청??보낼 ???�습?�다.</p>
             <form method="post" action="/manager/invite" class="invite-form">
-                <input type="email" name="creator_email" placeholder="크리에이터 이메일" required>
-                <button class="btn primary" type="submit">초대 링크 생성</button>
+                <input type="email" name="creator_email" placeholder="?�리?�이???�메?? required>
+                <button class="btn primary" type="submit">초�? 링크 ?�성</button>
             </form>
             {% if invite_link %}
             <div class="invite-result">
-                <p><strong>초대 링크:</strong></p>
+                <p><strong>초�? 링크:</strong></p>
                 <input type="text" readonly value="{{ invite_link }}" onclick="this.select()">
                 <button class="btn tertiary" onclick="copyToClipboard('{{ invite_link }}')">복사</button>
             </div>
@@ -218,11 +218,11 @@
         </div>
 
         <div class="tool-card">
-            <h3>통합 리포트</h3>
-            <p>모든 승인된 크리에이터의 통합 리포트를 생성합니다.</p>
+            <h3>?�합 리포??/h3>
+            <p>모든 ?�인???�리?�이?�의 ?�합 리포?��? ?�성?�니??</p>
             <div class="export-actions">
-                <a href="/manager/export/csv" class="btn secondary" download>CSV 다운로드</a>
-                <a href="/manager/export/pdf" class="btn secondary" download>PDF 다운로드</a>
+                <a href="/manager/export/csv" class="btn secondary" download>CSV ?�운로드</a>
+                <a href="/manager/export/pdf" class="btn secondary" download>PDF ?�운로드</a>
             </div>
         </div>
     </div>
@@ -613,7 +613,7 @@
     color: var(--text-secondary);
 }
 
-/* API 키 관리 스타일 */
+/* API ??관�??��???*/
 .api-key-status {
     padding: 1rem;
     border-radius: 6px;
@@ -671,24 +671,24 @@
 }
 </style>
 
-<!-- AI PD 채팅 섹션 (유료 기능) -->
+<!-- AI PD 채팅 ?�션 (?�료 기능) -->
 <section class="ai-pd-section">
-    <h2>🤖 AI PD 비서 - 포트폴리오 분석 <span class="premium-badge">PRO</span></h2>
-    <p class="section-desc">관리 중인 크리에이터들의 성과를 분석하고 전략을 제안받으세요</p>
+    <h2>?�� AI PD 비서 - ?�트?�리??분석 <span class="premium-badge">PRO</span></h2>
+    <p class="section-desc">관�?중인 ?�리?�이?�들???�과�?분석?�고 ?�략???�안받으?�요</p>
 
     {% if subscription.tier.value in ['pro', 'enterprise'] %}
     <div class="ai-chat-container">
         <div class="chat-messages" id="aiChatMessages">
             <div class="ai-message">
-                <div class="message-avatar">🤖</div>
+                <div class="message-avatar">?��</div>
                 <div class="message-content">
-                    <p><strong>안녕하세요! AI PD 비서입니다.</strong></p>
-                    <p>관리 중인 크리에이터 포트폴리오를 분석하고 최적화 전략을 제안해드립니다. 궁금한 것을 물어보세요:</p>
+                    <p><strong>?�녕?�세?? AI PD 비서?�니??</strong></p>
+                    <p>관�?중인 ?�리?�이???�트?�리?��? 분석?�고 최적???�략???�안?�드립니?? 궁금??것을 물어보세??</p>
                     <ul class="suggestion-chips">
-                        <li onclick="askAI(this.textContent)">어떤 크리에이터가 가장 좋은 성과를 내고 있나요?</li>
-                        <li onclick="askAI(this.textContent)">전체 포트폴리오의 강점과 약점은?</li>
-                        <li onclick="askAI(this.textContent)">크리에이터별 맞춤 전략을 제안해주세요</li>
-                        <li onclick="askAI(this.textContent)">다음 분기 액션 아이템은?</li>
+                        <li onclick="askAI(this.textContent)">?�떤 ?�리?�이?��? 가??좋�? ?�과�??�고 ?�나??</li>
+                        <li onclick="askAI(this.textContent)">?�체 ?�트?�리?�의 강점�??�점?�?</li>
+                        <li onclick="askAI(this.textContent)">?�리?�이?�별 맞춤 ?�략???�안?�주?�요</li>
+                        <li onclick="askAI(this.textContent)">?�음 분기 ?�션 ?�이?��??</li>
                     </ul>
                 </div>
             </div>
@@ -698,41 +698,41 @@
             <textarea
                 id="aiQuestionInput"
                 name="question"
-                placeholder="AI에게 질문하세요... (최소 10자)"
+                placeholder="AI?�게 질문?�세??.. (최소 10??"
                 rows="2"
                 required
                 minlength="10"
             ></textarea>
             <button type="submit" class="btn primary" id="aiSendBtn">
-                <span class="btn-text">질문하기</span>
-                <span class="btn-loader" style="display: none;">분석 중...</span>
+                <span class="btn-text">질문?�기</span>
+                <span class="btn-loader" style="display: none;">분석 �?..</span>
             </button>
         </form>
     </div>
     {% else %}
     <div class="upgrade-notice">
-        <div class="upgrade-icon">🔒</div>
-        <h3>AI PD 비서는 PRO 이상 구독자만 이용할 수 있습니다</h3>
-        <p>AI 기반 포트폴리오 분석 및 맞춤 전략을 받아보세요!</p>
+        <div class="upgrade-icon">?��</div>
+        <h3>AI PD 비서??PRO ?�상 구독?�만 ?�용?????�습?�다</h3>
+        <p>AI 기반 ?�트?�리??분석 �?맞춤 ?�략??받아보세??</p>
         <div class="upgrade-benefits">
             <div class="benefit-item">
-                <span class="benefit-icon">✨</span>
-                <span>실시간 AI 포트폴리오 분석</span>
+                <span class="benefit-icon">??/span>
+                <span>?�시�?AI ?�트?�리??분석</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">📊</span>
-                <span>크리에이터별 성과 비교</span>
+                <span class="benefit-icon">?��</span>
+                <span>?�리?�이?�별 ?�과 비교</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">🎯</span>
-                <span>전략적 인사이트 제공</span>
+                <span class="benefit-icon">?��</span>
+                <span>?�략???�사?�트 ?�공</span>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">💡</span>
-                <span>포트폴리오 최적화 가이드</span>
+                <span class="benefit-icon">?��</span>
+                <span>?�트?�리??최적??가?�드</span>
             </div>
         </div>
-        <a href="/business" class="btn primary upgrade-btn">ENTERPRISE로 업그레이드 하기</a>
+        <a href="/business" class="btn primary upgrade-btn">ENTERPRISE�??�그?�이???�기</a>
     </div>
     {% endif %}
 </section>
@@ -928,7 +928,7 @@
 <script>
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('초대 링크가 클립보드에 복사되었습니다.');
+        alert('초�? 링크가 ?�립보드??복사?�었?�니??');
     });
 }
 
@@ -952,7 +952,7 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
     const chatMessages = document.getElementById('aiChatMessages');
 
     if (question.length < 10) {
-        alert('질문은 최소 10자 이상 입력해주세요.');
+        alert('질문?� 최소 10???�상 ?�력?�주?�요.');
         return;
     }
 
@@ -966,7 +966,7 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
     const userMsg = document.createElement('div');
     userMsg.className = 'user-message';
     userMsg.innerHTML = `
-        <div class="message-avatar">👤</div>
+        <div class="message-avatar">?��</div>
         <div class="message-content"><p>${question}</p></div>
     `;
     chatMessages.appendChild(userMsg);
@@ -987,7 +987,7 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
             const aiMsg = document.createElement('div');
             aiMsg.className = 'ai-message';
             aiMsg.innerHTML = `
-                <div class="message-avatar">🤖</div>
+                <div class="message-avatar">?��</div>
                 <div class="message-content">
                     ${data.answer.split('\n').map(line => `<p>${line}</p>`).join('')}
                 </div>
@@ -1002,10 +1002,10 @@ document.getElementById('aiChatForm').addEventListener('submit', async function(
         const errorMsg = document.createElement('div');
         errorMsg.className = 'ai-message';
         errorMsg.innerHTML = `
-            <div class="message-avatar">⚠️</div>
+            <div class="message-avatar">?�️</div>
             <div class="message-content">
-                <p><strong>오류 발생</strong></p>
-                <p>${error.message || 'AI 분석 중 오류가 발생했습니다.'}</p>
+                <p><strong>?�류 발생</strong></p>
+                <p>${error.message || 'AI 분석 �??�류가 발생?�습?�다.'}</p>
             </div>
         `;
         chatMessages.appendChild(errorMsg);

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 {% block content %}
 <section class="auth-card">
     <h1>{{ t['auth']['login_title'] }}</h1>
@@ -18,7 +18,7 @@
     <div class="form-alert error">{{ social_error }}</div>
     {% endif %}
 
-    <!-- 소셜 로그인 버튼 (최상단) -->
+    <!-- ?�셜 로그??버튼 (최상?? -->
     <div class="social-login-section">
         <div class="social-button-grid">
             {% for provider in providers %}
