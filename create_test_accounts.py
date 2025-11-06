@@ -142,7 +142,7 @@ async def create_test_accounts():
     print(f"   (주의: .env 파일의 SUPER_ADMIN_ACCESS_TOKEN 필요)")
 
     print("\n4️⃣ 마스터 관리자 (모든 대시보드 접근 가능)")
-    print(f"   이메일: admin@creatorscontrol.com")
+    print(f"   이메일: kckc93@creatorscontrol.com")
     print(f"   비밀번호: Ckdgml9788@")
     print(f"   접속: http://127.0.0.1:8000/login")
     print(f"   → 개인 대시보드: http://127.0.0.1:8000/dashboard")

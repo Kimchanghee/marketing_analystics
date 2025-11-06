@@ -29,7 +29,7 @@ router = APIRouter()
 
 
 @router.get("/dashboard")
-def dashboard(request: Request, user: User = Depends(require_roles(UserRole.CREATOR)), session=Depends(get_session)):
+def dashboard(request: Request, user: User = Depends(get_current_user), session=Depends(get_session)):
     locale = user.locale
     strings = translator.load_locale(locale)
 
