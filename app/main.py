@@ -42,7 +42,7 @@ def build_asset_url(request, path: str) -> str:
     """Return cache-busted HTTPS asset URL for static files."""
     version = "1"
     if request is not None:
-        url = request.url_for("static", path=path)
+        url = str(request.url_for("static", path=path))
         version = getattr(request.app.state, "asset_version", "1")
     else:
         url = f"/static/{path}"
