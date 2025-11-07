@@ -36,6 +36,23 @@ UI_DIR = BASE_DIR.parent / "ui"
 
 app = FastAPI(title="Creator Control Center")
 app.state.asset_version = os.getenv("ASSET_VERSION", str(int(time.time())))
+
+
+def build_asset_url(request, path: str) -> str:
+    """Return cache-busted HTTPS asset URL for static files."""
+    version = "1"
+    if request is not None:
+        url = request.url_for("static", path=path)
+        version = getattr(request.app.state, "asset_version", "1")
+    else:
+        url = f"/static/{path}"
+        version = getattr(app.state, "asset_version", "1")
+
+    if url.startswith("http://"):
+        url = "https://" + url[len("http://") :]
+
+    separator = "&" if "?" in url else "?"
+    return f"{url}{separator}v={version}"
 app.mount("/static", StaticFiles(directory=UI_DIR / "static"), name="static")
 
 # 템플릿 디렉토리 설정 (호환성을 위해 여러 경로 지원)
@@ -44,6 +61,7 @@ template_dirs = [
     str(UI_DIR / "templates"),  # 레거시 templates 폴더 (호환성)
 ]
 app.state.templates = Jinja2Templates(directory=template_dirs)
+app.state.templates.env.globals["asset_url"] = build_asset_url
 
 
 @app.exception_handler(Exception)
