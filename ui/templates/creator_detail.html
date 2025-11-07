@@ -1,331 +1,331 @@
-{% extends "layouts/base.html" %}
-{% block content %}
-<section class="creator-detail-header">
-    <div class="back-nav">
-        <a href="/manager/dashboard" class="btn tertiary">??관리자 ?�?�보?�로 ?�아가�?/a>
-    </div>
-    <h1>{{ creator.name or creator.email }}???�세 ?�보</h1>
-    <div class="creator-meta">
-        <p><strong>?�메??</strong> {{ creator.email }}</p>
-        <p><strong>조직:</strong> {{ creator.organization or '-' }}</p>
-        <p><strong>??��:</strong> {{ t['roles'][creator.role.value] }}</p>
-        {% if subscription %}
-        <p><strong>구독 ?�랜:</strong> {{ t['subscriptions'][subscription.tier.value] }}</p>
-        <p><strong>최�? 채널 ??</strong> {{ subscription.max_accounts }}</p>
-        <p><strong>?�재 채널 ??</strong> {{ channels|length }}</p>
-        {% endif %}
-    </div>
-</section>
-
-<section class="channels-overview">
-    <div class="section-header">
-        <h2>채널 목록 ({{ channels|length }}�?</h2>
-        <div class="export-actions">
-            <a href="/manager/creator/{{ creator.id }}/export/csv" class="btn secondary" download>CSV ?�운로드</a>
-            <a href="/manager/creator/{{ creator.id }}/export/pdf" class="btn secondary" download>PDF ?�운로드</a>
-        </div>
-    </div>
-
-    {% if channels %}
-    <div class="detail-channel-grid">
-        {% for channel in channels %}
-        <article class="detail-channel-card">
-            <header>
-                <h3>{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</h3>
-                <span class="platform-badge">{{ channel.platform }}</span>
-            </header>
-
-            <div class="channel-account-info">
-                <p><strong>{{ t['dashboard']['account_label'] }}:</strong> {{ channel.account_name }}</p>
-            </div>
-
-            {% set snapshot = snapshots.get(channel.id) %}
-            {% if snapshot %}
-            <div class="detailed-metrics">
-                <div class="metric-group">
-                    <h4>기본 지??/h4>
-                    <div class="metric-grid">
-                        <div class="metric">
-                            <span class="metric-label">{{ t['dashboard']['followers'] }}</span>
-                            <span class="metric-value">{{ snapshot['followers'] }}</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">{{ t['dashboard']['growth'] }}</span>
-                            <span class="metric-value">{{ snapshot['growth_rate'] }}%</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">{{ t['dashboard']['engagement'] }}</span>
-                            <span class="metric-value">{{ snapshot['engagement_rate'] }}%</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">{{ t['dashboard']['last_post'] }}</span>
-                            <span class="metric-value">{{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                {% if snapshot.get('recent_posts') %}
-                <div class="metric-group">
-                    <h4>{{ t['dashboard']['recent_posts'] }}</h4>
-                    <div class="posts-list">
-                        {% for post in snapshot['recent_posts'] %}
-                        <div class="post-item">
-                            <div class="post-header">
-                                <strong>{{ post['title'] }}</strong>
-                                <span class="post-date">{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
-                            </div>
-                            <div class="post-stats">
-                                <span>?�� {{ post['likes'] }}</span>
-                                <span>?�� {{ post['comments'] }}</span>
-                                <span>?? {{ post['impressions'] }}</span>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if snapshot.get('hourly_views') %}
-                <div class="metric-group">
-                    <h4>{{ t['dashboard']['hourly_views_title'] }}</h4>
-                    <div class="hourly-chart-large">
-                        {% set max_views = snapshot['hourly_views']|map(attribute='views')|max %}
-                        {% for data in snapshot['hourly_views'] %}
-                        <div class="hour-bar">
-                            <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%"
-                                 title="{{ data['hour'] }}?? {{ data['views'] }} 조회"></div>
-                            <span class="hour-label">{{ data['hour'] }}</span>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                <p class="data-source-info">
-                    {{ t['dashboard']['data_source'] }}:
-                    {% if snapshot['source'] == 'api' %}
-                    <span class="source api">{{ t['dashboard']['source_api'] }}</span>
-                    {% else %}
-                    <span class="source mock">{{ t['dashboard']['source_mock'] }}</span>
-                    {% endif %}
-                </p>
-            </div>
-            {% else %}
-            <p class="no-data">?�이?��? 불러?????�습?�다.</p>
-            {% endif %}
-        </article>
-        {% endfor %}
-    </div>
-    {% else %}
-    <p class="empty-state">???�리?�이?�는 ?�직 채널???�결?��? ?�았?�니??</p>
-    {% endif %}
-</section>
-
-<style>
-.creator-detail-header {
-    margin-bottom: 2rem;
-}
-
-.back-nav {
-    margin-bottom: 1rem;
-}
-
-.creator-meta {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    margin-top: 1rem;
-}
-
-.creator-meta p {
-    margin: 0.5rem 0;
-}
-
-.channels-overview {
-    margin-top: 2rem;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.export-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.detail-channel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-}
-
-.detail-channel-card {
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.detail-channel-card header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.platform-badge {
-    background: var(--primary);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.channel-account-info {
-    margin-bottom: 1.5rem;
-}
-
-.detailed-metrics {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.metric-group h4 {
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    color: var(--text-secondary);
-}
-
-.metric-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.metric {
-    background: var(--bg);
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-}
-
-.metric-label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
-}
-
-.metric-value {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary);
-}
-
-.posts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.post-item {
-    background: var(--bg);
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-}
-
-.post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.post-date {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-}
-
-.post-stats {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.9rem;
-}
-
-.hourly-chart-large {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.25rem;
-    height: 200px;
-    background: var(--bg);
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-}
-
-.hour-bar {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.bar {
-    width: 100%;
-    background: var(--primary);
-    border-radius: 4px 4px 0 0;
-    transition: background 0.2s;
-}
-
-.bar:hover {
-    background: var(--primary-dark, #0056b3);
-}
-
-.hour-label {
-    font-size: 0.7rem;
-    margin-top: 0.25rem;
-    color: var(--text-secondary);
-}
-
-.data-source-info {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.9rem;
-}
-
-.source {
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-weight: 500;
-}
-
-.source.api {
-    background: #D4EDDA;
-    color: #155724;
-}
-
-.source.mock {
-    background: #FFF3CD;
-    color: #856404;
-}
-
-.no-data, .empty-state {
-    text-align: center;
-    padding: 3rem;
-    color: var(--text-secondary);
-}
-</style>
-{% endblock %}
+{% extends "layouts/base.html" %}
+{% block content %}
+<section class="creator-detail-header">
+    <div class="back-nav">
+        <a href="/manager/dashboard" class="btn tertiary">??ê´ë¦¬ì ??ë³´?ë¡ ?ìê°ê¸?/a>
+    </div>
+    <h1>{{ creator.name or creator.email }}???ì¸ ?ë³´</h1>
+    <div class="creator-meta">
+        <p><strong>?´ë©??</strong> {{ creator.email }}</p>
+        <p><strong>ì¡°ì§:</strong> {{ creator.organization or '-' }}</p>
+        <p><strong>?? :</strong> {{ t['roles'][creator.role.value] }}</p>
+        {% if subscription %}
+        <p><strong>êµ¬ë ?ë:</strong> {{ t['subscriptions'][subscription.tier.value] }}</p>
+        <p><strong>ìµë? ì±ë ??</strong> {{ subscription.max_accounts }}</p>
+        <p><strong>?ì¬ ì±ë ??</strong> {{ channels|length }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="channels-overview">
+    <div class="section-header">
+        <h2>ì±ë ëª©ë¡ ({{ channels|length }}ê°?</h2>
+        <div class="export-actions">
+            <a href="/manager/creator/{{ creator.id }}/export/csv" class="btn secondary" download>CSV ?¤ì´ë¡ë</a>
+            <a href="/manager/creator/{{ creator.id }}/export/pdf" class="btn secondary" download>PDF ?¤ì´ë¡ë</a>
+        </div>
+    </div>
+
+    {% if channels %}
+    <div class="detail-channel-grid">
+        {% for channel in channels %}
+        <article class="detail-channel-card">
+            <header>
+                <h3>{{ t['channels'][channel.platform] if channel.platform in t['channels'] else channel.platform }}</h3>
+                <span class="platform-badge">{{ channel.platform }}</span>
+            </header>
+
+            <div class="channel-account-info">
+                <p><strong>{{ t['dashboard']['account_label'] }}:</strong> {{ channel.account_name }}</p>
+            </div>
+
+            {% set snapshot = snapshots.get(channel.id) %}
+            {% if snapshot %}
+            <div class="detailed-metrics">
+                <div class="metric-group">
+                    <h4>ê¸°ë³¸ ì§??/h4>
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['followers'] }}</span>
+                            <span class="metric-value">{{ snapshot['followers'] }}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['growth'] }}</span>
+                            <span class="metric-value">{{ snapshot['growth_rate'] }}%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['engagement'] }}</span>
+                            <span class="metric-value">{{ snapshot['engagement_rate'] }}%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">{{ t['dashboard']['last_post'] }}</span>
+                            <span class="metric-value">{{ snapshot['last_post_date'][:10] if snapshot['last_post_date'] else '-' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if snapshot.get('recent_posts') %}
+                <div class="metric-group">
+                    <h4>{{ t['dashboard']['recent_posts'] }}</h4>
+                    <div class="posts-list">
+                        {% for post in snapshot['recent_posts'] %}
+                        <div class="post-item">
+                            <div class="post-header">
+                                <strong>{{ post['title'] }}</strong>
+                                <span class="post-date">{{ post['published_at'][:10] if post['published_at'] else '-' }}</span>
+                            </div>
+                            <div class="post-stats">
+                                <span>? {{ post['likes'] }}</span>
+                                <span>?¬ {{ post['comments'] }}</span>
+                                <span>?? {{ post['impressions'] }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if snapshot.get('hourly_views') %}
+                <div class="metric-group">
+                    <h4>{{ t['dashboard']['hourly_views_title'] }}</h4>
+                    <div class="hourly-chart-large">
+                        {% set max_views = snapshot['hourly_views']|map(attribute='views')|max %}
+                        {% for data in snapshot['hourly_views'] %}
+                        <div class="hour-bar">
+                            <div class="bar" style="height: {{ (data['views'] / max_views * 100) if max_views > 0 else 0 }}%"
+                                 title="{{ data['hour'] }}?? {{ data['views'] }} ì¡°í"></div>
+                            <span class="hour-label">{{ data['hour'] }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <p class="data-source-info">
+                    {{ t['dashboard']['data_source'] }}:
+                    {% if snapshot['source'] == 'api' %}
+                    <span class="source api">{{ t['dashboard']['source_api'] }}</span>
+                    {% else %}
+                    <span class="source mock">{{ t['dashboard']['source_mock'] }}</span>
+                    {% endif %}
+                </p>
+            </div>
+            {% else %}
+            <p class="no-data">?°ì´?°ë? ë¶ë¬?????ìµ?ë¤.</p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">???¬ë¦¬?ì´?°ë ?ì§ ì±ë???°ê²°?ì? ?ì?µë??</p>
+    {% endif %}
+</section>
+
+<style>
+.creator-detail-header {
+    margin-bottom: 2rem;
+}
+
+.back-nav {
+    margin-bottom: 1rem;
+}
+
+.creator-meta {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-top: 1rem;
+}
+
+.creator-meta p {
+    margin: 0.5rem 0;
+}
+
+.channels-overview {
+    margin-top: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.export-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.detail-channel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.detail-channel-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.detail-channel-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.platform-badge {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.channel-account-info {
+    margin-bottom: 1.5rem;
+}
+
+.detailed-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.metric-group h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.metric {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-item {
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.post-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.post-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.hourly-chart-large {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.25rem;
+    height: 200px;
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.hour-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.bar {
+    width: 100%;
+    background: var(--primary);
+    border-radius: 4px 4px 0 0;
+    transition: background 0.2s;
+}
+
+.bar:hover {
+    background: var(--primary-dark, #0056b3);
+}
+
+.hour-label {
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    color: var(--text-secondary);
+}
+
+.data-source-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.source {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.source.api {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.source.mock {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.no-data, .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+</style>
+{% endblock %}

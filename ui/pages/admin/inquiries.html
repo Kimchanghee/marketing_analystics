@@ -1,380 +1,380 @@
-{% extends "layouts/base.html" %}
-{% block content %}
-<section class="inquiries-header">
-    <div class="header-row">
-        <h1>?�리?�이??문의 관�?/h1>
-        <a href="/manager/dashboard" class="btn tertiary">???�?�보?�로 ?�아가�?/a>
-    </div>
-
-    {% if not has_api_key %}
-    <div class="alert warning">
-        <span class="alert-icon">??/span>
-        <div>
-            <strong>AI 기능??비활?�화?�어 ?�습?�다.</strong>
-            <p>Gemini API ?��? ?�록?�면 AI ?��? 초안 ?�성 기능???�용?????�습?�다.
-            <a href="/manager/dashboard">?�?�보??/a>?�서 API ?��? ?�록?�세??</p>
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="inquiries-stats">
-        <div class="stat-card">
-            <span class="stat-value">{{ inquiries|length }}</span>
-            <span class="stat-label">�?문의</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-value">{{ inquiries|selectattr('status', 'equalto', inquiry_statuses[0])|list|length }}</span>
-            <span class="stat-label">?��?�?/span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-value">{{ inquiries|selectattr('status', 'equalto', inquiry_statuses[2])|list|length }}</span>
-            <span class="stat-label">AI 초안 준비됨</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-value">{{ inquiries|selectattr('status', 'equalto', inquiry_statuses[3])|list|length }}</span>
-            <span class="stat-label">?��? ?�료</span>
-        </div>
-    </div>
-</section>
-
-<section class="inquiries-list">
-    <div class="section-header">
-        <h2>문의 목록</h2>
-    </div>
-
-    {% if inquiries %}
-    <div class="inquiry-grid">
-        {% for inquiry in inquiries %}
-        {% set creator = creator_lookup[inquiry.creator_id] %}
-        <article class="inquiry-card status-{{ inquiry.status.value }}">
-            <header class="inquiry-header">
-                <div>
-                    <h3>{{ inquiry.subject }}</h3>
-                    <p class="inquiry-meta">
-                        <strong>?�리?�이??</strong> {{ creator.name or creator.email }} |
-                        <strong>카테고리:</strong> {{ inquiry.category.value }} |
-                        <strong>?�성??</strong> {{ inquiry.created_at.strftime('%Y-%m-%d %H:%M') }}
-                    </p>
-                </div>
-                <span class="status-badge status-{{ inquiry.status.value }}">
-                    {{ inquiry.status.value|replace('_', ' ')|title }}
-                </span>
-            </header>
-
-            <div class="inquiry-body">
-                <div class="inquiry-message">
-                    <strong>문의 ?�용:</strong>
-                    <p>{{ inquiry.message }}</p>
-                </div>
-
-                {% if inquiry.ai_draft_response %}
-                <div class="ai-draft-section">
-                    <div class="section-title">
-                        <span class="ai-icon">?��</span>
-                        <strong>AI ?��? 초안</strong>
-                        <span class="draft-indicator">?�정 ??발송?�세??/span>
-                    </div>
-                    <form method="post" action="/manager/inquiry/{{ inquiry.id }}/send-response" class="response-form">
-                        <textarea name="final_response" rows="6" required>{{ inquiry.ai_draft_response }}</textarea>
-                        <div class="form-actions">
-                            <button class="btn primary" type="submit">?��? ?�송</button>
-                        </div>
-                    </form>
-                </div>
-                {% elif inquiry.final_response %}
-                <div class="final-response-section">
-                    <strong>?�송???��?:</strong>
-                    <p>{{ inquiry.final_response }}</p>
-                    <p class="response-meta">?��? ?�시: {{ inquiry.responded_at.strftime('%Y-%m-%d %H:%M') if inquiry.responded_at else '-' }}</p>
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="inquiry-actions">
-                {% if has_api_key and not inquiry.ai_draft_response and inquiry.status.value != 'answered' %}
-                <form method="post" action="/manager/inquiry/{{ inquiry.id }}/generate-ai-response" style="display: inline;">
-                    <button class="btn primary" type="submit">?�� AI ?��? 초안 ?�성</button>
-                </form>
-                {% endif %}
-
-                {% if inquiry.status.value != 'answered' and inquiry.status.value != 'closed' %}
-                <form method="post" action="/manager/inquiry/{{ inquiry.id }}/update-status" style="display: inline;">
-                    <select name="new_status" onchange="this.form.submit()" class="status-select">
-                        {% for status in inquiry_statuses %}
-                        <option value="{{ status.value }}" {% if inquiry.status == status %}selected{% endif %}>
-                            {{ status.value|replace('_', ' ')|title }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </form>
-                {% endif %}
-
-                <a href="/manager/creator/{{ creator.id }}" class="btn tertiary">?�리?�이???�보</a>
-            </div>
-        </article>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="empty-state">
-        <p>?�직 ?�록??문의가 ?�습?�다.</p>
-        <p class="empty-hint">?�리?�이?�의 문의?�항???�기??관리하�?AI ?��? 초안???�성?????�습?�다.</p>
-    </div>
-    {% endif %}
-</section>
-
-<style>
-.inquiries-header {
-    margin-bottom: 2rem;
-}
-
-.header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.alert {
-    padding: 1rem;
-    border-radius: 6px;
-    margin: 1rem 0;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-}
-
-.alert.warning {
-    background: #FFF3CD;
-    border: 1px solid #FFEAA7;
-    color: #856404;
-}
-
-.alert-icon {
-    font-size: 1.5rem;
-}
-
-.alert p {
-    margin: 0.25rem 0 0 0;
-    font-size: 0.9rem;
-}
-
-.alert a {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-.inquiries-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.stat-card {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid var(--border-color);
-}
-
-.stat-value {
-    display: block;
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.section-header {
-    margin-bottom: 1.5rem;
-}
-
-.inquiry-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.inquiry-card {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    border-left: 4px solid var(--border-color);
-}
-
-.inquiry-card.status-pending {
-    border-left-color: #FFA500;
-}
-
-.inquiry-card.status-in_progress {
-    border-left-color: #007BFF;
-}
-
-.inquiry-card.status-ai_draft_ready {
-    border-left-color: #28A745;
-}
-
-.inquiry-card.status-answered {
-    border-left-color: #6C757D;
-}
-
-.inquiry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.inquiry-header h3 {
-    margin: 0 0 0.5rem 0;
-}
-
-.inquiry-meta {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin: 0;
-}
-
-.status-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.status-badge.status-pending {
-    background: #FFF3CD;
-    color: #856404;
-}
-
-.status-badge.status-in_progress {
-    background: #CCE5FF;
-    color: #004085;
-}
-
-.status-badge.status-ai_draft_ready {
-    background: #D4EDDA;
-    color: #155724;
-}
-
-.status-badge.status-answered {
-    background: #E2E3E5;
-    color: #383D41;
-}
-
-.status-badge.status-closed {
-    background: #D6D8DB;
-    color: #1C1E21;
-}
-
-.inquiry-body {
-    margin-bottom: 1rem;
-}
-
-.inquiry-message {
-    margin-bottom: 1.5rem;
-}
-
-.inquiry-message p {
-    margin: 0.5rem 0 0 0;
-    padding: 1rem;
-    background: var(--bg);
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    white-space: pre-wrap;
-}
-
-.ai-draft-section {
-    background: #F0F8FF;
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid #B3D9FF;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.ai-icon {
-    font-size: 1.2rem;
-}
-
-.draft-indicator {
-    font-size: 0.85rem;
-    color: #666;
-    margin-left: auto;
-}
-
-.response-form textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-family: inherit;
-    resize: vertical;
-    margin-bottom: 0.5rem;
-}
-
-.form-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.final-response-section {
-    background: #E7F4E7;
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid #9FD89F;
-}
-
-.final-response-section p {
-    margin: 0.5rem 0 0 0;
-    white-space: pre-wrap;
-}
-
-.response-meta {
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: 0.75rem !important;
-}
-
-.inquiry-actions {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.status-select {
-    padding: 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--card-bg);
-    cursor: pointer;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--text-secondary);
-}
-
-.empty-hint {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
-</style>
-{% endblock %}
+{% extends "layouts/base.html" %}
+{% block content %}
+<section class="inquiries-header">
+    <div class="header-row">
+        <h1>?¬ë¦¬?ì´??ë¬¸ì ê´ë¦?/h1>
+        <a href="/manager/dashboard" class="btn tertiary">????ë³´?ë¡ ?ìê°ê¸?/a>
+    </div>
+
+    {% if not has_api_key %}
+    <div class="alert warning">
+        <span class="alert-icon">??/span>
+        <div>
+            <strong>AI ê¸°ë¥??ë¹í?±í?ì´ ?ìµ?ë¤.</strong>
+            <p>Gemini API ?¤ë? ?±ë¡?ë©´ AI ?µë? ì´ì ?ì± ê¸°ë¥???¬ì©?????ìµ?ë¤.
+            <a href="/manager/dashboard">??ë³´??/a>?ì API ?¤ë? ?±ë¡?ì¸??</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="inquiries-stats">
+        <div class="stat-card">
+            <span class="stat-value">{{ inquiries|length }}</span>
+            <span class="stat-label">ì´?ë¬¸ì</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ inquiries|selectattr('status', 'equalto', inquiry_statuses[0])|list|length }}</span>
+            <span class="stat-label">?ê¸?ì¤?/span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ inquiries|selectattr('status', 'equalto', inquiry_statuses[2])|list|length }}</span>
+            <span class="stat-label">AI ì´ì ì¤ë¹ë¨</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value">{{ inquiries|selectattr('status', 'equalto', inquiry_statuses[3])|list|length }}</span>
+            <span class="stat-label">?µë? ?ë£</span>
+        </div>
+    </div>
+</section>
+
+<section class="inquiries-list">
+    <div class="section-header">
+        <h2>ë¬¸ì ëª©ë¡</h2>
+    </div>
+
+    {% if inquiries %}
+    <div class="inquiry-grid">
+        {% for inquiry in inquiries %}
+        {% set creator = creator_lookup[inquiry.creator_id] %}
+        <article class="inquiry-card status-{{ inquiry.status.value }}">
+            <header class="inquiry-header">
+                <div>
+                    <h3>{{ inquiry.subject }}</h3>
+                    <p class="inquiry-meta">
+                        <strong>?¬ë¦¬?ì´??</strong> {{ creator.name or creator.email }} |
+                        <strong>ì¹´íê³ ë¦¬:</strong> {{ inquiry.category.value }} |
+                        <strong>?ì±??</strong> {{ inquiry.created_at.strftime('%Y-%m-%d %H:%M') }}
+                    </p>
+                </div>
+                <span class="status-badge status-{{ inquiry.status.value }}">
+                    {{ inquiry.status.value|replace('_', ' ')|title }}
+                </span>
+            </header>
+
+            <div class="inquiry-body">
+                <div class="inquiry-message">
+                    <strong>ë¬¸ì ?´ì©:</strong>
+                    <p>{{ inquiry.message }}</p>
+                </div>
+
+                {% if inquiry.ai_draft_response %}
+                <div class="ai-draft-section">
+                    <div class="section-title">
+                        <span class="ai-icon">?¤</span>
+                        <strong>AI ?µë? ì´ì</strong>
+                        <span class="draft-indicator">?ì  ??ë°ì¡?ì¸??/span>
+                    </div>
+                    <form method="post" action="/manager/inquiry/{{ inquiry.id }}/send-response" class="response-form">
+                        <textarea name="final_response" rows="6" required>{{ inquiry.ai_draft_response }}</textarea>
+                        <div class="form-actions">
+                            <button class="btn primary" type="submit">?µë? ?ì¡</button>
+                        </div>
+                    </form>
+                </div>
+                {% elif inquiry.final_response %}
+                <div class="final-response-section">
+                    <strong>?ì¡???µë?:</strong>
+                    <p>{{ inquiry.final_response }}</p>
+                    <p class="response-meta">?µë? ?¼ì: {{ inquiry.responded_at.strftime('%Y-%m-%d %H:%M') if inquiry.responded_at else '-' }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="inquiry-actions">
+                {% if has_api_key and not inquiry.ai_draft_response and inquiry.status.value != 'answered' %}
+                <form method="post" action="/manager/inquiry/{{ inquiry.id }}/generate-ai-response" style="display: inline;">
+                    <button class="btn primary" type="submit">?¤ AI ?µë? ì´ì ?ì±</button>
+                </form>
+                {% endif %}
+
+                {% if inquiry.status.value != 'answered' and inquiry.status.value != 'closed' %}
+                <form method="post" action="/manager/inquiry/{{ inquiry.id }}/update-status" style="display: inline;">
+                    <select name="new_status" onchange="this.form.submit()" class="status-select">
+                        {% for status in inquiry_statuses %}
+                        <option value="{{ status.value }}" {% if inquiry.status == status %}selected{% endif %}>
+                            {{ status.value|replace('_', ' ')|title }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </form>
+                {% endif %}
+
+                <a href="/manager/creator/{{ creator.id }}" class="btn tertiary">?¬ë¦¬?ì´???ë³´</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>?ì§ ?±ë¡??ë¬¸ìê° ?ìµ?ë¤.</p>
+        <p class="empty-hint">?¬ë¦¬?ì´?°ì ë¬¸ì?¬í­???¬ê¸°??ê´ë¦¬íê³?AI ?µë? ì´ì???ì±?????ìµ?ë¤.</p>
+    </div>
+    {% endif %}
+</section>
+
+<style>
+.inquiries-header {
+    margin-bottom: 2rem;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.alert.warning {
+    background: #FFF3CD;
+    border: 1px solid #FFEAA7;
+    color: #856404;
+}
+
+.alert-icon {
+    font-size: 1.5rem;
+}
+
+.alert p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+}
+
+.alert a {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.inquiries-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.section-header {
+    margin-bottom: 1.5rem;
+}
+
+.inquiry-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inquiry-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--border-color);
+}
+
+.inquiry-card.status-pending {
+    border-left-color: #FFA500;
+}
+
+.inquiry-card.status-in_progress {
+    border-left-color: #007BFF;
+}
+
+.inquiry-card.status-ai_draft_ready {
+    border-left-color: #28A745;
+}
+
+.inquiry-card.status-answered {
+    border-left-color: #6C757D;
+}
+
+.inquiry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.inquiry-header h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.inquiry-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-badge.status-pending {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.status-badge.status-in_progress {
+    background: #CCE5FF;
+    color: #004085;
+}
+
+.status-badge.status-ai_draft_ready {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.status-badge.status-answered {
+    background: #E2E3E5;
+    color: #383D41;
+}
+
+.status-badge.status-closed {
+    background: #D6D8DB;
+    color: #1C1E21;
+}
+
+.inquiry-body {
+    margin-bottom: 1rem;
+}
+
+.inquiry-message {
+    margin-bottom: 1.5rem;
+}
+
+.inquiry-message p {
+    margin: 0.5rem 0 0 0;
+    padding: 1rem;
+    background: var(--bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    white-space: pre-wrap;
+}
+
+.ai-draft-section {
+    background: #F0F8FF;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #B3D9FF;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.ai-icon {
+    font-size: 1.2rem;
+}
+
+.draft-indicator {
+    font-size: 0.85rem;
+    color: #666;
+    margin-left: auto;
+}
+
+.response-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.final-response-section {
+    background: #E7F4E7;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #9FD89F;
+}
+
+.final-response-section p {
+    margin: 0.5rem 0 0 0;
+    white-space: pre-wrap;
+}
+
+.response-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.75rem !important;
+}
+
+.inquiry-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.status-select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--card-bg);
+    cursor: pointer;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-hint {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+</style>
+{% endblock %}
