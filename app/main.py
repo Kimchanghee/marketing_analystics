@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 import time
 from pathlib import Path
@@ -34,6 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent
 UI_DIR = BASE_DIR.parent / "ui"
 
 app = FastAPI(title="Creator Control Center")
+app.state.asset_version = os.getenv("ASSET_VERSION", str(int(time.time())))
 app.mount("/static", StaticFiles(directory=UI_DIR / "static"), name="static")
 
 # 템플릿 디렉토리 설정 (호환성을 위해 여러 경로 지원)

@@ -34,10 +34,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com">
 
+    {% set asset_version = request.app.state.asset_version if request else '1' %}
+    {% set style_css = request.url_for('static', path='css/style.css') if request else '/static/css/style.css' %}
+    {% set style_modern_css = request.url_for('static', path='css/style-modern.css') if request else '/static/css/style-modern.css' %}
+    {% set theme_js = request.url_for('static', path='js/theme.js') if request else '/static/js/theme.js' %}
+    {% set slider_js = request.url_for('static', path='js/slider.js') if request else '/static/js/slider.js' %}
+
     {# Updated to modern CSS with improved styling #}
-    <link rel="preload" href="/static/css/style.css" as="style">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/style-modern.css">
+    <link rel="preload" href="{{ style_css }}?v={{ asset_version }}" as="style">
+    <link rel="stylesheet" href="{{ style_css }}?v={{ asset_version }}">
+    <link rel="stylesheet" href="{{ style_modern_css }}?v={{ asset_version }}">
 
     {# Optimized Font Loading #}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -52,8 +58,8 @@
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
-    <script defer src="/static/js/theme.js"></script>
-    <script defer src="/static/js/slider.js"></script>
+    <script defer src="{{ theme_js }}?v={{ asset_version }}"></script>
+    <script defer src="{{ slider_js }}?v={{ asset_version }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
