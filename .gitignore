@@ -43,6 +43,7 @@ app.db
 # IDE
 .vscode/
 .idea/
+.claude/settings.local.json
 *.swp
 *.swo
 *~
@@ -60,3 +61,10 @@ htmlcov/
 
 # OS
 Thumbs.db
+
+# Credentials & Secrets
+credentials/
+*.pickle
+client_secret*.json
+service-account*.json
+token.json
