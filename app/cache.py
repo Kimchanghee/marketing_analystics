@@ -4,6 +4,9 @@ from functools import wraps
 from typing import Any, Callable, Optional
 import hashlib
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SimpleCache:
@@ -96,6 +99,11 @@ def _generate_cache_key(func_name: str, prefix: str, args: tuple, kwargs: dict) 
         combined = f"{func_name}:{args_str}:{kwargs_str}"
         hash_value = hashlib.md5(combined.encode()).hexdigest()
         return f"{prefix}:{hash_value}" if prefix else hash_value
-    except (TypeError, ValueError):
-        # 직렬화 불가능한 경우 간단한 키 사용
-        return f"{prefix}:{func_name}:{id(args)}" if prefix else f"{func_name}:{id(args)}"
+    except (TypeError, ValueError) as e:
+        # 직렬화 불가능한 경우 문자열 표현 사용 (더 안정적)
+        logger.warning(f"Cannot serialize cache key for {func_name}, using string representation: {e}")
+        args_repr = str(args)
+        kwargs_repr = str(kwargs)
+        combined = f"{func_name}:{args_repr}:{kwargs_repr}"
+        hash_value = hashlib.md5(combined.encode()).hexdigest()
+        return f"{prefix}:{hash_value}" if prefix else hash_value

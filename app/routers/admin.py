@@ -280,12 +280,23 @@ def update_subscription(
 
 
 def _parse_datetime(value: str | None) -> datetime | None:
+    """Parse datetime from ISO format string.
+
+    Args:
+        value: ISO format datetime string or None
+
+    Returns:
+        datetime object if parsing succeeds, None if value is empty
+
+    Raises:
+        ValueError: If value is provided but has invalid format
+    """
     if not value:
         return None
     try:
         return datetime.fromisoformat(value)
-    except ValueError:
-        return None
+    except ValueError as e:
+        raise ValueError(f"Invalid datetime format: {value}") from e
 
 
 @router.post("/super-admin/payment/create")
@@ -305,6 +316,12 @@ def create_payment(
     if not target:
         raise HTTPException(status_code=404, detail="User not found")
 
+    try:
+        period_start = _parse_datetime(billing_period_start)
+        period_end = _parse_datetime(billing_period_end)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
     currency_value = (currency or "KRW").strip().upper()[:3] or "KRW"
     payment = Payment(
         user_id=user_id,
@@ -312,8 +329,8 @@ def create_payment(
         currency=currency_value,
         status=status_value,
         description=description.strip() if description else None,
-        billing_period_start=_parse_datetime(billing_period_start),
-        billing_period_end=_parse_datetime(billing_period_end),
+        billing_period_start=period_start,
+        billing_period_end=period_end,
     )
     session.add(payment)
     session.add(

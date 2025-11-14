@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
@@ -25,11 +26,13 @@ class ChannelConnectorConfigError(ChannelConnectorError):
     """Raised when a connector is missing mandatory configuration."""
 
 
-class BaseConnector:
+class BaseConnector(ABC):
     platform: str
 
+    @abstractmethod
     def fetch(self, account: ChannelAccount) -> Dict[str, Any]:
-        raise NotImplementedError
+        """Fetch live metrics from the platform."""
+        pass
 
     def _ensure_credential(
         self, account: ChannelAccount, *, require_token: bool = False

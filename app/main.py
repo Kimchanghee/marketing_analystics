@@ -137,8 +137,9 @@ async def localization_middleware(request: Request, call_next):
                 user = session.exec(select(User).where(User.email == email)).first()
                 if user:
                     locale = user.locale
-        except Exception:  # noqa: BLE001
-            pass
+        except Exception as e:
+            # Invalid or expired token - expected, just use default locale
+            logger.debug(f"Could not get user locale from token: {e}")
     request.state.locale = locale
     response = await call_next(request)
     return response

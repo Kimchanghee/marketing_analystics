@@ -3,6 +3,7 @@
 This service provides AI-powered analysis and feedback for creators and managers.
 It analyzes all channel data, posts, and performance metrics to provide personalized insights.
 """
+import logging
 import os
 from typing import Any, Dict, List, Optional
 
@@ -17,6 +18,23 @@ from ..models import (
     User,
     UserRole,
 )
+
+logger = logging.getLogger(__name__)
+
+
+class AIPDServiceError(Exception):
+    """Base exception for AI PD service errors"""
+    pass
+
+
+class APIKeyNotConfiguredError(AIPDServiceError):
+    """Raised when API key is not configured"""
+    pass
+
+
+class AIGenerationError(AIPDServiceError):
+    """Raised when AI generation fails"""
+    pass
 
 
 class AIPDService:
@@ -117,12 +135,17 @@ class AIPDService:
         question: str,
         api_key: Optional[str] = None
     ) -> str:
-        """Analyze creator performance and answer questions using Gemini AI"""
+        """Analyze creator performance and answer questions using Gemini AI
+
+        Raises:
+            APIKeyNotConfiguredError: If no API key is configured
+            AIGenerationError: If AI generation fails
+        """
         # Use provided API key or default from settings
         if api_key:
             genai.configure(api_key=api_key)
         elif not self.settings.gemini_api_key:
-            return "AI 분석 서비스를 사용하려면 Gemini API 키가 필요합니다."
+            raise APIKeyNotConfiguredError("AI 분석 서비스를 사용하려면 Gemini API 키가 필요합니다.")
 
         try:
             # Generate context
@@ -158,7 +181,8 @@ PD로서 격려하고 응원하는 마음으로 답변해주세요."""
             return response.text
 
         except Exception as e:
-            return f"AI 분석 중 오류가 발생했습니다: {str(e)}"
+            logger.error(f"AI analysis failed: {e}", exc_info=True)
+            raise AIGenerationError(f"AI 분석 중 오류가 발생했습니다: {str(e)}") from e
 
     def analyze_manager_portfolio(
         self,
@@ -169,12 +193,17 @@ PD로서 격려하고 응원하는 마음으로 답변해주세요."""
         all_snapshots: Dict[int, Dict[int, Dict[str, Any]]],
         question: str
     ) -> str:
-        """Analyze manager's entire creator portfolio using Gemini AI"""
+        """Analyze manager's entire creator portfolio using Gemini AI
+
+        Raises:
+            APIKeyNotConfiguredError: If no API key is configured
+            AIGenerationError: If AI generation fails
+        """
         # Get manager's API key
         api_key = self._get_manager_api_key(session, manager.id)
 
         if not api_key and not self.settings.gemini_api_key:
-            return "AI 분석 서비스를 사용하려면 Gemini API 키를 등록해주세요."
+            raise APIKeyNotConfiguredError("AI 분석 서비스를 사용하려면 Gemini API 키를 등록해주세요.")
 
         if api_key:
             genai.configure(api_key=api_key)
@@ -215,7 +244,8 @@ PD로서 격려하고 응원하는 마음으로 답변해주세요."""
             return response.text
 
         except Exception as e:
-            return f"AI 분석 중 오류가 발생했습니다: {str(e)}"
+            logger.error(f"AI portfolio analysis failed: {e}", exc_info=True)
+            raise AIGenerationError(f"AI 분석 중 오류가 발생했습니다: {str(e)}") from e
 
     def generate_inquiry_response(
         self,
@@ -223,12 +253,17 @@ PD로서 격려하고 응원하는 마음으로 답변해주세요."""
         inquiry: CreatorInquiry,
         context_data: Dict[str, Any]
     ) -> str:
-        """Generate AI draft response for creator inquiry"""
+        """Generate AI draft response for creator inquiry
+
+        Raises:
+            APIKeyNotConfiguredError: If no API key is configured
+            AIGenerationError: If AI generation fails
+        """
         # Get manager's API key
         api_key = self._get_manager_api_key(session, inquiry.manager_id)
 
         if not api_key and not self.settings.gemini_api_key:
-            return "AI 답변 생성을 위해서는 Gemini API 키가 필요합니다."
+            raise APIKeyNotConfiguredError("AI 답변 생성을 위해서는 Gemini API 키가 필요합니다.")
 
         if api_key:
             genai.configure(api_key=api_key)
@@ -260,7 +295,8 @@ PD로서 격려하고 응원하는 마음으로 답변해주세요."""
             return response.text
 
         except Exception as e:
-            return f"AI 답변 생성 중 오류가 발생했습니다: {str(e)}"
+            logger.error(f"AI inquiry response generation failed: {e}", exc_info=True)
+            raise AIGenerationError(f"AI 답변 생성 중 오류가 발생했습니다: {str(e)}") from e
 
     @staticmethod
     def get_system_prompt() -> str:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import secrets
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
@@ -13,6 +14,8 @@ from sqlmodel import Session, select
 from jose import jwt as jose_jwt
 
 from ..auth import auth_manager
+
+logger = logging.getLogger(__name__)
 from ..config import get_settings
 from ..database import get_session
 from ..dependencies import get_current_user
@@ -275,7 +278,8 @@ async def social_oauth_callback(
 
     try:
         token = await client.authorize_access_token(request)
-    except OAuthError:
+    except OAuthError as e:
+        logger.warning(f"OAuth authorization failed: {e}")
         state_cookie = request.cookies.get("oauth_state")
         locale = "ko"
         origin = "/login"
@@ -284,8 +288,10 @@ async def social_oauth_callback(
                 state_payload = decode_token(state_cookie)
                 locale = state_payload.get("locale", locale)
                 origin = state_payload.get("origin", origin)
-            except Exception:
-                pass
+            except jose_jwt.JWTError as jwt_err:
+                logger.debug(f"Failed to decode state cookie (expected if expired): {jwt_err}")
+            except Exception as exc:
+                logger.warning(f"Unexpected error decoding OAuth state cookie: {exc}")
         return _social_error_redirect(origin, locale, "social_auth_failed")
 
     state_value = request.query_params.get("state")
