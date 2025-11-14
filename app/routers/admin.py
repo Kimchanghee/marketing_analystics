@@ -966,14 +966,11 @@ def create_inquiry(
 
     # 크리에이터에게 이메일 알림 전송
     try:
-        from ..services.super_admin_email import SuperAdminEmailService
-        from ..config import get_settings
-        settings = get_settings()
+        from ..services.gmail_service import GmailService, send_notification_email
 
-        if SuperAdminEmailService.is_configured(settings):
-            email_service = SuperAdminEmailService(settings)
+        # Gmail API 사용 시도 (우선순위 1)
+        if GmailService.is_configured():
             creator = session.get(User, creator_id)
-
             if creator:
                 email_subject = f"[Creator Control Center] 새로운 문의: {subject}"
                 email_body = f"""안녕하세요 {creator.name or creator.email}님,
@@ -991,9 +988,38 @@ def create_inquiry(
 감사합니다.
 Creator Control Center
 """
-                email_service.send_email(creator.email, email_subject, email_body)
+                send_notification_email(creator.email, email_subject, email_body)
+        else:
+            # Fallback to SMTP/IMAP
+            from ..services.super_admin_email import SuperAdminEmailService
+            from ..config import get_settings
+            settings = get_settings()
+
+            if SuperAdminEmailService.is_configured(settings):
+                email_service = SuperAdminEmailService(settings)
+                creator = session.get(User, creator_id)
+
+                if creator:
+                    email_subject = f"[Creator Control Center] 새로운 문의: {subject}"
+                    email_body = f"""안녕하세요 {creator.name or creator.email}님,
+
+관리자로부터 새로운 문의가 도착했습니다.
+
+[문의 정보]
+카테고리: {category.value}
+제목: {subject}
+
+{message}
+
+대시보드에서 확인하세요: https://creatorcontrol.center/dashboard
+
+감사합니다.
+Creator Control Center
+"""
+                    email_service.send_email(creator.email, email_subject, email_body)
     except Exception as e:
         # 이메일 전송 실패해도 문의 생성은 성공
+        import logging
         logger = logging.getLogger(__name__)
         logger.warning(f"Failed to send inquiry notification email: {e}")
 
@@ -1198,14 +1224,11 @@ def send_inquiry_response(
 
     # 크리에이터에게 답변 이메일 알림 전송
     try:
-        from ..services.super_admin_email import SuperAdminEmailService
-        from ..config import get_settings
-        settings = get_settings()
+        from ..services.gmail_service import GmailService, send_notification_email
 
-        if SuperAdminEmailService.is_configured(settings):
-            email_service = SuperAdminEmailService(settings)
+        # Gmail API 사용 시도 (우선순위 1)
+        if GmailService.is_configured():
             creator = session.get(User, inquiry.creator_id)
-
             if creator:
                 email_subject = f"[Creator Control Center] 문의 답변: {inquiry.subject}"
                 email_body = f"""안녕하세요 {creator.name or creator.email}님,
@@ -1224,7 +1247,36 @@ def send_inquiry_response(
 감사합니다.
 Creator Control Center
 """
-                email_service.send_email(creator.email, email_subject, email_body)
+                send_notification_email(creator.email, email_subject, email_body)
+        else:
+            # Fallback to SMTP/IMAP
+            from ..services.super_admin_email import SuperAdminEmailService
+            from ..config import get_settings
+            settings = get_settings()
+
+            if SuperAdminEmailService.is_configured(settings):
+                email_service = SuperAdminEmailService(settings)
+                creator = session.get(User, inquiry.creator_id)
+
+                if creator:
+                    email_subject = f"[Creator Control Center] 문의 답변: {inquiry.subject}"
+                    email_body = f"""안녕하세요 {creator.name or creator.email}님,
+
+귀하의 문의에 대한 답변이 도착했습니다.
+
+[원래 문의]
+제목: {inquiry.subject}
+내용: {inquiry.message[:200]}{"..." if len(inquiry.message) > 200 else ""}
+
+[답변]
+{final_response}
+
+대시보드에서 확인하세요: https://creatorcontrol.center/dashboard
+
+감사합니다.
+Creator Control Center
+"""
+                    email_service.send_email(creator.email, email_subject, email_body)
     except Exception as e:
         # 이메일 전송 실패해도 답변 저장은 성공
         import logging

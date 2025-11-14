@@ -44,6 +44,12 @@ class Settings(BaseSettings):
     imap_use_ssl: bool = Field(True, env="IMAP_USE_SSL")
     imap_sent_folder: str = Field("[Gmail]/Sent Mail", env="IMAP_SENT_FOLDER")
 
+    # Gmail API 설정 (SMTP/IMAP 대체)
+    gmail_sender_email: str = Field("", env="GMAIL_SENDER_EMAIL")
+    google_service_account_file: str = Field("", env="GOOGLE_SERVICE_ACCOUNT_FILE")
+    gmail_delegated_email: str = Field("", env="GMAIL_DELEGATED_EMAIL")  # Domain-wide delegation
+    gmail_credentials_json: str = Field("", env="GMAIL_CREDENTIALS_JSON")  # OAuth2 credentials
+
     @property
     def is_production(self) -> bool:
         """Check if running in production environment (Cloud Run)"""
