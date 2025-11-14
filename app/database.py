@@ -22,8 +22,17 @@ engine = create_engine(
 _db_initialized = False
 
 
+class DatabaseInitializationError(Exception):
+    """Raised when database cannot be initialized."""
+    pass
+
+
 def init_db(max_retries: int = 2, retry_delay: int = 1) -> None:
-    """Initialize database with retry logic for Cloud Run deployments"""
+    """Initialize database with retry logic for Cloud Run deployments
+
+    Raises:
+        DatabaseInitializationError: If database initialization fails after all retries
+    """
     global _db_initialized
 
     if _db_initialized:
@@ -43,18 +52,20 @@ def init_db(max_retries: int = 2, retry_delay: int = 1) -> None:
                 time.sleep(retry_delay)
             else:
                 logger.error("Max retries reached. Database initialization failed.")
-                raise
+                raise DatabaseInitializationError(
+                    f"Failed to initialize database after {max_retries} attempts: {e}"
+                ) from e
 
 
 def get_session() -> Iterator[Session]:
-    """FastAPI Depends용 세션 제너레이터 - lazy initialization"""
-    # Initialize database on first access
+    """FastAPI Depends용 세션 제너레이터 - lazy initialization
+
+    Raises:
+        DatabaseInitializationError: If database initialization fails
+    """
+    # Initialize database on first access (fail-fast)
     if not _db_initialized:
-        try:
-            init_db()
-        except Exception as e:
-            logger.error(f"Failed to initialize database: {e}")
-            # Continue anyway - let the specific query fail if needed
+        init_db()
 
     with Session(engine) as session:
         yield session
@@ -62,14 +73,14 @@ def get_session() -> Iterator[Session]:
 
 @contextmanager
 def session_context() -> Iterator[Session]:
-    """일반 코드에서 with 블록용 컨텍스트 매니저 - lazy initialization"""
-    # Initialize database on first access
+    """일반 코드에서 with 블록용 컨텍스트 매니저 - lazy initialization
+
+    Raises:
+        DatabaseInitializationError: If database initialization fails
+    """
+    # Initialize database on first access (fail-fast)
     if not _db_initialized:
-        try:
-            init_db()
-        except Exception as e:
-            logger.error(f"Failed to initialize database: {e}")
-            # Continue anyway - let the specific query fail if needed
+        init_db()
 
     with Session(engine) as session:
         yield session

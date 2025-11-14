@@ -14,6 +14,11 @@ from ..config import get_settings
 logger = logging.getLogger(__name__)
 
 
+class DecryptionError(Exception):
+    """Raised when decryption fails due to invalid data or wrong key."""
+    pass
+
+
 @lru_cache(maxsize=1)
 def _get_fernet() -> Fernet:
     settings = get_settings()
@@ -34,18 +39,23 @@ def encrypt(value: Optional[str]) -> Optional[str]:
 def decrypt(value: Optional[str]) -> Optional[str]:
     """Decrypt previously encrypted *value* using the application secret.
 
+    Args:
+        value: Encrypted string or None
+
     Returns:
-        - None if value is None (no encrypted value provided)
-        - None if decryption fails due to invalid token (logs warning)
-        - Decrypted string if successful
+        None if value is None (no encrypted value provided)
+        Decrypted string if successful
+
+    Raises:
+        DecryptionError: If decryption fails due to invalid/corrupted data or wrong key
     """
     if value is None:
         return None
     fernet = _get_fernet()
     try:
         decrypted = fernet.decrypt(value.encode("utf-8"))
+        return decrypted.decode("utf-8")
     except InvalidToken as e:
         # Decryption failed - could be wrong key, corrupted data, or tampered value
-        logger.warning(f"Failed to decrypt value (invalid token): {e}")
-        return None
-    return decrypted.decode("utf-8")
+        logger.error(f"Decryption failed - possible data corruption or wrong key: {e}")
+        raise DecryptionError(f"Failed to decrypt value: {e}") from e
