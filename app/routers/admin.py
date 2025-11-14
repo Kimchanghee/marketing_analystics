@@ -404,17 +404,35 @@ def manager_dashboard(
     user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
-    """기업 관리자 전용 대시보드"""
+    """기업 관리자 전용 대시보드 - 페이지네이션 지원"""
     from sqlalchemy.orm import selectinload
+    from sqlalchemy import func
     from ..models import ChannelAccount
     from ..services.social_fetcher import fetch_channel_snapshots
 
     locale = user.locale
     strings = translator.load_locale(locale)
 
-    # 매니저와 연결된 모든 링크 조회
+    # 페이지네이션 파라미터
+    page = int(request.query_params.get("page", 1))
+    per_page = 20  # 페이지당 크리에이터 수
+    offset = (page - 1) * per_page
+
+    # 매니저와 연결된 링크 총 개수
+    total_links = session.exec(
+        select(func.count(ManagerCreatorLink.id))
+        .where(ManagerCreatorLink.manager_id == user.id)
+    ).first() or 0
+
+    total_pages = (total_links + per_page - 1) // per_page
+
+    # 매니저와 연결된 모든 링크 조회 (페이지네이션 적용)
     all_links = session.exec(
-        select(ManagerCreatorLink).where(ManagerCreatorLink.manager_id == user.id)
+        select(ManagerCreatorLink)
+        .where(ManagerCreatorLink.manager_id == user.id)
+        .order_by(ManagerCreatorLink.connected_at.desc())
+        .limit(per_page)
+        .offset(offset)
     ).all()
 
     # 승인된 링크와 대기 중인 링크 분리
@@ -485,7 +503,67 @@ def manager_dashboard(
             "creator_snapshots": creator_snapshots,
             "has_api_key": has_api_key,
             "subscription": subscription,
+            "page": page,
+            "per_page": per_page,
+            "total_links": total_links,
+            "total_pages": total_pages,
         },
+    )
+
+
+@router.get("/manager/dashboard/export/pdf")
+def export_manager_dashboard_pdf(
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
+    session=Depends(get_session),
+):
+    """매니저가 관리하는 크리에이터 포트폴리오를 PDF로 내보내기"""
+    from fastapi.responses import StreamingResponse
+    from datetime import datetime
+    from sqlalchemy.orm import selectinload
+    from ..models import ChannelAccount
+    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.pdf_generator import generate_manager_pdf
+
+    # 승인된 크리에이터 조회
+    approved_links = session.exec(
+        select(ManagerCreatorLink)
+        .where(ManagerCreatorLink.manager_id == user.id)
+        .where(ManagerCreatorLink.approved == True)
+    ).all()
+
+    creator_ids = [link.creator_id for link in approved_links]
+    creators = session.exec(
+        select(User).where(User.id.in_(creator_ids))
+    ).all() if creator_ids else []
+
+    # 크리에이터별 채널 정보
+    creator_channels = {}
+    if creator_ids:
+        channels = session.exec(
+            select(ChannelAccount)
+            .where(ChannelAccount.owner_id.in_(creator_ids))
+            .options(selectinload(ChannelAccount.credential))
+        ).all()
+
+        for channel in channels:
+            if channel.owner_id not in creator_channels:
+                creator_channels[channel.owner_id] = []
+            creator_channels[channel.owner_id].append(channel)
+
+    # 스냅샷 가져오기
+    all_channels = [ch for channels in creator_channels.values() for ch in channels]
+    creator_snapshots = fetch_channel_snapshots(all_channels)
+
+    # PDF 생성
+    pdf_buffer = generate_manager_pdf(user, creators, creator_channels, creator_snapshots)
+
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    filename = f"manager_portfolio_{timestamp}.pdf"
+
+    return StreamingResponse(
+        pdf_buffer,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 
 
@@ -886,6 +964,39 @@ def create_inquiry(
     session.add(inquiry)
     session.commit()
 
+    # 크리에이터에게 이메일 알림 전송
+    try:
+        from ..services.super_admin_email import SuperAdminEmailService
+        from ..config import get_settings
+        settings = get_settings()
+
+        if SuperAdminEmailService.is_configured(settings):
+            email_service = SuperAdminEmailService(settings)
+            creator = session.get(User, creator_id)
+
+            if creator:
+                email_subject = f"[Creator Control Center] 새로운 문의: {subject}"
+                email_body = f"""안녕하세요 {creator.name or creator.email}님,
+
+관리자로부터 새로운 문의가 도착했습니다.
+
+[문의 정보]
+카테고리: {category.value}
+제목: {subject}
+
+{message}
+
+대시보드에서 확인하세요: https://creatorcontrol.center/dashboard
+
+감사합니다.
+Creator Control Center
+"""
+                email_service.send_email(creator.email, email_subject, email_body)
+    except Exception as e:
+        # 이메일 전송 실패해도 문의 생성은 성공
+        logger = logging.getLogger(__name__)
+        logger.warning(f"Failed to send inquiry notification email: {e}")
+
     return RedirectResponse(
         url=f"/manager/inquiries?created=true",
         status_code=status.HTTP_303_SEE_OTHER
@@ -1084,6 +1195,41 @@ def send_inquiry_response(
         )
     )
     session.commit()
+
+    # 크리에이터에게 답변 이메일 알림 전송
+    try:
+        from ..services.super_admin_email import SuperAdminEmailService
+        from ..config import get_settings
+        settings = get_settings()
+
+        if SuperAdminEmailService.is_configured(settings):
+            email_service = SuperAdminEmailService(settings)
+            creator = session.get(User, inquiry.creator_id)
+
+            if creator:
+                email_subject = f"[Creator Control Center] 문의 답변: {inquiry.subject}"
+                email_body = f"""안녕하세요 {creator.name or creator.email}님,
+
+귀하의 문의에 대한 답변이 도착했습니다.
+
+[원래 문의]
+제목: {inquiry.subject}
+내용: {inquiry.message[:200]}{"..." if len(inquiry.message) > 200 else ""}
+
+[답변]
+{final_response}
+
+대시보드에서 확인하세요: https://creatorcontrol.center/dashboard
+
+감사합니다.
+Creator Control Center
+"""
+                email_service.send_email(creator.email, email_subject, email_body)
+    except Exception as e:
+        # 이메일 전송 실패해도 답변 저장은 성공
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(f"Failed to send inquiry response notification email: {e}")
 
     return RedirectResponse(
         url=f"/manager/inquiries?answered={inquiry_id}",
