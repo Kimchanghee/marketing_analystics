@@ -20,7 +20,11 @@ from ..models import (
     User,
     UserRole,
 )
-from ..services.ai_pd_service import ai_pd_service
+from ..services.ai_pd_service import (
+    ai_pd_service,
+    APIKeyNotConfiguredError,
+    AIGenerationError,
+)
 from ..services.social_fetcher import fetch_channel_snapshots
 
 router = APIRouter()
@@ -106,5 +110,21 @@ def ask_ai_pd(
             "answer": response
         }
 
+    except APIKeyNotConfiguredError as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"AI 서비스가 구성되지 않았습니다: {str(e)}"
+        )
+    except AIGenerationError as e:
+        raise HTTPException(
+            status_code=502,
+            detail=f"AI 분석 서비스 오류: {str(e)}"
+        )
+    except HTTPException:
+        # Re-raise existing HTTPExceptions
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"AI 분석 중 오류가 발생했습니다: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"AI 분석 중 예기치 않은 오류가 발생했습니다: {str(e)}"
+        )

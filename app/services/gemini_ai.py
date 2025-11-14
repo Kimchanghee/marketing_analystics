@@ -1,5 +1,6 @@
 """Gemini AI 통합 서비스"""
 import json
+import logging
 from typing import Optional
 
 try:
@@ -7,6 +8,18 @@ try:
     GEMINI_AVAILABLE = True
 except ImportError:
     GEMINI_AVAILABLE = False
+
+logger = logging.getLogger(__name__)
+
+
+class GeminiServiceError(Exception):
+    """Base exception for Gemini AI service errors"""
+    pass
+
+
+class AIGenerationError(GeminiServiceError):
+    """Raised when AI content generation fails"""
+    pass
 
 
 class GeminiAIService:
@@ -47,6 +60,9 @@ class GeminiAIService:
 
         Returns:
             AI가 생성한 답변 초안
+
+        Raises:
+            AIGenerationError: If AI generation fails
         """
         # 컨텍스트 정보 준비
         context_str = ""
@@ -97,7 +113,8 @@ class GeminiAIService:
             response = self.model.generate_content(prompt)
             return response.text.strip()
         except Exception as e:
-            return f"[AI 답변 생성 오류: {str(e)}]\n\n수동으로 답변을 작성해주세요."
+            logger.error(f"AI CS response generation failed: {e}", exc_info=True)
+            raise AIGenerationError(f"AI 답변 생성 중 오류가 발생했습니다: {str(e)}") from e
 
     def summarize_creator_activity(
         self,
@@ -117,6 +134,9 @@ class GeminiAIService:
 
         Returns:
             활동 요약 텍스트
+
+        Raises:
+            AIGenerationError: If AI generation fails
         """
         # 채널 요약
         channels_summary = []
@@ -151,7 +171,8 @@ class GeminiAIService:
             response = self.model.generate_content(prompt)
             return response.text.strip()
         except Exception as e:
-            return f"활동 요약 생성 실패: {str(e)}"
+            logger.error(f"Activity summary generation failed: {e}", exc_info=True)
+            raise AIGenerationError(f"활동 요약 생성 중 오류가 발생했습니다: {str(e)}") from e
 
     def analyze_inquiry_category(self, subject: str, message: str) -> str:
         """
@@ -163,6 +184,9 @@ class GeminiAIService:
 
         Returns:
             추천 카테고리 (technical, account, billing, feature_request, bug_report, general 중 하나)
+
+        Raises:
+            AIGenerationError: If AI generation fails
         """
         prompt = f"""다음 고객 문의를 분석하여 가장 적절한 카테고리를 하나만 선택해주세요.
 
@@ -187,9 +211,13 @@ class GeminiAIService:
             valid_categories = ["technical", "account", "billing", "feature_request", "bug_report", "general"]
             if category in valid_categories:
                 return category
+
+            # AI가 유효하지 않은 카테고리를 반환한 경우 기본값 반환
+            logger.warning(f"AI returned invalid category '{category}', using 'general' as fallback")
             return "general"
         except Exception as e:
-            return "general"
+            logger.error(f"Category analysis failed: {e}", exc_info=True)
+            raise AIGenerationError(f"카테고리 분석 중 오류가 발생했습니다: {str(e)}") from e
 
 
 def get_gemini_service(api_key: str) -> GeminiAIService:

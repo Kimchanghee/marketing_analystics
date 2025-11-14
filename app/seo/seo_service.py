@@ -10,9 +10,12 @@ SEO 및 AEO 최적화 서비스
 """
 
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 
 class SEOService:
@@ -220,6 +223,7 @@ class SEOService:
         faq_items = self.seo_data.get("faq", [])
 
         if not faq_items:
+            logger.debug(f"No FAQ items found for locale '{self.locale}', skipping FAQ schema generation")
             return ""
 
         schema = {
@@ -338,6 +342,7 @@ class SEOService:
 
         # contentUrl이 없으면 스키마 생성 안 함
         if not self.seo_data.get("video", {}).get("contentUrl"):
+            logger.debug(f"No video contentUrl configured for locale '{self.locale}', skipping VideoObject schema generation")
             return ""
 
         return self._json_ld_script(schema)
@@ -382,6 +387,7 @@ class SEOService:
         howto_data = self.seo_data.get("howto", {})
 
         if not howto_data:
+            logger.debug(f"No HowTo data configured for locale '{self.locale}', skipping HowTo schema generation")
             return ""
 
         schema = {

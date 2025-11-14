@@ -355,10 +355,20 @@ async def oauth_callback(
         response = requests.post(config["token_url"], data=token_data, timeout=10)
         response.raise_for_status()
         token_response = response.json()
+    except requests.exceptions.Timeout:
+        raise HTTPException(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            detail=f"{platform} 서버 응답 시간 초과"
+        )
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"{platform} 서버와 통신 실패: {str(e)}"
+        )
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"토큰 교환 실패: {str(e)}"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"토큰 교환 중 오류 발생: {str(e)}"
         )
 
     access_token = token_response.get("access_token")
@@ -662,10 +672,20 @@ async def refresh_channel_token(
         response = requests.post(config["token_url"], data=token_data, timeout=10)
         response.raise_for_status()
         token_response = response.json()
+    except requests.exceptions.Timeout:
+        raise HTTPException(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            detail=f"{channel.platform} 서버 응답 시간 초과"
+        )
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"{channel.platform} 서버와 통신 실패: {str(e)}"
+        )
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"토큰 갱신 실패: {str(e)}"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"토큰 갱신 중 오류 발생: {str(e)}"
         )
 
     access_token = token_response.get("access_token")

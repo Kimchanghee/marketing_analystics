@@ -251,8 +251,21 @@ class ManagerAPIKey(SQLModel, table=True):
 
     @property
     def api_key(self) -> str:
-        from .services.crypto import decrypt
-        return decrypt(self.api_key_encrypted)
+        """Decrypt and return the API key.
+
+        Returns:
+            Decrypted API key
+
+        Raises:
+            DecryptionError: If decryption fails (corrupted data or wrong key)
+        """
+        from .services.crypto import decrypt, DecryptionError
+
+        decrypted = decrypt(self.api_key_encrypted)
+        if decrypted is None:
+            # This should not happen since api_key_encrypted is required, but handle it safely
+            raise ValueError("API key is missing or empty")
+        return decrypted
 
     @api_key.setter
     def api_key(self, value: str) -> None:

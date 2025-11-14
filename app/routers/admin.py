@@ -912,8 +912,12 @@ def generate_ai_response(
 
     # 문의 조회
     inquiry = session.get(CreatorInquiry, inquiry_id)
-    if not inquiry or inquiry.manager_id != user.id:
+    if not inquiry:
         raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+
+    # SUPER_ADMIN은 모든 문의에 접근 가능
+    if user.role != UserRole.SUPER_ADMIN and inquiry.manager_id != user.id:
+        raise HTTPException(status_code=403, detail="이 문의에 대한 권한이 없습니다.")
 
     # API 키 조회
     api_key_record = session.exec(
@@ -999,8 +1003,12 @@ def send_inquiry_response(
 ):
     """최종 답변 전송 (실제로는 저장만, 이메일 발송은 추후 구현 가능)"""
     inquiry = session.get(CreatorInquiry, inquiry_id)
-    if not inquiry or inquiry.manager_id != user.id:
+    if not inquiry:
         raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+
+    # SUPER_ADMIN은 모든 문의에 접근 가능
+    if user.role != UserRole.SUPER_ADMIN and inquiry.manager_id != user.id:
+        raise HTTPException(status_code=403, detail="이 문의에 대한 권한이 없습니다.")
 
     inquiry.final_response = final_response
     inquiry.status = InquiryStatus.ANSWERED
@@ -1033,8 +1041,12 @@ def update_inquiry_status(
 ):
     """문의 상태 업데이트"""
     inquiry = session.get(CreatorInquiry, inquiry_id)
-    if not inquiry or inquiry.manager_id != user.id:
+    if not inquiry:
         raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+
+    # SUPER_ADMIN은 모든 문의에 접근 가능
+    if user.role != UserRole.SUPER_ADMIN and inquiry.manager_id != user.id:
+        raise HTTPException(status_code=403, detail="이 문의에 대한 권한이 없습니다.")
 
     inquiry.status = new_status
     inquiry.updated_at = datetime.utcnow()
