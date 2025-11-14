@@ -10,12 +10,20 @@ from .config import get_settings
 logger = logging.getLogger(__name__)
 settings = get_settings()
 
-# PostgreSQL 연결 (SQLite check_same_thread 옵션 제거)
+# PostgreSQL 연결 - 프로덕션 환경 최적화
+# 동시 접속자 500-1000명 대응 가능한 연결 풀 설정
 engine = create_engine(
     settings.database_url,
     echo=False,
-    pool_pre_ping=True,
-    connect_args={"connect_timeout": 10} if "postgresql" in settings.database_url else {},
+    pool_pre_ping=True,  # 연결 유효성 자동 확인
+    pool_size=20,  # 기본 연결 풀 크기 (기본값: 5)
+    max_overflow=40,  # 피크 시간 추가 연결 수 (총 60개 동시 연결 가능)
+    pool_timeout=30,  # 연결 대기 최대 시간 (초)
+    pool_recycle=3600,  # 1시간마다 연결 재생성 (장시간 유휴 연결 방지)
+    connect_args={
+        "connect_timeout": 10,
+        "options": "-c statement_timeout=30000"  # 30초 쿼리 타임아웃
+    } if "postgresql" in settings.database_url else {},
 )
 
 # Track if database has been initialized

@@ -36,23 +36,41 @@ class User(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     password_set_at: Optional[datetime] = None
 
-    channels: list["ChannelAccount"] = Relationship(back_populates="owner")
+    channels: list["ChannelAccount"] = Relationship(
+        back_populates="owner",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}  # User 삭제 시 채널도 삭제
+    )
     managed_creators: list["ManagerCreatorLink"] = Relationship(
         back_populates="manager",
-        sa_relationship_kwargs={"foreign_keys": "ManagerCreatorLink.manager_id"}
+        sa_relationship_kwargs={
+            "foreign_keys": "ManagerCreatorLink.manager_id",
+            "cascade": "all, delete-orphan"  # User 삭제 시 매니저 링크도 삭제
+        }
     )
     managers: list["ManagerCreatorLink"] = Relationship(
         back_populates="creator",
-        sa_relationship_kwargs={"foreign_keys": "ManagerCreatorLink.creator_id"}
+        sa_relationship_kwargs={
+            "foreign_keys": "ManagerCreatorLink.creator_id",
+            "cascade": "all, delete-orphan"  # User 삭제 시 크리에이터 링크도 삭제
+        }
     )
-    payments: list["Payment"] = Relationship(back_populates="user")
-    social_accounts: list["SocialAccount"] = Relationship(back_populates="user")
-    password_reset_tokens: list["PasswordResetToken"] = Relationship(back_populates="user")
+    payments: list["Payment"] = Relationship(
+        back_populates="user",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}  # User 삭제 시 결제 내역도 삭제 (GDPR 준수)
+    )
+    social_accounts: list["SocialAccount"] = Relationship(
+        back_populates="user",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}  # User 삭제 시 소셜 계정도 삭제
+    )
+    password_reset_tokens: list["PasswordResetToken"] = Relationship(
+        back_populates="user",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}  # User 삭제 시 토큰도 삭제
+    )
 
 
 class ChannelAccount(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    owner_id: int = Field(foreign_key="user.id")
+    owner_id: int = Field(foreign_key="user.id", index=True)  # 인덱스 추가 (조회 성능 향상)
     platform: str
     account_name: str
     followers: int = 0
@@ -60,6 +78,7 @@ class ChannelAccount(SQLModel, table=True):
     engagement_rate: float = 0.0
     last_post_date: Optional[datetime] = None
     last_post_title: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)  # 정렬용 인덱스
     extra_metadata: Dict[str, Any] = Field(
         default_factory=dict,
         sa_column=Column(JSON, nullable=False, default=dict),
@@ -75,8 +94,8 @@ class ChannelAccount(SQLModel, table=True):
 class ManagerCreatorLink(SQLModel, table=True):
     manager_id: int = Field(foreign_key="user.id", primary_key=True)
     creator_id: int = Field(foreign_key="user.id", primary_key=True)
-    approved: bool = Field(default=False)
-    connected_at: datetime = Field(default_factory=datetime.utcnow)
+    approved: bool = Field(default=False, index=True)  # 필터링 성능 향상
+    connected_at: datetime = Field(default_factory=datetime.utcnow, index=True)  # 정렬용 인덱스
 
     manager: User = Relationship(
         back_populates="managed_creators",
@@ -90,18 +109,18 @@ class ManagerCreatorLink(SQLModel, table=True):
 
 class Subscription(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    user_id: int = Field(foreign_key="user.id")
-    tier: SubscriptionTier = Field(default=SubscriptionTier.FREE)
-    active: bool = Field(default=True)
+    user_id: int = Field(foreign_key="user.id", index=True)  # 조회 성능 향상
+    tier: SubscriptionTier = Field(default=SubscriptionTier.FREE, index=True)  # 필터링 성능 향상
+    active: bool = Field(default=True, index=True)  # 활성 구독 필터링
     max_accounts: int = 1
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)  # 정렬용 인덱스
 
 
 class ActivityLog(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    user_id: int = Field(foreign_key="user.id")
-    action: str
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    user_id: int = Field(foreign_key="user.id", index=True)  # 사용자별 로그 조회 성능 향상
+    action: str = Field(index=True)  # 액션별 필터링 성능 향상
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)  # 정렬용 인덱스
     details: Optional[str] = None
 
 
@@ -206,14 +225,14 @@ class PaymentStatus(str, enum.Enum):
 
 class Payment(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    user_id: int = Field(foreign_key="user.id")
+    user_id: int = Field(foreign_key="user.id", index=True)  # 사용자별 결제 조회 성능 향상
     amount: float = Field(default=0.0, ge=0)
     currency: str = Field(default="KRW")
-    status: PaymentStatus = Field(default=PaymentStatus.PENDING)
+    status: PaymentStatus = Field(default=PaymentStatus.PENDING, index=True)  # 상태별 필터링 성능 향상
     description: Optional[str] = None
     billing_period_start: Optional[datetime] = None
     billing_period_end: Optional[datetime] = None
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)  # 정렬용 인덱스
 
     user: "User" = Relationship(back_populates="payments")
 
@@ -296,18 +315,18 @@ class InquiryCategory(str, enum.Enum):
 class CreatorInquiry(SQLModel, table=True):
     """크리에이터 문의/이슈 관리"""
     id: Optional[int] = Field(default=None, primary_key=True)
-    creator_id: int = Field(foreign_key="user.id")
-    manager_id: int = Field(foreign_key="user.id")
-    category: InquiryCategory = Field(default=InquiryCategory.GENERAL)
+    creator_id: int = Field(foreign_key="user.id", index=True)  # 크리에이터별 문의 조회 성능 향상
+    manager_id: int = Field(foreign_key="user.id", index=True)  # 매니저별 문의 조회 성능 향상
+    category: InquiryCategory = Field(default=InquiryCategory.GENERAL, index=True)  # 카테고리별 필터링
     subject: str
     message: str
-    status: InquiryStatus = Field(default=InquiryStatus.PENDING)
+    status: InquiryStatus = Field(default=InquiryStatus.PENDING, index=True)  # 상태별 필터링 성능 향상
     ai_draft_response: Optional[str] = None
     final_response: Optional[str] = None
     context_data: Dict[str, Any] = Field(
         default_factory=dict,
         sa_column=Column("context_data", JSON, nullable=False, default=dict),
     )
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)  # 정렬용 인덱스
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     responded_at: Optional[datetime] = None

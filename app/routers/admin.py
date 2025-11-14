@@ -43,12 +43,36 @@ def super_admin_dashboard(
 ):
     locale = user.locale
     strings = translator.load_locale(locale)
-    users = session.exec(select(User).order_by(User.created_at.desc())).all()
-    subscriptions = session.exec(select(Subscription)).all()
+
+    # 페이지네이션 추가 (기본 50개씩)
+    page = int(request.query_params.get("page", 1))
+    per_page = 50
+    offset = (page - 1) * per_page
+
+    # 전체 사용자 수 조회
+    from sqlalchemy import func
+    total_users = session.exec(select(func.count(User.id))).first() or 0
+
+    # 페이지별 사용자 조회 (성능 최적화)
+    users = session.exec(
+        select(User)
+        .order_by(User.created_at.desc())
+        .limit(per_page)
+        .offset(offset)
+    ).all()
+
+    # 구독 정보는 현재 페이지 사용자만 조회
+    user_ids = [u.id for u in users]
+    subscriptions = session.exec(
+        select(Subscription).where(Subscription.user_id.in_(user_ids))
+    ).all() if user_ids else []
 
     # 회원 구분: 기업(MANAGER) / 개인(CREATOR)
     business_users = [u for u in users if u.role == UserRole.MANAGER or u.role == UserRole.ADMIN]
     personal_users = [u for u in users if u.role == UserRole.CREATOR]
+
+    # 페이지 정보
+    total_pages = (total_users + per_page - 1) // per_page
 
     # 최근 결제 내역 (100개)
     recent_payments = session.exec(
@@ -113,6 +137,11 @@ def super_admin_dashboard(
             "email_inbox": email_inbox,
             "email_sent": email_sent,
             "super_admin_email": settings.super_admin_email,
+            # 페이지네이션 정보
+            "page": page,
+            "per_page": per_page,
+            "total_users": total_users,
+            "total_pages": total_pages,
             "email_last_refreshed": email_last_refreshed,
         },
     )
@@ -392,9 +421,13 @@ def manager_dashboard(
     approved_creators = [link for link in all_links if link.approved]
     pending_approvals = [link for link in all_links if not link.approved]
 
-    # 크리에이터 정보 조회
+    # 크리에이터 정보 조회 (N+1 쿼리 방지)
     creator_ids = [link.creator_id for link in all_links]
-    creators = session.exec(select(User).where(User.id.in_(creator_ids))).all() if creator_ids else []
+    creators = session.exec(
+        select(User)
+        .where(User.id.in_(creator_ids))
+        .options(selectinload(User.social_accounts))  # 소셜 계정 미리 로드
+    ).all() if creator_ids else []
     creator_lookup = {c.id: c for c in creators}
 
     # 크리에이터별 구독 정보
@@ -594,7 +627,12 @@ def export_manager_dashboard_pdf(
     ).all()
 
     creator_ids = [link.creator_id for link in approved_links]
-    creators = session.exec(select(User).where(User.id.in_(creator_ids))).all() if creator_ids else []
+    # N+1 쿼리 방지: selectinload로 관련 데이터 미리 로드
+    creators = session.exec(
+        select(User)
+        .where(User.id.in_(creator_ids))
+        .options(selectinload(User.social_accounts))  # 소셜 계정 미리 로드
+    ).all() if creator_ids else []
 
     # 크리에이터별 채널 정보
     creator_channels_list = session.exec(
@@ -860,15 +898,32 @@ def view_inquiries(
     user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
     session=Depends(get_session),
 ):
-    """모든 문의 조회"""
+    """모든 문의 조회 (페이지네이션 적용)"""
     from sqlalchemy.orm import selectinload
+    from sqlalchemy import func
 
-    # 이 관리자가 관리하는 크리에이터들의 문의만 조회
+    # 페이지네이션
+    page = int(request.query_params.get("page", 1))
+    per_page = 30
+    offset = (page - 1) * per_page
+
+    # 전체 문의 수 조회
+    total_inquiries = session.exec(
+        select(func.count(CreatorInquiry.id))
+        .where(CreatorInquiry.manager_id == user.id)
+    ).first() or 0
+
+    # 페이지별 문의 조회 (성능 최적화)
     inquiries = session.exec(
         select(CreatorInquiry)
         .where(CreatorInquiry.manager_id == user.id)
         .order_by(CreatorInquiry.created_at.desc())
+        .limit(per_page)
+        .offset(offset)
     ).all()
+
+    # 페이지 정보
+    total_pages = (total_inquiries + per_page - 1) // per_page
 
     # 크리에이터 정보 조회
     creator_ids = list(set([inq.creator_id for inq in inquiries]))
@@ -896,6 +951,11 @@ def view_inquiries(
             "has_api_key": has_api_key,
             "inquiry_statuses": list(InquiryStatus),
             "inquiry_categories": list(InquiryCategory),
+            # 페이지네이션 정보
+            "page": page,
+            "per_page": per_page,
+            "total_inquiries": total_inquiries,
+            "total_pages": total_pages,
         },
     )
 
