@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 자동화 테스트</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        .test-section {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+        }
+        .test-info {
+            margin: 10px 0;
+        }
+        .test-info strong {
+            display: inline-block;
+            width: 150px;
+            color: #555;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .result.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+        .result.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+        .result.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            display: block;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .test-result-item {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: white;
+            border-left: 4px solid #ccc;
+        }
+        .test-result-item.passed {
+            border-left-color: #4CAF50;
+        }
+        .test-result-item.failed {
+            border-left-color: #f44336;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .credentials {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .credentials h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Creator Control Center - 로그인 자동화 테스트</h1>
+        
+        <div class="credentials">
+            <h3>📋 마스터 관리자 계정 정보 (수정됨)</h3>
+            <p><strong>이메일:</strong> <code>kckc93@creatorscontrol.com</code></p>
+            <p><strong>비밀번호:</strong> <code>Ckdgml9788@</code></p>
+            <p><strong>역할:</strong> SUPER_ADMIN</p>
+            <p style="color: #d9534f; font-weight: bold;">
+                ⚠️ 이전 오류: 문서에 <code>kckc93@creatorcontrol.center</code>로 잘못 기재되어 있었습니다.<br>
+                ✅ 수정 완료: <code>kckc93@creatorscontrol.com</code>이 올바른 이메일입니다.
+            </p>
+        </div>
+
+        <h2>🎯 테스트 계정 목록</h2>
+        
+        <div class="test-section">
+            <h3>1️⃣ 마스터 관리자</h3>
+            <div class="test-info">
+                <strong>이메일:</strong> kckc93@creatorscontrol.com
+            </div>
+            <div class="test-info">
+                <strong>비밀번호:</strong> Ckdgml9788@
+            </div>
+            <div class="test-info">
+                <strong>설명:</strong> 모든 페이지 접근 가능한 슈퍼 관리자
+            </div>
+            <button onclick="testLogin('kckc93@creatorscontrol.com', 'Ckdgml9788@', 'master')">
+                로그인 테스트
+            </button>
+            <div id="result-master" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2️⃣ 슈퍼 관리자</h3>
+            <div class="test-info">
+                <strong>이메일:</strong> admin@test.com
+            </div>
+            <div class="test-info">
+                <strong>비밀번호:</strong> password123
+            </div>
+            <button onclick="testLogin('admin@test.com', 'password123', 'admin')">
+                로그인 테스트
+            </button>
+            <div id="result-admin" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3️⃣ 기업 관리자</h3>
+            <div class="test-info">
+                <strong>이메일:</strong> manager@test.com
+            </div>
+            <div class="test-info">
+                <strong>비밀번호:</strong> password123
+            </div>
+            <button onclick="testLogin('manager@test.com', 'password123', 'manager')">
+                로그인 테스트
+            </button>
+            <div id="result-manager" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4️⃣ 개인 크리에이터</h3>
+            <div class="test-info">
+                <strong>이메일:</strong> creator@test.com
+            </div>
+            <div class="test-info">
+                <strong>비밀번호:</strong> password123
+            </div>
+            <button onclick="testLogin('creator@test.com', 'password123', 'creator')">
+                로그인 테스트
+            </button>
+            <div id="result-creator" class="result"></div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <button onclick="testAllAccounts()" style="background: #2196F3; font-size: 18px; padding: 15px 40px;">
+                🚀 전체 계정 테스트 실행
+            </button>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>로그인 테스트 진행 중...</p>
+        </div>
+
+        <div id="all-results" style="margin-top: 30px;"></div>
+    </div>
+
+    <script>
+        // 로그인 API 엔드포인트 (프로덕션)
+        const PRODUCTION_URL = 'https://marketing-analystics-573434207823.europe-west1.run.app';
+        const LOCAL_URL = 'http://127.0.0.1:8000';
+        
+        // 사용할 URL (프로덕션 또는 로컬)
+        let API_BASE_URL = PRODUCTION_URL;
+
+        async function testLogin(email, password, resultId) {
+            const resultDiv = document.getElementById(`result-${resultId}`);
+            resultDiv.className = 'result info';
+            resultDiv.innerHTML = '⏳ 로그인 테스트 진행 중...';
+
+            try {
+                // 로그인 시도
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h4>✅ 로그인 성공!</h4>
+                        <p><strong>이메일:</strong> ${email}</p>
+                        <p><strong>사용자명:</strong> ${data.name || 'N/A'}</p>
+                        <p><strong>역할:</strong> ${data.role || 'N/A'}</p>
+                        <p><strong>액세스 토큰:</strong> ${data.access_token ? '✓ 발급됨' : '✗ 없음'}</p>
+                        <p><strong>토큰 타입:</strong> ${data.token_type || 'bearer'}</p>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `
+                        <h4>❌ 로그인 실패</h4>
+                        <p><strong>이메일:</strong> ${email}</p>
+                        <p><strong>오류:</strong> ${data.detail || '이메일 또는 비밀번호가 일치하지 않습니다.'}</p>
+                        <p><strong>상태 코드:</strong> ${response.status}</p>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <h4>❌ 연결 오류</h4>
+                    <p><strong>이메일:</strong> ${email}</p>
+                    <p><strong>오류:</strong> ${error.message}</p>
+                    <p><strong>힌트:</strong> 서버가 실행 중인지 확인해주세요.</p>
+                `;
+            }
+        }
+
+        async function testAllAccounts() {
+            const loadingDiv = document.getElementById('loading');
+            const allResultsDiv = document.getElementById('all-results');
+            
+            loadingDiv.style.display = 'block';
+            allResultsDiv.innerHTML = '';
+
+            const accounts = [
+                { email: 'kckc93@creatorscontrol.com', password: 'Ckdgml9788@', name: '마스터 관리자' },
+                { email: 'admin@test.com', password: 'password123', name: '슈퍼 관리자' },
+                { email: 'manager@test.com', password: 'password123', name: '기업 관리자' },
+                { email: 'creator@test.com', password: 'password123', name: '개인 크리에이터' }
+            ];
+
+            const results = [];
+
+            for (const account of accounts) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `username=${encodeURIComponent(account.email)}&password=${encodeURIComponent(account.password)}`
+                    });
+
+                    const data = await response.json();
+                    
+                    results.push({
+                        name: account.name,
+                        email: account.email,
+                        success: response.ok,
+                        data: data
+                    });
+                } catch (error) {
+                    results.push({
+                        name: account.name,
+                        email: account.email,
+                        success: false,
+                        error: error.message
+                    });
+                }
+            }
+
+            loadingDiv.style.display = 'none';
+
+            // 결과 표시
+            const successCount = results.filter(r => r.success).length;
+            const totalCount = results.length;
+
+            let html = `
+                <h2>📊 전체 테스트 결과</h2>
+                <div class="result ${successCount === totalCount ? 'success' : (successCount > 0 ? 'info' : 'error')}">
+                    <h3>총 ${totalCount}개 계정 테스트 완료</h3>
+                    <p>✅ 성공: ${successCount}개</p>
+                    <p>❌ 실패: ${totalCount - successCount}개</p>
+                </div>
+            `;
+
+            results.forEach(result => {
+                const status = result.success ? 'passed' : 'failed';
+                const icon = result.success ? '✅' : '❌';
+                
+                html += `
+                    <div class="test-result-item ${status}">
+                        <h4>${icon} ${result.name}</h4>
+                        <p><strong>이메일:</strong> ${result.email}</p>
+                        ${result.success ? `
+                            <p><strong>사용자명:</strong> ${result.data.name || 'N/A'}</p>
+                            <p><strong>역할:</strong> ${result.data.role || 'N/A'}</p>
+                            <p><strong>토큰:</strong> ✓ 발급됨</p>
+                        ` : `
+                            <p><strong>오류:</strong> ${result.error || result.data?.detail || '로그인 실패'}</p>
+                        `}
+                    </div>
+                `;
+            });
+
+            allResultsDiv.innerHTML = html;
+        }
+
+        // 페이지 로드 시 서버 연결 확인
+        window.addEventListener('load', async () => {
+            console.log('🚀 Creator Control Center 로그인 테스트 도구');
+            console.log(`📡 API URL: ${API_BASE_URL}`);
+            
+            // 서버 연결 확인
+            try {
+                const response = await fetch(`${API_BASE_URL}/`);
+                console.log('✅ 서버 연결 성공');
+            } catch (error) {
+                console.error('❌ 서버 연결 실패:', error);
+                alert('⚠️ 서버에 연결할 수 없습니다. 서버가 실행 중인지 확인해주세요.');
+            }
+        });
+    </script>
+</body>
+</html>

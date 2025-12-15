@@ -1,0 +1,75 @@
+<svg width="900" height="520" viewBox="0 0 900 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="520" rx="32" fill="#0F172A"/>
+  <rect x="28" y="28" width="844" height="464" rx="24" fill="url(#paint0_linear)"/>
+  <g filter="url(#filter0_d)">
+    <rect x="64" y="72" width="772" height="164" rx="24" fill="#111C32"/>
+    <text x="94" y="124" fill="#E0F2FE" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="22" font-weight="600">에이전시 운영 현황</text>
+    <text x="94" y="170" fill="#94A3B8" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="16">브랜드 승인 라운드 · 스폰서 매출 · 캠페인 리드타임</text>
+    <rect x="570" y="108" width="230" height="60" rx="16" fill="#1D4ED8"/>
+    <text x="594" y="146" fill="#DBEAFE" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="20" font-weight="600">승인 대기 6건</text>
+  </g>
+  <g filter="url(#filter1_d)">
+    <rect x="64" y="258" width="230" height="182" rx="20" fill="#12213B"/>
+    <text x="94" y="308" fill="#F8FAFC" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="20" font-weight="600">주간 리포트 시간</text>
+    <text x="94" y="356" fill="#38BDF8" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="52" font-weight="700">-58%</text>
+    <text x="94" y="390" fill="#CBD5F5" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="16">26분 → 11분</text>
+  </g>
+  <g filter="url(#filter2_d)">
+    <rect x="320" y="258" width="230" height="182" rx="20" fill="#12213B"/>
+    <text x="350" y="308" fill="#F8FAFC" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="20" font-weight="600">관리 크리에이터</text>
+    <text x="350" y="356" fill="#FBBF24" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="52" font-weight="700">34명</text>
+    <text x="350" y="390" fill="#CBD5F5" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="16">8명 매니저가 공유</text>
+  </g>
+  <g filter="url(#filter3_d)">
+    <rect x="576" y="258" width="260" height="182" rx="20" fill="#12213B"/>
+    <text x="606" y="308" fill="#F8FAFC" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="20" font-weight="600">브랜드 승인 리드타임</text>
+    <text x="606" y="356" fill="#34D399" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="52" font-weight="700">48시간</text>
+    <text x="606" y="390" fill="#CBD5F5" font-family="'Poppins', 'Noto Sans KR', sans-serif" font-size="16">왕복 이메일 3회 제거</text>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear" x1="28" y1="28" x2="872" y2="492" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101A32"/>
+      <stop offset="1" stop-color="#1E2963"/>
+    </linearGradient>
+    <filter id="filter0_d" x="48" y="58" width="804" height="196" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="6"/>
+      <feGaussianBlur stdDeviation="8"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.121569 0 0 0 0 0.231373 0 0 0 0.32 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+    <filter id="filter1_d" x="48" y="244" width="262" height="214" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="6"/>
+      <feGaussianBlur stdDeviation="8"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.121569 0 0 0 0 0.231373 0 0 0 0.32 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+    <filter id="filter2_d" x="304" y="244" width="262" height="214" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="6"/>
+      <feGaussianBlur stdDeviation="8"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.121569 0 0 0 0 0.231373 0 0 0 0.32 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+    <filter id="filter3_d" x="560" y="244" width="292" height="214" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="6"/>
+      <feGaussianBlur stdDeviation="8"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.121569 0 0 0 0 0.231373 0 0 0 0.32 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
+</svg>

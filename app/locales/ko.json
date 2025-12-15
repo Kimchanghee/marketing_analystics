@@ -1,0 +1,1404 @@
+{
+  "app": {
+    "title": "크리에이터 컨트롤 센터"
+  },
+  "nav": {
+    "home": "홈",
+    "services": "서비스 소개",
+    "personal": "개인",
+    "business": "기업",
+    "support": "지원",
+    "dashboard": "대시보드",
+    "channels": "채널",
+    "profile": "프로필",
+    "language": "언어 선택"
+  },
+  "theme": {
+    "toggle_label": "테마 전환",
+    "light_label": "라이트 모드",
+    "dark_label": "다크 모드"
+  },
+  "footer": {
+    "tagline": "성장을 설계하고 실행하는 모든 크리에이터 팀을 위한 마케팅 운영 허브",
+    "product": "제품",
+    "solutions": "솔루션",
+    "support": "지원",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. 모든 권리를 보유합니다."
+  },
+  "roles": {
+    "creator": "크리에이터",
+    "manager": "크리에이터 관리자",
+    "admin": "관리자",
+    "super_admin": "제작자"
+  },
+  "landing": {
+    "headline": "언제까지 모든 채널을 일일이 클릭하실 건가요?",
+    "subheadline": "크리에이터 전용 관리 채널에서 YouTube, Instagram, TikTok, Meta 지표와 수강생 현황을 한 번에 정리하고 수작업 보고 시간을 몇 시간에서 몇 분으로 줄이세요.",
+    "hero_highlights": [
+      "부업 · 기업 · 유튜브 강사까지 한 채널에서 통합 관리",
+      "하루 종일 걸리던 수작업 보고를 5분 만에 자동 정리",
+      "크리에이터 니즈와 성과를 실시간 분석해 즉시 대응"
+    ],
+    "cta_creator": "무료로 시작하기",
+    "cta_manager": "기업 상담 예약",
+    "auth_section": {
+      "login_title": "바로 로그인",
+      "login_description": "이메일과 비밀번호만 입력하면 5분 안에 주요 보드를 확인할 수 있습니다.",
+      "advanced_login": "지원 센터에서 도움받기",
+      "signup_title": "새 계정 만들기",
+      "signup_description": "매니저도 5분 만에 계정을 만들고 채널을 연결할 수 있어요.",
+      "advanced_signup": "요금제 및 기능 살펴보기"
+    },
+    "preview_title": "5분 만에 끝내는 채널 진단",
+    "mock_metric": "현재 5분 자동 리포트",
+    "platforms": {
+      "instagram": "인스타그램",
+      "threads": "쓰레드",
+      "youtube": "유튜브",
+      "facebook": "페이스북",
+      "tiktok": "틱톡",
+      "meta_ads": "메타 광고",
+      "shorts": "유튜브 쇼츠"
+    },
+    "metrics": [
+      {
+        "label": "지원 플랫폼",
+        "value": "5개",
+        "description": "YouTube, Instagram, TikTok, Facebook, Threads 계정 분석을 제공합니다."
+      },
+      {
+        "label": "추적 지표",
+        "value": "팔로워·게시물·댓글",
+        "description": "게시물 반응, 좋아요/싫어요, 댓글 흐름까지 한 화면에 정리합니다."
+      },
+      {
+        "label": "광고 인사이트",
+        "value": "AI 추천",
+        "description": "메타 광고 API 데이터를 기반으로 확장·중단해야 할 캠페인을 제안합니다."
+      }
+    ],
+    "feature_section": {
+      "title": "모든 채널과 광고를 잇는 핵심 기능",
+      "description": "5분 안에 로그인부터 리포트 공유까지 끝낼 수 있도록 핵심 기능을 한곳에 모았습니다.",
+      "items": [
+        {
+          "tag": "INSIGHTS",
+          "title": "채널별 세부 지표",
+          "description": "팔로워 변화, 게시물별 좋아요/싫어요, 댓글 반응, 시간대별 조회수를 비교합니다."
+        },
+        {
+          "tag": "ADS",
+          "title": "메타 광고 관리",
+          "description": "메타 광고 API를 통해 캠페인 현황을 불러오고 AI가 다음 액션을 권장합니다."
+        },
+        {
+          "tag": "ACCESS",
+          "title": "개인 계정 승인 흐름",
+          "description": "개인 사용자가 기업 팀에 통계를 공유하도록 승인 요청을 보낼 수 있습니다."
+        },
+        {
+          "tag": "REPORTS",
+          "title": "공유 가능한 보고서",
+          "description": "개인·기업 모두 공통 대시보드를 링크와 파일로 안전하게 전달합니다."
+        }
+      ]
+    },
+    "creator_section": {
+      "title": "개인 크리에이터 대시보드",
+      "description": "YouTube와 Instagram은 무료로, 유료 플랜에서는 TikTok·Facebook·Threads까지 통합 분석할 수 있습니다.",
+      "highlights": [
+        "채널별 팔로워와 게시물 성과 비교",
+        "댓글 반응과 시간대별 조회수 추세 확인",
+        "AI가 메타 광고 확장/축소 전략 제안"
+      ],
+      "cta": "개인 알아보기"
+    },
+    "manager_section": {
+      "title": "기업/에이전시 관리 기능",
+      "description": "고객이 개인 계정으로 가입해 승인 요청을 보내면 관리자 대시보드에서 전체 현황을 확인할 수 있습니다.",
+      "highlights": [
+        "승인된 고객 계정의 지표 열람",
+        "관리 중인 크리에이터 현황을 한눈에 파악",
+        "AI가 광고와 활동 리포트를 제안"
+      ],
+      "cta": "기업 알아보기"
+    },
+    "journey": {
+      "title": "5분 안에 끝내는 온보딩, 10분 안에 모든 팀이 공유",
+      "description": "로그인하자마자 어떤 순서로 채널을 연결하고 승인해야 하는지, 그리고 누구에게 무엇을 공유해야 하는지까지 분 단위로 안내합니다. 온보딩이 끝나면 콘텐츠 팀, 광고 팀, 협업 팀이 각각 어떤 보고서와 알림을 받아야 하는지까지 자동으로 정리해 드립니다.",
+      "steps": [
+        {
+          "label": "Minute 1",
+          "title": "로그인 즉시 기본 설정",
+          "description": "로그인 후 1분 안에 주요 채널을 연결합니다."
+        },
+        {
+          "label": "Minute 3",
+          "title": "데이터 불러오기 완료",
+          "description": "나머지 채널을 추가하고 대시보드 위젯을 3분 안에 구성합니다."
+        },
+        {
+          "label": "Minute 5",
+          "title": "맞춤 보고서 공유",
+          "description": "AI 추천과 알림 템플릿을 켜고 5분 안에 보고서를 공유합니다."
+        }
+      ]
+    },
+    "testimonials_label": "고객 후기 슬라이드",
+    "testimonials_prev": "이전 후기 보기",
+    "testimonials_next": "다음 후기 보기",
+    "testimonials": [
+      {
+        "quote": "플랫폼별 반응을 비교한 덕분에 게시 시간을 조정할 수 있었습니다. 특히 요일별 추천과 해시태그 제안으로 신제품 공개 직후 반응률이 35% 상승했습니다.",
+        "name": "박현우",
+        "title": "콘텐츠 마케터"
+      },
+      {
+        "quote": "고객이 승인 요청을 보내면 바로 데이터를 확인해 대응이 빨라집니다. 필요한 자료가 자동으로 정리돼 브랜드의 세부 니즈까지 맞춤 제안할 수 있게 되었어요.",
+        "name": "김지은",
+        "title": "크리에이터 매니지먼트 리드"
+      },
+      {
+        "quote": "메타 광고 추천으로 효율이 떨어지는 캠페인을 빠르게 조정했습니다. 이후 리마케팅과 협업 제안을 동시에 테스트해 전환당 비용을 절반으로 줄였어요.",
+        "name": "이소라",
+        "title": "라이프스타일 크리에이터"
+      },
+      {
+        "quote": "슬라이드형 리포트 덕분에 여러 크리에이터의 성과를 비교해 고객사가 원하는 조건을 정확히 파악합니다. 필요한 지표만 골라 공유할 수 있어 제안서 준비 시간이 크게 줄었어요.",
+        "name": "정하늘",
+        "title": "브랜드 콜라보 매니저"
+      },
+      {
+        "quote": "팀 공용 보드에서 니즈가 높은 콘텐츠 유형과 추천 액션을 모아볼 수 있습니다. 초보 크리에이터도 매주 해야 할 일을 이해해 온보딩 기간이 절반으로 단축됐습니다.",
+        "name": "최서윤",
+        "title": "엔터테인먼트 MCN PM"
+      },
+      {
+        "quote": "다국어 페이지에서 슬라이드로 정리된 후기와 니즈를 보면서 현지 팀과 빠르게 조율합니다. 데이터와 추천 메시지가 연결돼 본사 보고 자료를 손쉽게 맞춤화할 수 있었습니다.",
+        "name": "알렉스 리",
+        "title": "글로벌 캠페인 디렉터"
+      },
+      {
+        "quote": "캠페인별 요구사항과 사용 후기 데이터를 묶어서 확인하니 인사이트가 훨씬 선명해졌습니다. 고객 문의가 들어오면 어떤 지표를 보여줘야 할지 자동으로 제안돼 실수가 줄었어요.",
+        "name": "한미래",
+        "title": "데이터 분석가"
+      },
+      {
+        "quote": "슬라이드형 대시보드에서 필요한 니즈와 추천을 바로 체크하고 팀원에게 태그합니다. 광고·콘텐츠·라이브 커머스까지 흐름이 연결돼 주간 회의 준비 시간이 40% 절감됐습니다.",
+        "name": "윤도현",
+        "title": "D2C 마케팅 총괄"
+      },
+      {
+        "quote": "피드백 슬라이드를 고객에게 보여주면 어떤 지원을 원하는지 자연스럽게 대화가 이어집니다. 후기와 니즈를 한곳에서 정리하니 고객 만족도 설문 응답률도 함께 올라갔어요.",
+        "name": "안리나",
+        "title": "커뮤니티 매니저"
+      }
+    ],
+    "cta": {
+      "title": "지금 바로 대시보드를 체험해 보세요",
+      "description": "무료 개인 플랜을 바로 사용하거나 5분 만에 비즈니스 워크스페이스를 시작하세요.",
+      "primary": "개인 무료 시작",
+      "secondary": "기업 상담 요청"
+    }
+  },
+  "auth": {
+    "login_title": "로그인",
+    "email_login_title": "이메일 로그인",
+    "social_login_title": "소셜 계정으로 로그인",
+    "social_login_button": "선택한 계정으로 계속",
+    "social_hint": "계정을 연동할 때 받은 Google 또는 Apple ID를 입력하세요.",
+    "recover_hint": "계정 정보를 잊으셨나요?",
+    "recover_link": "계정 복구",
+    "or_divider": "또는",
+    "signup_title": "회원가입",
+    "email_signup_title": "이메일 회원가입",
+    "social_signup_title": "소셜 회원가입",
+    "social_signup_quick": "빠른 회원가입",
+    "social_signup_description": "아래 버튼을 눌러 Google 또는 Apple 계정으로 회원가입을 시작하세요. 연동이 완료되면 전달받은 이름과 이메일을 확인하고 부족한 정보를 입력하면 됩니다.",
+    "social_signup_button": "소셜 회원가입 완료",
+    "social_signup_hint": "핵심 정보를 함께 입력해 분석과 관리를 한 번에 제공합니다.",
+    "social_complete_title": "{provider} 계정으로 전달된 정보를 확인하세요",
+    "social_complete_description": "인증 코드와 필수 정보를 입력해 계정을 마무리하세요. 선택한 소셜 계정으로 로그인하면 동일한 정보가 자동으로 연결됩니다.",
+    "social_manual_summary": "수동으로 계정을 연결해야 하나요?",
+    "social_manual_help": "테스트 또는 관리자용 시나리오에서는 아래 양식을 사용해 제공사 계정 ID를 직접 입력할 수 있습니다.",
+    "email": "이메일",
+    "password": "비밀번호",
+    "password_optional": "비밀번호 (선택)",
+    "new_password": "새 비밀번호",
+    "role": "역할",
+    "organization": "소속/팀",
+    "language": "언어",
+    "name": "이름",
+    "provider": "제공사",
+    "provider_account": "제공사 계정 ID",
+    "verification_code": "인증 코드",
+    "send_verification": "인증 코드 보내기",
+    "verification_hint": "6자리 코드가 이메일로 전송됩니다. 만료되기 전에 입력하세요.",
+    "verification_request_title": "인증 코드 요청",
+    "consent_title": "필수 개인정보 동의",
+    "consent_description": "서비스 제공을 위해 수집·이용되는 개인정보 항목, 보관 기간, 필수 안내 수신에 대한 내용을 자세히 확인해주세요. 본 동의는 계정 생성과 안정적인 운영에 반드시 필요하며 관련 법령과 약관에 근거합니다.",
+    "consent_privacy_detail": "수집 항목: 이름, 이메일, 조직 및 역할 정보, 서비스 사용 로그. 이용 목적: 계정 생성·보안 모니터링·고객 지원. 보관 기간: 회원 탈퇴 후 30일 또는 관계 법령에 따라 필요한 기간까지 안전하게 보관합니다.",
+    "consent_terms_detail": "서비스 운영상 필수 공지, 온보딩 가이드, 보안 경보, 정책 변경 알림을 이메일 또는 인앱 알림으로 제공합니다. 중요한 변경 사항은 수신 거부 여부와 관계없이 전달될 수 있습니다.",
+    "consent_marketing_detail": "선택 동의 시 뉴스레터, 기능 업데이트, 이벤트 초대 등 마케팅 정보를 이메일로 발송합니다. 마케팅 수신 여부는 로그인 후 프로필 > 알림 설정에서 언제든지 변경할 수 있습니다.",
+    "consent_privacy": "개인정보 처리방침에 동의합니다.",
+    "consent_terms": "서비스 안내 및 온보딩 메시지 수신에 동의합니다.",
+    "login_button": "로그인",
+    "signup_button": "가입하기",
+    "signup_hint": "계정이 없으신가요?",
+    "signup_link": "회원가입",
+    "cancel": "취소",
+    "social_id_placeholder": "소셜 계정 ID 입력",
+    "invalid_credentials": "이메일 또는 비밀번호가 일치하지 않습니다.",
+    "account_inactive": "비활성화된 계정입니다. 관리자에게 문의하세요.",
+    "email_exists": "이미 등록된 이메일입니다.",
+    "email_not_verified": "로그인 전에 이메일로 전송된 인증 코드를 확인해주세요.",
+    "password_login_disabled": "이메일 로그인을 사용하려면 프로필에서 비밀번호를 설정하세요.",
+    "name_required": "이름을 입력한 후 진행해주세요.",
+    "consent_required": "필수 동의 항목을 체크한 후 진행해주세요.",
+    "invalid_verification_code": "인증 코드가 올바르지 않거나 만료되었습니다.",
+    "social_account_in_use": "이미 다른 사용자와 연결된 소셜 계정입니다.",
+    "social_account_not_found": "연결된 소셜 계정을 찾을 수 없습니다.",
+    "verification_sent": "인증 코드를 이메일로 전송했습니다.",
+    "signup_success": "계정이 준비되었습니다. 로그인 후 이용하세요.",
+    "social_signup": "소셜 회원가입이 완료되었습니다. 이제 로그인할 수 있습니다.",
+    "social_signup_linked": "소셜 계정을 프로필과 연결했습니다.",
+    "password_token_sent": "비밀번호 재설정 안내를 이메일로 보냈습니다.",
+    "password_reset": "비밀번호가 변경되었습니다. 이제 로그인할 수 있습니다.",
+    "username_sent": "로그인에 사용하는 이메일을 해당 주소로 전송했습니다.",
+    "account_not_found": "해당 이메일 계정을 찾을 수 없습니다.",
+    "invalid_token": "재설정 토큰이 올바르지 않거나 만료되었습니다.",
+    "social_linked": "소셜 계정을 성공적으로 연결했습니다.",
+    "password_updated": "비밀번호를 업데이트했습니다.",
+    "providers": {
+      "google": "Google",
+      "apple": "Apple",
+      "email": "이메일/비밀번호"
+    },
+    "social_buttons": {
+      "google": "Google 계정으로 계속",
+      "apple": "Apple ID로 계속"
+    },
+    "social_accounts_title": "연결된 소셜 계정",
+    "no_social_accounts": "아직 연결된 소셜 계정이 없습니다.",
+    "link_provider": "계정 연결",
+    "password_management_title": "비밀번호 관리",
+    "password_management_hint": "소셜 로그인 외에 이메일 로그인도 사용하려면 비밀번호를 설정하세요.",
+    "profile_verification_hint": "코드는 15분 동안만 유효합니다.",
+    "update_password_button": "비밀번호 업데이트",
+    "verified": "인증 완료",
+    "not_verified": "미인증",
+    "recovery_title": "계정 복구",
+    "username_recovery_title": "로그인 이메일 받기",
+    "username_recovery_hint": "등록된 메일로 로그인 이메일을 보내드립니다.",
+    "username_recovery_button": "이메일 전송",
+    "password_request_title": "비밀번호 재설정 요청",
+    "password_request_hint": "새 비밀번호를 만들 수 있도록 보안 토큰을 이메일로 전송합니다.",
+    "password_request_button": "재설정 메일 보내기",
+    "password_reset_title": "비밀번호 재설정 완료",
+    "password_reset_hint": "이메일로 받은 토큰을 입력하고 새 비밀번호를 설정하세요.",
+    "password_reset_button": "비밀번호 재설정",
+    "reset_token": "재설정 토큰",
+    "social_link_title": "소셜 계정 안내",
+    "social_link_hint": "로그인 페이지에서 Google 또는 Apple로 로그인한 뒤 이곳에서 계정을 연결하세요.",
+    "social_link_profile_hint": "연결 후에는 비밀번호를 설정해 통합 로그인할 수 있습니다.",
+    "social_auth_failed": "소셜 로그인 중 오류가 발생했습니다. 다시 시도해주세요.",
+    "invalid_state": "인증 세션이 만료되었거나 요청 정보가 유효하지 않습니다. 다시 진행해주세요.",
+    "profile_missing": "제공자로부터 사용자 정보를 받지 못했습니다. 잠시 후 다시 시도해주세요.",
+    "email_required": "소셜 로그인 제공자가 이메일 주소를 전달하지 않아 계정을 만들 수 없습니다."
+  },
+  "dashboard": {
+    "welcome": "환영합니다",
+    "current_plan": "현재 이용권",
+    "upgrade_prompt": "이용권 변경",
+    "update_plan": "변경",
+    "your_channels": "내 채널",
+    "add_channel": "채널 추가",
+    "remove": "삭제",
+    "account_label": "계정",
+    "followers": "구독자",
+    "growth": "성장률",
+    "engagement": "참여율",
+    "last_post": "최근 게시",
+    "recent_posts": "최근 게시물",
+    "manager_hint": "승인된 크리에이터 목록",
+    "creator_hint": "내 크리에이터 관리자",
+    "collaboration": "협업 현황",
+    "account_placeholder": "채널 아이디 또는 URL",
+    "data_source": "데이터 출처",
+    "source_api": "실시간 API",
+    "source_mock": "샘플 데이터",
+    "credentials_heading": "연결 자격 증명",
+    "credentials_status": "상태",
+    "credentials_present": "자격 증명 저장됨",
+    "credentials_missing": "연결 필요",
+    "auth_type_label": "인증 방식",
+    "auth_type_labels": {
+      "api_token": "API 토큰",
+      "user_password": "아이디·비밀번호",
+      "oauth2": "OAuth 2.0"
+    },
+    "identifier_label": "식별자 / 프로필 ID",
+    "access_token_label": "Access Token",
+    "secret_label": "클라이언트 시크릿 / 비밀번호",
+    "refresh_token_label": "Refresh Token",
+    "expires_at_label": "만료 시각",
+    "metadata_label": "추가 메타데이터 (JSON)",
+    "save_credentials": "자격 증명 저장",
+    "credential_hint": "이미 저장된 값입니다. 유지하려면 비워두세요.",
+    "placeholder_identifier": "예: @creator 또는 123456",
+    "placeholder_secret": "클라이언트 시크릿 또는 비밀번호",
+    "placeholder_token": "새 토큰을 붙여넣으세요",
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}",
+    "hourly_views_title": "시간대별 조회수 추이",
+    "export_csv": "CSV로 내보내기",
+    "export_json": "JSON으로 내보내기",
+    "ai_recommendations_title": "AI 추천 전략",
+    "manager_request_success": "????? ?? ??? ??????. ?? ?? ? ??? ????.",
+    "manager_request_label": "??? ??? ??? ???",
+    "manager_request_button": "?? ?? ???",
+    "manager_empty": "?? ??? ?????? ????.",
+    "manager_empty_for_creator": "??? ???? ????. ??? ??????.",
+    "link_status": {
+      "approved": "?? ??",
+      "pending": "?? ??"
+    },
+    "manager_request_errors": {
+      "manager_not_found": "?? ???? ???? ?? ? ????.",
+      "already_linked": "?? ??? ??????.",
+      "pending": "?? ?? ?? ?? ??? ????.",
+      "self_request_not_allowed": "?? ???? ?? ??? ?? ? ????.",
+      "unknown": "?? ??? ???? ? ??? ??????. ?? ??????."
+    }
+  },
+  "channels": {
+    "instagram": "인스타그램",
+    "threads": "쓰레드",
+    "youtube": "유튜브",
+    "twitter": "트위터/X",
+    "tiktok": "틱톡",
+  "facebook": "페이스북",
+  "meta_ads": "메타 광고"
+  },
+  "channels_manage": {
+    "title": "채널 관리 센터",
+    "subtitle": "팔로워 수, 참여도, 게시 습관을 중·고등학생도 이해할 수 있는 문장으로 확인하세요.",
+    "usage": {
+      "plan_label": "{plan} 요금제",
+      "summary": "현재 {max}개 중 {current}개의 채널을 사용 중입니다.",
+      "limit_reached": "이 요금제에서 연결할 수 있는 채널 수를 모두 사용했습니다.",
+      "upgrade": "요금제 업그레이드"
+    },
+    "alerts": {
+      "connected": "채널 연결이 완료되었습니다.",
+      "disconnected": "채널 연결을 해제했습니다."
+    },
+    "connected": {
+      "title": "연결된 채널 ({count})",
+      "status": {
+        "connected": "실시간 연결",
+        "needs_refresh": "로그인 새로고침",
+        "disconnected": "미연결"
+      },
+      "source": {
+        "api": "실시간 API 데이터",
+        "mock": "샘플 데이터입니다. 실제 계정을 연결하면 자동으로 바뀝니다.",
+        "error": "플랫폼 응답이 없어 저장된 데이터를 대신 보여 줍니다."
+      },
+      "metrics": {
+        "followers": {
+          "label": "팔로워",
+          "explain": "이 계정을 팔로우한 사람 수입니다."
+        },
+        "engagement": {
+          "label": "참여율",
+          "explain": "가장 최근 게시물에 반응한 팔로워 비율입니다."
+        },
+        "growth": {
+          "label": "성장률",
+          "explain": "지난주와 비교한 팔로워 증감률입니다."
+        },
+        "last_post": {
+          "label": "최근 게시물",
+          "explain": "마지막으로 올린 콘텐츠입니다.",
+          "no_data": "아직 게시물이 없습니다."
+        }
+      },
+      "recent_posts": {
+        "title": "최근 게시물",
+        "impressions": "조회수",
+        "likes": "좋아요",
+        "comments": "댓글",
+        "empty": "최근 게시물이 아직 없습니다."
+      },
+      "hourly_views": {
+        "title": "하루 시간대별 시청 패턴",
+        "peak": "가장 활발한 시간: {hour}시, 약 {views}회 시청.",
+        "off_peak": "가장 조용한 시간: {hour}시.",
+        "no_data": "시청 데이터가 더 모이면 그래프를 보여 드립니다."
+      },
+      "actions": {
+        "open_dashboard": "분석 페이지 열기",
+        "refresh": "토큰 새로고침",
+        "disconnect": "연결 해제",
+        "confirm_disconnect": "{account} 채널 연결을 해제할까요? 다시 데이터를 보려면 다시 로그인해야 합니다."
+      },
+      "empty": {
+        "title": "아직 연결된 채널이 없어요",
+        "body": "SNS 채널을 연결하면 팔로워, 반응, 시청 패턴을 한눈에 볼 수 있습니다."
+      }
+    },
+    "platforms": {
+      "title": "새 채널 추가",
+      "description": "플랫폼을 선택하고 짧은 체크리스트를 따라오세요. 어려운 용어는 쓰지 않았습니다.",
+      "feature_points": [
+        "팔로워·반응 그래프",
+        "최근 게시물 요약",
+        "AI 학습 팁",
+        "지표마다 쉬운 설명"
+      ],
+      "cta": "지금 연결",
+      "order": [
+        "instagram",
+        "facebook",
+        "threads",
+        "youtube",
+        "twitter",
+        "tiktok",
+        "meta_ads"
+      ],
+      "items": {
+        "instagram": {
+          "name": "인스타그램",
+          "badge": "IG",
+          "summary": "스토리, 릴스, 피드를 한 곳에서 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Facebook 페이지와 연결된 비즈니스 또는 크리에이터 계정을 사용하세요.",
+                "필요하면 선생님이나 관리자에게 Meta 개발자 계정 생성을 요청하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`instagram_basic` 권한으로 프로필 기본 정보를 불러옵니다.",
+                "`instagram_manage_insights` 권한으로 팔로워·게시물 통계를 확인합니다."
+              ]
+            }
+          ]
+        },
+        "facebook": {
+          "name": "페이스북",
+          "badge": "FB",
+          "summary": "페이지 팔로워와 반응, 게시 기록을 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "연결하려는 Facebook 페이지에서 관리자 권한을 갖고 있어야 합니다.",
+                "필요하면 Meta에서 요구하는 이중 인증 로그인을 미리 설정하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`pages_show_list` 권한으로 연결할 페이지를 선택합니다.",
+                "`read_insights` 권한으로 게시물 통계를 읽습니다."
+              ]
+            }
+          ]
+        },
+        "threads": {
+          "name": "스레드",
+          "badge": "TH",
+          "summary": "Threads의 짧은 글과 답글 활동을 살펴봅니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Threads 계정을 인스타그램 계정과 연결하세요.",
+                "Instagram과 같은 Meta 개발자 앱을 사용합니다."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`threads_basic` 권한으로 프로필 정보를 가져옵니다.",
+                "`threads_manage_insights` 권한으로 참여 지표를 확인합니다."
+              ]
+            }
+          ]
+        },
+        "youtube": {
+          "name": "유튜브",
+          "badge": "YT",
+          "summary": "구독자, 조회수, 인기 동영상을 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "채널을 소유한 Google 계정으로 로그인하세요.",
+                "Google Cloud 콘솔에서 YouTube Data API를 활성화하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`youtube.readonly` 권한으로 채널 정보를 읽습니다.",
+                "`yt-analytics.readonly` 권한으로 조회수와 시청 시간을 확인합니다."
+              ]
+            }
+          ]
+        },
+        "twitter": {
+          "name": "트위터 / X",
+          "badge": "X",
+          "summary": "트윗 도달, 팔로워 수, 멘션을 추적합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Twitter 개발자 프로젝트를 신청하세요.",
+                "대시보드에서 OAuth 2.0 키를 생성하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`tweet.read` 권한으로 트윗을 불러옵니다.",
+                "`users.read` 권한으로 프로필을 표시합니다.",
+                "`follows.read` 권한으로 팔로워 수를 확인합니다."
+              ]
+            }
+          ]
+        },
+        "tiktok": {
+          "name": "틱톡",
+          "badge": "TT",
+          "summary": "동영상 조회수, 좋아요, 댓글을 확인합니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "TikTok 비즈니스 계정을 사용하세요.",
+                "TikTok for Developers 포털에 앱을 등록하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`user.info.basic` 권한으로 프로필 정보를 확인합니다.",
+                "`video.list` 권한으로 업로드한 동영상을 불러옵니다."
+              ]
+            }
+          ]
+        },
+        "meta_ads": {
+          "name": "메타 광고",
+          "badge": "AD",
+          "summary": "광고 집행 비용, 클릭 수, 노출수를 살펴봅니다.",
+          "setup": [
+            {
+              "title": "준비하기",
+              "points": [
+                "Meta 광고 계정 ID(act_로 시작)를 확인하세요.",
+                "보고 권한이 있는 Ads Manager 접근 권한을 요청하세요."
+              ]
+            },
+            {
+              "title": "허용해야 하는 권한",
+              "points": [
+                "`ads_read` 권한으로 캠페인 성과를 불러옵니다."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "modal": {
+      "title": "{platform} 연결 체크리스트",
+      "close": "닫기"
+    }
+  },
+  "subscriptions": {
+    "free": "무료",
+    "pro": "프로",
+    "enterprise": "엔터프라이즈"
+  },
+  "service": {
+    "hero": {
+      "title": "소셜 분석과 광고를 한눈에 보는 워크스페이스",
+      "subtitle": "팔로워, 게시물, 반응 흐름과 메타 광고 가이드를 동시에 확인해 관리 중인 모든 크리에이터를 지원하세요.",
+      "primary_cta": "요금제 살펴보기",
+      "secondary_cta": "개인 기능 보기",
+      "visual_title": "인사이트 카드 예시",
+      "visual_points": [
+        {
+          "label": "팔로워 증감",
+          "value": "YouTube · Instagram"
+        },
+        {
+          "label": "반응 비율",
+          "value": "좋아요 vs. 싫어요"
+        },
+        {
+          "label": "시간대별 조회수",
+          "value": "피크 시간"
+        }
+      ]
+    },
+    "pillars_title": "핵심 기능",
+    "pillars_description": "정확한 채널 데이터와 강력한 AI 기반 분석, 협업형 고객 관리를 중심으로 구성했습니다.",
+    "pillars": [
+      {
+        "tagline": "AI PD",
+        "title": "AI Performance Director",
+        "description": "전담 마케팅 매니저처럼 모든 채널 데이터를 실시간 분석하고 다음 주 할 일을 직접 알려주는 AI 비서. 단순 리포트가 아닌 구체적인 실행 계획을 자동 제안합니다.",
+        "bullets": [
+          "콘텐츠 전략 제안 - 업로드 최적 시간, 해시태그, 주제 추천",
+          "광고 성과 분석 - 확대/중단/소재 교체 캠페인 즉시 감지",
+          "성장 기회 알림 - 급상승 키워드, 바이럴 예측, 트렌드 추적",
+          "주간 실행 계획 - 우선순위별 TODO 리스트와 예상 효과",
+          "감성 분석 - 팬 니즈와 부정 신호 자동 분류"
+        ]
+      },
+      {
+        "tagline": "Insights",
+        "title": "채널 인텔리전스",
+        "description": "YouTube, Instagram, TikTok, Facebook, Threads 5개 채널의 팔로워·게시물·반응·조회수를 실시간 추적하고 한 화면에서 비교합니다.",
+        "bullets": [
+          "5개 채널 통합 대시보드",
+          "시간대별 조회수 패턴 분석",
+          "상위 게시물 성과 추적",
+          "팔로워 증감 추세 모니터링"
+        ]
+      },
+      {
+        "tagline": "Access",
+        "title": "계정 관리",
+        "description": "개인은 직접 계정 연결, 비즈니스는 승인 큐에서 요청 처리. 안전한 OAuth 인증으로 비밀번호 공유 없이 데이터 연동.",
+        "bullets": [
+          "YouTube·Instagram 1계정 무료 연동",
+          "추가 채널 확장 경로",
+          "관리자 승인 대기열",
+          "OAuth 2.0 안전 인증"
+        ]
+      },
+      {
+        "tagline": "Ads",
+        "title": "메타 광고 최적화",
+        "description": "Meta Ads API 연동으로 캠페인 성과 실시간 추적. AI가 예산 배분부터 소재 교체까지 자동 추천. 광고 관리 시간 90% 절감.",
+        "bullets": [
+          "ROAS·CPC·전환율 실시간 모니터링",
+          "AI 예산 최적화 제안",
+          "소재 피로도 감지 및 교체 알림",
+          "예산 소진 경고"
+        ]
+      },
+      {
+        "tagline": "Support",
+        "title": "비즈니스 운영",
+        "description": "모든 크리에이터 현황을 한눈에 확인. AI가 고객 니즈 자동 분류 및 CS 답변 초안 생성.",
+        "bullets": [
+          "포트폴리오 대시보드",
+          "AI 고객 니즈 분류",
+          "AI CS 답변 초안 생성",
+          "이슈 조기 감지"
+        ]
+      }
+    ],
+    "outcomes": {
+      "title": "이렇게 활용하세요",
+      "description": "개인과 비즈니스 워크스페이스가 일상적인 의사결정을 어떻게 돕는지 실제 사용 장면을 중심으로 정리했습니다.",
+      "items": [
+        {
+          "label": "Creator",
+          "title": "채널 건강 상태를 즉시 확인",
+          "detail": "팔로워 증감, 반응 속도, 시간대별 조회수까지 한 화면에서 비교하고 콘텐츠 업로드 직후 변화 추이를 확인해 다음 영상 업로드 전략을 빠르게 조정합니다."
+        },
+        {
+          "label": "Manager",
+          "title": "승인 요청을 빠르게 처리",
+          "detail": "개인 가입 요청이 들어오면 대기열에서 채널 통계를 미리 확인한 뒤 승인 여부를 판단하고, 연결된 계정의 콘텐츠 성과와 협업 히스토리를 동시에 검토합니다."
+        },
+        {
+          "label": "Ads",
+          "title": "AI 제안을 근거로 실행",
+          "detail": "AI가 추천한 예산 증액, 소재 교체, 타깃 수정 항목을 근거 데이터와 함께 검토하고, 승인 버튼만 눌러도 자동으로 캠페인 설정이 업데이트되어 실행으로 이어집니다."
+        }
+      ]
+    },
+    "cta": {
+      "title": "지금 맞는 플랜을 선택하세요",
+      "description": "크리에이터는 무료로, 비즈니스는 7일 체험 후 원하는 월 구독으로 시작할 수 있습니다.",
+      "primary": "요금제 비교",
+      "secondary": "지원 센터"
+    }
+  },
+  "personal": {
+    "hero": {
+      "title": "5개 채널이 연결된 데모 개인 워크스페이스를 바로 확인하세요",
+      "subtitle": "샘플 개인 워크스페이스는 YouTube, Instagram, TikTok, Facebook, Threads 데이터를 이미 수집해 일정 점검, 반응 추세, 매출 준비 리포트가 어떻게 동작하는지 직접 확인할 수 있습니다.",
+      "primary_cta": "개인 무료 시작",
+      "secondary_cta": "개인 요금제 보기",
+      "visual_title": "샘플 크리에이터 스냅샷",
+      "visual_caption": "데모 데이터로 팔로워, 참여도, 시간대별 조회수가 업데이트되는 5개 채널",
+      "visual_alt": "5개 채널이 연결된 개인용 샘플 대시보드"
+    },
+    "benefits": {
+      "title": "개인 샘플 워크스페이스에서 확인할 수 있는 것들",
+      "description": "실제와 가까운 지표를 미리 채워 두어 크리에이터의 일상 업무가 어떤 흐름으로 정리되는지 한눈에 파악할 수 있습니다.",
+      "items": [
+        {
+          "tag": "CHANNELS",
+          "title": "5개 채널 동시 추적",
+          "description": "샘플 데이터셋으로 YouTube, Instagram, TikTok, Facebook, Threads를 동시에 비교하고 게시물별 추세까지 살펴볼 수 있습니다."
+        },
+        {
+          "tag": "ROUTINES",
+          "title": "주간 리포트 체크리스트",
+          "description": "팔로워 변화, 반응, 시청 시간 인사이트를 몇 분 만에 공유용 슬라이드로 정리하는 절차를 따라 해보세요."
+        },
+        {
+          "tag": "OFFERS",
+          "title": "스폰서 제안 준비",
+          "description": "시청자 세그먼트별로 저장된 제안, 업셀 아이디어, 추천 사례가 어떻게 연결되는지 미리 확인할 수 있습니다."
+        }
+      ]
+    },
+    "plans": {
+      "label": "개인 요금제",
+      "title": "필요한 범위에 맞춰 선택하세요",
+      "description": "샘플 워크스페이스는 Personal Plus로 구성되어 전체 자동화를 체험할 수 있습니다. 내 채널을 연결할 때 맞는 플랜을 선택하세요.",
+      "items": [
+        {
+          "name": "개인 무료",
+          "description": "두 개의 기본 채널 지표를 빠르게 확인",
+          "price": "KRW 0",
+          "cycle": "항상 무료",
+          "features": [
+            "YouTube 1개와 Instagram 1개 계정 연결",
+            "게시물, 댓글, 좋아요, 싫어요, 시간대별 조회수 자동 요약",
+            "주간 이메일 리포트 템플릿",
+            "샘플 개인 워크스페이스 구성과 동일하게 작동"
+          ],
+          "cta": "무료로 시작",
+          "cta_link": "/signup",
+          "highlighted": false
+        },
+        {
+          "name": "개인 플러스",
+          "description": "5개 채널과 AI 추천을 한 번에 운영",
+          "price": "KRW 29,900",
+          "cycle": "월 정기 결제",
+          "features": [
+            "YouTube·Instagram·TikTok·Facebook·Threads 분석",
+            "데모 워크스페이스가 사용하는 플랜으로 5개 채널 관리",
+            "AI 기반 Meta Ads 제안과 오디언스 기회 알림",
+            "CSV, PDF 내보내기와 우선 채팅 지원"
+          ],
+          "cta": "플러스로 업그레이드",
+          "cta_link": "/signup",
+          "highlighted": true,
+          "badge": "추천"
+        }
+      ],
+      "comparison": {
+        "title": "왜 플러스를 선택해야 할까요?",
+        "description": "무료 플랜도 강력하지만, 플러스에서는 AI가 직접 다음 주 할 일을 제안하고 5개 채널을 동시에 관리할 수 있습니다. 채널이 성장할수록 수작업 시간을 크게 절약할 수 있는 자동화 기능이 핵심입니다.",
+        "items": [
+          {
+            "label": "채널 범위",
+            "title": "2개 vs 5개 채널",
+            "detail": "무료는 YouTube·Instagram 각 1개, 플러스는 TikTok·Facebook·Threads까지 총 5개 채널을 통합 대시보드에서 실시간 비교. 멀티 플랫폼 전략이 필요한 중급 이상 크리에이터에게 필수입니다."
+          },
+          {
+            "label": "AI 기능",
+            "title": "AI Performance Director",
+            "detail": "플러스 전용 AI가 채널 데이터를 분석해 구체적인 TODO 제공. 예: '월요일 7시 TikTok 업로드', 'Instagram #뷰티루틴 추가', '광고 캠페인 A 예산 50% 축소'. 댓글 감성 분석, 급상승 키워드 추적, 바이럴 기회 포착까지 자동화."
+          },
+          {
+            "label": "광고 최적화",
+            "title": "메타 광고 자동 관리",
+            "detail": "Meta Ads API 연동으로 ROAS·CPC·전환율 실시간 추적. 성과 좋은 캠페인은 확대, 비효율 캠페인은 중단 제안. 소재 피로도 감지로 교체 시점 알림. 광고 관리 시간 90% 절감. 월 광고비 100만 원 이상이면 절약 효과로 구독료 회수 가능."
+          },
+          {
+            "label": "전문 도구",
+            "title": "CSV/PDF 내보내기, 우선 지원",
+            "detail": "모든 데이터를 CSV·PDF로 내보내 협찬 제안서, 미디어킷, 성과 보고서 즉시 제작. 우선 채팅 지원으로 평균 2시간 내 전문 팀 답변. 중요 캠페인 기간에도 안심 운영."
+          }
+        ]
+      }
+    },
+    "workflow": {
+      "title": "샘플 워크스페이스 분석 방법",
+      "description": "5개 채널 데이터셋을 활용해 지표, 자동화, 결과물이 얼마나 안정적으로 유지되는지 살펴보세요.",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "5개 채널 통합 화면 살펴보기",
+          "detail": "샘플 팔로워·참여·시청 시간 데이터가 대시보드에 어떻게 표시되고 이상 징후를 자동으로 강조하는지 확인하세요."
+        },
+        {
+          "label": "Step 2",
+          "title": "자동화 흐름 점검",
+          "detail": "준비된 주간 체크리스트를 따라가며 리포트, 내보내기, 오디언스 프롬프트가 샘플 지표에서 어떻게 생성되는지 검증하세요."
+        },
+        {
+          "label": "Step 3",
+          "title": "내 채널 운영에 적용",
+          "detail": "샘플 데이터의 주석과 비교 리포트를 참고해 실제 계정 연결 시 어떤 지표를 중점적으로 살필지 계획하세요."
+        }
+      ]
+    },
+    "cta": {
+      "title": "샘플 데이터로 개인 워크스페이스 체험",
+      "description": "데모 계정을 그대로 사용하거나 내 채널을 연결해도 언제든지 Plus로 업그레이드할 수 있습니다.",
+      "primary": "계정 만들기",
+      "secondary": "샘플 안내 보기"
+    },
+    "pricing_overview": {
+      "title": "개인 요금 안내",
+      "description": "샘플 워크스페이스는 Personal Plus 기준으로 구성되어 있습니다.",
+      "columns": [
+        "플랜",
+        "월간 요금",
+        "연간 요금",
+        "비고"
+      ],
+      "rows": [
+        {
+          "label": "개인 플러스",
+          "monthly": "KRW 29,900",
+          "annual": "KRW 329,000 (10% 할인)",
+          "note": "TikTok, Facebook, Threads, AI 광고 제안 포함"
+        },
+        {
+          "label": "개인 무료",
+          "monthly": "KRW 0",
+          "annual": "KRW 0",
+          "note": "YouTube·Instagram 분석은 계속 무료"
+        }
+      ],
+      "footnote": "가격은 부가세 포함이며, 샘플 계정은 Personal Plus 설정으로 제공됩니다."
+    },
+    "metrics": {
+      "title": "샘플 개인 계정에서 확인할 수 있는 KPI",
+      "description": "데모 계정 데이터가 바로 로드되어 자동화 수준을 직접 확인할 수 있습니다.",
+      "visual_alt": "개인용 샘플 대시보드 카드",
+      "source_label": "샘플",
+      "source_caption": "샘플 개인 워크스페이스 데이터셋",
+      "items": [
+        {
+          "label": "연결된 채널",
+          "value": "5",
+          "description": "샘플 데이터에 포함된 다섯 개 채널 데이터가 실시간으로 동기화됩니다."
+        },
+        {
+          "label": "절약된 수동 보고 시간",
+          "value": "주당 3시간",
+          "description": "주간 리포트 자동화로 스프레드시트 정리 시간을 절약합니다."
+        },
+        {
+          "label": "참여도 상승률",
+          "value": "+18%",
+          "description": "AI 할 일 목록을 적용한 샘플 TikTok 릴스가 기본 대비 18% 더 높은 반응을 기록했습니다."
+        }
+      ]
+    },
+    "personas": {
+      "title": "사용자 후기",
+      "description": "채널 운영 목표에 따라 필요한 기능을 예시로 소개합니다.",
+      "goal_label": "주요 목표",
+      "needs_label": "필요 기능",
+      "prev": "이전 페르소나 보기",
+      "next": "다음 페르소나 보기",
+      "items": [
+        {
+          "name": "윤지혜",
+          "role": "뷰티 크리에이터",
+          "quote": "댓글 반응을 모아서 협찬 제안에 활용하고 있어요. 추천 액션 덕분에 출시 직후 집중 리뷰를 요청할 브랜드를 쉽게 골라요.",
+          "goal": "월간 협찬 2건 이상을 안정적으로 유지하고 분기마다 브랜드 공동 캠페인 1건 진행",
+          "needs": [
+            "게시물·댓글 반응 요약",
+            "시간대별 조회수 분석",
+            "PDF 보고서 공유",
+            "브랜드 협찬 제안 템플릿",
+            "신제품 키워드 모니터링"
+          ]
+        },
+        {
+          "name": "Alex Kim",
+          "role": "교육 크리에이터",
+          "quote": "TikTok과 Facebook을 함께 비교해 어떤 채널이 반응이 좋은지 확인합니다. 니즈 기반 추천 목록을 따라가면 신규 강의 런칭 일정도 자연스럽게 세워집니다.",
+          "goal": "구독 회원 1,000명 달성과 월 2회 라이브 수업 전환 유지",
+          "needs": [
+            "다중 채널 비교",
+            "AI 광고 확장 추천",
+            "주간 이메일 리포트",
+            "학생 니즈 기반 콘텐츠 추천",
+            "강의 예약 일정 자동화"
+          ]
+        },
+        {
+          "name": "박서준",
+          "role": "게임 스트리머",
+          "quote": "슬라이드로 정리된 팬 피드백 덕분에 어떤 콘텐츠를 리메이크할지 명확해졌어요. 후원사가 요구하는 미션 니즈도 한 화면에서 체크하니 방송 준비가 빨라졌습니다.",
+          "goal": "신규 구독자 월 15% 성장과 스폰서 미션 성공률 90% 유지",
+          "needs": [
+            "라이브 하이라이트 자동 편집",
+            "스폰서 미션 수행 체크리스트",
+            "팬 리워드 니즈 분석",
+            "트위치·유튜브 동시 비교",
+            "게임 업데이트 일정 리마인드"
+          ]
+        },
+        {
+          "name": "오유나",
+          "role": "요가 인플루언서",
+          "quote": "회원 등급별 니즈가 슬라이드로 정리돼 바로 맞춤 프로그램을 제안할 수 있습니다. 후기와 추천 코멘트를 묶어 보내니 재구매 전환율이 크게 올랐어요.",
+          "goal": "프리미엄 클래스 갱신률 75% 유지와 오프라인 워크숍 월 1회 매진",
+          "needs": [
+            "회원 등급별 참여도 리포트",
+            "레슨 후기 슬라이드 공유",
+            "오프라인 클래스 예약 추적",
+            "웰니스 브랜드 콜라보 추천",
+            "구독자 Q&A 요약"
+          ]
+        },
+        {
+          "name": "최민아",
+          "role": "음악 튜토리얼 크리에이터",
+          "quote": "튜토리얼마다 시청자 피드백을 비교해 부족한 파트를 즉시 업데이트합니다. 이메일 추천 시나리오도 자동 생성돼 커뮤니티 요청에 빠르게 응답할 수 있습니다.",
+          "goal": "월간 마스터클래스 3회 이상 예약과 커뮤니티 유지율 80% 확보",
+          "needs": [
+            "곡별 튜토리얼 성과 분석",
+            "커뮤니티 설문 자동 요약",
+            "이메일 캠페인 A/B 추천",
+            "글로벌 시간대 업로드 제안",
+            "샘플팩 다운로드 추적"
+          ]
+        },
+        {
+          "name": "김라온",
+          "role": "패밀리 브이로거",
+          "quote": "브랜드가 궁금해하는 가족형 콘텐츠 니즈를 미리 파악해 제안서를 만들고 있어요. 리뷰와 추천 슬라이드가 있어 협찬 승인까지 걸리는 시간이 절반으로 줄었습니다.",
+          "goal": "패밀리 브랜드 공동 콘텐츠 월 2편 제작과 시청자 만족도 90점 이상 유지",
+          "needs": [
+            "가족 이벤트 일정 추천",
+            "협찬 파트너 우선순위 제안",
+            "시청자 니즈 키워드 추적",
+            "SNS 댓글 정서 분석",
+            "스폰서 리포트 자동 생성"
+          ]
+        }
+      ]
+    }
+  },
+  "business": {
+    "hero": {
+      "title": "35명의 크리에이터를 관리하는 데모 비즈니스 허브",
+      "subtitle": "비즈니스 샘플 허브는 35명의 크리에이터 승인, 업무량, 캠페인을 이미 추적해 계정 상태 검증과 이슈 기록 과정을 직접 확인할 수 있습니다.",
+      "primary_cta": "기업 상담 예약",
+      "secondary_cta": "기업 요금제 보기",
+      "visual_title": "샘플 승인 대기열",
+      "visual_caption": "우선순위, 플랫폼, 광고 상태별로 묶인 35명의 관리 대상 크리에이터",
+      "visual_alt": "승인과 지표를 보여주는 비즈니스용 샘플 대시보드"
+    },
+    "benefits": {
+      "title": "비즈니스 샘플 워크스페이스에서 체험할 수 있는 것들",
+      "description": "35명의 크리에이터 명단이 미리 채워져 있어 승인, 리포트, 협업 흐름을 그대로 따라 할 수 있습니다.",
+      "items": [
+        {
+          "tag": "CREATORS",
+          "title": "35명의 관리 크리에이터",
+          "description": "뷰티, 교육, 게임, 라이프스타일, 브이로그 카테고리 프로필을 즉시 살펴보세요."
+        },
+        {
+          "tag": "APPROVALS",
+          "title": "완결된 승인 히스토리",
+          "description": "대기, 승인, 회수 요청이 실제 업무와 동일한 흐름으로 기록되어 있습니다."
+        },
+        {
+          "tag": "OPERATIONS",
+          "title": "매니저 업무 보드",
+          "description": "계정 건전성, 캠페인 노트, 인수인계 태스크가 어떤 방식으로 묶이는지 확인하세요."
+        }
+      ]
+    },
+    "plans": {
+      "label": "기업 요금제",
+      "title": "팀 규모에 맞는 두 가지 옵션",
+      "description": "샘플 워크스페이스는 Business 100 구성을 사용해 중형 팀의 운영 방식을 보여줍니다. 실제 고객 수에 맞춰 적합한 플랜을 선택하세요.",
+      "items": [
+        {
+          "name": "비즈니스 100",
+          "description": "최대 100명의 크리에이터를 체계적으로 관리",
+          "price": "KRW 119,000",
+          "cycle": "월 정기 결제",
+          "features": [
+            "샘플 허브와 동일한 고객 승인 워크플로",
+            "YouTube·Instagram·TikTok·Facebook·Threads 분석과 비교",
+            "Meta Ads 성과 요약과 AI 최적화 제안",
+            "공유 가능한 대시보드, 리포트, 협업 노트"
+          ],
+          "cta": "7일 체험 시작",
+          "cta_link": "/signup?role=manager",
+          "highlighted": true,
+          "badge": "기본형"
+        },
+        {
+          "name": "비즈니스 1000",
+          "description": "대규모 팀을 위한 자동화와 권한 관리",
+          "price": "KRW 599,000",
+          "cycle": "월 정기 결제",
+          "features": [
+            "확장된 좌석과 세분화된 권한",
+            "매니저용 고객 활동 요약과 알림 자동화",
+            "AI 고객 응대 답변 초안과 후속 조치 추천",
+            "우선 지원과 온보딩 세션"
+          ],
+          "cta": "영업팀 문의",
+          "cta_link": "/support",
+          "highlighted": false
+        }
+      ],
+      "comparison": {
+        "title": "비즈니스 100 vs 1000 - 팀 규모에 맞는 선택",
+        "description": "관리하는 크리에이터 수가 늘어날수록 수작업 시간도 기하급수적으로 증가합니다. 100명까지는 기본 자동화로 충분하지만, 대규모 팀에서는 AI가 고객 이슈를 자동 분류하고 CS 답변까지 초안을 만들어주는 1000 플랜이 필수입니다.",
+        "items": [
+          {
+            "label": "관리 규모",
+            "title": "100명 vs 1,000명",
+            "detail": "비즈니스 100은 최대 100명 관리(총 300~500개 채널), 스타트업 에이전시나 중소형 MCN에 이상적. 비즈니스 1000은 최대 1,000명까지 확장 가능, 대형 에이전시·글로벌 MCN 대상. 세분화된 그룹 리포트(카테고리·지역·성과별)와 대량 액션(일괄 승인, 그룹 메시지) 제공."
+          },
+          {
+            "label": "AI 자동화",
+            "title": "응답 시간 1/10 단축",
+            "detail": "비즈니스 100은 기본 지표·광고 추천·알림 제공. 비즈니스 1000은 AI가 고객 이슈 자동 분류('광고 하락', '연동 오류', '협찬 문의' 등) 후 우선순위별 전달 + CS 답변 초안 즉시 생성. 예: 'Instagram 조회수 하락 문의' → AI가 데이터 분석 후 '게시 빈도 30% 감소, 해시태그 다양성 부족. #트렌드키워드 추가 권장' 답변 자동 생성. 응답 시간 24시간→2시간."
+          },
+          {
+            "label": "전담 지원",
+            "title": "셀프 서비스 vs 전담 CSM",
+            "detail": "비즈니스 100은 헬프센터·이메일·포럼 지원(24시간 내 답변), 월간 웨비나 제공. 비즈니스 1000은 전담 CSM 배정 - 온보딩 세션, 데이터 마이그레이션, 월 1회 전략 미팅, 대시보드 커스터마이징, Slack·Teams 통합, 베타 기능 우선 제공. 팀 규모 50명+ 또는 연매출 10억+ 시 CSM 컨설팅 가치 충분."
+          },
+          {
+            "label": "전용 기능",
+            "title": "비즈니스 1000 전용 도구",
+            "detail": "세분화된 권한 관리(팀원별 읽기/쓰기/승인), 대량 액션(100명 동시 메시지·일괄 승인), 고급 분석(카테고리·지역·성과별 그룹 리포트), API 사용량 10배 확대, 화이트라벨 옵션(자사 브랜드 로고·색상). 대규모 운영 효율 극대화."
+          }
+        ]
+      }
+    },
+    "workflow": {
+      "title": "샘플 허브 점검 방법",
+      "description": "저장된 승인, 태스크, 리포트를 따라가며 실제 고객을 초대하기 전 검증 절차를 이해하세요.",
+      "steps": [
+        {
+          "label": "Phase 1",
+          "title": "크리에이터 포트폴리오 점검",
+          "detail": "우선순위, 플랫폼 조합, 승인 상태에 따라 35명의 샘플 크리에이터가 어떻게 분류되는지 확인하세요."
+        },
+        {
+          "label": "Phase 2",
+          "title": "승인 근거 확인",
+          "detail": "저장된 요청, AI 메모, 성과 카드를 열어 매니저가 조치 전에 어떤 근거를 검토하는지 살펴보세요."
+        },
+        {
+          "label": "Phase 3",
+          "title": "운영 플레이북 적용",
+          "detail": "샘플 리포트, 알림, 인수인계 태스크를 검토해 실제 팀 온보딩 계획을 세우세요."
+        }
+      ]
+    },
+    "cta": {
+      "title": "샘플 크리에이터로 비즈니스 허브를 시험해 보세요",
+      "description": "7일 체험 동안 최대 5명의 실제 고객을 연결하고, 샘플 데이터는 계속 참고할 수 있습니다.",
+      "primary": "체험 시작",
+      "secondary": "플랜 비교"
+    },
+    "pricing_overview": {
+      "title": "기업 요금 안내",
+      "description": "관리할 크리에이터 수에 맞춰 비즈니스 플랜을 선택하세요.",
+      "columns": [
+        "플랜",
+        "월간 요금",
+        "연간 요금",
+        "비고"
+      ],
+      "rows": [
+        {
+          "label": "비즈니스 100",
+          "monthly": "KRW 119,000",
+          "annual": "KRW 1,309,000 (10% 할인)",
+          "note": "최대 100명 관리, Meta Ads AI 추천 포함"
+        },
+        {
+          "label": "비즈니스 1000",
+          "monthly": "KRW 599,000",
+          "annual": "KRW 6,589,000 (10% 할인)",
+          "note": "AI 고객 관리 자동화와 CS 초안 제공"
+        }
+      ],
+      "footnote": "가격은 부가세 포함. 샘플 비즈니스 허브는 Business 100 구성으로 제공됩니다."
+    },
+    "metrics": {
+      "title": "샘플 비즈니스 허브 핵심 지표",
+      "description": "데모 비즈니스 계정에서 불러온 주요 수치를 실제 운영처럼 확인할 수 있습니다.",
+      "visual_alt": "승인과 광고 카드를 보여주는 비즈니스 샘플 대시보드",
+      "source_label": "샘플",
+      "source_caption": "샘플 비즈니스 워크스페이스 데이터셋",
+      "items": [
+        {
+          "label": "연결된 크리에이터",
+          "value": "35",
+          "description": "데모 허브에서 승인된 모든 크리에이터를 즉시 검토할 수 있습니다."
+        },
+        {
+          "label": "크리에이터별 평균 채널",
+          "value": "3.1개",
+          "description": "각 크리에이터가 1~5개 채널을 연결하도록 구성된 현실적인 포트폴리오입니다."
+        },
+        {
+          "label": "승인 처리 시간",
+          "value": "12시간",
+          "description": "샘플 워크플로 기준으로 요청이 처리되는 평균 소요 시간입니다."
+        }
+      ]
+    },
+    "personas": {
+      "title": "사용자 후기",
+      "description": "팀 역할에 따라 어떤 방식으로 기능을 활용하는지 소개합니다.",
+      "goal_label": "주요 목표",
+      "needs_label": "필요 기능",
+      "prev": "이전 시나리오 보기",
+      "next": "다음 시나리오 보기",
+      "items": [
+        {
+          "name": "박민서",
+          "role": "에이전시 계정 매니저",
+          "quote": "승인 요청이 들어오면 바로 데이터가 정리되어 고객 브리핑이 쉬워졌습니다. 추천 액션 덕분에 캠페인별 니즈를 빠르게 파악해 미팅 자료를 준비합니다.",
+          "goal": "관리 고객 80명 이상 현황 유지와 주간 성과 보고서 자동 발송 안정화",
+          "needs": [
+            "승인 흐름 관리",
+            "채널 지표 대시보드",
+            "AI 광고 추천",
+            "고객별 목표 대비 경고 알림",
+            "슬라이드형 제안서 내보내기"
+          ]
+        },
+        {
+          "name": "임소라",
+          "role": "인하우스 마케팅 리드",
+          "quote": "AI CS 초안을 활용해 고객 문의 응답 시간을 줄였습니다. 후기와 니즈가 연결돼 있어 세일즈 팀과의 협업도 훨씬 빨라졌습니다.",
+          "goal": "고객 응대 시간 24시간 이내 유지와 이탈 고객률 월 2% 이하",
+          "needs": [
+            "AI 고객 관리 자동화",
+            "활동 요약 리포트",
+            "전담 지원",
+            "팀별 태스크 보드 연동",
+            "재구매 니즈 태깅"
+          ]
+        },
+        {
+          "name": "이재훈",
+          "role": "브랜드 파트너십 디렉터",
+          "quote": "추천 슬라이드로 크리에이터 후보를 비교해 파트너사 니즈를 바로 맞춰 줍니다. 캠페인 후기와 요구사항이 묶여 있어 계약 승인까지의 시간이 단축됐습니다.",
+          "goal": "신규 파트너십 월 3건 체결과 공동 캠페인 만족도 90점 이상",
+          "needs": [
+            "타겟 니즈 기반 크리에이터 추천",
+            "예산 대비 성과 시뮬레이션",
+            "후기 슬라이드 공유 링크",
+            "법무 협업 체크리스트",
+            "캠페인 피드백 추적"
+          ]
+        },
+        {
+          "name": "최한나",
+          "role": "글로벌 커뮤니티 매니저",
+          "quote": "지역별 니즈가 자동 태깅되어 현지 팀에 필요한 자료를 바로 전달합니다. 슬라이드 리포트가 표준화돼 본사 승인 절차도 훨씬 간결해졌습니다.",
+          "goal": "글로벌 챕터 참여율 60% 이상과 지역별 지원 요청 SLA 48시간 준수",
+          "needs": [
+            "다국어 리포트 변환",
+            "슬랙·Teams 통합 알림",
+            "지역별 니즈 태그 관리",
+            "사용 후기 아카이브",
+            "현지 팀 액션 플래너"
+          ]
+        },
+        {
+          "name": "김태훈",
+          "role": "퍼포먼스 마케팅 총괄",
+          "quote": "광고 성과가 하락하면 즉시 추천 액션이 제공되어 의사결정이 빨라집니다. 캠페인별 니즈와 목표를 한눈에 보니 테스트 예산 배분이 효율적으로 이뤄집니다.",
+          "goal": "ROAS 120% 이상 유지와 테스트 캠페인 5건 동시 운영",
+          "needs": [
+            "광고 세그먼트별 추천",
+            "예산 소진 속도 경고",
+            "캠페인 비교 슬라이드",
+            "CRM 연동 리드 동기화",
+            "성과 리뷰 자동 회고"
+          ]
+        },
+        {
+          "name": "Elena Park",
+          "role": "데이터 전략 컨설턴트",
+          "quote": "고객사가 요청하는 니즈와 추천 사례를 슬라이드로 정리해 제안합니다. 데이터 템플릿이 자동 생성돼 반복 프로젝트도 빠르게 재사용할 수 있습니다.",
+          "goal": "분기별 컨설팅 제안서 8건 제공과 프로젝트 재계약률 70% 달성",
+          "needs": [
+            "고객 니즈별 데이터 템플릿",
+            "후기·추천 요약 슬라이드",
+            "API 사용량 모니터링",
+            "보안 감사 체크리스트",
+            "프레젠테이션 모드 공유"
+          ]
+        }
+      ]
+    }
+  },
+  "support": {
+    "hero": {
+      "title": "언제든지 도움을 받을 수 있는 지원 센터",
+      "subtitle": "도입, 교육, 기술 연동까지 전문 팀이 함께합니다.",
+      "primary_cta": "지원팀 이메일",
+      "secondary_cta": "기업 요금제 안내",
+      "visual_title": "지원 지표",
+      "visual_points": [
+        {
+          "label": "평균 응답 시간",
+          "value": "2시간 이내"
+        },
+        {
+          "label": "고객 만족도",
+          "value": "4.8 / 5"
+        },
+        {
+          "label": "헬프센터 문서",
+          "value": "120+"
+        }
+      ]
+    },
+    "cards": [
+      {
+        "title": "온보딩 & 컨설팅",
+        "description": "데이터 연결과 워크플로우 설계를 전담 매니저가 도와드립니다.",
+        "items": [
+          "팀 맞춤 온보딩 세션",
+          "데이터 품질 점검",
+          "내부 교육 자료 제공"
+        ]
+      },
+      {
+        "title": "기술 지원",
+        "description": "API 연동과 보안 검토를 기술 엔지니어가 직접 지원합니다.",
+        "items": [
+          "API 가이드와 샘플 코드",
+          "SSO/보안 정책 컨설팅",
+          "우선순위 이슈 트래킹"
+        ]
+      },
+      {
+        "title": "커뮤니티",
+        "description": "크리에이터와 마케터를 위한 운영 인사이트를 공유합니다.",
+        "items": [
+          "월간 웨비나",
+          "베타 기능 선공개",
+          "베스트 프랙티스 라이브러리"
+        ]
+      }
+    ],
+    "contact": {
+      "title": "지원팀에 연락하기",
+      "description": "전문가가 필요한 내용을 파악하고 최적의 다음 단계를 안내합니다.",
+      "email_label": "이메일",
+      "email": "support@creatorcontrol.center",
+      "response": "영업일 기준 24시간 이내에 답변드립니다.",
+      "office_label": "운영 시간",
+      "office_hours": "월–금 09:00~18:00 (KST)",
+      "office_description": "국제 공휴일을 제외하고 실시간 채팅과 전화 상담을 제공합니다."
+    },
+    "cta": {
+      "title": "필요한 도움을 지금 요청하세요",
+      "description": "기술 문의부터 전략 상담까지, 언제든지 팀이 대기하고 있습니다.",
+      "primary": "지원팀 이메일 보내기",
+      "secondary": "서비스 소개 보기"
+    }
+  },
+  "super_admin": {
+    "title": "제작자 관리실",
+    "description": "회원, 구독, 활동 내역을 빠르게 확인하세요.",
+    "users": "회원",
+    "email": "이메일",
+    "role": "역할",
+    "plan": "이용권",
+    "status": "상태",
+    "created": "가입일",
+    "status_active": "활성",
+    "status_inactive": "비활성",
+    "activate": "활성화",
+    "deactivate": "중지",
+    "update_role": "역할 변경",
+    "max_accounts": "연동 가능 계정 수",
+    "subscription_active": "구독 활성화",
+    "save": "저장",
+    "total_members": "전체 회원",
+    "activity": "최근 활동",
+    "no_details": "추가 정보 없음",
+    "payments": "결제 관리",
+    "payments_description": "수동 청구 및 결제 상태를 기록하고 관리하세요.",
+    "email_service": "슈퍼 관리자 메일",
+    "email_service_description": "슈퍼 관리자 메일함으로 고객과 바로 메일을 주고받을 수 있습니다.",
+    "email_connected_account": "연결된 계정:",
+    "email_config_warning": "메일 연동이 설정되지 않았습니다.",
+    "email_config_hint": ".env 환경 변수에 SMTP/IMAP 정보를 추가해 주세요.",
+    "email_sent_success": "메일을 성공적으로 발송했습니다.",
+    "email_error_title": "메일 서비스 오류",
+    "email_recipient": "받는 사람",
+    "email_subject": "제목",
+    "email_body": "내용",
+    "email_send": "메일 보내기",
+    "email_inbox": "수신함",
+    "email_sent": "보낸메일함",
+    "email_empty": "표시할 메일이 없습니다.",
+    "email_from": "보낸 사람:",
+    "email_to": "받는 사람:",
+    "email_no_subject": "(제목 없음)",
+    "email_refresh": "새로고침",
+    "email_last_refreshed": "마지막 업데이트",
+    "email_body_placeholder": "보낼 내용을 입력하세요...",
+    "email_send_test": "테스트 메일 보내기 ({email})",
+    "email_test_success": "{email} 주소로 테스트 메일을 보냈습니다.",
+    "email_test_subject": "Creator Control Center 테스트 메일",
+    "email_test_body": "안녕하세요.\n관리자 {admin}가 관리자 페이지에서 보낸 테스트 메일입니다.\n이 메일을 받으셨다면 발신 설정이 정상입니다."
+  },
+  "payments": {
+    "title": "결제 내역",
+    "create_title": "결제 기록 추가",
+    "description": "자동 과금 외에 발생한 청구, 이체, 환불 내역을 저장합니다.",
+    "empty": "등록된 결제 내역이 없습니다.",
+    "fields": {
+      "user": "회원",
+      "amount": "금액",
+      "currency": "통화",
+      "status": "상태",
+      "period_start": "시작일",
+      "period_end": "종료일",
+      "description": "메모"
+    },
+    "actions": {
+      "create": "결제 추가",
+      "update": "상태 변경"
+    },
+    "status": {
+      "pending": "대기",
+      "paid": "결제 완료",
+      "failed": "실패",
+      "refunded": "환불"
+    }
+  },
+  "profile": {
+    "title": "내 정보",
+    "logout": "로그아웃"
+  }
+}

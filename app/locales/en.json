@@ -1,0 +1,1350 @@
+{
+  "app": {
+    "title": "Creator Control Center"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Product",
+    "personal": "Personal",
+    "business": "Business",
+    "support": "Support",
+    "dashboard": "Dashboard",
+    "channels": "Channels",
+    "profile": "Profile",
+    "language": "Language"
+  },
+  "theme": {
+    "toggle_label": "Toggle theme",
+    "light_label": "Light mode",
+    "dark_label": "Dark mode"
+  },
+  "footer": {
+    "tagline": "The marketing operations hub built for creators and the teams who champion them.",
+    "product": "Product",
+    "solutions": "Solutions",
+    "support": "Support",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. All rights reserved."
+  },
+  "roles": {
+    "creator": "Creator",
+    "manager": "Creator Manager",
+    "admin": "Admin",
+    "super_admin": "Platform Owner"
+  },
+  "landing": {
+    "headline": "How long will you keep checking every channel one by one?",
+    "subheadline": "Turn hours of manual reporting into minutes with a creator-first control hub that brings YouTube, Instagram, TikTok, and Meta metrics together with your student roster.",
+    "hero_highlights": [
+      "Side hustles, brands, and YouTube instructors managed from one hub",
+      "All-day manual reports replaced by a five-minute auto summary",
+      "Real-time insights into creator needs and performance for instant action"
+    ],
+    "cta_creator": "Start free",
+    "cta_manager": "Talk to sales",
+    "auth_section": {
+      "login_title": "Log in instantly",
+      "login_description": "Enter your email and password to review the main boards in under five minutes.",
+      "advanced_login": "Contact support for help",
+      "signup_title": "Create a new account",
+      "signup_description": "Managers can also build an account and link channels in five minutes.",
+      "advanced_signup": "Review plans & pricing"
+    },
+    "preview_title": "Five-minute channel check",
+    "mock_metric": "Current 5-minute auto report",
+    "platforms": {
+      "instagram": "Instagram",
+      "threads": "Threads",
+      "youtube": "YouTube",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
+      "meta_ads": "Meta Ads",
+      "shorts": "YouTube Shorts"
+    },
+    "metrics": [
+      {
+        "label": "Supported platforms",
+        "value": "5",
+        "description": "Analytics for YouTube, Instagram, TikTok, Facebook, and Threads."
+      },
+      {
+        "label": "Tracked signals",
+        "value": "Followers · Posts · Comments",
+        "description": "See reactions, likes vs. dislikes, and comment trends without spreadsheets."
+      },
+      {
+        "label": "Ad insights",
+        "value": "AI suggestions",
+        "description": "Meta Ads API data highlights campaigns to scale or pause."
+      }
+    ],
+    "feature_section": {
+      "title": "Key capabilities across channels and ads",
+      "description": "Collect channel data, combine it with Meta Ads results, and prepare decisions quickly.",
+      "items": [
+        {
+          "tag": "INSIGHTS",
+          "title": "Detailed channel metrics",
+          "description": "Track follower shifts, post likes and dislikes, comment sentiment, and hourly views."
+        },
+        {
+          "tag": "ADS",
+          "title": "Meta Ads management",
+          "description": "Bring in campaign performance through the Meta Ads API and receive AI action items."
+        },
+        {
+          "tag": "ACCESS",
+          "title": "Account approval workflow",
+          "description": "Creators can request access so business managers can review their analytics."
+        },
+        {
+          "tag": "REPORTS",
+          "title": "Shareable reports",
+          "description": "Export dashboards for both personal and business workspaces."
+        }
+      ]
+    },
+    "creator_section": {
+      "title": "Personal creator workspace",
+      "description": "YouTube and Instagram are free, and the paid plan adds TikTok, Facebook, and Threads analytics.",
+      "highlights": [
+        "Compare follower and post performance",
+        "Review reactions and hourly views",
+        "Get AI advice for Meta Ads campaigns"
+      ],
+      "cta": "See personal plan"
+    },
+    "manager_section": {
+      "title": "Business & agency controls",
+      "description": "Customers sign up with personal accounts, send approval requests, and managers review every creator in one hub.",
+      "highlights": [
+        "View approved client metrics",
+        "Monitor every managed creator",
+        "Receive AI summaries for ads and activity"
+      ],
+      "cta": "See business plan"
+    },
+    "journey": {
+      "title": "Complete onboarding in five minutes, align every team in ten",
+      "description": "Log in, connect the right channels, and share reports so each checklist item is covered. Once the setup workflow is finished, automation prepares the exact summary decks marketing, ads, and partnership teams expect so no one misses an update.",
+      "steps": [
+        {
+          "label": "Minute 1",
+          "title": "Instant basic setup",
+          "description": "Log in and connect your primary channels within the first minute."
+        },
+        {
+          "label": "Minute 3",
+          "title": "Data loading finished",
+          "description": "Add remaining sources and arrange dashboard widgets by minute three."
+        },
+        {
+          "label": "Minute 5",
+          "title": "Share tailored reports",
+          "description": "Enable AI suggestions and send reports within five minutes of signing in."
+        }
+      ]
+    },
+    "testimonials_label": "Customer testimonials slider",
+    "testimonials_prev": "View previous testimonial",
+    "testimonials_next": "View next testimonial",
+    "testimonials": [
+      {
+        "quote": "Comparing reactions by platform helped me adjust posting schedules. The day-of-week tips and hashtag suggestions lifted launch engagement by 35%.",
+        "name": "Hyunwoo Park",
+        "title": "Content marketer"
+      },
+      {
+        "quote": "Client approvals arrive with full context, so we respond faster. Auto-generated packets make it easier to tailor offers to each brand's specific needs.",
+        "name": "Jieun Kim",
+        "title": "Creator management lead"
+      },
+      {
+        "quote": "The Meta Ads guidance flagged campaigns that needed quick edits. We paired the recommendations with new collaborations and cut cost per result in half.",
+        "name": "Sora Lee",
+        "title": "Lifestyle creator"
+      },
+      {
+        "quote": "The slide deck view lets me compare multiple creators and understand what clients are asking for. Selecting only the relevant metrics trimmed proposal prep time dramatically.",
+        "name": "Haneul Jung",
+        "title": "Brand collaboration manager"
+      },
+      {
+        "quote": "Our team board surfaces the content formats with the highest demand and recommended next steps. New creators understand their weekly tasks right away, so onboarding now takes half the time.",
+        "name": "Seoyun Choi",
+        "title": "Entertainment MCN PM"
+      },
+      {
+        "quote": "I review the slide-based testimonials and needs in multiple languages to sync with regional teams. Because the data and suggested talking points stay connected, headquarters reports are easier to localize.",
+        "name": "Alex Lee",
+        "title": "Global campaign director"
+      },
+      {
+        "quote": "Linking campaign requirements with testimonial data produces much clearer insights. When a client message comes in, the workspace suggests which metrics to highlight, so we avoid mistakes.",
+        "name": "Mirae Han",
+        "title": "Data analyst"
+      },
+      {
+        "quote": "I mark the needs and recommendations I care about directly on the slide dashboard and assign them to teammates. Ads, content, and live commerce initiatives now run in one flow, cutting weekly prep by 40%.",
+        "name": "Dohyun Yoon",
+        "title": "D2C marketing lead"
+      },
+      {
+        "quote": "Showing the feedback slides to customers helps them articulate what support they expect. Having testimonials and needs in one place also pushed our satisfaction survey response rate higher.",
+        "name": "Rina Ahn",
+        "title": "Community manager"
+      }
+    ],
+    "cta": {
+      "title": "Explore the dashboard today",
+      "description": "Use the personal plan for free or launch a business workspace in under five minutes.",
+      "primary": "Start personal plan",
+      "secondary": "Book business demo"
+    }
+  },
+  "auth": {
+    "login_title": "Log in",
+    "email_login_title": "Email login",
+    "social_login_title": "Sign in with a social account",
+    "social_login_button": "Continue with selected provider",
+    "social_hint": "Enter the ID issued by Google or Apple when you connected your account.",
+    "recover_hint": "Forgot your details?",
+    "recover_link": "Recover access",
+    "signup_title": "Create your account",
+    "email_signup_title": "Email sign-up",
+    "social_signup_title": "Social sign-up",
+    "social_signup_button": "Complete social sign-up",
+    "social_signup_hint": "We still collect core information so you can manage analytics in one place.",
+    "email": "Email",
+    "password": "Password",
+    "password_optional": "Password (optional)",
+    "new_password": "New password",
+    "role": "Role",
+    "organization": "Organization / Team",
+    "language": "Language",
+    "name": "Name",
+    "provider": "Provider",
+    "provider_account": "Provider account ID",
+    "verification_code": "Verification code",
+    "send_verification": "Send verification code",
+    "verification_hint": "A 6-digit code is sent to your inbox. Enter it before it expires.",
+    "verification_request_title": "Request a verification code",
+    "consent_title": "Required privacy notices",
+    "consent_description": "Review the personal data we collect, how long it is retained, and the required service notifications. This consent is necessary to create and operate your account in compliance with applicable laws and our terms.",
+    "consent_privacy_detail": "Data collected: name, email, organization details, role, and product usage logs. Purposes: account provisioning, security monitoring, customer support. Retention: stored securely for 30 days after account deletion or longer when required by law.",
+    "consent_terms_detail": "We send essential service notices, onboarding tips, security alerts, and policy updates by email or in-app messaging. Critical updates may be delivered regardless of marketing preferences.",
+    "consent_marketing_detail": "If you opt in, we may email newsletters, feature highlights, and event invitations. You can update marketing preferences anytime in Profile → Notifications.",
+    "consent_privacy": "I agree to the privacy policy.",
+    "consent_terms": "I agree to receive onboarding and service guidance.",
+    "login_button": "Log in",
+    "signup_button": "Sign up",
+    "signup_hint": "Need an account?",
+    "signup_link": "Create one",
+    "invalid_credentials": "We couldn't match those credentials.",
+    "account_inactive": "This account is currently inactive. Please contact support.",
+    "email_exists": "This email address is already registered.",
+    "email_not_verified": "Please verify your email with the code we sent before logging in.",
+    "password_login_disabled": "Set a password from your profile to enable direct email login.",
+    "name_required": "Please provide your name to continue.",
+    "consent_required": "Please agree to the privacy notices to continue.",
+    "invalid_verification_code": "The verification code is invalid or expired.",
+    "social_account_in_use": "That social account is already linked to another user.",
+    "social_account_not_found": "We couldn't find a user connected to that social account.",
+    "verification_sent": "We sent a verification code to your email.",
+    "signup_success": "Your account is ready. Log in to continue.",
+    "social_signup": "Social sign-up completed. You can log in now.",
+    "social_signup_linked": "We linked the social account to your profile.",
+    "password_token_sent": "We sent reset instructions to your email.",
+    "password_reset": "Password updated. You can log in now.",
+    "username_sent": "We emailed your login details to the address on file.",
+    "account_not_found": "We could not find an account for that email.",
+    "invalid_token": "The reset token is invalid or expired.",
+    "social_linked": "Social account linked successfully.",
+    "password_updated": "Password updated successfully.",
+    "providers": {
+      "google": "Google",
+      "apple": "Apple",
+      "email": "Email/password"
+    },
+    "social_accounts_title": "Connected social accounts",
+    "no_social_accounts": "No social accounts are linked yet.",
+    "link_provider": "Link provider",
+    "password_management_title": "Password management",
+    "password_management_hint": "Set a password to sign in with email in addition to social login.",
+    "profile_verification_hint": "Codes are valid for 15 minutes.",
+    "update_password_button": "Update password",
+    "verified": "Verified",
+    "not_verified": "Not verified",
+    "recovery_title": "Recover your account",
+    "username_recovery_title": "Remind me of my login email",
+    "username_recovery_hint": "We'll send your login email to the inbox on record.",
+    "username_recovery_button": "Send reminder",
+    "password_request_title": "Request a password reset",
+    "password_request_hint": "We'll email a secure token so you can choose a new password.",
+    "password_request_button": "Send reset email",
+    "password_reset_title": "Finish password reset",
+    "password_reset_hint": "Paste the token from the email and set a new password.",
+    "password_reset_button": "Reset password",
+    "reset_token": "Reset token",
+    "social_link_title": "Social account help",
+    "social_link_hint": "Use Google or Apple sign-in on the login page, then link the account here.",
+    "social_link_profile_hint": "After linking, you can set a password to unify access.",
+    "social_signup_description": "Start with Google or Apple by selecting one of the buttons below. After authorization we will confirm the shared name and email so you can complete any missing fields.",
+    "social_complete_title": "Review the details received from {provider}",
+    "social_complete_description": "Enter the verification code and confirm the required fields to finish creating your account. Future sign-ins with this social account will reuse the saved information.",
+    "social_manual_summary": "Need to connect an account manually?",
+    "social_manual_help": "For testing or administrator scenarios you can still provide the provider account ID using the form below.",
+    "social_buttons": {
+      "google": "Continue with Google",
+      "apple": "Continue with Apple"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "current_plan": "Current plan",
+    "upgrade_prompt": "Upgrade tier",
+    "update_plan": "Update",
+    "your_channels": "Your channels",
+    "add_channel": "Add channel",
+    "remove": "Remove",
+    "account_label": "Account",
+    "followers": "Followers",
+    "growth": "Growth",
+    "engagement": "Engagement",
+    "last_post": "Last post",
+    "recent_posts": "Recent posts",
+    "manager_hint": "Creators who accepted your access",
+    "creator_hint": "Managers looking after your growth",
+    "collaboration": "Collaboration hub",
+    "account_placeholder": "Channel handle or URL",
+    "data_source": "Data source",
+    "source_api": "Live API",
+    "source_mock": "Sample data",
+    "credentials_heading": "Connection credentials",
+    "credentials_status": "Status",
+    "credentials_present": "Credentials stored",
+    "credentials_missing": "Not connected",
+    "auth_type_label": "Authentication method",
+    "auth_type_labels": {
+      "api_token": "API token",
+      "user_password": "Username & password",
+      "oauth2": "OAuth 2.0"
+    },
+    "identifier_label": "Identifier / profile ID",
+    "access_token_label": "Access token",
+    "secret_label": "Client secret / password",
+    "refresh_token_label": "Refresh token",
+    "expires_at_label": "Expires at",
+    "metadata_label": "Extra metadata (JSON)",
+    "save_credentials": "Save credentials",
+    "credential_hint": "Already saved — leave blank to keep the current value.",
+    "placeholder_identifier": "e.g. @creator or 123456",
+    "placeholder_secret": "Paste client secret or password",
+    "placeholder_token": "Paste new token",
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}"
+  },
+  "channels": {
+    "instagram": "Instagram",
+    "threads": "Threads",
+    "youtube": "YouTube",
+    "twitter": "Twitter / X",
+    "tiktok": "TikTok",
+  "facebook": "Facebook",
+  "meta_ads": "Meta Ads"
+  },
+  "channels_manage": {
+    "title": "Channel control center",
+    "subtitle": "Check real follower numbers, engagement, and posting habits with clear explanations.",
+    "usage": {
+      "plan_label": "{plan} plan",
+      "summary": "You are using {current} of {max} connected channels.",
+      "limit_reached": "You reached the maximum number of channels for this plan.",
+      "upgrade": "Upgrade plan"
+    },
+    "alerts": {
+      "connected": "The channel is now connected.",
+      "disconnected": "The channel has been disconnected."
+    },
+    "connected": {
+      "title": "Connected channels ({count})",
+      "status": {
+        "connected": "Live connection",
+        "needs_refresh": "Refresh login",
+        "disconnected": "Disconnected"
+      },
+      "source": {
+        "api": "Live API data",
+        "mock": "Sample data (connect the real account to replace this).",
+        "error": "We reused cached data because the platform did not answer."
+      },
+      "metrics": {
+        "followers": {
+          "label": "Followers",
+          "explain": "People who chose to follow this account."
+        },
+        "engagement": {
+          "label": "Engagement",
+          "explain": "Percent of followers who reacted to the newest post."
+        },
+        "growth": {
+          "label": "Growth",
+          "explain": "Follower change compared with last week."
+        },
+        "last_post": {
+          "label": "Latest post",
+          "explain": "The most recent piece of content we could find.",
+          "no_data": "No posts yet."
+        }
+      },
+      "recent_posts": {
+        "title": "Recent posts",
+        "impressions": "Views",
+        "likes": "Likes",
+        "comments": "Comments",
+        "empty": "No recent posts available."
+      },
+      "hourly_views": {
+        "title": "Daily viewing pattern",
+        "peak": "Peak time: {hour}:00 with about {views} views.",
+        "off_peak": "Quiet time: {hour}:00.",
+        "no_data": "We need more viewing data before we can draw this chart."
+      },
+      "actions": {
+        "open_dashboard": "Open analytics",
+        "refresh": "Refresh token",
+        "disconnect": "Disconnect",
+        "confirm_disconnect": "Disconnect {account}? You will need to log in again to restore the data."
+      },
+      "empty": {
+        "title": "No channels yet",
+        "body": "Connect a social platform to start tracking followers, reactions, and viewing patterns."
+      }
+    },
+    "platforms": {
+      "title": "Add a new channel",
+      "description": "Choose a platform and follow the short checklist. Every step uses student-friendly words.",
+      "feature_points": [
+        "Follower and reaction charts",
+        "Recent post summaries",
+        "AI generated study tips",
+        "Simple explanations for each metric"
+      ],
+      "cta": "Connect now",
+      "order": [
+        "instagram",
+        "facebook",
+        "threads",
+        "youtube",
+        "twitter",
+        "tiktok",
+        "meta_ads"
+      ],
+      "items": {
+        "instagram": {
+          "name": "Instagram",
+          "badge": "IG",
+          "summary": "Stories, Reels, and feed posts in one place.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Use a Business or Creator account linked to a Facebook Page.",
+                "Ask your teacher or admin for a Meta developer account if needed."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`instagram_basic` for profile basics.",
+                "`instagram_manage_insights` for follower and post numbers."
+              ]
+            }
+          ]
+        },
+        "facebook": {
+          "name": "Facebook",
+          "badge": "FB",
+          "summary": "Page followers, reactions, and post history.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Be a manager of the Facebook Page you want to connect.",
+                "Make sure two-factor login is ready if Meta asks for it."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`pages_show_list` to pick your page.",
+                "`read_insights` to read post metrics."
+              ]
+            }
+          ]
+        },
+        "threads": {
+          "name": "Threads",
+          "badge": "TH",
+          "summary": "Short text posts and replies from Instagram Threads.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Link your Threads account to Instagram.",
+                "Use the same Meta developer app as Instagram."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`threads_basic` for profile info.",
+                "`threads_manage_insights` for engagement numbers."
+              ]
+            }
+          ]
+        },
+        "youtube": {
+          "name": "YouTube",
+          "badge": "YT",
+          "summary": "Subscribers, views, and top videos.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Log in with the Google account that owns the channel.",
+                "Enable the YouTube Data API in Google Cloud."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`youtube.readonly` for channel details.",
+                "`yt-analytics.readonly` for view and watch time stats."
+              ]
+            }
+          ]
+        },
+        "twitter": {
+          "name": "Twitter / X",
+          "badge": "X",
+          "summary": "Tweet reach, followers, and mentions.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Apply for a Twitter developer project.",
+                "Create OAuth 2.0 keys in the dashboard."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`tweet.read` to load tweets.",
+                "`users.read` to display the profile.",
+                "`follows.read` for follower counts."
+              ]
+            }
+          ]
+        },
+        "tiktok": {
+          "name": "TikTok",
+          "badge": "TT",
+          "summary": "Video views, likes, and comments.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Use a TikTok Business account.",
+                "Register your app in the TikTok for Developers portal."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`user.info.basic` for the profile.",
+                "`video.list` to see uploaded videos."
+              ]
+            }
+          ]
+        },
+        "meta_ads": {
+          "name": "Meta Ads",
+          "badge": "AD",
+          "summary": "Ad spend, clicks, and impressions.",
+          "setup": [
+            {
+              "title": "Prepare",
+              "points": [
+                "Get the Meta Ad Account ID (starts with `act_`).",
+                "Ask for Ads Manager access with reporting rights."
+              ]
+            },
+            {
+              "title": "Permissions to allow",
+              "points": [
+                "`ads_read` to read campaign performance."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "modal": {
+      "title": "{platform} connection checklist",
+      "close": "Close"
+    }
+  },
+  "subscriptions": {
+    "free": "Free",
+    "pro": "Pro",
+    "enterprise": "Enterprise"
+  },
+  "service": {
+    "hero": {
+      "title": "One workspace for social analytics and ads",
+      "subtitle": "Review follower, content, and reaction trends alongside Meta Ads guidance for every creator you manage.",
+      "primary_cta": "Explore plans",
+      "secondary_cta": "See personal features",
+      "visual_title": "Sample insight cards",
+      "visual_points": [
+        {
+          "label": "Follower change",
+          "value": "YouTube · Instagram"
+        },
+        {
+          "label": "Reaction mix",
+          "value": "Likes vs. dislikes"
+        },
+        {
+          "label": "Hourly views",
+          "value": "Peak performance"
+        }
+      ]
+    },
+    "pillars_title": "Core capabilities",
+    "pillars_description": "Everything centers on accurate channel analytics and collaborative client management.",
+    "pillars": [
+      {
+        "tagline": "Insights",
+        "title": "Channel intelligence",
+        "description": "Track followers, posts, comments, likes, dislikes, and hourly views for YouTube, Instagram, TikTok, Facebook, and Threads.",
+        "bullets": [
+          "Follower and engagement snapshots",
+          "Top-performing post breakdowns",
+          "Comment sentiment overview"
+        ]
+      },
+      {
+        "tagline": "Access",
+        "title": "Account management",
+        "description": "Let personal users connect their own accounts and request approval from business managers.",
+        "bullets": [
+          "Personal free tier for one YouTube and one Instagram account",
+          "Upgrade path for additional channels",
+          "Client approval queue for managers"
+        ]
+      },
+      {
+        "tagline": "Ads",
+        "title": "Meta Ads guidance",
+        "description": "Use the Meta Ads API to compare performance and receive AI recommendations on what to scale or pause.",
+        "bullets": [
+          "Campaign health overview",
+          "AI-generated next steps",
+          "Budget pacing alerts"
+        ]
+      },
+      {
+        "tagline": "Support",
+        "title": "Business operations",
+        "description": "Help teams supervise every managed creator and keep customer service consistent.",
+        "bullets": [
+          "Portfolio-wide dashboards",
+          "AI-assisted client summaries",
+          "Optional AI CS draft replies"
+        ]
+      }
+    ],
+    "outcomes": {
+      "title": "What teams can do",
+      "description": "Ways personal and business workspaces simplify day-to-day decisions.",
+      "items": [
+        {
+          "label": "Creators",
+          "title": "See channel health at a glance",
+          "detail": "Monitor followers, reactions, and hourly views without juggling multiple tabs."
+        },
+        {
+          "label": "Managers",
+          "title": "Approve client requests quickly",
+          "detail": "Personal signups route into a shared approval queue with their connected analytics."
+        },
+        {
+          "label": "Ads",
+          "title": "Act on AI suggestions",
+          "detail": "Review recommended optimizations before extending or pausing a campaign."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Choose the plan that fits today",
+      "description": "Start free as a creator, begin a 7-day business trial, or talk with our team for enterprise needs.",
+      "primary": "Compare plans",
+      "secondary": "Visit support"
+    }
+  },
+  "personal": {
+    "hero": {
+      "title": "Explore a five-channel creator workspace instantly",
+      "subtitle": "The sample personal workspace already tracks YouTube, Instagram, TikTok, Facebook, and Threads so you can observe how scheduling checks, reaction trends, and revenue prep reports run before connecting your own channels.",
+      "primary_cta": "Start for free",
+      "secondary_cta": "View personal pricing",
+      "visual_title": "Sample creator snapshot",
+      "visual_caption": "Five linked channels with followers, engagement, and hourly views from the demo data.",
+      "visual_alt": "Personal sample dashboard with five connected channels"
+    },
+    "benefits": {
+      "title": "What the personal sample workspace shows you",
+      "description": "We preloaded realistic metrics so you can see how the platform organizes everyday creator work.",
+      "items": [
+        {
+          "tag": "CHANNELS",
+          "title": "Five connected channels",
+          "description": "Track YouTube, Instagram, TikTok, Facebook, and Threads together with post-level trends from the sample dataset."
+        },
+        {
+          "tag": "ROUTINES",
+          "title": "Weekly recap checklist",
+          "description": "Use the prepared tasks to turn follower changes, reactions, and watch-time insights into a shareable deck in minutes."
+        },
+        {
+          "tag": "OFFERS",
+          "title": "Sponsor-ready insights",
+          "description": "Preview how pitches, upsell ideas, and testimonials are linked to each audience segment."
+        }
+      ]
+    },
+    "plans": {
+      "label": "Personal plans",
+      "title": "Choose the coverage you need",
+      "description": "The sample workspace runs on Personal Plus so you can test the full automation. Choose the plan that fits once you connect your own accounts.",
+      "items": [
+        {
+          "name": "Personal Free",
+          "description": "Quick insights for two starter channels",
+          "price": "KRW 0",
+          "cycle": "Always free",
+          "features": [
+            "Connect one YouTube and one Instagram account",
+            "Automatic summaries for followers, comments, likes, dislikes, and hourly views",
+            "Weekly email recap template",
+            "Matches the sample personal workspace setup"
+          ],
+          "cta": "Start free",
+          "cta_link": "/signup",
+          "highlighted": false
+        },
+        {
+          "name": "Personal Plus",
+          "description": "Manage five channels with AI guidance",
+          "price": "KRW 29,900",
+          "cycle": "Billed monthly",
+          "features": [
+            "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
+            "Demo workspace already uses this tier to manage five channels",
+            "AI powered Meta Ads suggestions and audience opportunity alerts",
+            "CSV and PDF export plus priority chat support"
+          ],
+          "cta": "Upgrade to Plus",
+          "cta_link": "/signup",
+          "highlighted": true,
+          "badge": "Recommended"
+        }
+      ],
+      "comparison": {
+        "title": "Free vs. Plus",
+        "description": "See how coverage and automation change between plans.",
+        "items": [
+          {
+            "label": "A",
+            "title": "Core metrics",
+            "detail": "Free keeps YouTube and Instagram KPIs visible at all times."
+          },
+          {
+            "label": "B",
+            "title": "More platforms",
+            "detail": "Plus adds TikTok, Facebook, and Threads comparisons."
+          },
+          {
+            "label": "C",
+            "title": "Ad guidance",
+            "detail": "AI ad suggestions and downloadable reports are Plus only."
+          }
+        ]
+      }
+    },
+    "workflow": {
+      "title": "How to study the sample workspace",
+      "description": "Use the preloaded five-channel dataset to inspect how metrics, automations, and deliverables stay reliable.",
+      "steps": [
+        {
+          "label": "Step 1",
+          "title": "Review the five-channel overview",
+          "detail": "See how sample followers, engagement, and watch-time from five channels appear on the dashboard and highlight anomalies automatically."
+        },
+        {
+          "label": "Step 2",
+          "title": "Inspect the automation trail",
+          "detail": "Follow the prebuilt weekly checklist to validate recap slides, exports, and audience prompts generated from the sample metrics."
+        },
+        {
+          "label": "Step 3",
+          "title": "Translate findings to your accounts",
+          "detail": "Use the annotations and comparison reports in the sample data as a guide for which metrics to monitor once your own channels are connected."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Test the personal workspace with live demo data",
+      "description": "Stay on the demo account or connect your own channels. You can upgrade to Plus at any time.",
+      "primary": "Create account",
+      "secondary": "View sample guide"
+    },
+    "pricing_overview": {
+      "title": "Personal pricing",
+      "description": "Personal Plus powers the sample workspace so you can experience every automation.",
+      "columns": [
+        "Plan",
+        "Monthly",
+        "Annual",
+        "Notes"
+      ],
+      "rows": [
+        {
+          "label": "Personal Plus",
+          "monthly": "KRW 29,900",
+          "annual": "KRW 329,000 (save 10%)",
+          "note": "Includes TikTok, Facebook, Threads, and AI ad suggestions"
+        },
+        {
+          "label": "Personal Free",
+          "monthly": "KRW 0",
+          "annual": "KRW 0",
+          "note": "YouTube and Instagram analytics remain free"
+        }
+      ],
+      "footnote": "Prices are listed in KRW. The sample personal login runs on Personal Plus."
+    },
+    "metrics": {
+      "title": "Sample KPIs you can explore",
+      "description": "All metrics load from the demo personal account so you can evaluate automation before importing your own data.",
+      "visual_alt": "Cards from the personal sample dashboard",
+      "source_label": "Sample",
+      "source_caption": "Sample personal workspace dataset",
+      "items": [
+        {
+          "label": "Channels connected",
+          "value": "5",
+          "description": "Every channel from the sample dataset streams data at once so you can test comparisons."
+        },
+        {
+          "label": "Manual hours saved",
+          "value": "3h/week",
+          "description": "Weekly recap automation shows the time you reclaim from spreadsheets."
+        },
+        {
+          "label": "Engagement lift",
+          "value": "+18%",
+          "description": "Sample TikTok reels improved after applying the AI task list."
+        }
+      ]
+    },
+    "personas": {
+      "title": "Who benefits most",
+      "description": "Examples of creator goals and required features.",
+      "goal_label": "Primary goal",
+      "needs_label": "Key needs",
+      "prev": "View previous persona",
+      "next": "View next persona",
+      "items": [
+        {
+          "name": "Jihye Yoon",
+          "role": "Beauty creator",
+          "quote": "I rely on the reaction summaries when preparing sponsorship pitches. The recommended next steps help me decide which brands to approach right after a launch.",
+          "goal": "Keep at least two collaborations per month and run one co-branded campaign each quarter",
+          "needs": [
+            "Post and comment summaries",
+            "Hourly view insights",
+            "PDF report sharing",
+            "Brand pitch templates",
+            "New product keyword monitoring"
+          ]
+        },
+        {
+          "name": "Alex Kim",
+          "role": "Education creator",
+          "quote": "Comparing TikTok and Facebook shows where my community grows faster. Following the needs-based recommendations makes planning new course launches much easier.",
+          "goal": "Reach 1,000 paid members and maintain two live class conversions every month",
+          "needs": [
+            "Multi-channel comparisons",
+            "AI ad scale suggestions",
+            "Weekly email recap",
+            "Student need-based content tips",
+            "Automated class booking schedule"
+          ]
+        },
+        {
+          "name": "Seojun Park",
+          "role": "Game streamer",
+          "quote": "The slide-ready fan feedback tells me which shows to remake, and I see sponsor requirements on the same screen. That clarity speeds up my broadcast prep.",
+          "goal": "Grow new subscribers by 15% each month and keep sponsorship mission success at 90%",
+          "needs": [
+            "Auto-cut live highlights",
+            "Sponsor mission checklist",
+            "Fan reward needs analysis",
+            "Twitch & YouTube side-by-side view",
+            "Game update reminders"
+          ]
+        },
+        {
+          "name": "Yuna Oh",
+          "role": "Yoga influencer",
+          "quote": "Member needs are organized in slides so I can pitch the right program instantly. Pairing testimonials with suggested offers boosted my renewal rate.",
+          "goal": "Maintain a 75% premium renewal rate and sell out one offline workshop every month",
+          "needs": [
+            "Engagement by member tier",
+            "Shareable lesson review slides",
+            "Offline class booking tracker",
+            "Wellness brand collaboration picks",
+            "Subscriber Q&A summaries"
+          ]
+        },
+        {
+          "name": "Mina Choi",
+          "role": "Music tutorial creator",
+          "quote": "Comparing feedback for each tutorial shows exactly which sections need updates. The email recommendation flows also help me respond to community requests quickly.",
+          "goal": "Book three masterclasses per month and keep community retention at 80%",
+          "needs": [
+            "Performance by song tutorial",
+            "Community survey summaries",
+            "Email A/B test suggestions",
+            "Global time-zone posting advice",
+            "Sample pack download tracking"
+          ]
+        },
+        {
+          "name": "Raon Kim",
+          "role": "Family vlogger",
+          "quote": "I map out what family-focused sponsors expect before drafting proposals. With testimonial and recommendation slides ready, approval time dropped by half.",
+          "goal": "Publish two co-branded family videos each month and keep viewer satisfaction above 90",
+          "needs": [
+            "Family event schedule ideas",
+            "Sponsor prioritization hints",
+            "Audience need keyword tracking",
+            "Social comment sentiment analysis",
+            "Auto-generated sponsor reports"
+          ]
+        }
+      ]
+    }
+  },
+  "business": {
+    "hero": {
+      "title": "Manage 35 creators in the demo business hub",
+      "subtitle": "The business sample hub already monitors approvals, workload, and campaigns across 35 creators so you can examine how account health is verified and escalations are recorded.",
+      "primary_cta": "Book demo",
+      "secondary_cta": "View business pricing",
+      "visual_title": "Sample approval queue",
+      "visual_caption": "Thirty five managed creators grouped by priority, platform coverage, and ad status.",
+      "visual_alt": "Business sample dashboard showing managed creators and approvals"
+    },
+    "benefits": {
+      "title": "What the business sample workspace highlights",
+      "description": "Use the preloaded roster of thirty five creators to practice approvals, reporting, and collaboration flows.",
+      "items": [
+        {
+          "tag": "CREATORS",
+          "title": "Thirty five managed creators",
+          "description": "Beauty, education, gaming, lifestyle, and vlogger profiles are ready for you to explore."
+        },
+        {
+          "tag": "APPROVALS",
+          "title": "Complete approval history",
+          "description": "Review pending, approved, and revoked requests exactly as your team would handle them."
+        },
+        {
+          "tag": "OPERATIONS",
+          "title": "Manager task board",
+          "description": "Sample tasks show how account health, campaign notes, and handoffs come together."
+        }
+      ]
+    },
+    "plans": {
+      "label": "Business plans",
+      "title": "Two options by team size",
+      "description": "The sample workspace runs on Business 100 so you can see how mid sized teams operate. Choose the plan that matches your client volume.",
+      "items": [
+        {
+          "name": "Business 100",
+          "description": "Manage up to 100 clients with structured automation",
+          "price": "KRW 119,000",
+          "cycle": "Billed monthly",
+          "features": [
+            "Client approval workflow from the sample hub",
+            "Analytics for YouTube, Instagram, TikTok, Facebook, Threads",
+            "Meta Ads summaries with AI optimisation suggestions",
+            "Shareable dashboards, reports, and collaboration notes"
+          ],
+          "cta": "Start 7-day trial",
+          "cta_link": "/signup?role=manager",
+          "highlighted": true,
+          "badge": "Standard"
+        },
+        {
+          "name": "Business 1000",
+          "description": "Scale to 1,000 clients with deeper automation",
+          "price": "KRW 599,000",
+          "cycle": "Billed monthly",
+          "features": [
+            "Expanded seats and granular permissions",
+            "AI summaries of client activity for managers",
+            "AI generated customer service reply drafts and nudges",
+            "Priority support and onboarding sessions"
+          ],
+          "cta": "Contact sales",
+          "cta_link": "/support",
+          "highlighted": false
+        }
+      ],
+      "comparison": {
+        "title": "Compare plans",
+        "description": "Check differences in scale and automation.",
+        "items": [
+          {
+            "label": "1",
+            "title": "Managed clients",
+            "detail": "Business 100 covers up to 100, Business 1000 supports up to 1,000."
+          },
+          {
+            "label": "2",
+            "title": "AI automation",
+            "detail": "Business 1000 adds AI customer management and CS drafting."
+          },
+          {
+            "label": "3",
+            "title": "Support",
+            "detail": "Business 1000 includes dedicated support and training."
+          }
+        ]
+      }
+    },
+    "workflow": {
+      "title": "How to examine the sample hub",
+      "description": "Work through the stored approvals, tasks, and reports to understand the verification process before inviting clients.",
+      "steps": [
+        {
+          "label": "Phase 1",
+          "title": "Audit the creator portfolio",
+          "detail": "Check how thirty five sample creators are segmented by priority, platform mix, and approval status across the dashboards."
+        },
+        {
+          "label": "Phase 2",
+          "title": "Validate approval evidence",
+          "detail": "Open stored requests, AI notes, and performance cards to see how managers confirm accuracy before acting."
+        },
+        {
+          "label": "Phase 3",
+          "title": "Operationalize the playbooks",
+          "detail": "Review sample reports, nudges, and task handoffs to plan how your team will onboard real clients."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Try the business workspace with live sample creators",
+      "description": "During the 7-day trial you can connect up to five real clients while keeping the sample data for reference.",
+      "primary": "Start trial",
+      "secondary": "Compare plans"
+    },
+    "pricing_overview": {
+      "title": "Business pricing",
+      "description": "Select a business tier based on your managed creator volume.",
+      "columns": [
+        "Plan",
+        "Monthly",
+        "Annual",
+        "Notes"
+      ],
+      "rows": [
+        {
+          "label": "Business 100",
+          "monthly": "KRW 119,000",
+          "annual": "KRW 1,309,000 (save 10%)",
+          "note": "Up to 100 clients with Meta Ads AI recommendations"
+        },
+        {
+          "label": "Business 1000",
+          "monthly": "KRW 599,000",
+          "annual": "KRW 6,589,000 (save 10%)",
+          "note": "AI customer management automation and CS drafting"
+        }
+      ],
+      "footnote": "Prices are listed in KRW. The sample business hub runs on Business 100."
+    },
+    "metrics": {
+      "title": "Sample business workspace metrics",
+      "description": "Key figures load from the demo business account so you can inspect performance before inviting clients.",
+      "visual_alt": "Business sample dashboard with approvals and ads",
+      "source_label": "Sample",
+      "source_caption": "Sample business workspace dataset",
+      "items": [
+        {
+          "label": "Creators connected",
+          "value": "35",
+          "description": "Every approved creator from the demo hub is available for review."
+        },
+        {
+          "label": "Average channels per creator",
+          "value": "3.1",
+          "description": "Sample creators connect between one and five channels for realistic portfolio coverage."
+        },
+        {
+          "label": "Approval turnaround",
+          "value": "12h",
+          "description": "Average time to process a request based on the sample workflow."
+        }
+      ]
+    },
+    "personas": {
+      "title": "Business user scenarios",
+      "description": "Examples of how different roles rely on the platform.",
+      "goal_label": "Primary goal",
+      "needs_label": "Key needs",
+      "prev": "View previous scenario",
+      "next": "View next scenario",
+      "items": [
+        {
+          "name": "Minseo Park",
+          "role": "Agency account manager",
+          "quote": "Approval requests arrive with structured data, so client briefings are straightforward. The recommended actions help us surface each advertiser's needs before meetings.",
+          "goal": "Maintain insights for 80+ clients and keep weekly performance reports automated",
+          "needs": [
+            "Approval workflow",
+            "Cross-channel dashboards",
+            "AI ad suggestions",
+            "Goal variance alerts",
+            "Slide-ready proposal exports"
+          ]
+        },
+        {
+          "name": "Sora Lim",
+          "role": "In-house marketing lead",
+          "quote": "AI CS drafts shortened our response time dramatically. With needs and testimonials linked together, collaboration with sales is much faster.",
+          "goal": "Respond within 24 hours and keep monthly churn under 2%",
+          "needs": [
+            "AI customer automation",
+            "Activity summary reports",
+            "Dedicated support",
+            "Team task board sync",
+            "Renewal need tagging"
+          ]
+        },
+        {
+          "name": "Jaehoon Lee",
+          "role": "Brand partnerships director",
+          "quote": "Slide comparisons highlight which creators match a partner's requirements. Housing campaign feedback and requests together trimmed approval times considerably.",
+          "goal": "Close three new partnerships per month and sustain 90% campaign satisfaction",
+          "needs": [
+            "Need-based creator recommendations",
+            "Budget versus outcome simulator",
+            "Shareable testimonial slides",
+            "Legal coordination checklist",
+            "Campaign feedback tracker"
+          ]
+        },
+        {
+          "name": "Hanna Choi",
+          "role": "Global community manager",
+          "quote": "Regional needs are automatically tagged, so I can route resources instantly. The standardized slide reports keep headquarters approvals lightweight.",
+          "goal": "Keep global chapter participation above 60% and meet a 48-hour regional support SLA",
+          "needs": [
+            "Multilingual report conversion",
+            "Slack & Teams alerts",
+            "Regional need tagging",
+            "Testimonial archive",
+            "Local action planner"
+          ]
+        },
+        {
+          "name": "Taehun Kim",
+          "role": "Performance marketing head",
+          "quote": "When performance dips, the recommended actions appear instantly. Seeing campaign needs next to goals makes test budget allocation far easier.",
+          "goal": "Maintain 120% ROAS and run five test campaigns at once",
+          "needs": [
+            "Segment-level ad guidance",
+            "Budget pacing alerts",
+            "Campaign comparison slides",
+            "CRM lead sync",
+            "Automated retrospective notes"
+          ]
+        },
+        {
+          "name": "Elena Park",
+          "role": "Data strategy consultant",
+          "quote": "I package requested needs and recommendation examples into ready slides for clients. Reusable data templates mean repeat projects start much faster.",
+          "goal": "Deliver eight consulting proposals per quarter and hit a 70% renewal rate",
+          "needs": [
+            "Need-based data templates",
+            "Testimonial & recommendation summaries",
+            "API usage monitoring",
+            "Security audit checklist",
+            "Presentation mode sharing"
+          ]
+        }
+      ]
+    }
+  },
+  "support": {
+    "hero": {
+      "title": "Support when and how you need it",
+      "subtitle": "From onboarding to integrations, our specialists have you covered.",
+      "primary_cta": "Email support",
+      "secondary_cta": "Explore business plans",
+      "visual_title": "Service metrics",
+      "visual_points": [
+        {
+          "label": "Avg. response time",
+          "value": "< 2 hrs"
+        },
+        {
+          "label": "CSAT",
+          "value": "4.8 / 5"
+        },
+        {
+          "label": "Help center articles",
+          "value": "120+"
+        }
+      ]
+    },
+    "cards": [
+      {
+        "title": "Onboarding & strategy",
+        "description": "Dedicated managers help configure data sources and workflows.",
+        "items": [
+          "Custom onboarding sessions",
+          "Data quality reviews",
+          "Internal training resources"
+        ]
+      },
+      {
+        "title": "Technical assistance",
+        "description": "Solutions engineers support API integrations and security reviews.",
+        "items": [
+          "API guides & samples",
+          "SSO and security consulting",
+          "Priority issue tracking"
+        ]
+      },
+      {
+        "title": "Community",
+        "description": "Learn from other creators and marketers operating at scale.",
+        "items": [
+          "Monthly webinars",
+          "Early access to betas",
+          "Best-practice library"
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Contact our support team",
+      "description": "Tell us what you need and we’ll guide you to the right next step.",
+      "email_label": "Email",
+      "email": "support@creatorcontrol.center",
+      "response": "Responses within 24 business hours.",
+      "office_label": "Office hours",
+      "office_hours": "Mon–Fri 9am–6pm (KST)",
+      "office_description": "Live chat and phone support available outside major holidays."
+    },
+    "cta": {
+      "title": "Get the help you need today",
+      "description": "Technical questions or strategic guidance—we’re ready to assist.",
+      "primary": "Email support",
+      "secondary": "View product overview"
+    }
+  },
+  "super_admin": {
+    "title": "Owner control room",
+    "description": "Manage every member, subscription, and activity trail in seconds.",
+    "users": "Members",
+    "email": "Email",
+    "role": "Role",
+    "plan": "Plan",
+    "status": "Status",
+    "created": "Joined",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "update_role": "Update role",
+    "max_accounts": "Seats",
+    "subscription_active": "Subscription active",
+    "save": "Save changes",
+    "total_members": "Total members",
+    "activity": "Latest activity",
+    "no_details": "No additional details",
+    "payments": "Payments",
+    "payments_description": "Record manual charges and track their current status.",
+    "email_service": "Super Admin Mail",
+    "email_service_description": "Send and receive messages directly with the super admin mailbox.",
+    "email_connected_account": "Connected account:",
+    "email_config_warning": "Email service is not configured.",
+    "email_config_hint": "Add SMTP and IMAP credentials to your environment configuration.",
+    "email_sent_success": "Message sent successfully.",
+    "email_error_title": "Email service error",
+    "email_refresh": "Refresh",
+    "email_last_refreshed": "Last updated",
+    "email_recipient": "Recipient",
+    "email_subject": "Subject",
+    "email_body": "Message",
+    "email_body_placeholder": "Write your message here...",
+    "email_send_test": "Send test email ({email})",
+    "email_test_success": "Sent a test email to {email}.",
+    "email_test_subject": "Creator Control Center test email",
+    "email_test_body": "Hello,\nThis is a test email sent from the admin console by {admin}.\nIf you can read this, email delivery is working.",
+    "email_send": "Send email",
+    "email_inbox": "Inbox",
+    "email_sent": "Sent mail",
+    "email_empty": "No messages to show.",
+    "email_from": "From:",
+    "email_to": "To:",
+    "email_no_subject": "(No subject)"
+  },
+  "payments": {
+    "title": "Payment history",
+    "create_title": "Record payment",
+    "description": "Each entry reflects an invoice, transfer, or refund processed outside the automated billing flow.",
+    "empty": "No payments recorded yet.",
+    "fields": {
+      "user": "Member",
+      "amount": "Amount",
+      "currency": "Currency",
+      "status": "Status",
+      "period_start": "Period start",
+      "period_end": "Period end",
+      "description": "Memo"
+    },
+    "actions": {
+      "create": "Add payment",
+      "update": "Update status"
+    },
+    "status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    }
+  },
+  "profile": {
+    "title": "Your profile",
+    "logout": "Log out"
+  }
+}

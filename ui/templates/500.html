@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서버 오류 - Creator Control Center</title>
+    <link rel="stylesheet" href="{{ asset_url(request, 'css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset_url(request, 'css/style-modern.css') }}">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 1rem;
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background-color: #dc2626;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #b91c1c;
+        }
+        
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+        
+        .error-illustration {
+            max-width: 300px;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        .error-details {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 2rem;
+            max-width: 600px;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.875rem;
+            color: #7f1d1d;
+            display: none;
+        }
+        
+        .toggle-details {
+            background: none;
+            border: none;
+            color: #dc2626;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    
+    {% block content %}
+    <div class="error-container">
+        <div class="error-illustration">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+        </div>
+        
+        <div class="error-code">500</div>
+        <h1 class="error-title">서버 오류가 발생했습니다</h1>
+        
+        <p class="error-message">
+            서버에서 예기치 않은 오류가 발생했습니다.<br>
+            잠시 후 다시 시도해주시거나, 아래 버튼을 통해 다른 페이지로 이동해보세요.
+        </p>
+        
+        <div class="error-actions">
+            <a href="/" class="btn-primary">홈으로 이동</a>
+            <a href="javascript:location.reload()" class="btn-secondary">페이지 새로고침</a>
+            <a href="/support" class="btn-secondary">고객 지원</a>
+        </div>
+        
+        <button class="toggle-details" onclick="toggleErrorDetails()">오류 상세 정보 보기</button>
+        
+        <div id="errorDetails" class="error-details">
+            <p><strong>오류 ID:</strong> {{ error_id if error_id else 'N/A' }}</p>
+            <p><strong>발생 시간:</strong> {{ timestamp if timestamp else 'N/A' }}</p>
+            <p><strong>요청 경로:</strong> {{ request_path if request_path else 'N/A' }}</p>
+            {% if error_message %}
+            <p><strong>오류 메시지:</strong> {{ error_message }}</p>
+            {% endif %}
+        </div>
+        
+        <div style="margin-top: 3rem; color: #9ca3af; font-size: 0.875rem;">
+            <p>문제가 지속되면 <a href="/support" style="color: #dc2626; text-decoration: underline;">고객 지원팀</a>에 문의해주세요.</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleErrorDetails() {
+            const details = document.getElementById('errorDetails');
+            const button = document.querySelector('.toggle-details');
+            
+            if (details.style.display === 'block') {
+                details.style.display = 'none';
+                button.textContent = '오류 상세 정보 보기';
+            } else {
+                details.style.display = 'block';
+                button.textContent = '오류 상세 정보 숨기기';
+            }
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>
