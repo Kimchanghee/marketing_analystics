@@ -1,4 +1,7 @@
 """채널 관리 및 OAuth 인증 라우터"""
+import base64
+import hashlib
+import secrets
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
 from urllib.parse import urlencode, quote
@@ -6,6 +9,19 @@ from urllib.parse import urlencode, quote
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
+
+
+def generate_pkce_pair():
+    """PKCE code_verifier와 code_challenge(S256) 생성"""
+    # 43-128자 사이의 랜덤 문자열 생성 (RFC 7636)
+    code_verifier = secrets.token_urlsafe(32)
+
+    # S256: SHA256 해시 후 base64url 인코딩
+    code_challenge = base64.urlsafe_b64encode(
+        hashlib.sha256(code_verifier.encode('ascii')).digest()
+    ).decode('ascii').rstrip('=')
+
+    return code_verifier, code_challenge
 
 from ..auth import create_access_token
 from ..database import get_session
@@ -140,55 +156,54 @@ async def manage_channels(
             "needs_refresh": needs_refresh,
         })
 
-    # 지원하는 플랫폼 목록
-    platforms = [
-        {
-            "id": "instagram",
+    # 지원하는 플랫폼 목록 (기본 데이터)
+    platform_defaults = {
+        "instagram": {
             "name": "Instagram",
             "icon": "📷",
             "color": "#E4405F",
             "description": "게시물, 스토리, 릴스 분석",
         },
-        {
-            "id": "facebook",
+        "facebook": {
             "name": "Facebook",
             "icon": "📘",
             "color": "#1877F2",
             "description": "페이지 인사이트 및 게시물 분석",
         },
-        {
-            "id": "threads",
+        "threads": {
             "name": "Threads",
             "icon": "🧵",
             "color": "#000000",
             "description": "스레드 게시물 및 참여도 분석",
         },
-        {
-            "id": "youtube",
+        "youtube": {
             "name": "YouTube",
             "icon": "▶️",
             "color": "#FF0000",
             "description": "동영상, 구독자, 시청 시간 분석",
         },
-        {
-            "id": "twitter",
+        "twitter": {
             "name": "Twitter / X",
             "icon": "🐦",
             "color": "#1DA1F2",
             "description": "트윗, 팔로워, 참여도 분석",
         },
-        {
-            "id": "tiktok",
+        "tiktok": {
             "name": "TikTok",
             "icon": "🎵",
             "color": "#000000",
             "description": "동영상, 좋아요, 조회수 분석",
         },
-    ]
+    }
 
+    # 번역 데이터와 기본 데이터를 병합
     platforms = [
         {
             "id": platform_id,
+            "name": platform_items.get(platform_id, {}).get("name", platform_defaults.get(platform_id, {}).get("name", platform_id.title())),
+            "icon": platform_defaults.get(platform_id, {}).get("icon", "📊"),
+            "color": platform_defaults.get(platform_id, {}).get("color", "#666666"),
+            "description": platform_items.get(platform_id, {}).get("description", platform_defaults.get(platform_id, {}).get("description", "")),
             "badge": platform_items.get(platform_id, {}).get("badge", platform_id[:2].upper()),
         }
         for platform_id in platform_order
@@ -275,10 +290,18 @@ async def connect_channel(
         "state": state,
     }
 
-    # Twitter는 추가 파라미터 필요
+    # Twitter는 PKCE (S256) 필요
     if platform == "twitter":
-        params["code_challenge"] = "challenge"  # PKCE 필요시 구현
-        params["code_challenge_method"] = "plain"
+        code_verifier, code_challenge = generate_pkce_pair()
+
+        # code_verifier를 state와 함께 저장 (JWT에 포함)
+        state = create_access_token(
+            data={"user_id": user.id, "platform": platform, "code_verifier": code_verifier},
+            expires_delta=timedelta(minutes=10)
+        )
+        params["state"] = state
+        params["code_challenge"] = code_challenge
+        params["code_challenge_method"] = "S256"
 
     auth_url = f"{config['auth_url']}?{urlencode(params)}"
 
@@ -315,6 +338,7 @@ async def oauth_callback(
         payload = decode_token(state)
         user_id = payload.get("user_id")
         platform_from_state = payload.get("platform")
+        code_verifier = payload.get("code_verifier")  # Twitter PKCE용
 
         if platform != platform_from_state:
             raise HTTPException(
@@ -350,6 +374,10 @@ async def oauth_callback(
         "redirect_uri": redirect_uri,
         "grant_type": "authorization_code",
     }
+
+    # Twitter PKCE: code_verifier 추가
+    if platform == "twitter" and code_verifier:
+        token_data["code_verifier"] = code_verifier
 
     try:
         response = requests.post(config["token_url"], data=token_data, timeout=10)
