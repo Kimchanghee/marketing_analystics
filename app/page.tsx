@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -30,7 +29,6 @@ function getCookie(name: string): string | null {
 }
 
 export default function LandingPage() {
-  const router = useRouter()
   const [lang, setLang] = useState<Language>("en")
 
   // Initialize language from cookie or browser preference
