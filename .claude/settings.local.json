@@ -5,7 +5,17 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(ls:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(git config:*)",
+      "Bash(cat:*)",
+      "Bash(powershell -Command \"[System.IO.File]::ReadAllText\\(''c:\\\\Github\\\\marketing_analystics\\\\ui\\\\templates\\\\signup.html'', [System.Text.Encoding]::UTF8\\)\")",
+      "Bash(powershell -Command:*)",
+      "Bash(python -c:*)",
+      "Bash(python3 -c \"import ast; exec\\(open\\(''C:/Github/marketing_analystics/app/routers/admin.py''\\).read\\(\\)\\)\")",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(python scripts/add_legal_translations.py:*)",
+      "Bash(python -m py_compile:*)"
     ]
   }
 }

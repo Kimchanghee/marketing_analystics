@@ -2137,3 +2137,231 @@ body {
     min-width: 600px;
   }
 }
+
+/* ========================================
+   Legal Pages (Terms, Privacy)
+   ======================================== */
+.legal-section {
+  padding: 4rem 0;
+  min-height: calc(100vh - 200px);
+}
+
+.legal-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.legal-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.legal-updated {
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+}
+
+.legal-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--surface-primary);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--card-shadow);
+}
+
+.legal-article {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--divider);
+}
+
+.legal-article:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.legal-article h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.legal-article p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.legal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* ========================================
+   Contact Page
+   ======================================== */
+.contact-section {
+  padding: 4rem 0;
+  min-height: calc(100vh - 200px);
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact-form-wrapper {
+  background: var(--surface-primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+}
+
+.contact-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form .btn {
+  width: 100%;
+}
+
+.contact-info {
+  background: var(--surface-primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+  height: fit-content;
+}
+
+.contact-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.contact-info .info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.contact-info .info-item svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.contact-info .info-item a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-info .info-item a:hover {
+  text-decoration: underline;
+}
+
+.contact-info .response-time {
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.alert {
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.alert.success {
+  background: rgba(27, 185, 120, 0.15);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.alert.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+@media (max-width: 768px) {
+  .legal-header h1,
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+
+  .legal-content {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .legal-footer {
+    flex-direction: column;
+  }
+}

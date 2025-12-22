@@ -444,6 +444,241 @@ class SEOService:
         return "\n    ".join(components)
 
 
+    def generate_speakable_schema(self, page: str = "home") -> str:
+        """
+        Speakable structured data (JSON-LD) 생성 - 음성 검색 최적화 (AEO)
+
+        Google Assistant, Alexa 등 음성 비서가 읽을 수 있는 콘텐츠 마크업
+        """
+        meta = self.get_page_metadata(page)
+        site = self.seo_data.get("site", {})
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": meta["title"],
+            "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": [
+                    ".hero-title",
+                    ".hero-subtitle",
+                    ".feature-title",
+                    ".section-header h2",
+                    ".faq-answer"
+                ]
+            },
+            "url": meta["url"]
+        }
+
+        return self._json_ld_script(schema)
+
+    def generate_itemlist_schema(self, items: List[Dict[str, Any]], list_type: str = "ItemList") -> str:
+        """
+        ItemList structured data (JSON-LD) 생성 - 목록 콘텐츠 최적화 (GEO)
+
+        AI 검색 엔진이 목록 형태의 콘텐츠를 더 잘 이해하도록 마크업
+        """
+        schema = {
+            "@context": "https://schema.org",
+            "@type": list_type,
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": idx + 1,
+                    "name": item.get("name", ""),
+                    "description": item.get("description", ""),
+                    "url": item.get("url", "")
+                }
+                for idx, item in enumerate(items)
+            ]
+        }
+
+        return self._json_ld_script(schema)
+
+    def generate_service_schema(self) -> str:
+        """
+        Service structured data (JSON-LD) 생성 - 서비스 정보 최적화 (GEO)
+
+        AI가 서비스 정보를 정확하게 이해하고 인용할 수 있도록 마크업
+        """
+        site = self.seo_data.get("site", {})
+        org = self.seo_data.get("organization", {})
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Creator Control Center",
+            "description": site.get("description", ""),
+            "provider": {
+                "@type": "Organization",
+                "name": org.get("name", "Creator Control Center"),
+                "url": site.get("url", "")
+            },
+            "serviceType": "SaaS Analytics Platform",
+            "areaServed": {
+                "@type": "Country",
+                "name": "Worldwide"
+            },
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Creator Control Center Plans",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "name": "Free Plan",
+                        "description": "1 channel, basic analytics",
+                        "price": "0",
+                        "priceCurrency": "USD"
+                    },
+                    {
+                        "@type": "Offer",
+                        "name": "Personal Plus",
+                        "description": "5 channels, AI features, advanced analytics",
+                        "price": "29.90",
+                        "priceCurrency": "USD"
+                    },
+                    {
+                        "@type": "Offer",
+                        "name": "Enterprise",
+                        "description": "Unlimited channels, team management, API access",
+                        "price": "119.00",
+                        "priceCurrency": "USD"
+                    }
+                ]
+            }
+        }
+
+        return self._json_ld_script(schema)
+
+    def generate_definedterm_schema(self, terms: List[Dict[str, str]]) -> str:
+        """
+        DefinedTerm structured data (JSON-LD) 생성 - 용어 정의 최적화 (AEO)
+
+        AI가 전문 용어와 그 정의를 명확하게 이해하도록 마크업
+        """
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "DefinedTermSet",
+            "name": "Creator Control Center Glossary",
+            "hasDefinedTerm": [
+                {
+                    "@type": "DefinedTerm",
+                    "name": term.get("term", ""),
+                    "description": term.get("definition", "")
+                }
+                for term in terms
+            ]
+        }
+
+        return self._json_ld_script(schema)
+
+    def generate_claim_review_schema(self, claims: List[Dict[str, Any]]) -> str:
+        """
+        ClaimReview structured data (JSON-LD) 생성 - 신뢰성 강화 (GEO/E-E-A-T)
+
+        AI가 정보의 신뢰성을 평가할 수 있도록 마크업
+        """
+        site = self.seo_data.get("site", {})
+
+        schema_list = []
+        for claim in claims:
+            schema = {
+                "@context": "https://schema.org",
+                "@type": "ClaimReview",
+                "claimReviewed": claim.get("claim", ""),
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": claim.get("rating", 5),
+                    "bestRating": 5,
+                    "worstRating": 1,
+                    "alternateName": claim.get("verdict", "True")
+                },
+                "author": {
+                    "@type": "Organization",
+                    "name": "Creator Control Center"
+                },
+                "url": claim.get("url", site.get("url", ""))
+            }
+            schema_list.append(self._json_ld_script(schema))
+
+        return "\n    ".join(schema_list)
+
+    def generate_aeo_optimized_content(self, page: str = "home") -> str:
+        """
+        AEO (Answer Engine Optimization) 최적화된 모든 스키마 생성
+
+        AI 답변 엔진(ChatGPT, Perplexity, Google AI Overview 등)에 최적화
+        """
+        schemas = [
+            self.generate_speakable_schema(page),
+            self.generate_faq_schema(),
+            self.generate_howto_schema(),
+        ]
+
+        # Filter out empty schemas
+        schemas = [s for s in schemas if s]
+
+        return "\n    ".join(schemas)
+
+    def generate_geo_optimized_content(self, page: str = "home") -> str:
+        """
+        GEO (Generative Engine Optimization) 최적화된 모든 스키마 생성
+
+        생성형 AI 검색 엔진에 최적화된 구조화된 데이터
+        """
+        schemas = [
+            self.generate_service_schema(),
+            self.generate_article_schema(page),
+        ]
+
+        # Add defined terms for educational content
+        terms = [
+            {"term": "Creator Economy", "definition": "The economic ecosystem built around independent content creators who monetize their content and audience."},
+            {"term": "Multi-Channel Network (MCN)", "definition": "Organizations that work with video platforms to offer content creators assistance with programming, funding, promotion, and audience development."},
+            {"term": "Social Media Analytics", "definition": "The practice of gathering data from social media platforms and analyzing it to make business decisions."},
+            {"term": "AI Performance Director", "definition": "An AI-powered tool that analyzes all channel data in real-time and provides actionable weekly recommendations."},
+        ]
+        schemas.append(self.generate_definedterm_schema(terms))
+
+        # Filter out empty schemas
+        schemas = [s for s in schemas if s]
+
+        return "\n    ".join(schemas)
+
+    def generate_complete_optimization(
+        self,
+        page: str = "home",
+        page_path: str = "/",
+        include_aeo: bool = True,
+        include_geo: bool = True,
+        custom_image: Optional[str] = None
+    ) -> str:
+        """
+        SEO + AEO + GEO 완전한 최적화 head 섹션 생성
+
+        모든 검색 엔진과 AI 시스템에 최적화된 메타데이터
+        """
+        components = [
+            self.generate_hreflang_tags(page_path),
+            self.generate_meta_tags(page),
+            self.generate_opengraph_tags(page, custom_image),
+            self.generate_twitter_cards(page, custom_image),
+            self.generate_all_schemas(page, include_faq=(page == "support")),
+        ]
+
+        if include_aeo:
+            aeo_content = self.generate_aeo_optimized_content(page)
+            if aeo_content:
+                components.append(aeo_content)
+
+        if include_geo:
+            geo_content = self.generate_geo_optimized_content(page)
+            if geo_content:
+                components.append(geo_content)
+
+        return "\n    ".join(components)
+
+
 def get_seo_service(locale: str = "ko") -> SEOService:
     """SEO 서비스 인스턴스 반환"""
     return SEOService(locale=locale)

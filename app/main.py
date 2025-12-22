@@ -271,6 +271,90 @@ async def support(request: Request):
     )
 
 
+@app.get("/terms")
+async def terms_of_service(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
+    return app.state.templates.TemplateResponse(
+        "terms.html",
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "terms"},
+    )
+
+
+@app.get("/privacy")
+async def privacy_policy(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
+    return app.state.templates.TemplateResponse(
+        "privacy.html",
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "privacy"},
+    )
+
+
+@app.get("/contact")
+async def contact_page(request: Request):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
+    return app.state.templates.TemplateResponse(
+        "contact.html",
+        {"request": request, "locale": locale, "t": strings, "seo": seo_service, "page": "contact"},
+    )
+
+
+@app.post("/contact")
+async def contact_submit(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    subject: str = Form(...),
+    message: str = Form(...),
+):
+    locale = getattr(request.state, "locale", "ko")
+    strings = translator.load_locale(locale)
+    seo_service = get_seo_service(locale)
+
+    # Send contact email via Resend if configured
+    from .services.resend_email import resend_email_service
+
+    settings = get_settings()
+    success_message = False
+    error_message = False
+
+    if settings.use_resend:
+        result = resend_email_service.send_admin_notification(
+            to=settings.resend_from_email,
+            subject_text=f"[Contact] {subject}",
+            message=f"From: {name} <{email}>\n\nMessage:\n{message}",
+        )
+        if result.success:
+            success_message = True
+        else:
+            error_message = True
+    else:
+        # Log the contact request if Resend is not configured
+        import logging
+
+        logger = logging.getLogger(__name__)
+        logger.info(f"Contact form submission: {name} <{email}> - {subject}")
+        success_message = True
+
+    return app.state.templates.TemplateResponse(
+        "contact.html",
+        {
+            "request": request,
+            "locale": locale,
+            "t": strings,
+            "seo": seo_service,
+            "page": "contact",
+            "success_message": success_message,
+            "error_message": error_message,
+        },
+    )
+
+
 @app.get("/profile")
 async def profile(
     request: Request,

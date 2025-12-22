@@ -24,7 +24,10 @@
     "solutions": "Solutions",
     "support": "Support",
     "contact": "hello@creatorcontrol.center",
-    "note": "© 2024 Creator Control Center. All rights reserved."
+    "note": "© 2024 Creator Control Center. All rights reserved.",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "contact_link": "Contact Us"
   },
   "roles": {
     "creator": "Creator",
@@ -349,8 +352,8 @@
     "youtube": "YouTube",
     "twitter": "Twitter / X",
     "tiktok": "TikTok",
-  "facebook": "Facebook",
-  "meta_ads": "Meta Ads"
+    "facebook": "Facebook",
+    "meta_ads": "Meta Ads"
   },
   "channels_manage": {
     "title": "Channel control center",
@@ -1346,5 +1349,101 @@
   "profile": {
     "title": "Your profile",
     "logout": "Log out"
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms of Service",
+      "last_updated": "Last Updated: December 23, 2024",
+      "sections": [
+        {
+          "title": "Article 1 (Purpose)",
+          "content": "These Terms govern the conditions and procedures for using the services provided by Creator Control Center (hereinafter \"Company\"), and define the rights, obligations, and responsibilities of the Company and its members."
+        },
+        {
+          "title": "Article 2 (Definitions)",
+          "content": "1. \"Service\" refers to the creator channel management and analytics service provided by the Company.\n2. \"Member\" refers to a person who agrees to these Terms and uses the Service.\n3. \"Account\" refers to unique identification information created by a member for using the Service."
+        },
+        {
+          "title": "Article 3 (Effect and Amendment of Terms)",
+          "content": "1. These Terms take effect when posted on the Service screen or notified to members by other means.\n2. The Company may amend these Terms when necessary, and amended Terms take effect when notified in the same manner as paragraph 1."
+        },
+        {
+          "title": "Article 4 (Provision of Service)",
+          "content": "1. The Company provides the following services:\n   - Integrated social media channel management\n   - Channel performance analytics and reporting\n   - AI-based insights\n2. The Service is provided 24 hours a day, year-round, in principle."
+        },
+        {
+          "title": "Article 5 (Member Obligations)",
+          "content": "1. Members must comply with relevant laws, these Terms, and usage guidelines.\n2. Members must not misappropriate others' personal information or fraudulently use the Service.\n3. Members are responsible for maintaining the security of their account information."
+        },
+        {
+          "title": "Article 6 (Intellectual Property Rights)",
+          "content": "Copyrights and intellectual property rights for the Service and related content belong to the Company. Members may not reproduce, distribute, broadcast, or otherwise use them without prior consent from the Company."
+        },
+        {
+          "title": "Article 7 (Disclaimer)",
+          "content": "1. The Company is not liable for service interruptions due to force majeure such as natural disasters or wars.\n2. The Company is not liable for service disruptions caused by members' own fault."
+        },
+        {
+          "title": "Article 8 (Dispute Resolution)",
+          "content": "Disputes regarding these Terms shall be resolved in accordance with the laws of the Republic of Korea, and the competent court shall be the court having jurisdiction over the Company's location."
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "last_updated": "Last Updated: December 23, 2024",
+      "sections": [
+        {
+          "title": "1. Personal Information Collected",
+          "content": "The Company collects the following personal information to provide services:\n- Required: Email address, password (encrypted)\n- Optional: Name, profile photo\n- For social login: Platform ID, email, profile information"
+        },
+        {
+          "title": "2. Purpose of Collection and Use",
+          "content": "- Member registration and management\n- Service provision and improvement\n- Customer support and inquiry response\n- Legal compliance"
+        },
+        {
+          "title": "3. Retention Period",
+          "content": "Personal information is destroyed without delay upon member withdrawal or when the purpose of collection is achieved. However, if retention is required by relevant laws, it is stored for the required period."
+        },
+        {
+          "title": "4. Provision to Third Parties",
+          "content": "The Company does not provide personal information to third parties without member consent. However, requests pursuant to laws are exceptions."
+        },
+        {
+          "title": "5. Security Measures",
+          "content": "- Password encryption\n- SSL/TLS communication encryption\n- Access control management\n- Regular security audits"
+        },
+        {
+          "title": "6. Data Subject Rights",
+          "content": "Members may request access, correction, deletion, or suspension of processing of their personal information at any time. Requests can be made through settings or customer support."
+        },
+        {
+          "title": "7. Cookie Usage",
+          "content": "The Company uses cookies for service convenience and analytics. You can refuse cookie usage through browser settings."
+        },
+        {
+          "title": "8. Privacy Officer",
+          "content": "For privacy inquiries: hello@creatorcontrol.center"
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact Us",
+      "subtitle": "Have questions? Feel free to reach out anytime.",
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "subject": "Subject",
+        "message": "Message",
+        "submit": "Send",
+        "success": "Your message has been sent successfully.",
+        "error": "Failed to send message. Please try again."
+      },
+      "info": {
+        "title": "Contact Information",
+        "email": "hello@creatorcontrol.center",
+        "response_time": "We respond within 24 business hours."
+      }
+    }
   }
 }

@@ -1,0 +1,51 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<section class="contact-section">
+    <div class="section-container">
+        <div class="contact-header">
+            <h1>{{ t['legal']['contact']['title'] }}</h1>
+            <p>{{ t['legal']['contact']['subtitle'] }}</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-form-wrapper">
+                <form id="contactForm" class="contact-form" method="post" action="/contact">
+                    <div class="form-group">
+                        <label for="name">{{ t['legal']['contact']['form']['name'] }}</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">{{ t['legal']['contact']['form']['email'] }}</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">{{ t['legal']['contact']['form']['subject'] }}</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">{{ t['legal']['contact']['form']['message'] }}</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">{{ t['legal']['contact']['form']['submit'] }}</button>
+                </form>
+                {% if success_message %}
+                <div class="alert success">{{ t['legal']['contact']['form']['success'] }}</div>
+                {% endif %}
+                {% if error_message %}
+                <div class="alert error">{{ t['legal']['contact']['form']['error'] }}</div>
+                {% endif %}
+            </div>
+            <div class="contact-info">
+                <h3>{{ t['legal']['contact']['info']['title'] }}</h3>
+                <div class="info-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <a href="mailto:{{ t['legal']['contact']['info']['email'] }}">{{ t['legal']['contact']['info']['email'] }}</a>
+                </div>
+                <p class="response-time">{{ t['legal']['contact']['info']['response_time'] }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

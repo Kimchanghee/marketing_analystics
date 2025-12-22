@@ -44,6 +44,24 @@
       "description": "모든 채널의 성과를 실시간으로 확인하고 관리하세요.",
       "keywords": "크리에이터 대시보드, 실시간 분석, 채널 관리",
       "og_type": "website"
+    },
+    "terms": {
+      "title": "이용약관 - Creator Control Center",
+      "description": "Creator Control Center 서비스 이용약관입니다. 서비스 이용 조건, 회원의 권리와 의무, 책임 제한 사항을 확인하세요.",
+      "keywords": "이용약관, 서비스 약관, 크리에이터 플랫폼 이용약관, 이용조건",
+      "og_type": "website"
+    },
+    "privacy": {
+      "title": "개인정보처리방침 - Creator Control Center",
+      "description": "Creator Control Center의 개인정보 수집, 이용, 보관에 관한 정책입니다. 개인정보 보호와 안전한 데이터 관리에 대해 알아보세요.",
+      "keywords": "개인정보처리방침, 개인정보보호, 데이터 보안, 프라이버시 정책",
+      "og_type": "website"
+    },
+    "contact": {
+      "title": "문의하기 - Creator Control Center",
+      "description": "Creator Control Center에 문의하세요. 서비스 관련 질문, 제휴 문의, 기술 지원 요청을 받고 있습니다.",
+      "keywords": "문의하기, 고객지원, 연락처, 제휴문의, 기술지원",
+      "og_type": "website"
     }
   },
   "organization": {

@@ -1,1 +1,225 @@
-"""입력값 검증 모듈"""\n\nimport re\nfrom datetime import datetime\nfrom typing import Optional\n\nfrom pydantic import BaseModel, EmailStr, Field, validator\n\n\nclass UserRegistration(BaseModel):\n    """사용자 등록 입력값 검증"""\n    email: EmailStr\n    password: str = Field(..., min_length=8, max_length=100)\n    name: str = Field(..., min_length=2, max_length=50)\n    role: str = Field(default=\"creator\", regex=\"^(creator|manager)$\")\n    organization: Optional[str] = Field(None, max_length=100)\n    locale: str = Field(default=\"ko\", regex=\"^(ko|en|ja)$\")\n    privacy_agreement: bool\n    guidance_agreement: bool\n    \n    @validator('password')\n    def validate_password_strength(cls, v):\n        """비밀번호 강도 검증"""\n        if len(v) < 8:\n            raise ValueError('Password must be at least 8 characters long')\n        if not re.search(r'[A-Z]', v):\n            raise ValueError('Password must contain at least one uppercase letter')\n        if not re.search(r'[a-z]', v):\n            raise ValueError('Password must contain at least one lowercase letter')\n        if not re.search(r'\d', v):\n            raise ValueError('Password must contain at least one digit')\n        if not re.search(r'[!@#$%^&*(),.?\":{}|<>]', v):\n            raise ValueError('Password must contain at least one special character')\n        return v\n    \n    @validator('name')\n    def validate_name(cls, v):\n        """이름 검증"""\n        # 이름에 특수문자 제한\n        if re.search(r'[!@#$%^&*()_+=\\[\\]{};:\"\\|,.<>/?]', v):\n            raise ValueError('Name cannot contain special characters')\n        return v.strip()\n\n\nclass UserLogin(BaseModel):\n    """사용자 로그인 입력값 검증"""\n    email: EmailStr\n    password: str\n    locale: str = Field(default=\"ko\", regex=\"^(ko|en|ja)$\")\n\n\nclass PasswordReset(BaseModel):\n    """비밀번호 재설정 입력값 검증"""\n    email: EmailStr\n    token: str\n    new_password: str = Field(..., min_length=8, max_length=100)\n    locale: str = Field(default=\"ko\", regex=\"^(ko|en|ja)$\")\n    \n    @validator('new_password')\n    def validate_password_strength(cls, v):\n        """비밀번호 강도 검증"""\n        if len(v) < 8:\n            raise ValueError('Password must be at least 8 characters long')\n        if not re.search(r'[A-Z]', v):\n            raise ValueError('Password must contain at least one uppercase letter')\n        if not re.search(r'[a-z]', v):\n            raise ValueError('Password must contain at least one lowercase letter')\n        if not re.search(r'\d', v):\n            raise ValueError('Password must contain at least one digit')\n        if not re.search(r'[!@#$%^&*(),.?\":{}|<>]', v):\n            raise ValueError('Password must contain at least one special character')\n        return v\n\n\nclass ChannelConnection(BaseModel):\n    """채널 연결 입력값 검증"""\n    platform: str = Field(..., regex=\"^(instagram|facebook|threads|youtube|twitter|tiktok)$\")\n    account_name: str = Field(..., min_length=1, max_length=100)\n    \n    @validator('account_name')\n    def validate_account_name(cls, v):\n        """계정명 검증"""\n        # 계정명에 허용되지 않는 문자 제한\n        if re.search(r'[\\\\/:*?\"<>|]', v):\n            raise ValueError('Account name contains invalid characters')\n        return v.strip()\n\n\nclass ChannelCredentials(BaseModel):\n    """채널 자격 증명 입력값 검증"""\n    auth_type: str = Field(..., regex=\"^(oauth2|api_key|password)$\")\n    identifier: Optional[str] = Field(None, max_length=500)\n    secret: Optional[str] = Field(None, max_length=500)\n    access_token: Optional[str] = Field(None, max_length=2000)\n    refresh_token: Optional[str] = Field(None, max_length=2000)\n    expires_at: Optional[str] = None\n    metadata: Optional[str] = None\n    \n    @validator('expires_at')\n    def validate_expires_at(cls, v):\n        """만료 시간 검증"""\n        if v:\n            try:\n                datetime.fromisoformat(v.replace('Z', '+00:00'))\n            except ValueError:\n                raise ValueError('Invalid datetime format. Use ISO format.')\n        return v\n    \n    @validator('metadata')\n    def validate_metadata(cls, v):\n        """메타데이터 JSON 검증"""\n        if v:\n            import json\n            try:\n                json.loads(v)\n            except json.JSONDecodeError:\n                raise ValueError('Invalid JSON format for metadata')\n        return v\n\n\nclass EmailVerification(BaseModel):\n    """이메일 인증 입력값 검증"""\n    email: EmailStr\n    verification_code: str = Field(..., min_length=6, max_length=6, regex=\"^\\d{6}$\")\n    locale: str = Field(default=\"ko\", regex=\"^(ko|en|ja)$\")\n\n\nclass SocialLink(BaseModel):\n    """소셜 계정 연결 입력값 검증"""\n    provider: str = Field(..., regex=\"^(google|apple|facebook|twitter)$\")\n    provider_user_id: str = Field(..., min_length=1, max_length=200)\n\n\nclass SubscriptionChange(BaseModel):\n    """구독 변경 입력값 검증"""\n    tier: str = Field(..., regex=\"^(free|pro|enterprise)$\")\n\n\nclass ManagerLinkRequest(BaseModel):\n    """매니저 연결 요청 입력값 검증"""\n    manager_email: EmailStr\n\n\nclass ExportRequest(BaseModel):\n    """데이터 내보내기 요청 입력값 검증"""\n    format: str = Field(..., regex=\"^(csv|json|pdf)$\")\n    start_date: Optional[str] = None\n    end_date: Optional[str] = None\n    \n    @validator('start_date', 'end_date')\n    def validate_date_format(cls, v):\n        """날짜 형식 검증"""\n        if v:\n            try:\n                datetime.strptime(v, '%Y-%m-%d')\n            except ValueError:\n                raise ValueError('Invalid date format. Use YYYY-MM-DD.')\n        return v\n    \n    @validator('end_date')\n    def validate_date_range(cls, v, values):\n        """날짜 범위 검증"""\n        if v and 'start_date' in values and values['start_date']:\n            start = datetime.strptime(values['start_date'], '%Y-%m-%d')\n            end = datetime.strptime(v, '%Y-%m-%d')\n            if end < start:\n                raise ValueError('End date must be after start date')\n        return v\n\n\ndef sanitize_input(text: str, max_length: int = 1000) -> str:\n    """사용자 입력값 정리"""\n    if not text:\n        return ''\n    \n    # 길이 제한\n    text = text[:max_length]\n    \n    # HTML 태그 제거 (기본적인 XSS 방지)\n    text = re.sub(r'<[^>]*>', '', text)\n    \n    # 위험한 문자 제거\n    text = text.replace('\\0', '')\n    text = text.replace('\\x00', '')\n    \n    return text.strip()\n\n\ndef validate_email_domain(email: str, allowed_domains: Optional[list] = None) -> bool:\n    """이메일 도메인 검증"""\n    if allowed_domains is None:\n        allowed_domains = []\n    \n    # 기본 허용 도메인\n    default_allowed = ['gmail.com', 'naver.com', 'daum.net', 'hanmail.net', 'yahoo.com', 'outlook.com', 'hotmail.com']\n    allowed_domains = list(set(allowed_domains + default_allowed))\n    \n    try:\n        domain = email.split('@')[1].lower()\n        return domain in allowed_domains\n    except (IndexError, AttributeError):\n        return False"
+"""Input validation module."""
+
+import re
+from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel, EmailStr, Field, field_validator
+
+
+class UserRegistration(BaseModel):
+    """User registration input validation."""
+
+    email: EmailStr
+    password: str = Field(..., min_length=8, max_length=100)
+    name: str = Field(..., min_length=2, max_length=50)
+    role: str = Field(default="creator", pattern=r"^(creator|manager)$")
+    organization: Optional[str] = Field(None, max_length=100)
+    locale: str = Field(default="ko", pattern=r"^(ko|en|ja)$")
+    privacy_agreement: bool
+    guidance_agreement: bool
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_strength(cls, v):
+        """Validate password strength."""
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        if not re.search(r"[A-Z]", v):
+            raise ValueError("Password must contain at least one uppercase letter")
+        if not re.search(r"[a-z]", v):
+            raise ValueError("Password must contain at least one lowercase letter")
+        if not re.search(r"\d", v):
+            raise ValueError("Password must contain at least one digit")
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
+            raise ValueError("Password must contain at least one special character")
+        return v
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v):
+        """Validate name."""
+        if re.search(r'[!@#$%^&*()_+=\[\]{};:"\|,.<>/?]', v):
+            raise ValueError("Name cannot contain special characters")
+        return v.strip()
+
+
+class UserLogin(BaseModel):
+    """User login input validation."""
+
+    email: EmailStr
+    password: str
+    locale: str = Field(default="ko", pattern=r"^(ko|en|ja)$")
+
+
+class PasswordReset(BaseModel):
+    """Password reset input validation."""
+
+    email: EmailStr
+    token: str
+    new_password: str = Field(..., min_length=8, max_length=100)
+    locale: str = Field(default="ko", pattern=r"^(ko|en|ja)$")
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_password_strength(cls, v):
+        """Validate password strength."""
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        if not re.search(r"[A-Z]", v):
+            raise ValueError("Password must contain at least one uppercase letter")
+        if not re.search(r"[a-z]", v):
+            raise ValueError("Password must contain at least one lowercase letter")
+        if not re.search(r"\d", v):
+            raise ValueError("Password must contain at least one digit")
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
+            raise ValueError("Password must contain at least one special character")
+        return v
+
+
+class ChannelConnection(BaseModel):
+    """Channel connection input validation."""
+
+    platform: str = Field(
+        ..., pattern=r"^(instagram|facebook|threads|youtube|twitter|tiktok)$"
+    )
+    account_name: str = Field(..., min_length=1, max_length=100)
+
+    @field_validator("account_name")
+    @classmethod
+    def validate_account_name(cls, v):
+        """Validate account name."""
+        if re.search(r'[\/:*?"<>|]', v):
+            raise ValueError("Account name contains invalid characters")
+        return v.strip()
+
+
+class ChannelCredentials(BaseModel):
+    """Channel credentials input validation."""
+
+    auth_type: str = Field(..., pattern=r"^(oauth2|api_key|password)$")
+    identifier: Optional[str] = Field(None, max_length=500)
+    secret: Optional[str] = Field(None, max_length=500)
+    access_token: Optional[str] = Field(None, max_length=2000)
+    refresh_token: Optional[str] = Field(None, max_length=2000)
+    expires_at: Optional[str] = None
+    metadata: Optional[str] = None
+
+    @field_validator("expires_at")
+    @classmethod
+    def validate_expires_at(cls, v):
+        """Validate expiration time."""
+        if v:
+            try:
+                datetime.fromisoformat(v.replace("Z", "+00:00"))
+            except ValueError:
+                raise ValueError("Invalid datetime format. Use ISO format.")
+        return v
+
+    @field_validator("metadata")
+    @classmethod
+    def validate_metadata(cls, v):
+        """Validate metadata JSON."""
+        if v:
+            import json
+
+            try:
+                json.loads(v)
+            except json.JSONDecodeError:
+                raise ValueError("Invalid JSON format for metadata")
+        return v
+
+
+class EmailVerification(BaseModel):
+    """Email verification input validation."""
+
+    email: EmailStr
+    verification_code: str = Field(..., min_length=6, max_length=6, pattern=r"^\d{6}$")
+    locale: str = Field(default="ko", pattern=r"^(ko|en|ja)$")
+
+
+class SocialLink(BaseModel):
+    """Social account link input validation."""
+
+    provider: str = Field(..., pattern=r"^(google|apple|facebook|twitter)$")
+    provider_user_id: str = Field(..., min_length=1, max_length=200)
+
+
+class SubscriptionChange(BaseModel):
+    """Subscription change input validation."""
+
+    tier: str = Field(..., pattern=r"^(free|pro|enterprise)$")
+
+
+class ManagerLinkRequest(BaseModel):
+    """Manager link request input validation."""
+
+    manager_email: EmailStr
+
+
+class ExportRequest(BaseModel):
+    """Data export request input validation."""
+
+    format: str = Field(..., pattern=r"^(csv|json|pdf)$")
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+    @field_validator("start_date", "end_date")
+    @classmethod
+    def validate_date_format(cls, v):
+        """Validate date format."""
+        if v:
+            try:
+                datetime.strptime(v, "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("Invalid date format. Use YYYY-MM-DD.")
+        return v
+
+    @field_validator("end_date")
+    @classmethod
+    def validate_date_range(cls, v, info):
+        """Validate date range."""
+        if v and info.data.get("start_date"):
+            start = datetime.strptime(info.data["start_date"], "%Y-%m-%d")
+            end = datetime.strptime(v, "%Y-%m-%d")
+            if end < start:
+                raise ValueError("End date must be after start date")
+        return v
+
+
+def sanitize_input(text: str, max_length: int = 1000) -> str:
+    """Sanitize user input."""
+    if not text:
+        return ""
+
+    text = text[:max_length]
+    text = re.sub(r"<[^>]*>", "", text)
+    text = text.replace("\0", "")
+    text = text.replace("\x00", "")
+
+    return text.strip()
+
+
+def validate_email_domain(
+    email: str, allowed_domains: Optional[list] = None
+) -> bool:
+    """Validate email domain."""
+    if allowed_domains is None:
+        allowed_domains = []
+
+    default_allowed = [
+        "gmail.com",
+        "naver.com",
+        "daum.net",
+        "hanmail.net",
+        "yahoo.com",
+        "outlook.com",
+        "hotmail.com",
+    ]
+    allowed_domains = list(set(allowed_domains + default_allowed))
+
+    try:
+        domain = email.split("@")[1].lower()
+        return domain in allowed_domains
+    except (IndexError, AttributeError):
+        return False

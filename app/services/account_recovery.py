@@ -13,6 +13,7 @@ from ..auth import auth_manager
 from ..config import get_settings
 from ..database import session_context
 from ..models import PasswordResetToken, User
+from .resend_email import resend_email_service
 
 logger = logging.getLogger(__name__)
 
@@ -27,8 +28,16 @@ class AccountRecoveryService:
     def _hash_token(token: str) -> str:
         return hashlib.sha256(token.encode("utf-8")).hexdigest()
 
-    def create_reset_token(self, user: User) -> str:
-        """Create a password reset token for the user and persist it."""
+    def create_reset_token(self, user: User, base_url: str = "") -> str:
+        """Create a password reset token for the user and persist it.
+
+        Args:
+            user: User requesting password reset
+            base_url: Base URL for reset link (e.g., "https://example.com")
+
+        Returns:
+            The reset token
+        """
 
         token = secrets.token_urlsafe(32)
         hashed = self._hash_token(token)
@@ -44,6 +53,21 @@ class AccountRecoveryService:
             session.commit()
 
         logger.info("Created password reset token for user_id=%s expiring at %s", user.id, expires_at)
+
+        # Resend를 통해 비밀번호 재설정 이메일 발송
+        settings = get_settings()
+        if settings.use_resend and base_url:
+            reset_link = f"{base_url}/recover/reset?email={user.email}&token={token}"
+            result = resend_email_service.send_password_reset(
+                to=user.email,
+                reset_link=reset_link,
+                locale=getattr(user, "locale", "ko"),
+            )
+            if result.success:
+                logger.info("Password reset email sent via Resend to %s", user.email)
+            else:
+                logger.warning("Failed to send password reset email via Resend: %s", result.error)
+
         return token
 
     def verify_and_consume_token(self, user: User, token: str) -> bool:

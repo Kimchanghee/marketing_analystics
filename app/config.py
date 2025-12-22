@@ -52,6 +52,21 @@ class Settings(BaseSettings):
     gmail_delegated_email: str = Field("", env="GMAIL_DELEGATED_EMAIL")  # Domain-wide delegation
     gmail_credentials_json: str = Field("", env="GMAIL_CREDENTIALS_JSON")  # OAuth2 credentials
 
+    # Supabase 설정 (DATABASE_URL에 Supabase PostgreSQL URL 사용)
+    supabase_url: str = Field("", env="SUPABASE_URL")
+    supabase_anon_key: str = Field("", env="SUPABASE_ANON_KEY")
+    supabase_service_role_key: str = Field("", env="SUPABASE_SERVICE_ROLE_KEY")
+
+    # Resend 이메일 서비스 설정
+    resend_api_key: str = Field("", env="RESEND_API_KEY")
+    resend_from_email: str = Field("noreply@yourdomain.com", env="RESEND_FROM_EMAIL")
+    resend_from_name: str = Field("Creator Control Center", env="RESEND_FROM_NAME")
+
+    @property
+    def use_resend(self) -> bool:
+        """Resend API 사용 여부"""
+        return bool(self.resend_api_key)
+
     @property
     def is_production(self) -> bool:
         """Check if running in production environment (Cloud Run)"""

@@ -12,6 +12,7 @@ from sqlmodel import select
 from ..config import get_settings
 from ..database import session_context
 from ..models import EmailVerification
+from .resend_email import resend_email_service
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +67,16 @@ class EmailVerificationService:
             session.commit()
 
         logger.info("Generated verification code for %s (expires at %s)", email, expires_at)
+
+        # Resend를 통해 이메일 발송
+        settings = get_settings()
+        if settings.use_resend:
+            result = resend_email_service.send_verification_code(email, code, locale)
+            if result.success:
+                logger.info("Verification code email sent via Resend to %s", email)
+            else:
+                logger.warning("Failed to send verification code email via Resend: %s", result.error)
+
         return code
 
     def verify_code(self, email: str, code: str) -> bool:

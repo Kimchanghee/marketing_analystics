@@ -44,6 +44,24 @@
       "description": "すべてのチャンネルのパフォーマンスをリアルタイムで確認・管理できます。",
       "keywords": "クリエイターダッシュボード, リアルタイム分析, チャンネル管理",
       "og_type": "website"
+    },
+    "terms": {
+      "title": "利用規約 - Creator Control Center",
+      "description": "Creator Control Centerサービス利用規約です。サービス利用条件、会員の権利と義務、責任制限事項をご確認ください。",
+      "keywords": "利用規約, サービス規約, クリエイタープラットフォーム利用規約, 利用条件",
+      "og_type": "website"
+    },
+    "privacy": {
+      "title": "プライバシーポリシー - Creator Control Center",
+      "description": "Creator Control Centerの個人情報収集、利用、保管に関するポリシーです。個人情報保護と安全なデータ管理についてご確認ください。",
+      "keywords": "プライバシーポリシー, 個人情報保護, データセキュリティ, プライバシー",
+      "og_type": "website"
+    },
+    "contact": {
+      "title": "お問い合わせ - Creator Control Center",
+      "description": "Creator Control Centerへのお問い合わせ。サービス関連のご質問、提携のご相談、技術サポートのご依頼を承っております。",
+      "keywords": "お問い合わせ, カスタマーサポート, 連絡先, 提携, 技術サポート",
+      "og_type": "website"
     }
   },
   "organization": {

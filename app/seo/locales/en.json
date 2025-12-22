@@ -44,6 +44,24 @@
       "description": "Monitor and manage all your channel performance in real-time.",
       "keywords": "creator dashboard, real-time analytics, channel management",
       "og_type": "website"
+    },
+    "terms": {
+      "title": "Terms of Service - Creator Control Center",
+      "description": "Terms of Service for Creator Control Center. Learn about service usage conditions, member rights and obligations, and liability limitations.",
+      "keywords": "terms of service, service agreement, creator platform terms, usage conditions",
+      "og_type": "website"
+    },
+    "privacy": {
+      "title": "Privacy Policy - Creator Control Center",
+      "description": "Creator Control Center's policy on personal data collection, usage, and storage. Learn about our commitment to privacy protection and secure data management.",
+      "keywords": "privacy policy, data protection, data security, privacy",
+      "og_type": "website"
+    },
+    "contact": {
+      "title": "Contact Us - Creator Control Center",
+      "description": "Contact Creator Control Center. We welcome service inquiries, partnership requests, and technical support questions.",
+      "keywords": "contact us, customer support, contact information, partnership, technical support",
+      "og_type": "website"
     }
   },
   "organization": {
