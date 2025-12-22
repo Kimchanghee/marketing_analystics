@@ -32,7 +32,6 @@ from ..services.super_admin_email import (
 )
 
 router = APIRouter()
-TEST_EMAIL_RECIPIENT = "k931103@gmail.com"
 
 
 @router.get("/super-admin")
@@ -906,7 +905,7 @@ def save_gemini_api_key(
 @router.post("/manager/api-key/delete")
 def delete_gemini_api_key(
     request: Request,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """Gemini API 키 삭제"""
@@ -937,7 +936,7 @@ def create_inquiry(
     category: InquiryCategory = Form(...),
     subject: str = Form(...),
     message: str = Form(...),
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """크리에이터 문의 수동 생성 (관리자가 대신 기록)"""
@@ -1032,7 +1031,7 @@ Creator Control Center
 @router.get("/manager/inquiries")
 def view_inquiries(
     request: Request,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """모든 문의 조회 (페이지네이션 적용)"""
@@ -1101,7 +1100,7 @@ def view_inquiries(
 def generate_ai_response(
     inquiry_id: int,
     request: Request,
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """AI를 사용하여 답변 초안 생성"""
@@ -1195,7 +1194,7 @@ def send_inquiry_response(
     inquiry_id: int,
     request: Request,
     final_response: str = Form(...),
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """최종 답변 전송 (실제로는 저장만, 이메일 발송은 추후 구현 가능)"""
@@ -1294,7 +1293,7 @@ def update_inquiry_status(
     inquiry_id: int,
     request: Request,
     new_status: InquiryStatus = Form(...),
-    user: User = Depends(require_roles([UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN])),
+    user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
     """문의 상태 업데이트"""

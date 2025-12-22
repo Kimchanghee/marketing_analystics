@@ -31,6 +31,7 @@ from ..models import (
 from ..services.account_recovery import account_recovery_service
 from ..services.email_verification import email_verification_service
 from ..services.localization import translator
+from ..services.login_throttle import login_throttle_service
 from ..services.social_auth import social_auth_service
 from ..services.social_oauth import (
     OAuthError,
@@ -217,12 +218,42 @@ def _upsert_social_user(
 
 
 @router.get("/oauth/{provider}")
-async def start_social_oauth(provider: str, request: Request):
+async def start_social_oauth(
+    provider: str,
+    request: Request,
+    session: Session = Depends(get_session),
+):
     locale = _determine_locale(request)
     action = request.query_params.get("action", "login")
     origin = request.query_params.get("origin")
     role_value = request.query_params.get("role", UserRole.CREATOR.value)
     next_url = request.query_params.get("next")
+
+    # link 액션은 로그인된 사용자만 가능
+    link_user_id = None
+    if action == "link":
+        token = request.cookies.get("access_token")
+        if not token:
+            return RedirectResponse(
+                url="/login?social_error=login_required",
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+        try:
+            payload = auth_manager.decode_access_token(token)
+            email = payload.get("sub")
+            user = session.exec(select(User).where(User.email == email)).first()
+            if user:
+                link_user_id = user.id
+            else:
+                return RedirectResponse(
+                    url="/login?social_error=login_required",
+                    status_code=status.HTTP_303_SEE_OTHER,
+                )
+        except Exception:
+            return RedirectResponse(
+                url="/login?social_error=login_required",
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
 
     try:
         client = get_oauth_client(provider)
@@ -234,10 +265,12 @@ async def start_social_oauth(provider: str, request: Request):
         "provider": provider,
         "action": action,
         "role": role.value,
-        "origin": origin or ("/signup" if action == "signup" else "/login"),
+        "origin": origin or ("/profile" if action == "link" else ("/signup" if action == "signup" else "/login")),
         "locale": locale,
         "next": next_url,
     }
+    if link_user_id:
+        state_payload["link_user_id"] = link_user_id
     state_token = create_access_token(state_payload, expires_delta=timedelta(minutes=10))
     redirect_uri = request.url_for("social_oauth_callback", provider=provider)
 
@@ -317,6 +350,7 @@ async def social_oauth_callback(
     action = state_payload.get("action", "login")
     next_url = state_payload.get("next")
     role = _resolve_role(state_payload.get("role"))
+    link_user_id = state_payload.get("link_user_id")
 
     profile = await _fetch_social_profile(provider, client, token, request, form_data)
     provider_user_id = profile.get("id")
@@ -333,6 +367,42 @@ async def social_oauth_callback(
     except ValueError:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="unsupported_provider")
 
+    # link 액션: 기존 사용자에게 소셜 계정 연동
+    if action == "link" and link_user_id:
+        link_user = session.exec(select(User).where(User.id == link_user_id)).first()
+        if not link_user:
+            return _social_error_redirect("/profile", locale, "user_not_found")
+
+        # 이미 다른 사용자가 사용 중인 소셜 계정인지 확인
+        existing_account = social_auth_service.find_account(
+            session, provider_enum, str(provider_user_id)
+        )
+        if existing_account and existing_account.user_id != link_user_id:
+            return _social_error_redirect("/profile", locale, "social_account_in_use")
+
+        # 이미 연동된 경우 스킵
+        if not existing_account:
+            try:
+                social_auth_service.link_account(
+                    session=session,
+                    user=link_user,
+                    provider=provider_enum,
+                    provider_user_id=str(provider_user_id),
+                )
+                session.commit()
+            except ValueError:
+                return _social_error_redirect("/profile", locale, "social_account_in_use")
+
+        session.add(ActivityLog(user_id=link_user.id, action=f"link_{provider_enum.value}"))
+        session.commit()
+
+        response = RedirectResponse(
+            url="/profile?social=linked", status_code=status.HTTP_303_SEE_OTHER
+        )
+        response.delete_cookie("oauth_state")
+        return response
+
+    # 일반 로그인/가입 흐름
     user = _upsert_social_user(
         session=session,
         provider=provider_enum,
@@ -348,15 +418,12 @@ async def social_oauth_callback(
 
     auth_token = auth_manager.create_access_token(user.email)
 
-    # Role별 자동 리다이렉트
-    # SUPER_ADMIN은 /dashboard로 이동 (모든 페이지 접근 가능)
-    # /super-admin은 수동으로 접속해야 함
-    if next_url:
+    # Role별 자동 리다이렉트 (안전한 URL만 허용)
+    if next_url and _is_safe_redirect_url(next_url):
         redirect_target = next_url
     elif user.role == UserRole.MANAGER:
         redirect_target = "/manager/dashboard"
     else:
-        # CREATOR, SUPER_ADMIN 등은 모두 /dashboard로
         redirect_target = "/dashboard"
 
     response = RedirectResponse(url=redirect_target, status_code=status.HTTP_303_SEE_OTHER)
@@ -393,6 +460,44 @@ def login_page(request: Request):
     )
 
 
+def _get_client_ip(request: Request) -> str:
+    """Get client IP address from request, handling proxy headers."""
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _is_safe_redirect_url(url: str | None) -> bool:
+    """Validate that redirect URL is safe (internal path only).
+
+    Prevents open redirect attacks by only allowing:
+    - None/empty (safe - will use default)
+    - Relative paths starting with /
+    - No protocol or domain specification
+    """
+    if not url:
+        return True
+
+    # Must start with / for relative path
+    if not url.startswith("/"):
+        return False
+
+    # Block protocol-relative URLs (//example.com)
+    if url.startswith("//"):
+        return False
+
+    # Block URLs with protocols
+    if "://" in url:
+        return False
+
+    # Block JavaScript URLs
+    if url.lower().startswith("javascript:"):
+        return False
+
+    return True
+
+
 @router.post("/login")
 def login(
     request: Request,
@@ -403,6 +508,33 @@ def login(
 ):
     locale = _determine_locale(request)
     strings = translator.load_locale(locale)
+    client_ip = _get_client_ip(request)
+
+    # 로그인 시도 제한 확인
+    is_locked, remaining_seconds = login_throttle_service.is_locked_out(email, client_ip)
+    if is_locked:
+        remaining_minutes = (remaining_seconds // 60) + 1
+        error_msg = strings["auth"].get(
+            "too_many_attempts",
+            f"Too many login attempts. Please try again in {remaining_minutes} minutes."
+        ).format(minutes=remaining_minutes) if "{minutes}" in strings["auth"].get("too_many_attempts", "") else f"로그인 시도가 너무 많습니다. {remaining_minutes}분 후에 다시 시도해주세요."
+
+        if origin == "landing":
+            redirect_url = f"/?lang={locale}&login_error=too_many_attempts"
+            return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
+        return request.app.state.templates.TemplateResponse(
+            "login.html",
+            _template_context(
+                request,
+                locale,
+                strings,
+                {
+                    "error": error_msg,
+                    "providers": list(social_auth_service.get_supported_providers()),
+                },
+            ),
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        )
 
     # 데이터베이스 연결 확인
     try:
@@ -427,6 +559,16 @@ def login(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
     if not user or not auth_manager.verify_password(password, user.hashed_password):
+        # 로그인 실패 기록
+        is_now_locked, remaining_attempts, lockout_secs = login_throttle_service.record_failed_attempt(email, client_ip)
+
+        error_msg = strings["auth"].get("invalid_credentials", "Invalid credentials")
+        if is_now_locked:
+            lockout_minutes = (lockout_secs // 60)
+            error_msg = f"로그인 시도가 너무 많습니다. {lockout_minutes}분 후에 다시 시도해주세요."
+        elif remaining_attempts <= 2:
+            error_msg = f"{error_msg} (남은 시도: {remaining_attempts}회)"
+
         if origin == "landing":
             redirect_url = f"/?lang={locale}&login_error=invalid_credentials"
             return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
@@ -437,11 +579,11 @@ def login(
                 locale,
                 strings,
                 {
-                    "error": strings["auth"].get("invalid_credentials", "Invalid credentials"),
+                    "error": error_msg,
                     "providers": list(social_auth_service.get_supported_providers()),
                 },
             ),
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS if is_now_locked else status.HTTP_400_BAD_REQUEST,
         )
     if not user.is_active:
         if origin == "landing":
@@ -489,53 +631,11 @@ def login(
             status_code=status.HTTP_403_FORBIDDEN,
         )
 
+    # 로그인 성공 - 시도 기록 초기화
+    login_throttle_service.record_successful_login(email, client_ip)
+
     token = auth_manager.create_access_token(user.email)
     session.add(ActivityLog(user_id=user.id, action="login"))
-    session.commit()
-
-    # 역할별 리다이렉트
-    # SUPER_ADMIN은 /dashboard로 이동 (모든 페이지 접근 가능)
-    # /super-admin은 수동으로 접속해야 함 (admin_token 필요)
-    if user.role == UserRole.MANAGER:
-        redirect_to = "/manager/dashboard"
-    else:
-        # CREATOR, SUPER_ADMIN 등은 모두 /dashboard로
-        redirect_to = "/dashboard"
-
-    redirect_response = RedirectResponse(url=redirect_to, status_code=status.HTTP_303_SEE_OTHER)
-    auth_manager.set_login_cookie(redirect_response, token)
-    return redirect_response
-
-
-@router.post("/login/social")
-def social_login(
-    request: Request,
-    provider: str = Form(...),
-    provider_user_id: str = Form(...),
-    locale: str = Form("ko"),
-    session: Session = Depends(get_session),
-):
-    strings = translator.load_locale(locale)
-    try:
-        provider_enum = SocialProvider(provider)
-    except ValueError as exc:  # pragma: no cover - validation guard
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="invalid_provider") from exc
-
-    if provider_enum not in social_auth_service.get_supported_providers():
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="unsupported_provider")
-
-    account = social_auth_service.find_account(session, provider_enum, provider_user_id)
-    if not account:
-        redirect_url = f"/login?lang={locale}&social_error=social_account_not_found"
-        return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
-
-    user = session.exec(select(User).where(User.id == account.user_id)).first()
-    if not user or not user.is_active:
-        redirect_url = f"/login?lang={locale}&social_error=account_inactive"
-        return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
-
-    token = auth_manager.create_access_token(user.email)
-    session.add(ActivityLog(user_id=user.id, action=f"social_login_{provider_enum.value}"))
     session.commit()
 
     # 역할별 리다이렉트
@@ -601,6 +701,7 @@ def signup(
     request: Request,
     email: EmailStr = Form(...),
     password: str = Form(...),
+    verification_code: str = Form(...),
     role: UserRole = Form(UserRole.CREATOR),
     locale: str = Form("ko"),
     organization: str | None = Form(None),
@@ -611,6 +712,23 @@ def signup(
     session: Session = Depends(get_session),
 ):
     strings = translator.load_locale(locale)
+
+    # 이메일 인증코드 검증
+    if not email_verification_service.verify_code(email, verification_code):
+        return request.app.state.templates.TemplateResponse(
+            "signup.html",
+            _template_context(
+                request,
+                locale,
+                strings,
+                {
+                    "error": strings["auth"].get("invalid_verification_code", "Invalid verification code"),
+                    "providers": list(social_auth_service.get_supported_providers()),
+                },
+            ),
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+
     if privacy_agreement != "on" or guidance_agreement != "on":
         return request.app.state.templates.TemplateResponse(
             "signup.html",
@@ -934,43 +1052,6 @@ def set_password(
     session.commit()
     email_verification_service.clear_code(user.email)
     redirect = RedirectResponse(url="/profile?credentials=updated", status_code=status.HTTP_303_SEE_OTHER)
-    return redirect
-
-
-@router.post("/social/link")
-def link_social(
-    user: User = Depends(get_current_user),
-    provider: str = Form(...),
-    provider_user_id: str = Form(...),
-    session: Session = Depends(get_session),
-):
-    try:
-        provider_enum = SocialProvider(provider)
-    except ValueError as exc:  # pragma: no cover - validation guard
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="invalid_provider") from exc
-
-    if provider_enum not in social_auth_service.get_supported_providers():
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="unsupported_provider")
-
-    db_user = session.exec(select(User).where(User.id == user.id)).first()
-    if not db_user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user_not_found")
-
-    try:
-        social_auth_service.link_account(
-            session=session,
-            user=db_user,
-            provider=provider_enum,
-            provider_user_id=provider_user_id,
-        )
-    except ValueError:
-        redirect = RedirectResponse(
-            url="/profile?social_error=social_account_in_use", status_code=status.HTTP_303_SEE_OTHER
-        )
-        return redirect
-
-    session.commit()
-    redirect = RedirectResponse(url="/profile?social=linked", status_code=status.HTTP_303_SEE_OTHER)
     return redirect
 
 

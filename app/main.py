@@ -39,7 +39,10 @@ app.state.asset_version = os.getenv("ASSET_VERSION", str(int(time.time())))
 
 
 def build_asset_url(request, path: str) -> str:
-    """Return cache-busted HTTPS asset URL for static files."""
+    """Return cache-busted asset URL for static files.
+
+    In production, forces HTTPS. In development, preserves the original scheme.
+    """
     version = "1"
     if request is not None:
         url = str(request.url_for("static", path=path))
@@ -48,8 +51,9 @@ def build_asset_url(request, path: str) -> str:
         url = f"/static/{path}"
         version = getattr(app.state, "asset_version", "1")
 
-    if url.startswith("http://"):
-        url = "https://" + url[len("http://") :]
+    settings = get_settings()
+    if settings.is_production and url.startswith("http://"):
+        url = "https://" + url[len("http://"):]
 
     separator = "&" if "?" in url else "?"
     return f"{url}{separator}v={version}"
@@ -71,12 +75,23 @@ async def global_exception_handler(request: Request, exc: Exception):
     logger.error(f"Request URL: {request.url}")
     logger.error(f"Request method: {request.method}")
 
-    # 사용자에게 친절한 에러 메시지 반환
+    # 프로덕션에서는 내부 정보 노출 방지
+    settings = get_settings()
+    if settings.is_production:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "detail": "An internal error occurred. Please try again later."
+            }
+        )
+
+    # 개발 환경에서는 디버깅을 위해 상세 정보 제공
     return JSONResponse(
         status_code=500,
         content={
-            "detail": "Internal server error occurred. Please check the logs for more details.",
-            "error": str(exc)
+            "detail": "Internal server error occurred.",
+            "error": str(exc),
+            "type": type(exc).__name__
         }
     )
 

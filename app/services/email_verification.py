@@ -4,8 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import logging
-import random
-import string
+import secrets
 from datetime import datetime, timedelta
 
 from sqlmodel import select
@@ -27,7 +26,9 @@ class EmailVerificationService:
         self.expiry_delta = timedelta(minutes=expiry_minutes)
 
     def _generate_code(self) -> str:
-        return "".join(random.choices(string.digits, k=self.code_length))
+        """Generate a cryptographically secure verification code."""
+        # Use secrets module for cryptographically secure random numbers
+        return "".join(str(secrets.randbelow(10)) for _ in range(self.code_length))
 
     @staticmethod
     def _hash_code(code: str) -> str:
