@@ -162,7 +162,7 @@ def add_channel(
 ):
     current_accounts = session.exec(select(ChannelAccount).where(ChannelAccount.owner_id == user.id)).all()
     if len(current_accounts) >= subscription.max_accounts:
-        raise HTTPException(status_code=402, detail="Subscription limit reached")
+        raise HTTPException(status_code=status.HTTP_402_PAYMENT_REQUIRED, detail="Subscription limit reached")
 
     channel = ChannelAccount(owner_id=user.id, platform=platform, account_name=account_name)
     session.add(channel)
@@ -178,7 +178,7 @@ def remove_channel(
 ):
     channel = session.get(ChannelAccount, channel_id)
     if not channel or channel.owner_id != user.id:
-        raise HTTPException(status_code=404, detail="Channel not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Channel not found")
     session.delete(channel)
     session.commit()
     return {"message": "Channel removed"}
@@ -199,11 +199,11 @@ def upsert_channel_credentials(
 ):
     channel = session.get(ChannelAccount, channel_id)
     if not channel or channel.owner_id != user.id:
-        raise HTTPException(status_code=404, detail="Channel not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Channel not found")
     try:
         auth_enum = AuthType(auth_type)
     except ValueError as exc:  # noqa: B904
-        raise HTTPException(status_code=400, detail="Invalid authentication type") from exc
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid authentication type") from exc
 
     credential = channel.credential
     if credential is None:
@@ -223,12 +223,12 @@ def upsert_channel_credentials(
         try:
             credential.expires_at = datetime.fromisoformat(expires_at)
         except ValueError as exc:  # noqa: B904
-            raise HTTPException(status_code=400, detail="Invalid expires_at format") from exc
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid expires_at format") from exc
     if metadata:
         try:
             credential.metadata_json = json.loads(metadata)
         except json.JSONDecodeError as exc:  # noqa: B904
-            raise HTTPException(status_code=400, detail="Invalid metadata JSON") from exc
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid metadata JSON") from exc
 
     session.add(credential)
     session.commit()

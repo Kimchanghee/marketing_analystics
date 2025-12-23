@@ -15,7 +15,9 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(python scripts/add_legal_translations.py:*)",
-      "Bash(python -m py_compile:*)"
+      "Bash(python -m py_compile:*)",
+      "Bash(dir \"c:\\\\Github\\\\marketing_analystics\")",
+      "Bash(wc:*)"
     ]
   }
 }

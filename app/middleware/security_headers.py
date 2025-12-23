@@ -53,22 +53,39 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 
-def add_security_middleware(app: FastAPI, allowed_origins: list[str] = None):
+def add_security_middleware(
+    app: FastAPI,
+    allowed_origins: list[str] = None,
+    allowed_hosts: list[str] = None,
+    environment: str = "development"
+):
     """
     Add security middleware to the FastAPI app.
 
     Args:
         app: FastAPI application instance
-        allowed_origins: List of allowed CORS origins. If None, uses defaults.
+        allowed_origins: List of allowed CORS origins. If None, uses environment-based defaults.
+        allowed_hosts: List of allowed hosts for TrustedHostMiddleware.
+        environment: "production" or "development"
     """
+    import os
 
-    # Default allowed origins
+    # 환경 변수에서 설정 가져오기
+    env = environment or os.getenv("ENVIRONMENT", "development")
+    is_production = env.lower() == "production"
+
+    # 프로덕션/개발 환경에 따른 CORS 설정
     if allowed_origins is None:
-        allowed_origins = [
-            "http://localhost:3000",  # Next.js dev server
-            "http://localhost:8000",  # FastAPI dev server
-            "https://yourdomain.com",  # Production domain
-        ]
+        if is_production:
+            # 프로덕션: 실제 도메인만 허용
+            prod_domain = os.getenv("ALLOWED_ORIGIN", "https://creatorcontrolcenter.com")
+            allowed_origins = [prod_domain]
+        else:
+            # 개발: localhost 허용
+            allowed_origins = [
+                "http://localhost:3000",
+                "http://localhost:8000",
+            ]
 
     # CORS middleware
     app.add_middleware(
@@ -84,7 +101,13 @@ def add_security_middleware(app: FastAPI, allowed_origins: list[str] = None):
     app.add_middleware(SecurityHeadersMiddleware)
 
     # Trusted host middleware (prevents host header attacks)
-    # app.add_middleware(
-    #     TrustedHostMiddleware,
-    #     allowed_hosts=["localhost", "yourdomain.com", "*.yourdomain.com"]
-    # )
+    # 프로덕션 환경에서만 활성화
+    if is_production:
+        if allowed_hosts is None:
+            prod_host = os.getenv("ALLOWED_HOST", "creatorcontrolcenter.com")
+            allowed_hosts = [prod_host, f"*.{prod_host}"]
+
+        app.add_middleware(
+            TrustedHostMiddleware,
+            allowed_hosts=allowed_hosts
+        )

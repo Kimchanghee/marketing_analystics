@@ -33,6 +33,10 @@ from ..services.super_admin_email import (
 
 router = APIRouter()
 
+# 테스트 이메일 수신자 - 환경변수에서 가져오거나 관리자 이메일 사용
+import os
+TEST_EMAIL_RECIPIENT = os.getenv("TEST_EMAIL_RECIPIENT", "admin@creatorcontrolcenter.com")
+
 
 @router.get("/super-admin")
 def super_admin_dashboard(
@@ -158,19 +162,19 @@ def send_super_admin_email(
 ):
     settings = get_settings()
     if not SuperAdminEmailService.is_configured(settings):
-        raise HTTPException(status_code=400, detail="Email service is not configured.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email service is not configured.")
 
     if not to_address.strip():
-        raise HTTPException(status_code=400, detail="Recipient address is required.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Recipient address is required.")
 
     if not subject.strip():
-        raise HTTPException(status_code=400, detail="Subject is required.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Subject is required.")
 
     try:
         service = SuperAdminEmailService(settings)
         service.send_email(to_address=to_address, subject=subject, body=body)
     except (EmailSendError, EmailServiceError) as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
     session.add(
         ActivityLog(
@@ -193,7 +197,7 @@ def send_super_admin_test_email(
 ):
     settings = get_settings()
     if not SuperAdminEmailService.is_configured(settings):
-        raise HTTPException(status_code=400, detail="Email service is not configured.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email service is not configured.")
 
     strings = translator.load_locale(user.locale)
     super_admin_strings = strings.get("super_admin", {})
@@ -211,7 +215,7 @@ def send_super_admin_test_email(
         service = SuperAdminEmailService(settings)
         service.send_email(to_address=TEST_EMAIL_RECIPIENT, subject=subject, body=body)
     except (EmailSendError, EmailServiceError) as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
     session.add(
         ActivityLog(
@@ -238,7 +242,7 @@ def promote_user(
 ):
     target = session.exec(select(User).where(User.email == email)).first()
     if not target:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     target.role = role
     session.add(target)
     session.add(
@@ -262,7 +266,7 @@ def update_user_status(
 ):
     target = session.get(User, user_id)
     if not target:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     target.is_active = is_active
     session.add(target)
     session.add(
@@ -288,7 +292,7 @@ def update_subscription(
 ):
     target = session.get(User, user_id)
     if not target:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     subscription = session.exec(select(Subscription).where(Subscription.user_id == user_id)).first()
     if not subscription:
         subscription = Subscription(user_id=user_id)
@@ -342,13 +346,13 @@ def create_payment(
 ):
     target = session.get(User, user_id)
     if not target:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
     try:
         period_start = _parse_datetime(billing_period_start)
         period_end = _parse_datetime(billing_period_end)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
 
     currency_value = (currency or "KRW").strip().upper()[:3] or "KRW"
     payment = Payment(
@@ -382,7 +386,7 @@ def update_payment_status(
 ):
     payment = session.get(Payment, payment_id)
     if not payment:
-        raise HTTPException(status_code=404, detail="Payment not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Payment not found")
 
     payment.status = status_value
     session.add(payment)
@@ -578,7 +582,7 @@ def approve_manager(
     creator = session.exec(select(User).where(User.email == creator_email)).first()
     manager = session.exec(select(User).where(User.email == manager_email)).first()
     if not creator or not manager:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
     link = session.exec(
         select(ManagerCreatorLink)
@@ -649,11 +653,11 @@ def view_creator_detail(
     ).first()
 
     if not link:
-        raise HTTPException(status_code=403, detail="이 크리에이터의 정보에 접근할 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="이 크리에이터의 정보에 접근할 수 없습니다.")
 
     creator = session.get(User, creator_id)
     if not creator:
-        raise HTTPException(status_code=404, detail="크리에이터를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="크리에이터를 찾을 수 없습니다.")
 
     # 크리에이터의 채널 및 스냅샷 조회
     channels = session.exec(
@@ -763,11 +767,11 @@ def export_creator_csv(
     ).first()
 
     if not link:
-        raise HTTPException(status_code=403, detail="접근 권한이 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="접근 권한이 없습니다.")
 
     creator = session.get(User, creator_id)
     if not creator:
-        raise HTTPException(status_code=404, detail="크리에이터를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="크리에이터를 찾을 수 없습니다.")
 
     channels = session.exec(
         select(ChannelAccount)
@@ -839,11 +843,11 @@ def export_creator_pdf(
     ).first()
 
     if not link:
-        raise HTTPException(status_code=403, detail="접근 권한이 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="접근 권한이 없습니다.")
 
     creator = session.get(User, creator_id)
     if not creator:
-        raise HTTPException(status_code=404, detail="크리에이터를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="크리에이터를 찾을 수 없습니다.")
 
     channels = session.exec(
         select(ChannelAccount)
@@ -949,7 +953,7 @@ def create_inquiry(
     ).first()
 
     if not link:
-        raise HTTPException(status_code=403, detail="이 크리에이터를 관리할 권한이 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="이 크리에이터를 관리할 권한이 없습니다.")
 
     # 문의 생성
     inquiry = CreatorInquiry(
@@ -1109,11 +1113,11 @@ def generate_ai_response(
     # 문의 조회
     inquiry = session.get(CreatorInquiry, inquiry_id)
     if not inquiry:
-        raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="문의를 찾을 수 없습니다.")
 
     # SUPER_ADMIN은 모든 문의에 접근 가능
     if user.role != UserRole.SUPER_ADMIN and inquiry.manager_id != user.id:
-        raise HTTPException(status_code=403, detail="이 문의에 대한 권한이 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="이 문의에 대한 권한이 없습니다.")
 
     # API 키 조회
     api_key_record = session.exec(
@@ -1122,14 +1126,14 @@ def generate_ai_response(
 
     if not api_key_record:
         raise HTTPException(
-            status_code=400,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="Gemini API 키가 설정되지 않았습니다. 먼저 API 키를 등록해주세요."
         )
 
     # 크리에이터 정보 조회
     creator = session.get(User, inquiry.creator_id)
     if not creator:
-        raise HTTPException(status_code=404, detail="크리에이터를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="크리에이터를 찾을 수 없습니다.")
 
     # 크리에이터의 채널 정보 조회 (컨텍스트용)
     channels = session.exec(
@@ -1186,7 +1190,7 @@ def generate_ai_response(
         )
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"AI 답변 생성 실패: {str(e)}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"AI 답변 생성 실패: {str(e)}")
 
 
 @router.post("/manager/inquiry/{inquiry_id}/send-response")
@@ -1200,11 +1204,11 @@ def send_inquiry_response(
     """최종 답변 전송 (실제로는 저장만, 이메일 발송은 추후 구현 가능)"""
     inquiry = session.get(CreatorInquiry, inquiry_id)
     if not inquiry:
-        raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="문의를 찾을 수 없습니다.")
 
     # SUPER_ADMIN은 모든 문의에 접근 가능
     if user.role != UserRole.SUPER_ADMIN and inquiry.manager_id != user.id:
-        raise HTTPException(status_code=403, detail="이 문의에 대한 권한이 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="이 문의에 대한 권한이 없습니다.")
 
     inquiry.final_response = final_response
     inquiry.status = InquiryStatus.ANSWERED
@@ -1299,11 +1303,11 @@ def update_inquiry_status(
     """문의 상태 업데이트"""
     inquiry = session.get(CreatorInquiry, inquiry_id)
     if not inquiry:
-        raise HTTPException(status_code=404, detail="문의를 찾을 수 없습니다.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="문의를 찾을 수 없습니다.")
 
     # SUPER_ADMIN은 모든 문의에 접근 가능
     if user.role != UserRole.SUPER_ADMIN and inquiry.manager_id != user.id:
-        raise HTTPException(status_code=403, detail="이 문의에 대한 권한이 없습니다.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="이 문의에 대한 권한이 없습니다.")
 
     inquiry.status = new_status
     inquiry.updated_at = datetime.utcnow()

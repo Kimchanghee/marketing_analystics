@@ -8,7 +8,7 @@ AI PD features are now fully integrated into the creator and manager dashboards.
 """
 from typing import Dict, List
 
-from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi import APIRouter, Depends, Form, HTTPException, Request, status
 from sqlalchemy.orm import selectinload
 from sqlmodel import select
 
@@ -43,7 +43,7 @@ def ask_ai_pd(
 ):
     """Ask AI PD a question about performance and get insights (PRO+ subscription required)"""
     if not question or len(question.strip()) < 10:
-        raise HTTPException(status_code=400, detail="질문은 최소 10자 이상 입력해주세요.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="질문은 최소 10자 이상 입력해주세요.")
 
     try:
         if user.role == UserRole.CREATOR:
@@ -102,7 +102,7 @@ def ask_ai_pd(
             )
 
         else:
-            raise HTTPException(status_code=403, detail="권한이 없습니다.")
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="권한이 없습니다.")
 
         return {
             "success": True,
@@ -112,12 +112,12 @@ def ask_ai_pd(
 
     except APIKeyNotConfiguredError as e:
         raise HTTPException(
-            status_code=503,
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail=f"AI 서비스가 구성되지 않았습니다: {str(e)}"
         )
     except AIGenerationError as e:
         raise HTTPException(
-            status_code=502,
+            status_code=status.HTTP_502_BAD_GATEWAY,
             detail=f"AI 분석 서비스 오류: {str(e)}"
         )
     except HTTPException:
@@ -125,6 +125,6 @@ def ask_ai_pd(
         raise
     except Exception as e:
         raise HTTPException(
-            status_code=500,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"AI 분석 중 예기치 않은 오류가 발생했습니다: {str(e)}"
         )

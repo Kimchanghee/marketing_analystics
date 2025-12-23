@@ -13,11 +13,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, Form, Request
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import select
+
+from .config import get_settings
 
 from .auth import auth_manager
 from .database import get_session, session_context

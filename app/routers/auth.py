@@ -232,15 +232,14 @@ async def start_social_oauth(
     # link 액션은 로그인된 사용자만 가능
     link_user_id = None
     if action == "link":
-        token = request.cookies.get("access_token")
+        token = request.cookies.get("session")
         if not token:
             return RedirectResponse(
                 url="/login?social_error=login_required",
                 status_code=status.HTTP_303_SEE_OTHER,
             )
         try:
-            payload = auth_manager.decode_access_token(token)
-            email = payload.get("sub")
+            email = auth_manager.decode_token(token)
             user = session.exec(select(User).where(User.email == email)).first()
             if user:
                 link_user_id = user.id
@@ -541,8 +540,6 @@ def login(
         user = session.exec(select(User).where(User.email == email)).first()
     except Exception as e:
         # 데이터베이스 연결 실패
-        import logging
-        logger = logging.getLogger(__name__)
         logger.error(f"Database connection failed during login: {e}", exc_info=True)
 
         return request.app.state.templates.TemplateResponse(

@@ -1,0 +1,23 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<section class="legal-section">
+    <div class="section-container">
+        <div class="legal-header">
+            <h1>{{ t['legal']['terms']['title'] }}</h1>
+            <p class="legal-updated">{{ t['legal']['terms']['last_updated'] }}</p>
+        </div>
+        <div class="legal-content">
+            {% for section in t['legal']['terms']['sections'] %}
+            <article class="legal-article">
+                <h2>{{ section['title'] }}</h2>
+                <p>{{ section['content'] | replace('\n', '<br>') | safe }}</p>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="legal-footer">
+            <a href="/privacy" class="btn secondary">{{ t['legal']['privacy']['title'] }}</a>
+            <a href="/contact" class="btn primary">{{ t['legal']['contact']['title'] }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
