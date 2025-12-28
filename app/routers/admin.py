@@ -33,9 +33,9 @@ from ..services.super_admin_email import (
 
 router = APIRouter()
 
-# 테스트 이메일 수신자 - 환경변수에서 가져오거나 관리자 이메일 사용
+# 테스트 이메일 수신자 - 환경변수에서 가져옴 (필수)
 import os
-TEST_EMAIL_RECIPIENT = os.getenv("TEST_EMAIL_RECIPIENT", "admin@creatorcontrolcenter.com")
+TEST_EMAIL_RECIPIENT = os.getenv("TEST_EMAIL_RECIPIENT", "")
 
 
 @router.get("/super-admin")
@@ -198,6 +198,12 @@ def send_super_admin_test_email(
     settings = get_settings()
     if not SuperAdminEmailService.is_configured(settings):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email service is not configured.")
+
+    if not TEST_EMAIL_RECIPIENT:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="TEST_EMAIL_RECIPIENT environment variable is not set."
+        )
 
     strings = translator.load_locale(user.locale)
     super_admin_strings = strings.get("super_admin", {})

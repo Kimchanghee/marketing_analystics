@@ -114,6 +114,12 @@ def login(
         )
 
     if not user or not auth_manager.verify_password(password, user.hashed_password):
+        # 보안 감사 로깅 - 로그인 실패
+        reason = "user_not_found" if not user else "invalid_password"
+        logger.warning(
+            f"Login failed: email={email} ip={client_ip} reason={reason}"
+        )
+
         # 로그인 실패 기록
         is_now_locked, remaining_attempts, lockout_secs = login_throttle_service.record_failed_attempt(email, client_ip)
 
@@ -191,6 +197,11 @@ def login(
 
     # 로그인 성공 - 시도 기록 초기화
     login_throttle_service.record_successful_login(email, client_ip)
+
+    # 보안 감사 로깅 - 로그인 성공
+    logger.info(
+        f"Login successful: email={email} ip={client_ip} user_id={user.id} role={user.role.value}"
+    )
 
     token = auth_manager.create_access_token(user.email)
     session.add(ActivityLog(user_id=user.id, action="login"))

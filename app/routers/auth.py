@@ -13,7 +13,7 @@ from pydantic import EmailStr
 from sqlmodel import Session, select
 from jose import jwt as jose_jwt
 
-from ..auth import auth_manager
+from ..auth import auth_manager, create_access_token, decode_token
 
 logger = logging.getLogger(__name__)
 from ..config import get_settings
@@ -115,11 +115,14 @@ async def _fetch_social_profile(
         if form_data and form_data.get("user"):
             try:
                 user_blob = json.loads(form_data.get("user"))
-            except (TypeError, ValueError):
+                # JSON 스키마 검증 - 허용된 필드만 추출
+                if not isinstance(user_blob, dict):
+                    user_blob = {}
+            except (TypeError, ValueError, json.JSONDecodeError):
                 user_blob = {}
-            name_data = user_blob.get("name") or {}
-            first_name = name_data.get("firstName")
-            last_name = name_data.get("lastName")
+            name_data = user_blob.get("name") if isinstance(user_blob.get("name"), dict) else {}
+            first_name = str(name_data.get("firstName", ""))[:100] if name_data.get("firstName") else None
+            last_name = str(name_data.get("lastName", ""))[:100] if name_data.get("lastName") else None
             full_name = " ".join(filter(None, [first_name, last_name])).strip() or None
         if not full_name and claims.get("name"):
             full_name = claims.get("name")
@@ -556,6 +559,12 @@ def login(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
     if not user or not auth_manager.verify_password(password, user.hashed_password):
+        # 보안 감사 로깅 - 로그인 실패
+        reason = "user_not_found" if not user else "invalid_password"
+        logger.warning(
+            f"Login failed: email={email} ip={client_ip} reason={reason}"
+        )
+
         # 로그인 실패 기록
         is_now_locked, remaining_attempts, lockout_secs = login_throttle_service.record_failed_attempt(email, client_ip)
 
@@ -630,6 +639,11 @@ def login(
 
     # 로그인 성공 - 시도 기록 초기화
     login_throttle_service.record_successful_login(email, client_ip)
+
+    # 보안 감사 로깅 - 로그인 성공
+    logger.info(
+        f"Login successful: email={email} ip={client_ip} user_id={user.id} role={user.role.value}"
+    )
 
     token = auth_manager.create_access_token(user.email)
     session.add(ActivityLog(user_id=user.id, action="login"))
@@ -988,6 +1002,7 @@ def recover_username(
 
 @router.post("/recover/password")
 def recover_password(
+    request: Request,
     email: EmailStr = Form(...),
     locale: str = Form("ko"),
     session: Session = Depends(get_session),
@@ -997,7 +1012,8 @@ def recover_password(
         redirect_url = f"/recover?lang={locale}&error=account_not_found"
         return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
-    account_recovery_service.create_reset_token(user)
+    base_url = str(request.base_url).rstrip("/")
+    account_recovery_service.create_reset_token(user, base_url=base_url)
     redirect_url = f"/recover?lang={locale}&success=password_token_sent"
     return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 

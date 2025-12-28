@@ -7,6 +7,31 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
+def _validate_password_strength(password: str) -> str:
+    """공통 비밀번호 강도 검증 함수.
+
+    Args:
+        password: 검증할 비밀번호
+
+    Returns:
+        검증된 비밀번호
+
+    Raises:
+        ValueError: 비밀번호가 요구사항을 충족하지 않는 경우
+    """
+    if len(password) < 8:
+        raise ValueError("Password must be at least 8 characters long")
+    if not re.search(r"[A-Z]", password):
+        raise ValueError("Password must contain at least one uppercase letter")
+    if not re.search(r"[a-z]", password):
+        raise ValueError("Password must contain at least one lowercase letter")
+    if not re.search(r"\d", password):
+        raise ValueError("Password must contain at least one digit")
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        raise ValueError("Password must contain at least one special character")
+    return password
+
+
 class UserRegistration(BaseModel):
     """User registration input validation."""
 
@@ -23,17 +48,7 @@ class UserRegistration(BaseModel):
     @classmethod
     def validate_password_strength(cls, v):
         """Validate password strength."""
-        if len(v) < 8:
-            raise ValueError("Password must be at least 8 characters long")
-        if not re.search(r"[A-Z]", v):
-            raise ValueError("Password must contain at least one uppercase letter")
-        if not re.search(r"[a-z]", v):
-            raise ValueError("Password must contain at least one lowercase letter")
-        if not re.search(r"\d", v):
-            raise ValueError("Password must contain at least one digit")
-        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
-            raise ValueError("Password must contain at least one special character")
-        return v
+        return _validate_password_strength(v)
 
     @field_validator("name")
     @classmethod
@@ -64,17 +79,7 @@ class PasswordReset(BaseModel):
     @classmethod
     def validate_password_strength(cls, v):
         """Validate password strength."""
-        if len(v) < 8:
-            raise ValueError("Password must be at least 8 characters long")
-        if not re.search(r"[A-Z]", v):
-            raise ValueError("Password must contain at least one uppercase letter")
-        if not re.search(r"[a-z]", v):
-            raise ValueError("Password must contain at least one lowercase letter")
-        if not re.search(r"\d", v):
-            raise ValueError("Password must contain at least one digit")
-        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
-            raise ValueError("Password must contain at least one special character")
-        return v
+        return _validate_password_strength(v)
 
 
 class ChannelConnection(BaseModel):
@@ -198,28 +203,3 @@ def sanitize_input(text: str, max_length: int = 1000) -> str:
     text = text.replace("\x00", "")
 
     return text.strip()
-
-
-def validate_email_domain(
-    email: str, allowed_domains: Optional[list] = None
-) -> bool:
-    """Validate email domain."""
-    if allowed_domains is None:
-        allowed_domains = []
-
-    default_allowed = [
-        "gmail.com",
-        "naver.com",
-        "daum.net",
-        "hanmail.net",
-        "yahoo.com",
-        "outlook.com",
-        "hotmail.com",
-    ]
-    allowed_domains = list(set(allowed_domains + default_allowed))
-
-    try:
-        domain = email.split("@")[1].lower()
-        return domain in allowed_domains
-    except (IndexError, AttributeError):
-        return False

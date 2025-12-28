@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +22,37 @@ class Settings(BaseSettings):
     super_admin_access_token: str = Field(..., env="SUPER_ADMIN_ACCESS_TOKEN")
     gemini_api_key: str = Field("", env="GEMINI_API_KEY")
     environment: str = Field("development", env="ENVIRONMENT")  # production or development
+
+    @model_validator(mode='after')
+    def validate_settings(self) -> 'Settings':
+        """환경 변수 검증"""
+        # 환경 값 검증
+        valid_environments = ["development", "production", "staging", "test"]
+        if self.environment.lower() not in valid_environments:
+            raise ValueError(
+                f"Invalid ENVIRONMENT: '{self.environment}'. "
+                f"Must be one of: {', '.join(valid_environments)}"
+            )
+
+        # 프로덕션 환경에서 필수 설정 검증
+        if self.is_production:
+            if not self.secret_key or len(self.secret_key) < 32:
+                raise ValueError(
+                    "Production requires SECRET_KEY with at least 32 characters"
+                )
+            if not self.super_admin_access_token or len(self.super_admin_access_token) < 16:
+                raise ValueError(
+                    "Production requires SUPER_ADMIN_ACCESS_TOKEN with at least 16 characters"
+                )
+            if "sqlite" in self.database_url.lower():
+                import warnings
+                warnings.warn(
+                    "Using SQLite in production is not recommended. "
+                    "Consider using PostgreSQL.",
+                    UserWarning
+                )
+
+        return self
 
     # OAuth 2.0 설정
     facebook_app_id: str = Field("", env="FACEBOOK_APP_ID")

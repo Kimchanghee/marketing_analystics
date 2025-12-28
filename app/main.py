@@ -4,10 +4,13 @@ import sys
 import time
 from pathlib import Path
 
-# 로깅 설정 - as early as possible
-# WARNING 레벨로 설정하여 성능 개선 (INFO 로그 제거)
+# 로깅 설정 - 환경 변수로 레벨 조정 가능
+# LOG_LEVEL: DEBUG, INFO, WARNING, ERROR, CRITICAL (기본값: WARNING)
+_log_level_name = os.getenv("LOG_LEVEL", "WARNING").upper()
+_log_level = getattr(logging, _log_level_name, logging.WARNING)
+
 logging.basicConfig(
-    level=logging.WARNING,
+    level=_log_level,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     stream=sys.stdout
 )
@@ -32,12 +35,17 @@ from .services.localization import translator
 from .services.social_auth import social_auth_service
 
 from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
+from .middleware.security_headers import add_security_middleware
 
 BASE_DIR = Path(__file__).resolve().parent
 UI_DIR = BASE_DIR.parent / "ui"
 
 app = FastAPI(title="Creator Control Center")
 app.state.asset_version = os.getenv("ASSET_VERSION", str(int(time.time())))
+
+# Add security middleware (CORS, security headers, trusted hosts)
+settings = get_settings()
+add_security_middleware(app, environment=settings.environment)
 
 
 def build_asset_url(request, path: str) -> str:
@@ -72,10 +80,101 @@ app.state.templates.env.globals["asset_url"] = build_asset_url
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    """전역 예외 핸들러 - 모든 에러를 로깅"""
-    logger.error(f"Unhandled exception: {exc}", exc_info=True)
-    logger.error(f"Request URL: {request.url}")
-    logger.error(f"Request method: {request.method}")
+    """전역 예외 핸들러 - 예외 타입별 세분화된 처리"""
+    from fastapi import HTTPException
+    from sqlalchemy.exc import SQLAlchemyError, OperationalError, IntegrityError
+    from pydantic import ValidationError
+
+    # 사용자 정보 추출 (가능한 경우)
+    user_info = "anonymous"
+    try:
+        token = request.cookies.get("session")
+        if token:
+            email = auth_manager.decode_token(token)
+            user_info = email
+    except Exception:
+        pass
+
+    # 클라이언트 IP 추출
+    client_ip = request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+    if not client_ip and request.client:
+        client_ip = request.client.host
+
+    # 예외 타입별 처리
+    if isinstance(exc, HTTPException):
+        # HTTPException은 이미 적절히 처리되므로 로깅만
+        logger.warning(
+            f"HTTPException: status={exc.status_code} detail={exc.detail} "
+            f"path={request.url.path} user={user_info} ip={client_ip}"
+        )
+        raise exc
+
+    if isinstance(exc, ValidationError):
+        logger.warning(
+            f"ValidationError: {exc.error_count()} errors "
+            f"path={request.url.path} user={user_info} ip={client_ip}"
+        )
+        return JSONResponse(
+            status_code=422,
+            content={"detail": "Validation error", "errors": exc.errors()}
+        )
+
+    if isinstance(exc, OperationalError):
+        logger.critical(
+            f"Database connection error: {exc} "
+            f"path={request.url.path} user={user_info} ip={client_ip}",
+            exc_info=True
+        )
+        return JSONResponse(
+            status_code=503,
+            content={"detail": "Database connection error. Please try again later."}
+        )
+
+    if isinstance(exc, IntegrityError):
+        logger.error(
+            f"Database integrity error: {exc} "
+            f"path={request.url.path} user={user_info} ip={client_ip}",
+            exc_info=True
+        )
+        return JSONResponse(
+            status_code=409,
+            content={"detail": "Data conflict occurred."}
+        )
+
+    if isinstance(exc, SQLAlchemyError):
+        logger.error(
+            f"Database error: {type(exc).__name__}: {exc} "
+            f"path={request.url.path} user={user_info} ip={client_ip}",
+            exc_info=True
+        )
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Database error occurred."}
+        )
+
+    if isinstance(exc, (ValueError, KeyError, TypeError)):
+        logger.error(
+            f"Application error: {type(exc).__name__}: {exc} "
+            f"path={request.url.path} user={user_info} ip={client_ip}",
+            exc_info=True
+        )
+        settings = get_settings()
+        if settings.is_production:
+            return JSONResponse(
+                status_code=400,
+                content={"detail": "Invalid request."}
+            )
+        return JSONResponse(
+            status_code=400,
+            content={"detail": str(exc), "type": type(exc).__name__}
+        )
+
+    # 알 수 없는 예외 - 가장 상세하게 로깅
+    logger.critical(
+        f"Unhandled exception: {type(exc).__name__}: {exc} "
+        f"path={request.url.path} method={request.method} user={user_info} ip={client_ip}",
+        exc_info=True
+    )
 
     # 프로덕션에서는 내부 정보 노출 방지
     settings = get_settings()
