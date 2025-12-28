@@ -2,6 +2,24 @@
   "app": {
     "title": "Creator Control Center"
   },
+  "errors": {
+    "404": {
+      "title": "Page not found",
+      "message": "The page you requested does not exist or may have been moved. Please check the URL or use the buttons below to navigate.",
+      "home": "Go to Home",
+      "dashboard": "Dashboard",
+      "services": "Services",
+      "support": "Support",
+      "contact_hint": "If the problem persists, please contact our support team."
+    },
+    "500": {
+      "title": "Server error",
+      "message": "A temporary error occurred. Please try again later.",
+      "home": "Go to Home",
+      "retry": "Try again",
+      "contact_hint": "If the problem persists, please contact our support team."
+    }
+  },
   "nav": {
     "home": "Home",
     "services": "Product",
@@ -344,7 +362,27 @@
     "placeholder_identifier": "e.g. @creator or 123456",
     "placeholder_secret": "Paste client secret or password",
     "placeholder_token": "Paste new token",
-    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}"
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}",
+    "hourly_views_title": "Hourly views trend",
+    "export_csv": "Export to CSV",
+    "export_json": "Export to JSON",
+    "ai_recommendations_title": "AI Recommendations",
+    "manager_request_success": "Connection request sent to manager. Data will be shared after approval.",
+    "manager_request_label": "Enter manager email address",
+    "manager_request_button": "Send connection request",
+    "manager_empty": "No connected managers.",
+    "manager_empty_for_creator": "Connect with a manager to share your data.",
+    "link_status": {
+      "approved": "Approved",
+      "pending": "Pending"
+    },
+    "manager_request_errors": {
+      "manager_not_found": "No manager found with that email address.",
+      "already_linked": "Already connected to this manager.",
+      "pending": "A connection request is already pending.",
+      "self_request_not_allowed": "You cannot send a connection request to yourself.",
+      "unknown": "An unknown error occurred. Please try again."
+    }
   },
   "channels": {
     "instagram": "Instagram",

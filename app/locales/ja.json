@@ -2,6 +2,24 @@
   "app": {
     "title": "Creator Control Center"
   },
+  "errors": {
+    "404": {
+      "title": "ページが見つかりません",
+      "message": "お探しのページは存在しないか、移動された可能性があります。URLをご確認いただくか、下のボタンからご希望のページへ移動してください。",
+      "home": "ホームへ",
+      "dashboard": "ダッシュボード",
+      "services": "サービス紹介",
+      "support": "サポート",
+      "contact_hint": "問題が解決しない場合は、サポートチームまでお問い合わせください。"
+    },
+    "500": {
+      "title": "サーバーエラーが発生しました",
+      "message": "一時的なエラーが発生しました。しばらくしてから再度お試しください。",
+      "home": "ホームへ",
+      "retry": "再試行",
+      "contact_hint": "問題が解決しない場合は、サポートチームまでお問い合わせください。"
+    }
+  },
   "nav": {
     "home": "ホーム",
     "services": "サービス",
@@ -344,7 +362,27 @@
     "placeholder_identifier": "例: @creator または 123456",
     "placeholder_secret": "クライアントシークレットまたはパスワードを貼り付け",
     "placeholder_token": "新しいトークンを貼り付け",
-    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}"
+    "placeholder_metadata": "{\n  \"business_id\": \"1789...\"\n}",
+    "hourly_views_title": "時間帯別閲覧数",
+    "export_csv": "CSVでエクスポート",
+    "export_json": "JSONでエクスポート",
+    "ai_recommendations_title": "AIおすすめ戦略",
+    "manager_request_success": "マネージャーに接続リクエストを送信しました。承認後にデータが共有されます。",
+    "manager_request_label": "マネージャーのメールアドレスを入力",
+    "manager_request_button": "接続リクエストを送信",
+    "manager_empty": "接続されたマネージャーはいません。",
+    "manager_empty_for_creator": "マネージャーと接続すると、データを共有できます。",
+    "link_status": {
+      "approved": "承認済み",
+      "pending": "承認待ち"
+    },
+    "manager_request_errors": {
+      "manager_not_found": "該当のメールアドレスのマネージャーが見つかりません。",
+      "already_linked": "既にこのマネージャーと接続されています。",
+      "pending": "接続リクエストが既に送信されています。",
+      "self_request_not_allowed": "自分自身には接続リクエストを送信できません。",
+      "unknown": "不明なエラーが発生しました。もう一度お試しください。"
+    }
   },
   "channels": {
     "instagram": "Instagram",

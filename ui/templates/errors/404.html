@@ -59,22 +59,21 @@
     </div>
 
     <div class="error-code">404</div>
-    <h1 class="error-title">페이지를 찾을 수 없습니다</h1>
+    <h1 class="error-title">{{ t['errors']['404']['title'] if t and 'errors' in t else 'Page not found' }}</h1>
 
     <p class="error-message">
-        요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.<br>
-        URL을 확인하시거나 아래 버튼을 통해 원하는 페이지로 이동해보세요.
+        {{ t['errors']['404']['message'] if t and 'errors' in t else 'The page you requested does not exist or may have been moved.' }}
     </p>
 
     <div class="error-actions">
-        <a href="/" class="btn primary">홈으로 이동</a>
-        <a href="/dashboard" class="btn secondary">대시보드</a>
-        <a href="/services" class="btn secondary">서비스 소개</a>
-        <a href="/support" class="btn secondary">고객 지원</a>
+        <a href="/" class="btn primary">{{ t['errors']['404']['home'] if t and 'errors' in t else 'Go to Home' }}</a>
+        <a href="/dashboard" class="btn secondary">{{ t['errors']['404']['dashboard'] if t and 'errors' in t else 'Dashboard' }}</a>
+        <a href="/services" class="btn secondary">{{ t['errors']['404']['services'] if t and 'errors' in t else 'Services' }}</a>
+        <a href="/support" class="btn secondary">{{ t['errors']['404']['support'] if t and 'errors' in t else 'Support' }}</a>
     </div>
 
     <div style="margin-top: 3rem; color: var(--text-secondary, #9ca3af); font-size: 0.875rem;">
-        <p>문제가 지속되면 <a href="/support" style="color: var(--primary, #4f46e5); text-decoration: underline;">고객 지원팀</a>에 문의해주세요.</p>
+        <p>{{ t['errors']['404']['contact_hint'] if t and 'errors' in t else 'If the problem persists, please contact our support team.' }}</p>
     </div>
 </div>
 {% endblock %}
