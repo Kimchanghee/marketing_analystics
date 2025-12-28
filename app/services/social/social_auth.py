@@ -7,7 +7,7 @@ from typing import Iterable
 
 from sqlmodel import Session, select
 
-from ..models import ActivityLog, SocialAccount, SocialProvider, User
+from ...models import ActivityLog, SocialAccount, SocialProvider, User
 
 logger = logging.getLogger(__name__)
 

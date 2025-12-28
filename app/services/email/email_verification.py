@@ -9,9 +9,9 @@ from datetime import datetime, timedelta
 
 from sqlmodel import select
 
-from ..config import get_settings
-from ..database import session_context
-from ..models import EmailVerification
+from ...config import get_settings
+from ...database import session_context
+from ...models import EmailVerification
 from .resend_email import resend_email_service
 
 logger = logging.getLogger(__name__)

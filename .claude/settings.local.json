@@ -19,7 +19,15 @@
       "Bash(dir \"c:\\\\Github\\\\marketing_analystics\")",
       "Bash(wc:*)",
       "Bash(dir /s /b c:githubmarketing_analystics)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(pip install:*)",
+      "Bash(timeout 15 python:*)",
+      "Bash(timeout 20 python -m uvicorn:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(taskkill:*)",
+      "Bash(python3 -m py_compile:*)",
+      "Bash(python3:*)"
     ]
   }
 }

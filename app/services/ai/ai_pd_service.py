@@ -10,8 +10,8 @@ from typing import Any, Dict, List, Optional
 import google.generativeai as genai
 from sqlmodel import Session, select
 
-from ..config import get_settings
-from ..models import (
+from ...config import get_settings
+from ...models import (
     ChannelAccount,
     CreatorInquiry,
     ManagerAPIKey,

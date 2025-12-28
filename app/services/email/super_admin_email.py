@@ -7,7 +7,7 @@ from email.header import decode_header, make_header
 from email.message import EmailMessage
 from typing import List, Optional
 
-from ..config import Settings
+from ...config import Settings
 
 
 class EmailServiceError(Exception):

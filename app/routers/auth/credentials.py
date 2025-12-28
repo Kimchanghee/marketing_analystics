@@ -15,7 +15,7 @@ from ...auth import auth_manager
 from ...database import get_session
 from ...dependencies import get_current_user
 from ...models import ActivityLog, User
-from ...services.email_verification import email_verification_service
+from ...services.email.email_verification import email_verification_service
 
 router = APIRouter()
 

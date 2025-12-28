@@ -6,7 +6,7 @@ from typing import Optional
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from jose import jwt
 
-from ..config import get_settings
+from ...config import get_settings
 
 
 class SocialOAuthNotConfigured(RuntimeError):

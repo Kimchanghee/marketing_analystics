@@ -26,9 +26,9 @@ from . import social
 from .account_recovery import account_recovery_service
 from .login_throttle import login_throttle_service
 from .localization import translator
-from .crypto import CryptoService
-from .pdf_generator import PDFGenerator
-from .config_status import ConfigStatus
+from .crypto import encrypt, decrypt, DecryptionError
+from .pdf_generator import generate_dashboard_pdf
+from .config_status import get_config_status
 
 __all__ = [
     # 서브모듈
@@ -39,7 +39,9 @@ __all__ = [
     "account_recovery_service",
     "login_throttle_service",
     "translator",
-    "CryptoService",
-    "PDFGenerator",
-    "ConfigStatus",
+    "encrypt",
+    "decrypt",
+    "DecryptionError",
+    "generate_dashboard_pdf",
+    "get_config_status",
 ]

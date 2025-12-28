@@ -36,7 +36,7 @@ from ..models import (
     UserRole,
 )
 from ..services.localization import load_translations
-from ..services.social_fetcher import fetch_channel_snapshots
+from ..services.social.social_fetcher import fetch_channel_snapshots
 
 router = APIRouter(prefix="/channels", tags=["channels"])
 

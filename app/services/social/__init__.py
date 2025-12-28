@@ -13,7 +13,7 @@ from .social_oauth import (
     OAuthError,
     SocialOAuthNotConfigured,
 )
-from .social_fetcher import SocialFetcher
+from .social_fetcher import fetch_channel_snapshots, generate_mock_metrics
 from .channel_connectors import (
     InstagramConnector,
     YouTubeConnector,
@@ -25,7 +25,8 @@ __all__ = [
     "get_oauth_client",
     "OAuthError",
     "SocialOAuthNotConfigured",
-    "SocialFetcher",
+    "fetch_channel_snapshots",
+    "generate_mock_metrics",
     "InstagramConnector",
     "YouTubeConnector",
     "TikTokConnector",

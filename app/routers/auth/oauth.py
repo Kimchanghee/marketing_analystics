@@ -29,8 +29,8 @@ from ...models import (
     User,
     UserRole,
 )
-from ...services.social_auth import social_auth_service
-from ...services.social_oauth import (
+from ...services.social.social_auth import social_auth_service
+from ...services.social.social_oauth import (
     OAuthError,
     SocialOAuthNotConfigured,
     get_oauth_client,

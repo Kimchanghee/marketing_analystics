@@ -20,12 +20,12 @@ from ..models import (
     User,
     UserRole,
 )
-from ..services.ai_pd_service import (
+from ..services.ai.ai_pd_service import (
     ai_pd_service,
     APIKeyNotConfiguredError,
     AIGenerationError,
 )
-from ..services.social_fetcher import fetch_channel_snapshots
+from ..services.social.social_fetcher import fetch_channel_snapshots
 
 router = APIRouter()
 

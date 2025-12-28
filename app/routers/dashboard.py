@@ -21,9 +21,9 @@ from ..models import (
     User,
     UserRole,
 )
-from ..services.ai_recommendations import generate_ad_recommendations
+from ..services.ai.ai_recommendations import generate_ad_recommendations
 from ..services.localization import translator
-from ..services.social_fetcher import fetch_channel_snapshots
+from ..services.social.social_fetcher import fetch_channel_snapshots
 from ..services.config_status import get_config_summary
 
 router = APIRouter()

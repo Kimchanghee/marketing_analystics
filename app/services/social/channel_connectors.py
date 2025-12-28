@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 import requests
 from requests import Response
 
-from ..models import ChannelAccount, ChannelCredential
+from ...models import ChannelAccount, ChannelCredential
 
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "

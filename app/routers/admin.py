@@ -23,7 +23,7 @@ from ..models import (
     UserRole,
 )
 from ..services.localization import translator
-from ..services.super_admin_email import (
+from ..services.email.super_admin_email import (
     EmailConfigurationError,
     EmailServiceError,
     EmailReceiveError,
@@ -95,7 +95,7 @@ def super_admin_dashboard(
     gemini_api_key_set = hasattr(settings, 'gemini_api_key') and settings.gemini_api_key and settings.gemini_api_key != ""
 
     # AI PD 시스템 프롬프트 가져오기
-    from ..services.ai_pd_service import AIPDService
+    from ..services.ai.ai_pd_service import AIPDService
     ai_system_prompt = AIPDService.get_system_prompt()
 
     email_inbox = []
@@ -417,7 +417,7 @@ def manager_dashboard(
     from sqlalchemy.orm import selectinload
     from sqlalchemy import func
     from ..models import ChannelAccount
-    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.social.social_fetcher import fetch_channel_snapshots
 
     locale = user.locale
     strings = translator.load_locale(locale)
@@ -530,7 +530,7 @@ def export_manager_dashboard_pdf(
     from datetime import datetime
     from sqlalchemy.orm import selectinload
     from ..models import ChannelAccount
-    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.social.social_fetcher import fetch_channel_snapshots
     from ..services.pdf_generator import generate_manager_pdf
 
     # 승인된 크리에이터 조회
@@ -648,7 +648,7 @@ def view_creator_detail(
     """특정 크리에이터의 상세 정보 조회"""
     from sqlalchemy.orm import selectinload
     from ..models import ChannelAccount
-    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.social.social_fetcher import fetch_channel_snapshots
 
     # 매니저와 크리에이터의 연결 확인
     link = session.exec(
@@ -703,7 +703,7 @@ def export_manager_dashboard_pdf(
     from fastapi.responses import StreamingResponse
     from sqlalchemy.orm import selectinload
     from ..models import ChannelAccount
-    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.social.social_fetcher import fetch_channel_snapshots
     from ..services.pdf_generator import generate_manager_pdf
 
     # 승인된 크리에이터 정보 조회
@@ -762,7 +762,7 @@ def export_creator_csv(
     from fastapi.responses import StreamingResponse
     from sqlalchemy.orm import selectinload
     from ..models import ChannelAccount
-    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.social.social_fetcher import fetch_channel_snapshots
 
     # 권한 확인
     link = session.exec(
@@ -837,7 +837,7 @@ def export_creator_pdf(
     from fastapi.responses import StreamingResponse
     from sqlalchemy.orm import selectinload
     from ..models import ChannelAccount
-    from ..services.social_fetcher import fetch_channel_snapshots
+    from ..services.social.social_fetcher import fetch_channel_snapshots
     from ..services.pdf_generator import generate_dashboard_pdf
 
     # 권한 확인
@@ -975,7 +975,7 @@ def create_inquiry(
 
     # 크리에이터에게 이메일 알림 전송
     try:
-        from ..services.gmail_service import GmailService, send_notification_email
+        from ..services.email.gmail_service import GmailService, send_notification_email
 
         # Gmail API 사용 시도 (우선순위 1)
         if GmailService.is_configured():
@@ -1000,7 +1000,7 @@ Creator Control Center
                 send_notification_email(creator.email, email_subject, email_body)
         else:
             # Fallback to SMTP/IMAP
-            from ..services.super_admin_email import SuperAdminEmailService
+            from ..services.email.super_admin_email import SuperAdminEmailService
             from ..config import get_settings
             settings = get_settings()
 
@@ -1167,7 +1167,7 @@ def generate_ai_response(
 
     # AI 서비스 사용
     try:
-        from ..services.gemini_ai import get_gemini_service
+        from ..services.ai.gemini_ai import get_gemini_service
 
         gemini = get_gemini_service(api_key_record.api_key)
 
@@ -1233,7 +1233,7 @@ def send_inquiry_response(
 
     # 크리에이터에게 답변 이메일 알림 전송
     try:
-        from ..services.gmail_service import GmailService, send_notification_email
+        from ..services.email.gmail_service import GmailService, send_notification_email
 
         # Gmail API 사용 시도 (우선순위 1)
         if GmailService.is_configured():
@@ -1259,7 +1259,7 @@ Creator Control Center
                 send_notification_email(creator.email, email_subject, email_body)
         else:
             # Fallback to SMTP/IMAP
-            from ..services.super_admin_email import SuperAdminEmailService
+            from ..services.email.super_admin_email import SuperAdminEmailService
             from ..config import get_settings
             settings = get_settings()
 

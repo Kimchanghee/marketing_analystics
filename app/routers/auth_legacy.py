@@ -29,11 +29,11 @@ from ..models import (
     UserRole,
 )
 from ..services.account_recovery import account_recovery_service
-from ..services.email_verification import email_verification_service
+from ..services.email.email_verification import email_verification_service
 from ..services.localization import translator
 from ..services.login_throttle import login_throttle_service
-from ..services.social_auth import social_auth_service
-from ..services.social_oauth import (
+from ..services.social.social_auth import social_auth_service
+from ..services.social.social_oauth import (
     OAuthError,
     SocialOAuthNotConfigured,
     get_oauth_client,

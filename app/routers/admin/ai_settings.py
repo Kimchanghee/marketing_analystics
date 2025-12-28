@@ -91,7 +91,7 @@ def update_ai_system_prompt(
     user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     """AI 시스템 프롬프트 업데이트"""
-    from ...services.ai_pd_service import AIPDService
+    from ...services.ai.ai_pd_service import AIPDService
 
     AIPDService.set_system_prompt(system_prompt.strip())
 
@@ -117,7 +117,7 @@ def reset_ai_system_prompt(
     user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
     """AI 시스템 프롬프트 초기화"""
-    from ...services.ai_pd_service import AIPDService
+    from ...services.ai.ai_pd_service import AIPDService
 
     AIPDService.reset_system_prompt()
 

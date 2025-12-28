@@ -23,9 +23,9 @@ from ...models import (
     User,
     UserRole,
 )
-from ...services.email_verification import email_verification_service
+from ...services.email.email_verification import email_verification_service
 from ...services.localization import translator
-from ...services.social_auth import social_auth_service
+from ...services.social.social_auth import social_auth_service
 
 from .helpers import determine_locale, template_context
 

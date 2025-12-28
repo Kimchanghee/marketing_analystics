@@ -22,7 +22,7 @@ from ...models import (
     UserRole,
 )
 from ...services.localization import translator
-from ...services.super_admin_email import (
+from ...services.email.super_admin_email import (
     EmailConfigurationError,
     EmailReceiveError,
     EmailServiceError,
@@ -88,7 +88,7 @@ def super_admin_dashboard(
     gemini_api_key_set = hasattr(settings, 'gemini_api_key') and settings.gemini_api_key and settings.gemini_api_key != ""
 
     # AI PD 시스템 프롬프트
-    from ...services.ai_pd_service import AIPDService
+    from ...services.ai.ai_pd_service import AIPDService
     ai_system_prompt = AIPDService.get_system_prompt()
 
     # 이메일 서비스

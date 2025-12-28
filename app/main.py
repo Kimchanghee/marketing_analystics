@@ -33,7 +33,7 @@ from .routers import admin, ai_pd, channels, dashboard, subscriptions
 from .routers.auth import router as auth_router
 
 from .services.localization import translator
-from .services.social_auth import social_auth_service
+from .services.social.social_auth import social_auth_service
 
 from .seo import get_seo_service, get_sitemap_generator, generate_robots_txt
 from .middleware.security_headers import add_security_middleware

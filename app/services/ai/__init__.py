@@ -9,10 +9,11 @@ AI 서비스 모듈
 
 from .gemini_ai import GeminiAIService
 from .ai_pd_service import AIPDService
-from .ai_recommendations import AIRecommendationService
+from .ai_recommendations import generate_ad_recommendations, generate_meta_ads_recommendations
 
 __all__ = [
     "GeminiAIService",
     "AIPDService",
-    "AIRecommendationService",
+    "generate_ad_recommendations",
+    "generate_meta_ads_recommendations",
 ]

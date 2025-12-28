@@ -13,7 +13,7 @@ from ..auth import auth_manager
 from ..config import get_settings
 from ..database import session_context
 from ..models import PasswordResetToken, User
-from .resend_email import resend_email_service
+from .email.resend_email import resend_email_service
 
 logger = logging.getLogger(__name__)
 

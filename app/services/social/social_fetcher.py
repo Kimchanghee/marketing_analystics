@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from random import randint, random
 from typing import Any, Dict, List
 
-from ..models import ChannelAccount
-from ..cache import cache
+from ...models import ChannelAccount
+from ...cache import cache
 from .channel_connectors import (
     ChannelConnectorConfigError,
     ChannelConnectorError,

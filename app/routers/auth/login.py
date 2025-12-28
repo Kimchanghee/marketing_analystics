@@ -16,7 +16,7 @@ from ...database import get_session
 from ...models import ActivityLog, User, UserRole
 from ...services.localization import translator
 from ...services.login_throttle import login_throttle_service
-from ...services.social_auth import social_auth_service
+from ...services.social.social_auth import social_auth_service
 
 from .helpers import determine_locale, template_context, get_client_ip
 

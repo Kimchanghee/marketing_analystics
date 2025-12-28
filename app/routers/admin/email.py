@@ -12,7 +12,7 @@ from ...database import get_session
 from ...dependencies import require_roles
 from ...models import ActivityLog, User, UserRole
 from ...services.localization import translator
-from ...services.super_admin_email import (
+from ...services.email.super_admin_email import (
     EmailSendError,
     EmailServiceError,
     SuperAdminEmailService,
