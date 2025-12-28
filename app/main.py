@@ -29,7 +29,8 @@ from .database import get_session, session_context
 from .dependencies import get_current_user
 from .models import SocialAccount, User
 
-from .routers import admin, ai_pd, auth, channels, dashboard, subscriptions
+from .routers import admin, ai_pd, channels, dashboard, subscriptions
+from .routers.auth import router as auth_router
 
 from .services.localization import translator
 from .services.social_auth import social_auth_service
@@ -504,7 +505,7 @@ async def robots():
     return Response(content=robots_content, media_type="text/plain")
 
 
-app.include_router(auth.router)
+app.include_router(auth_router)
 app.include_router(dashboard.router)
 app.include_router(channels.router)
 app.include_router(admin.router)

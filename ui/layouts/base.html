@@ -101,6 +101,7 @@
                     <span class="btn-nav-text">{{ t['nav']['channels'] if 'channels' in t['nav'] else '채널' }}</span>
                 </a>
                 <form method="post" action="/logout" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_token', '') }}">
                     <button class="btn primary" type="submit">{{ t['profile']['logout'] }}</button>
                 </form>
             {% else %}

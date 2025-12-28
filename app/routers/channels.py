@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
 from urllib.parse import urlencode, quote
 
+import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
@@ -42,7 +43,8 @@ router = APIRouter(prefix="/channels", tags=["channels"])
 
 def get_oauth_configs():
     """OAuth 설정을 동적으로 가져오기 (환경변수 로드)"""
-    from ..config import settings
+    from ..config import get_settings
+    settings = get_settings()
 
     return {
         "instagram": {
@@ -365,8 +367,6 @@ async def oauth_callback(
     base_url = str(request.base_url).rstrip('/')
     redirect_uri = f"{base_url}/channels/callback/{platform}"
 
-    import requests
-
     token_data = {
         "client_id": config["client_id"],
         "client_secret": config["client_secret"],
@@ -380,15 +380,16 @@ async def oauth_callback(
         token_data["code_verifier"] = code_verifier
 
     try:
-        response = requests.post(config["token_url"], data=token_data, timeout=10)
-        response.raise_for_status()
-        token_response = response.json()
-    except requests.exceptions.Timeout:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.post(config["token_url"], data=token_data)
+            response.raise_for_status()
+            token_response = response.json()
+    except httpx.TimeoutException:
         raise HTTPException(
             status_code=status.HTTP_504_GATEWAY_TIMEOUT,
             detail=f"{platform} 서버 응답 시간 초과"
         )
-    except requests.exceptions.RequestException as e:
+    except httpx.HTTPStatusError as e:
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail=f"{platform} 서버와 통신 실패: {str(e)}"
@@ -458,167 +459,157 @@ async def oauth_callback(
 
 
 async def _fetch_account_info(platform: str, access_token: str, config: Dict[str, Any]) -> Dict[str, Any]:
-    """플랫폼별 계정 정보 가져오기"""
-    import requests
-
+    """플랫폼별 계정 정보 가져오기 (비동기)"""
     headers = {"Authorization": f"Bearer {access_token}"}
 
-    if platform in ["instagram", "facebook", "threads"]:
-        # Meta 플랫폼
-        response = requests.get(
-            "https://graph.facebook.com/v20.0/me",
-            params={"fields": "id,name", "access_token": access_token},
-            timeout=10
-        )
-        data = response.json()
-
-        if platform == "instagram":
-            # Instagram Business 계정 정보 가져오기
-            accounts_response = requests.get(
-                "https://graph.facebook.com/v20.0/me/accounts",
-                params={"access_token": access_token},
-                timeout=10
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        if platform in ["instagram", "facebook", "threads"]:
+            # Meta 플랫폼
+            response = await client.get(
+                "https://graph.facebook.com/v20.0/me",
+                params={"fields": "id,name", "access_token": access_token},
             )
-            accounts = accounts_response.json().get("data", [])
+            data = response.json()
 
-            # 첫 번째 페이지의 Instagram Business 계정 찾기
-            for page in accounts:
-                page_id = page.get("id")
-                ig_response = requests.get(
-                    f"https://graph.facebook.com/v20.0/{page_id}",
-                    params={
-                        "fields": "instagram_business_account",
-                        "access_token": access_token
-                    },
-                    timeout=10
+            if platform == "instagram":
+                # Instagram Business 계정 정보 가져오기
+                accounts_response = await client.get(
+                    "https://graph.facebook.com/v20.0/me/accounts",
+                    params={"access_token": access_token},
                 )
-                ig_data = ig_response.json()
-                if "instagram_business_account" in ig_data:
-                    ig_account_id = ig_data["instagram_business_account"]["id"]
+                accounts = accounts_response.json().get("data", [])
 
-                    # Instagram 계정 세부 정보
-                    ig_detail_response = requests.get(
-                        f"https://graph.facebook.com/v20.0/{ig_account_id}",
+                # 첫 번째 페이지의 Instagram Business 계정 찾기
+                for page in accounts:
+                    page_id = page.get("id")
+                    ig_response = await client.get(
+                        f"https://graph.facebook.com/v20.0/{page_id}",
                         params={
-                            "fields": "username,followers_count",
+                            "fields": "instagram_business_account",
                             "access_token": access_token
                         },
-                        timeout=10
                     )
-                    ig_detail = ig_detail_response.json()
+                    ig_data = ig_response.json()
+                    if "instagram_business_account" in ig_data:
+                        ig_account_id = ig_data["instagram_business_account"]["id"]
+
+                        # Instagram 계정 세부 정보
+                        ig_detail_response = await client.get(
+                            f"https://graph.facebook.com/v20.0/{ig_account_id}",
+                            params={
+                                "fields": "username,followers_count",
+                                "access_token": access_token
+                            },
+                        )
+                        ig_detail = ig_detail_response.json()
+
+                        return {
+                            "id": ig_account_id,
+                            "username": ig_detail.get("username", "instagram_user"),
+                            "followers": ig_detail.get("followers_count", 0),
+                            "metadata": {"business_id": ig_account_id, "page_id": page_id}
+                        }
+
+                # Instagram 계정을 찾지 못한 경우
+                return {
+                    "id": data.get("id", ""),
+                    "username": data.get("name", "instagram_user"),
+                    "followers": 0,
+                    "metadata": {}
+                }
+
+            elif platform == "facebook":
+                # Facebook 페이지 정보
+                accounts_response = await client.get(
+                    "https://graph.facebook.com/v20.0/me/accounts",
+                    params={"access_token": access_token},
+                )
+                accounts = accounts_response.json().get("data", [])
+
+                if accounts:
+                    page = accounts[0]  # 첫 번째 페이지 사용
+                    page_id = page.get("id")
+
+                    # 페이지 세부 정보
+                    page_response = await client.get(
+                        f"https://graph.facebook.com/v20.0/{page_id}",
+                        params={
+                            "fields": "name,followers_count,fan_count",
+                            "access_token": access_token
+                        },
+                    )
+                    page_data = page_response.json()
 
                     return {
-                        "id": ig_account_id,
-                        "username": ig_detail.get("username", "instagram_user"),
-                        "followers": ig_detail.get("followers_count", 0),
-                        "metadata": {"business_id": ig_account_id, "page_id": page_id}
+                        "id": page_id,
+                        "username": page_data.get("name", "facebook_page"),
+                        "followers": page_data.get("followers_count", page_data.get("fan_count", 0)),
+                        "metadata": {"page_id": page_id}
                     }
 
-            # Instagram 계정을 찾지 못한 경우
+            # Threads (기본 Facebook 정보 사용)
             return {
                 "id": data.get("id", ""),
-                "username": data.get("name", "instagram_user"),
+                "username": data.get("name", "threads_user"),
                 "followers": 0,
                 "metadata": {}
             }
 
-        elif platform == "facebook":
-            # Facebook 페이지 정보
-            accounts_response = requests.get(
-                "https://graph.facebook.com/v20.0/me/accounts",
-                params={"access_token": access_token},
-                timeout=10
+        elif platform == "youtube":
+            # YouTube
+            response = await client.get(
+                "https://www.googleapis.com/youtube/v3/channels",
+                params={
+                    "part": "snippet,statistics",
+                    "mine": "true",
+                    "access_token": access_token
+                },
             )
-            accounts = accounts_response.json().get("data", [])
+            data = response.json()
+            items = data.get("items", [])
 
-            if accounts:
-                page = accounts[0]  # 첫 번째 페이지 사용
-                page_id = page.get("id")
-
-                # 페이지 세부 정보
-                page_response = requests.get(
-                    f"https://graph.facebook.com/v20.0/{page_id}",
-                    params={
-                        "fields": "name,followers_count,fan_count",
-                        "access_token": access_token
-                    },
-                    timeout=10
-                )
-                page_data = page_response.json()
-
+            if items:
+                channel = items[0]
                 return {
-                    "id": page_id,
-                    "username": page_data.get("name", "facebook_page"),
-                    "followers": page_data.get("followers_count", page_data.get("fan_count", 0)),
-                    "metadata": {"page_id": page_id}
+                    "id": channel["id"],
+                    "username": channel["snippet"]["title"],
+                    "followers": int(channel["statistics"].get("subscriberCount", 0)),
+                    "metadata": {"channel_id": channel["id"]}
                 }
 
-        # Threads (기본 Facebook 정보 사용)
-        return {
-            "id": data.get("id", ""),
-            "username": data.get("name", "threads_user"),
-            "followers": 0,
-            "metadata": {}
-        }
+            return {"id": "", "username": "youtube_channel", "followers": 0, "metadata": {}}
 
-    elif platform == "youtube":
-        # YouTube
-        response = requests.get(
-            "https://www.googleapis.com/youtube/v3/channels",
-            params={
-                "part": "snippet,statistics",
-                "mine": "true",
-                "access_token": access_token
-            },
-            timeout=10
-        )
-        data = response.json()
-        items = data.get("items", [])
+        elif platform == "twitter":
+            # Twitter
+            response = await client.get(
+                "https://api.twitter.com/2/users/me",
+                params={"user.fields": "public_metrics,username"},
+                headers=headers,
+            )
+            data = response.json().get("data", {})
 
-        if items:
-            channel = items[0]
             return {
-                "id": channel["id"],
-                "username": channel["snippet"]["title"],
-                "followers": int(channel["statistics"].get("subscriberCount", 0)),
-                "metadata": {"channel_id": channel["id"]}
+                "id": data.get("id", ""),
+                "username": data.get("username", "twitter_user"),
+                "followers": data.get("public_metrics", {}).get("followers_count", 0),
+                "metadata": {"user_id": data.get("id")}
             }
 
-        return {"id": "", "username": "youtube_channel", "followers": 0, "metadata": {}}
+        elif platform == "tiktok":
+            # TikTok
+            response = await client.get(
+                "https://open.tiktokapis.com/v2/user/info/",
+                params={"fields": "open_id,union_id,avatar_url,display_name"},
+                headers=headers,
+            )
+            data = response.json().get("data", {}).get("user", {})
 
-    elif platform == "twitter":
-        # Twitter
-        response = requests.get(
-            "https://api.twitter.com/2/users/me",
-            params={"user.fields": "public_metrics,username"},
-            headers=headers,
-            timeout=10
-        )
-        data = response.json().get("data", {})
-
-        return {
-            "id": data.get("id", ""),
-            "username": data.get("username", "twitter_user"),
-            "followers": data.get("public_metrics", {}).get("followers_count", 0),
-            "metadata": {"user_id": data.get("id")}
-        }
-
-    elif platform == "tiktok":
-        # TikTok
-        response = requests.get(
-            "https://open.tiktokapis.com/v2/user/info/",
-            params={"fields": "open_id,union_id,avatar_url,display_name"},
-            headers=headers,
-            timeout=10
-        )
-        data = response.json().get("data", {}).get("user", {})
-
-        return {
-            "id": data.get("open_id", ""),
-            "username": data.get("display_name", "tiktok_user"),
-            "followers": 0,  # TikTok API는 별도 요청 필요
-            "metadata": {"open_id": data.get("open_id")}
-        }
+            return {
+                "id": data.get("open_id", ""),
+                "username": data.get("display_name", "tiktok_user"),
+                "followers": 0,  # TikTok API는 별도 요청 필요
+                "metadata": {"open_id": data.get("open_id")}
+            }
 
     return {"id": "", "username": "unknown", "followers": 0, "metadata": {}}
 
@@ -687,8 +678,6 @@ async def refresh_channel_token(
             detail="지원하지 않는 플랫폼입니다."
         )
 
-    import requests
-
     token_data = {
         "client_id": config["client_id"],
         "client_secret": config["client_secret"],
@@ -697,15 +686,16 @@ async def refresh_channel_token(
     }
 
     try:
-        response = requests.post(config["token_url"], data=token_data, timeout=10)
-        response.raise_for_status()
-        token_response = response.json()
-    except requests.exceptions.Timeout:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.post(config["token_url"], data=token_data)
+            response.raise_for_status()
+            token_response = response.json()
+    except httpx.TimeoutException:
         raise HTTPException(
             status_code=status.HTTP_504_GATEWAY_TIMEOUT,
             detail=f"{channel.platform} 서버 응답 시간 초과"
         )
-    except requests.exceptions.RequestException as e:
+    except httpx.HTTPStatusError as e:
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail=f"{channel.platform} 서버와 통신 실패: {str(e)}"

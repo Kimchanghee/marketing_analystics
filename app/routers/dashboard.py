@@ -41,12 +41,15 @@ def dashboard(request: Request, user: User = Depends(get_current_user), session=
     ).all()
     snapshots = fetch_channel_snapshots(accounts)
 
-    # AI 추천 생성
+    # AI 추천 생성 (account.id 기준으로 저장)
     ai_recommendations = {}
-    for platform, snapshot in snapshots.items():
-        recommendations = generate_ad_recommendations(snapshot)
-        if recommendations:
-            ai_recommendations[platform] = recommendations
+    for account in accounts:
+        snapshot = snapshots.get(account.id, {})
+        if snapshot:
+            recommendations = generate_ad_recommendations(snapshot)
+            if recommendations:
+                # Template looks up by account.platform, so key by platform
+                ai_recommendations[account.platform] = recommendations
 
     subscription = session.exec(select(Subscription).where(Subscription.user_id == user.id)).first()
     if not subscription:
@@ -267,7 +270,7 @@ def export_dashboard_csv(
 
     # 데이터 행
     for account in accounts:
-        snapshot = snapshots.get(account.platform, {})
+        snapshot = snapshots.get(account.id, {})
         writer.writerow([
             account.platform,
             account.account_name,

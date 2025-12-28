@@ -17,7 +17,9 @@
       "Bash(python scripts/add_legal_translations.py:*)",
       "Bash(python -m py_compile:*)",
       "Bash(dir \"c:\\\\Github\\\\marketing_analystics\")",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(dir /s /b c:githubmarketing_analystics)",
+      "Bash(findstr:*)"
     ]
   }
 }

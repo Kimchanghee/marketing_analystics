@@ -20,6 +20,11 @@ logger = logging.getLogger(__name__)
 class EmailVerificationService:
     """Manage verification codes used during signup or security checks."""
 
+    # Max verification attempts before lockout
+    MAX_ATTEMPTS = 5
+    # Lockout duration after max attempts (minutes)
+    LOCKOUT_MINUTES = 15
+
     def __init__(self) -> None:
         settings = get_settings()
         self.code_length = getattr(settings, "verification_code_length", 6)
@@ -83,6 +88,7 @@ class EmailVerificationService:
         """Validate the given verification code.
 
         Returns True when the code is valid and marks the record as verified.
+        Returns False if code is invalid, expired, or max attempts exceeded.
         """
 
         hashed = self._hash_code(code)
@@ -94,10 +100,26 @@ class EmailVerificationService:
                 return False
             if record.expires_at < datetime.utcnow():
                 return False
+            # Check if max attempts exceeded (lockout)
+            if record.attempt_count >= self.MAX_ATTEMPTS:
+                # Check if lockout period has passed since last attempt
+                lockout_until = record.expires_at + timedelta(minutes=self.LOCKOUT_MINUTES)
+                if datetime.utcnow() < lockout_until:
+                    logger.warning(
+                        "Verification attempt blocked for %s due to max attempts exceeded",
+                        email
+                    )
+                    return False
+                # Lockout expired, reset attempt count
+                record.attempt_count = 0
             if record.code_hash != hashed:
                 record.attempt_count += 1
                 session.add(record)
                 session.commit()
+                logger.info(
+                    "Invalid verification code for %s (attempt %d/%d)",
+                    email, record.attempt_count, self.MAX_ATTEMPTS
+                )
                 return False
             record.verified = True
             record.attempt_count = 0

@@ -6,6 +6,7 @@
     <div class="subscription">
         <span>{{ t['dashboard']['current_plan'] }}: {{ t['subscriptions'][subscription.tier.value] }}</span>
         <form method="post" action="/subscriptions/change">
+            <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_token', '') }}">
             <label>{{ t['dashboard']['upgrade_prompt'] }}
                 <select name="tier">
                     <option value="free">{{ t['subscriptions']['free'] }}</option>
@@ -35,6 +36,7 @@
         </p>
     </div>
     <form method="post" action="/channels/add" class="channel-form">
+        <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_token', '') }}">
         <select name="platform">
             {% for key, label in t['channels'].items() %}
             <option value="{{ key }}">{{ label }}</option>
@@ -77,6 +79,7 @@
             <div class="channel-card-actions">
                 <button class="btn tertiary btn-compact toggle-details" type="button" aria-expanded="false">상세 보기</button>
                 <form method="post" action="/channels/remove" class="channel-remove-form">
+                    <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_token', '') }}">
                     <input type="hidden" name="channel_id" value="{{ account.id }}">
                     <button class="btn tertiary btn-compact" type="submit">삭제</button>
                 </form>
@@ -140,6 +143,7 @@
                     {% endif %}
                 </p>
                 <form method="post" action="/channels/credentials" class="credential-form">
+                    <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_token', '') }}">
                     <input type="hidden" name="channel_id" value="{{ account.id }}">
                     <label>
                         {{ t['dashboard']['auth_type_label'] }}
@@ -517,6 +521,7 @@ if (postsCtx && chartData.recentPosts.length > 0) {
     </div>
     {% endif %}
     <form method="post" action="/manager/request-link" class="manager-request-form">
+        <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_token', '') }}">
         <label>
             {{ t['dashboard']['manager_request_label'] }}
             <input type="email" name="manager_email" placeholder="manager@example.com" required>

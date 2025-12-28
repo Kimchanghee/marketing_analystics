@@ -52,6 +52,7 @@ def recover_username(
 
 @router.post("/recover/password")
 def recover_password(
+    request: Request,
     email: EmailStr = Form(...),
     locale: str = Form("ko"),
     session: Session = Depends(get_session),
@@ -62,7 +63,8 @@ def recover_password(
         redirect_url = f"/recover?lang={locale}&error=account_not_found"
         return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
-    account_recovery_service.create_reset_token(user)
+    base_url = str(request.base_url).rstrip("/")
+    account_recovery_service.create_reset_token(user, base_url=base_url)
     redirect_url = f"/recover?lang={locale}&success=password_token_sent"
     return RedirectResponse(url=redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
