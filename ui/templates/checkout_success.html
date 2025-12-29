@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}{% if locale == "ko" %}결제 완료{% elif locale == "ja" %}お支払い完了{% else %}Payment Complete{% endif %} - {{ t.app.title }}{% endblock %}
+
+{% block content %}
+<div class="min-h-[60vh] flex items-center justify-center px-4 py-12">
+    <div class="max-w-md w-full text-center">
+        <!-- Success Icon -->
+        <div class="mx-auto w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            {% if locale == "ko" %}결제가 완료되었습니다!{% elif locale == "ja" %}お支払い完了！{% else %}Payment Successful!{% endif %}
+        </h1>
+
+        <!-- Description -->
+        <p class="text-gray-600 dark:text-gray-300 mb-8">
+            {% if locale == "ko" %}
+            <strong>{{ plan.name }}</strong> 플랜이 활성화되었습니다.<br>
+            새로운 기능을 마음껏 사용해보세요!
+            {% elif locale == "ja" %}
+            <strong>{{ plan.name }}</strong>プランが有効になりました。<br>
+            新機能をお楽しみください！
+            {% else %}
+            Your <strong>{{ plan.name }}</strong> plan is now active.<br>
+            Enjoy your new features!
+            {% endif %}
+        </p>
+
+        <!-- Plan Summary Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 text-left">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-600 dark:text-gray-400">
+                    {% if locale == "ko" %}플랜{% elif locale == "ja" %}プラン{% else %}Plan{% endif %}
+                </span>
+                <span class="font-semibold text-gray-900 dark:text-white">{{ plan.name }}</span>
+            </div>
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-600 dark:text-gray-400">
+                    {% if locale == "ko" %}금액{% elif locale == "ja" %}金額{% else %}Amount{% endif %}
+                </span>
+                <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ plan.price }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">
+                    {% if locale == "ko" %}채널 수{% elif locale == "ja" %}チャンネル数{% else %}Channels{% endif %}
+                </span>
+                <span class="font-semibold text-gray-900 dark:text-white">{{ plan.max_accounts }}</span>
+            </div>
+        </div>
+
+        <!-- Email Notice -->
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">
+            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            {% if locale == "ko" %}확인 이메일이 발송되었습니다{% elif locale == "ja" %}確認メールを送信しました{% else %}Confirmation email has been sent{% endif %}
+        </p>
+
+        <!-- Actions -->
+        <div class="space-y-3">
+            <a href="/dashboard"
+               class="block w-full py-3 px-6 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition">
+                {% if locale == "ko" %}대시보드로 이동{% elif locale == "ja" %}ダッシュボードへ{% else %}Go to Dashboard{% endif %}
+            </a>
+            <a href="/channels"
+               class="block w-full py-3 px-6 rounded-lg bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition">
+                {% if locale == "ko" %}채널 연결하기{% elif locale == "ja" %}チャンネルを接続{% else %}Connect Channels{% endif %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

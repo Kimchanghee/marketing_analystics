@@ -419,7 +419,7 @@ async def contact_submit(
     seo_service = get_seo_service(locale)
 
     # Send contact email via Resend if configured
-    from .services.resend_email import resend_email_service
+    from .services.email.resend_email import resend_email_service
 
     settings = get_settings()
     success_message = False

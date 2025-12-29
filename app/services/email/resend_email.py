@@ -360,6 +360,319 @@ class ResendEmailService:
 
         return self.send_email_sync(to, subject, html)
 
+    def send_subscription_change(
+        self,
+        to: str,
+        name: str,
+        old_plan: str,
+        new_plan: str,
+        change_type: str,
+        locale: str = "ko",
+    ) -> EmailResult:
+        """Send subscription change notification."""
+        templates = {
+            "ko": {
+                "upgrade": {
+                    "subject": "[Creator Control Center] 구독 플랜이 업그레이드되었습니다",
+                    "title": "구독 업그레이드 완료 🎉",
+                    "message": f"{name}님, 구독 플랜이 업그레이드되었습니다.",
+                    "detail": f"<strong>{old_plan}</strong> → <strong>{new_plan}</strong>",
+                    "note": "새로운 기능을 마음껏 사용해보세요!",
+                },
+                "downgrade": {
+                    "subject": "[Creator Control Center] 구독 플랜이 변경되었습니다",
+                    "title": "구독 플랜 변경 안내",
+                    "message": f"{name}님, 구독 플랜이 변경되었습니다.",
+                    "detail": f"<strong>{old_plan}</strong> → <strong>{new_plan}</strong>",
+                    "note": "다음 결제일부터 새 플랜이 적용됩니다.",
+                },
+                "cancel": {
+                    "subject": "[Creator Control Center] 구독이 취소되었습니다",
+                    "title": "구독 취소 안내",
+                    "message": f"{name}님, 구독이 취소 요청되었습니다.",
+                    "detail": f"현재 플랜: <strong>{old_plan}</strong>",
+                    "note": "구독 기간 종료 시까지 서비스를 이용하실 수 있습니다.",
+                },
+            },
+            "en": {
+                "upgrade": {
+                    "subject": "[Creator Control Center] Your subscription has been upgraded",
+                    "title": "Subscription Upgraded 🎉",
+                    "message": f"Hello {name}, your subscription has been upgraded.",
+                    "detail": f"<strong>{old_plan}</strong> → <strong>{new_plan}</strong>",
+                    "note": "Enjoy your new features!",
+                },
+                "downgrade": {
+                    "subject": "[Creator Control Center] Your subscription has been changed",
+                    "title": "Subscription Changed",
+                    "message": f"Hello {name}, your subscription has been changed.",
+                    "detail": f"<strong>{old_plan}</strong> → <strong>{new_plan}</strong>",
+                    "note": "The new plan will take effect from your next billing date.",
+                },
+                "cancel": {
+                    "subject": "[Creator Control Center] Your subscription has been cancelled",
+                    "title": "Subscription Cancelled",
+                    "message": f"Hello {name}, your subscription cancellation has been requested.",
+                    "detail": f"Current plan: <strong>{old_plan}</strong>",
+                    "note": "You can continue using the service until the end of your billing period.",
+                },
+            },
+            "ja": {
+                "upgrade": {
+                    "subject": "[Creator Control Center] サブスクリプションがアップグレードされました",
+                    "title": "サブスクリプションアップグレード完了 🎉",
+                    "message": f"{name}様、サブスクリプションがアップグレードされました。",
+                    "detail": f"<strong>{old_plan}</strong> → <strong>{new_plan}</strong>",
+                    "note": "新機能をお楽しみください！",
+                },
+                "downgrade": {
+                    "subject": "[Creator Control Center] サブスクリプションが変更されました",
+                    "title": "サブスクリプション変更のお知らせ",
+                    "message": f"{name}様、サブスクリプションが変更されました。",
+                    "detail": f"<strong>{old_plan}</strong> → <strong>{new_plan}</strong>",
+                    "note": "次回請求日から新プランが適用されます。",
+                },
+                "cancel": {
+                    "subject": "[Creator Control Center] サブスクリプションがキャンセルされました",
+                    "title": "サブスクリプションキャンセルのお知らせ",
+                    "message": f"{name}様、サブスクリプションのキャンセルが受け付けられました。",
+                    "detail": f"現在のプラン: <strong>{old_plan}</strong>",
+                    "note": "請求期間終了まではサービスをご利用いただけます。",
+                },
+            },
+        }
+
+        lang_templates = templates.get(locale, templates["en"])
+        template = lang_templates.get(change_type, lang_templates["upgrade"])
+
+        html = f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333;">{template['title']}</h2>
+            <p>{template['message']}</p>
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+                <p style="margin: 0; font-size: 18px;">{template['detail']}</p>
+            </div>
+            <p style="color: #666;">{template['note']}</p>
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="/dashboard" style="background: #4F46E5; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold;">대시보드로 이동</a>
+            </div>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+            <p style="color: #999; font-size: 12px;">Creator Control Center</p>
+        </div>
+        """
+
+        return self.send_email_sync(to, template["subject"], html)
+
+    def send_event_notification(
+        self,
+        to: str,
+        name: str,
+        event_title: str,
+        event_description: str,
+        event_date: Optional[str] = None,
+        cta_link: Optional[str] = None,
+        cta_text: Optional[str] = None,
+        locale: str = "ko",
+    ) -> EmailResult:
+        """Send event/promotion notification."""
+        labels = {
+            "ko": {"subject_prefix": "이벤트", "cta_default": "자세히 보기", "date_label": "일시"},
+            "en": {"subject_prefix": "Event", "cta_default": "Learn More", "date_label": "Date"},
+            "ja": {"subject_prefix": "イベント", "cta_default": "詳しく見る", "date_label": "日時"},
+        }
+        label = labels.get(locale, labels["en"])
+
+        subject = f"[Creator Control Center] {label['subject_prefix']}: {event_title}"
+
+        date_html = f"<p><strong>{label['date_label']}:</strong> {event_date}</p>" if event_date else ""
+        cta_html = ""
+        if cta_link:
+            cta_label = cta_text or label["cta_default"]
+            cta_html = f"""
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{cta_link}" style="background: #4F46E5; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold;">{cta_label}</a>
+            </div>
+            """
+
+        html = f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333;">🎉 {event_title}</h2>
+            <p>안녕하세요 {name}님,</p>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <p style="margin: 0; font-size: 16px; line-height: 1.6;">{event_description}</p>
+            </div>
+            {date_html}
+            {cta_html}
+            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+            <p style="color: #999; font-size: 12px;">Creator Control Center</p>
+        </div>
+        """
+
+        return self.send_email_sync(to, subject, html)
+
+    def send_announcement(
+        self,
+        to: str,
+        name: str,
+        announcement_title: str,
+        announcement_content: str,
+        announcement_type: str = "info",
+        locale: str = "ko",
+    ) -> EmailResult:
+        """Send announcement/notice email.
+
+        Args:
+            announcement_type: 'info', 'warning', 'update', 'maintenance'
+        """
+        labels = {
+            "ko": {
+                "info": {"prefix": "공지", "icon": "📢"},
+                "warning": {"prefix": "중요 공지", "icon": "⚠️"},
+                "update": {"prefix": "업데이트", "icon": "🆕"},
+                "maintenance": {"prefix": "점검 안내", "icon": "🔧"},
+            },
+            "en": {
+                "info": {"prefix": "Notice", "icon": "📢"},
+                "warning": {"prefix": "Important", "icon": "⚠️"},
+                "update": {"prefix": "Update", "icon": "🆕"},
+                "maintenance": {"prefix": "Maintenance", "icon": "🔧"},
+            },
+            "ja": {
+                "info": {"prefix": "お知らせ", "icon": "📢"},
+                "warning": {"prefix": "重要なお知らせ", "icon": "⚠️"},
+                "update": {"prefix": "アップデート", "icon": "🆕"},
+                "maintenance": {"prefix": "メンテナンス", "icon": "🔧"},
+            },
+        }
+
+        type_colors = {
+            "info": "#4F46E5",
+            "warning": "#DC2626",
+            "update": "#059669",
+            "maintenance": "#D97706",
+        }
+
+        lang_labels = labels.get(locale, labels["en"])
+        type_label = lang_labels.get(announcement_type, lang_labels["info"])
+        color = type_colors.get(announcement_type, "#4F46E5")
+
+        subject = f"[Creator Control Center] {type_label['prefix']}: {announcement_title}"
+
+        html = f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333;">{type_label['icon']} {announcement_title}</h2>
+            <p>안녕하세요 {name}님,</p>
+            <div style="border-left: 4px solid {color}; padding: 15px 20px; background: #f9fafb; margin: 20px 0;">
+                <p style="margin: 0; line-height: 1.8; color: #374151;">{announcement_content}</p>
+            </div>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+            <p style="color: #999; font-size: 12px;">Creator Control Center</p>
+        </div>
+        """
+
+        return self.send_email_sync(to, subject, html)
+
+    def send_inquiry_notification(
+        self,
+        to: str,
+        creator_name: str,
+        manager_name: str,
+        subject_text: str,
+        message_preview: str,
+        locale: str = "ko",
+    ) -> EmailResult:
+        """Send inquiry notification to creator."""
+        templates = {
+            "ko": {
+                "subject": f"[Creator Control Center] 새로운 문의: {subject_text}",
+                "greeting": f"안녕하세요 {creator_name}님,",
+                "intro": f"{manager_name} 관리자로부터 새로운 문의가 도착했습니다.",
+                "cta": "대시보드에서 확인하기",
+            },
+            "en": {
+                "subject": f"[Creator Control Center] New Inquiry: {subject_text}",
+                "greeting": f"Hello {creator_name},",
+                "intro": f"You have a new inquiry from {manager_name}.",
+                "cta": "View in Dashboard",
+            },
+            "ja": {
+                "subject": f"[Creator Control Center] 新しいお問い合わせ: {subject_text}",
+                "greeting": f"{creator_name}様、",
+                "intro": f"{manager_name}マネージャーから新しいお問い合わせが届きました。",
+                "cta": "ダッシュボードで確認",
+            },
+        }
+
+        t = templates.get(locale, templates["en"])
+
+        html = f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333;">💬 {subject_text}</h2>
+            <p>{t['greeting']}</p>
+            <p>{t['intro']}</p>
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0; color: #555; font-style: italic;">"{message_preview[:200]}{"..." if len(message_preview) > 200 else ""}"</p>
+            </div>
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="/dashboard" style="background: #4F46E5; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold;">{t['cta']}</a>
+            </div>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+            <p style="color: #999; font-size: 12px;">Creator Control Center</p>
+        </div>
+        """
+
+        return self.send_email_sync(to, t["subject"], html)
+
+    def send_inquiry_response(
+        self,
+        to: str,
+        creator_name: str,
+        subject_text: str,
+        response_text: str,
+        locale: str = "ko",
+    ) -> EmailResult:
+        """Send inquiry response notification to creator."""
+        templates = {
+            "ko": {
+                "subject": f"[Creator Control Center] 문의 답변: {subject_text}",
+                "greeting": f"안녕하세요 {creator_name}님,",
+                "intro": "귀하의 문의에 대한 답변이 도착했습니다.",
+                "cta": "전체 답변 보기",
+            },
+            "en": {
+                "subject": f"[Creator Control Center] Inquiry Response: {subject_text}",
+                "greeting": f"Hello {creator_name},",
+                "intro": "A response to your inquiry has been received.",
+                "cta": "View Full Response",
+            },
+            "ja": {
+                "subject": f"[Creator Control Center] お問い合わせへの回答: {subject_text}",
+                "greeting": f"{creator_name}様、",
+                "intro": "お問い合わせへの回答が届きました。",
+                "cta": "回答を見る",
+            },
+        }
+
+        t = templates.get(locale, templates["en"])
+
+        html = f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #333;">✉️ {subject_text}</h2>
+            <p>{t['greeting']}</p>
+            <p>{t['intro']}</p>
+            <div style="background: #f0fdf4; border: 1px solid #22c55e; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0; color: #166534; line-height: 1.6;">{response_text[:500]}{"..." if len(response_text) > 500 else ""}</p>
+            </div>
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="/dashboard" style="background: #4F46E5; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold;">{t['cta']}</a>
+            </div>
+            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+            <p style="color: #999; font-size: 12px;">Creator Control Center</p>
+        </div>
+        """
+
+        return self.send_email_sync(to, t["subject"], html)
+
 
 # Global singleton instance
 resend_email_service = ResendEmailService()

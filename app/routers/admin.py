@@ -695,11 +695,11 @@ def view_creator_detail(
 
 
 @router.get("/manager/export/pdf")
-def export_manager_dashboard_pdf(
+def export_manager_report_pdf(
     user: User = Depends(require_roles(UserRole.MANAGER, UserRole.ADMIN, UserRole.SUPER_ADMIN)),
     session=Depends(get_session),
 ):
-    """기업 관리자용 통합 PDF 리포트 다운로드"""
+    """기업 관리자용 통합 PDF 리포트 다운로드 (별칭 엔드포인트)"""
     from fastapi.responses import StreamingResponse
     from sqlalchemy.orm import selectinload
     from ..models import ChannelAccount
@@ -714,14 +714,12 @@ def export_manager_dashboard_pdf(
     ).all()
 
     creator_ids = [link.creator_id for link in approved_links]
-    # N+1 쿼리 방지: selectinload로 관련 데이터 미리 로드
     creators = session.exec(
         select(User)
         .where(User.id.in_(creator_ids))
-        .options(selectinload(User.social_accounts))  # 소셜 계정 미리 로드
+        .options(selectinload(User.social_accounts))
     ).all() if creator_ids else []
 
-    # 크리에이터별 채널 정보
     creator_channels_list = session.exec(
         select(ChannelAccount)
         .where(ChannelAccount.owner_id.in_(creator_ids))
@@ -734,10 +732,7 @@ def export_manager_dashboard_pdf(
             creator_channels[channel.owner_id] = []
         creator_channels[channel.owner_id].append(channel)
 
-    # 스냅샷 조회
     creator_snapshots = fetch_channel_snapshots(creator_channels_list)
-
-    # PDF 생성
     pdf_buffer = generate_manager_pdf(user, creators, creator_channels, creator_snapshots)
 
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")

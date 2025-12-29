@@ -11,19 +11,6 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
 
-
-def generate_pkce_pair():
-    """PKCE code_verifier와 code_challenge(S256) 생성"""
-    # 43-128자 사이의 랜덤 문자열 생성 (RFC 7636)
-    code_verifier = secrets.token_urlsafe(32)
-
-    # S256: SHA256 해시 후 base64url 인코딩
-    code_challenge = base64.urlsafe_b64encode(
-        hashlib.sha256(code_verifier.encode('ascii')).digest()
-    ).decode('ascii').rstrip('=')
-
-    return code_verifier, code_challenge
-
 from ..auth import create_access_token
 from ..database import get_session
 from ..dependencies import get_current_user, require_roles
@@ -37,6 +24,19 @@ from ..models import (
 )
 from ..services.localization import load_translations
 from ..services.social.social_fetcher import fetch_channel_snapshots
+
+
+def generate_pkce_pair():
+    """PKCE code_verifier와 code_challenge(S256) 생성"""
+    # 43-128자 사이의 랜덤 문자열 생성 (RFC 7636)
+    code_verifier = secrets.token_urlsafe(32)
+
+    # S256: SHA256 해시 후 base64url 인코딩
+    code_challenge = base64.urlsafe_b64encode(
+        hashlib.sha256(code_verifier.encode('ascii')).digest()
+    ).decode('ascii').rstrip('=')
+
+    return code_verifier, code_challenge
 
 router = APIRouter(prefix="/channels", tags=["channels"])
 

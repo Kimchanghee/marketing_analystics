@@ -1,0 +1,129 @@
+{
+  "app": {
+    "title": "Centro de Control de Creadores"
+  },
+  "errors": {
+    "404": {
+      "title": "Página no encontrada",
+      "message": "La página solicitada no existe o ha sido movida. Por favor verifica la URL o usa los botones de abajo.",
+      "home": "Ir a Inicio",
+      "dashboard": "Panel",
+      "services": "Servicios",
+      "support": "Soporte",
+      "contact_hint": "Si el problema persiste, contacta a nuestro equipo de soporte."
+    },
+    "500": {
+      "title": "Error del servidor",
+      "message": "Ocurrió un error temporal. Por favor intenta de nuevo.",
+      "home": "Ir a Inicio",
+      "retry": "Reintentar",
+      "contact_hint": "Si el problema persiste, contacta a nuestro equipo de soporte."
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "services": "Producto",
+    "personal": "Personal",
+    "business": "Empresa",
+    "support": "Soporte",
+    "dashboard": "Panel",
+    "channels": "Canales",
+    "profile": "Perfil",
+    "language": "Idioma"
+  },
+  "theme": {
+    "toggle_label": "Cambiar tema",
+    "light_label": "Modo claro",
+    "dark_label": "Modo oscuro"
+  },
+  "footer": {
+    "tagline": "El centro de operaciones de marketing para creadores y sus equipos.",
+    "product": "Producto",
+    "solutions": "Soluciones",
+    "support": "Soporte",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. Todos los derechos reservados.",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad",
+    "contact_link": "Contáctanos"
+  },
+  "roles": {
+    "creator": "Creador",
+    "manager": "Gerente de Creadores",
+    "admin": "Administrador",
+    "super_admin": "Propietario"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirm_password": "Confirmar contraseña",
+    "name": "Nombre",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "reset_password": "Restablecer contraseña",
+    "verification_code": "Código de verificación",
+    "send_code": "Enviar código",
+    "verify": "Verificar",
+    "invalid_credentials": "Credenciales inválidas",
+    "email_exists": "Este correo ya está registrado",
+    "signup_success": "¡Registro exitoso! Por favor inicia sesión.",
+    "password_reset": "Contraseña restablecida exitosamente",
+    "verification_sent": "Código de verificación enviado",
+    "invalid_verification_code": "Código inválido o expirado",
+    "account_inactive": "Cuenta inactiva",
+    "email_not_verified": "Por favor verifica tu correo",
+    "password_login_disabled": "Inicio con contraseña deshabilitado",
+    "too_many_attempts": "Demasiados intentos. Intenta en {minutes} minutos.",
+    "consent_required": "Por favor acepta los términos",
+    "name_required": "Por favor ingresa tu nombre",
+    "social_linked": "Cuenta social vinculada",
+    "password_updated": "Contraseña actualizada"
+  },
+  "pricing": {
+    "title": "Precios",
+    "free": "Gratis",
+    "pro": "Pro",
+    "business": "Empresa",
+    "current_plan": "Plan actual",
+    "upgrade": "Mejorar",
+    "month": "mes",
+    "popular": "Popular",
+    "start_free": "Comenzar gratis",
+    "get_started": "Comenzar"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Bienvenido de vuelta",
+    "overview": "Resumen",
+    "channels": "Canales",
+    "analytics": "Análisis",
+    "settings": "Configuración",
+    "total_followers": "Total de seguidores",
+    "total_posts": "Total de publicaciones",
+    "engagement_rate": "Tasa de interacción",
+    "growth_rate": "Tasa de crecimiento",
+    "recent_activity": "Actividad reciente",
+    "ai_recommendations": "Recomendaciones IA",
+    "export_pdf": "Exportar PDF",
+    "connect_channel": "Conectar canal",
+    "no_channels": "Sin canales conectados"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "submit": "Enviar",
+    "close": "Cerrar"
+  }
+}

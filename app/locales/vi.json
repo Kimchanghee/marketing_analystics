@@ -1,0 +1,129 @@
+{
+  "app": {
+    "title": "Trung Tâm Điều Khiển Nhà Sáng Tạo"
+  },
+  "errors": {
+    "404": {
+      "title": "Không tìm thấy trang",
+      "message": "Trang bạn yêu cầu không tồn tại hoặc đã được di chuyển.",
+      "home": "Về Trang Chủ",
+      "dashboard": "Bảng điều khiển",
+      "services": "Dịch vụ",
+      "support": "Hỗ trợ",
+      "contact_hint": "Nếu vấn đề vẫn tiếp tục, vui lòng liên hệ đội ngũ hỗ trợ."
+    },
+    "500": {
+      "title": "Lỗi máy chủ",
+      "message": "Đã xảy ra lỗi tạm thời. Vui lòng thử lại.",
+      "home": "Về Trang Chủ",
+      "retry": "Thử lại",
+      "contact_hint": "Nếu vấn đề vẫn tiếp tục, vui lòng liên hệ đội ngũ hỗ trợ."
+    }
+  },
+  "nav": {
+    "home": "Trang Chủ",
+    "services": "Sản Phẩm",
+    "personal": "Cá Nhân",
+    "business": "Doanh Nghiệp",
+    "support": "Hỗ Trợ",
+    "dashboard": "Bảng Điều Khiển",
+    "channels": "Kênh",
+    "profile": "Hồ Sơ",
+    "language": "Ngôn Ngữ"
+  },
+  "theme": {
+    "toggle_label": "Chuyển đổi giao diện",
+    "light_label": "Chế độ sáng",
+    "dark_label": "Chế độ tối"
+  },
+  "footer": {
+    "tagline": "Trung tâm vận hành marketing cho nhà sáng tạo và đội ngũ của họ.",
+    "product": "Sản Phẩm",
+    "solutions": "Giải Pháp",
+    "support": "Hỗ Trợ",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. Bảo lưu mọi quyền.",
+    "terms": "Điều Khoản Dịch Vụ",
+    "privacy": "Chính Sách Bảo Mật",
+    "contact_link": "Liên Hệ"
+  },
+  "roles": {
+    "creator": "Nhà Sáng Tạo",
+    "manager": "Quản Lý",
+    "admin": "Quản Trị Viên",
+    "super_admin": "Chủ Sở Hữu"
+  },
+  "auth": {
+    "login": "Đăng Nhập",
+    "signup": "Đăng Ký",
+    "logout": "Đăng Xuất",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "confirm_password": "Xác nhận mật khẩu",
+    "name": "Tên",
+    "forgot_password": "Quên mật khẩu?",
+    "reset_password": "Đặt lại mật khẩu",
+    "verification_code": "Mã xác thực",
+    "send_code": "Gửi mã",
+    "verify": "Xác thực",
+    "invalid_credentials": "Thông tin đăng nhập không hợp lệ",
+    "email_exists": "Email này đã được đăng ký",
+    "signup_success": "Đăng ký thành công! Vui lòng đăng nhập.",
+    "password_reset": "Mật khẩu đã được đặt lại",
+    "verification_sent": "Mã xác thực đã được gửi",
+    "invalid_verification_code": "Mã không hợp lệ hoặc đã hết hạn",
+    "account_inactive": "Tài khoản không hoạt động",
+    "email_not_verified": "Vui lòng xác thực email",
+    "password_login_disabled": "Đăng nhập bằng mật khẩu đã bị tắt",
+    "too_many_attempts": "Quá nhiều lần thử. Thử lại sau {minutes} phút.",
+    "consent_required": "Vui lòng chấp nhận điều khoản",
+    "name_required": "Vui lòng nhập tên",
+    "social_linked": "Đã liên kết tài khoản mạng xã hội",
+    "password_updated": "Mật khẩu đã cập nhật"
+  },
+  "pricing": {
+    "title": "Bảng Giá",
+    "free": "Miễn Phí",
+    "pro": "Pro",
+    "business": "Doanh Nghiệp",
+    "current_plan": "Gói hiện tại",
+    "upgrade": "Nâng cấp",
+    "month": "tháng",
+    "popular": "Phổ biến",
+    "start_free": "Bắt đầu miễn phí",
+    "get_started": "Bắt đầu"
+  },
+  "dashboard": {
+    "title": "Bảng Điều Khiển",
+    "welcome": "Chào mừng trở lại",
+    "overview": "Tổng quan",
+    "channels": "Kênh",
+    "analytics": "Phân tích",
+    "settings": "Cài đặt",
+    "total_followers": "Tổng người theo dõi",
+    "total_posts": "Tổng bài đăng",
+    "engagement_rate": "Tỷ lệ tương tác",
+    "growth_rate": "Tỷ lệ tăng trưởng",
+    "recent_activity": "Hoạt động gần đây",
+    "ai_recommendations": "Đề xuất AI",
+    "export_pdf": "Xuất PDF",
+    "connect_channel": "Kết nối kênh",
+    "no_channels": "Chưa có kênh nào"
+  },
+  "common": {
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "edit": "Sửa",
+    "add": "Thêm",
+    "search": "Tìm kiếm",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "confirm": "Xác nhận",
+    "back": "Quay lại",
+    "next": "Tiếp",
+    "submit": "Gửi",
+    "close": "Đóng"
+  }
+}

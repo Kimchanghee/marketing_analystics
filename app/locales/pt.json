@@ -1,0 +1,129 @@
+{
+  "app": {
+    "title": "Centro de Controle do Criador"
+  },
+  "errors": {
+    "404": {
+      "title": "Página não encontrada",
+      "message": "A página solicitada não existe ou foi movida.",
+      "home": "Ir para Início",
+      "dashboard": "Painel",
+      "services": "Serviços",
+      "support": "Suporte",
+      "contact_hint": "Se o problema persistir, entre em contato com nossa equipe."
+    },
+    "500": {
+      "title": "Erro do servidor",
+      "message": "Ocorreu um erro temporário. Por favor, tente novamente.",
+      "home": "Ir para Início",
+      "retry": "Tentar novamente",
+      "contact_hint": "Se o problema persistir, entre em contato com nossa equipe."
+    }
+  },
+  "nav": {
+    "home": "Início",
+    "services": "Produto",
+    "personal": "Pessoal",
+    "business": "Empresarial",
+    "support": "Suporte",
+    "dashboard": "Painel",
+    "channels": "Canais",
+    "profile": "Perfil",
+    "language": "Idioma"
+  },
+  "theme": {
+    "toggle_label": "Alternar tema",
+    "light_label": "Modo claro",
+    "dark_label": "Modo escuro"
+  },
+  "footer": {
+    "tagline": "O hub de marketing para criadores e suas equipes.",
+    "product": "Produto",
+    "solutions": "Soluções",
+    "support": "Suporte",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. Todos os direitos reservados.",
+    "terms": "Termos de Serviço",
+    "privacy": "Política de Privacidade",
+    "contact_link": "Contato"
+  },
+  "roles": {
+    "creator": "Criador",
+    "manager": "Gerente de Criadores",
+    "admin": "Administrador",
+    "super_admin": "Proprietário"
+  },
+  "auth": {
+    "login": "Entrar",
+    "signup": "Cadastrar",
+    "logout": "Sair",
+    "email": "E-mail",
+    "password": "Senha",
+    "confirm_password": "Confirmar senha",
+    "name": "Nome",
+    "forgot_password": "Esqueceu a senha?",
+    "reset_password": "Redefinir senha",
+    "verification_code": "Código de verificação",
+    "send_code": "Enviar código",
+    "verify": "Verificar",
+    "invalid_credentials": "Credenciais inválidas",
+    "email_exists": "Este e-mail já está cadastrado",
+    "signup_success": "Cadastro realizado! Por favor, faça login.",
+    "password_reset": "Senha redefinida com sucesso",
+    "verification_sent": "Código de verificação enviado",
+    "invalid_verification_code": "Código inválido ou expirado",
+    "account_inactive": "Conta inativa",
+    "email_not_verified": "Por favor, verifique seu e-mail",
+    "password_login_disabled": "Login com senha desativado",
+    "too_many_attempts": "Muitas tentativas. Tente em {minutes} minutos.",
+    "consent_required": "Por favor, aceite os termos",
+    "name_required": "Por favor, digite seu nome",
+    "social_linked": "Conta social vinculada",
+    "password_updated": "Senha atualizada"
+  },
+  "pricing": {
+    "title": "Preços",
+    "free": "Grátis",
+    "pro": "Pro",
+    "business": "Empresarial",
+    "current_plan": "Plano atual",
+    "upgrade": "Upgrade",
+    "month": "mês",
+    "popular": "Popular",
+    "start_free": "Começar grátis",
+    "get_started": "Começar"
+  },
+  "dashboard": {
+    "title": "Painel",
+    "welcome": "Bem-vindo de volta",
+    "overview": "Visão geral",
+    "channels": "Canais",
+    "analytics": "Análises",
+    "settings": "Configurações",
+    "total_followers": "Total de seguidores",
+    "total_posts": "Total de posts",
+    "engagement_rate": "Taxa de engajamento",
+    "growth_rate": "Taxa de crescimento",
+    "recent_activity": "Atividade recente",
+    "ai_recommendations": "Recomendações IA",
+    "export_pdf": "Exportar PDF",
+    "connect_channel": "Conectar canal",
+    "no_channels": "Nenhum canal conectado"
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "search": "Buscar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "submit": "Enviar",
+    "close": "Fechar"
+  }
+}

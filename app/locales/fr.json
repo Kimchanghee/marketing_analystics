@@ -1,0 +1,129 @@
+{
+  "app": {
+    "title": "Centre de Contrôle Créateur"
+  },
+  "errors": {
+    "404": {
+      "title": "Page non trouvée",
+      "message": "La page demandée n'existe pas ou a été déplacée. Veuillez vérifier l'URL.",
+      "home": "Accueil",
+      "dashboard": "Tableau de bord",
+      "services": "Services",
+      "support": "Support",
+      "contact_hint": "Si le problème persiste, contactez notre équipe de support."
+    },
+    "500": {
+      "title": "Erreur serveur",
+      "message": "Une erreur temporaire s'est produite. Veuillez réessayer.",
+      "home": "Accueil",
+      "retry": "Réessayer",
+      "contact_hint": "Si le problème persiste, contactez notre équipe de support."
+    }
+  },
+  "nav": {
+    "home": "Accueil",
+    "services": "Produit",
+    "personal": "Personnel",
+    "business": "Entreprise",
+    "support": "Support",
+    "dashboard": "Tableau de bord",
+    "channels": "Chaînes",
+    "profile": "Profil",
+    "language": "Langue"
+  },
+  "theme": {
+    "toggle_label": "Changer de thème",
+    "light_label": "Mode clair",
+    "dark_label": "Mode sombre"
+  },
+  "footer": {
+    "tagline": "Le hub marketing pour les créateurs et leurs équipes.",
+    "product": "Produit",
+    "solutions": "Solutions",
+    "support": "Support",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. Tous droits réservés.",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "contact_link": "Nous contacter"
+  },
+  "roles": {
+    "creator": "Créateur",
+    "manager": "Gestionnaire de créateurs",
+    "admin": "Administrateur",
+    "super_admin": "Propriétaire"
+  },
+  "auth": {
+    "login": "Connexion",
+    "signup": "Inscription",
+    "logout": "Déconnexion",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirm_password": "Confirmer le mot de passe",
+    "name": "Nom",
+    "forgot_password": "Mot de passe oublié ?",
+    "reset_password": "Réinitialiser le mot de passe",
+    "verification_code": "Code de vérification",
+    "send_code": "Envoyer le code",
+    "verify": "Vérifier",
+    "invalid_credentials": "Identifiants invalides",
+    "email_exists": "Cet e-mail est déjà enregistré",
+    "signup_success": "Inscription réussie ! Connectez-vous.",
+    "password_reset": "Mot de passe réinitialisé",
+    "verification_sent": "Code de vérification envoyé",
+    "invalid_verification_code": "Code invalide ou expiré",
+    "account_inactive": "Compte inactif",
+    "email_not_verified": "Veuillez vérifier votre e-mail",
+    "password_login_disabled": "Connexion par mot de passe désactivée",
+    "too_many_attempts": "Trop de tentatives. Réessayez dans {minutes} minutes.",
+    "consent_required": "Veuillez accepter les conditions",
+    "name_required": "Veuillez entrer votre nom",
+    "social_linked": "Compte social lié",
+    "password_updated": "Mot de passe mis à jour"
+  },
+  "pricing": {
+    "title": "Tarifs",
+    "free": "Gratuit",
+    "pro": "Pro",
+    "business": "Entreprise",
+    "current_plan": "Plan actuel",
+    "upgrade": "Mettre à niveau",
+    "month": "mois",
+    "popular": "Populaire",
+    "start_free": "Commencer gratuitement",
+    "get_started": "Commencer"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue",
+    "overview": "Aperçu",
+    "channels": "Chaînes",
+    "analytics": "Analyses",
+    "settings": "Paramètres",
+    "total_followers": "Total abonnés",
+    "total_posts": "Total publications",
+    "engagement_rate": "Taux d'engagement",
+    "growth_rate": "Taux de croissance",
+    "recent_activity": "Activité récente",
+    "ai_recommendations": "Recommandations IA",
+    "export_pdf": "Exporter PDF",
+    "connect_channel": "Connecter une chaîne",
+    "no_channels": "Aucune chaîne connectée"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Soumettre",
+    "close": "Fermer"
+  }
+}

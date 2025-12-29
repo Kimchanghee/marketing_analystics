@@ -1,0 +1,129 @@
+{
+  "app": {
+    "title": "Creator Control Center"
+  },
+  "errors": {
+    "404": {
+      "title": "Seite nicht gefunden",
+      "message": "Die angeforderte Seite existiert nicht oder wurde verschoben.",
+      "home": "Zur Startseite",
+      "dashboard": "Dashboard",
+      "services": "Dienste",
+      "support": "Support",
+      "contact_hint": "Bei anhaltenden Problemen kontaktieren Sie unser Support-Team."
+    },
+    "500": {
+      "title": "Serverfehler",
+      "message": "Ein temporärer Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "home": "Zur Startseite",
+      "retry": "Erneut versuchen",
+      "contact_hint": "Bei anhaltenden Problemen kontaktieren Sie unser Support-Team."
+    }
+  },
+  "nav": {
+    "home": "Startseite",
+    "services": "Produkt",
+    "personal": "Persönlich",
+    "business": "Unternehmen",
+    "support": "Support",
+    "dashboard": "Dashboard",
+    "channels": "Kanäle",
+    "profile": "Profil",
+    "language": "Sprache"
+  },
+  "theme": {
+    "toggle_label": "Design wechseln",
+    "light_label": "Heller Modus",
+    "dark_label": "Dunkler Modus"
+  },
+  "footer": {
+    "tagline": "Das Marketing-Hub für Creator und ihre Teams.",
+    "product": "Produkt",
+    "solutions": "Lösungen",
+    "support": "Support",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. Alle Rechte vorbehalten.",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutz",
+    "contact_link": "Kontakt"
+  },
+  "roles": {
+    "creator": "Creator",
+    "manager": "Creator Manager",
+    "admin": "Administrator",
+    "super_admin": "Inhaber"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "logout": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirm_password": "Passwort bestätigen",
+    "name": "Name",
+    "forgot_password": "Passwort vergessen?",
+    "reset_password": "Passwort zurücksetzen",
+    "verification_code": "Bestätigungscode",
+    "send_code": "Code senden",
+    "verify": "Bestätigen",
+    "invalid_credentials": "Ungültige Anmeldedaten",
+    "email_exists": "Diese E-Mail ist bereits registriert",
+    "signup_success": "Registrierung erfolgreich! Bitte anmelden.",
+    "password_reset": "Passwort erfolgreich zurückgesetzt",
+    "verification_sent": "Bestätigungscode gesendet",
+    "invalid_verification_code": "Ungültiger oder abgelaufener Code",
+    "account_inactive": "Konto inaktiv",
+    "email_not_verified": "Bitte bestätigen Sie Ihre E-Mail",
+    "password_login_disabled": "Passwort-Login deaktiviert",
+    "too_many_attempts": "Zu viele Versuche. Versuchen Sie es in {minutes} Minuten.",
+    "consent_required": "Bitte akzeptieren Sie die Bedingungen",
+    "name_required": "Bitte geben Sie Ihren Namen ein",
+    "social_linked": "Social-Account verknüpft",
+    "password_updated": "Passwort aktualisiert"
+  },
+  "pricing": {
+    "title": "Preise",
+    "free": "Kostenlos",
+    "pro": "Pro",
+    "business": "Unternehmen",
+    "current_plan": "Aktueller Plan",
+    "upgrade": "Upgrade",
+    "month": "Monat",
+    "popular": "Beliebt",
+    "start_free": "Kostenlos starten",
+    "get_started": "Loslegen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen zurück",
+    "overview": "Übersicht",
+    "channels": "Kanäle",
+    "analytics": "Analysen",
+    "settings": "Einstellungen",
+    "total_followers": "Gesamt Follower",
+    "total_posts": "Gesamt Beiträge",
+    "engagement_rate": "Engagement-Rate",
+    "growth_rate": "Wachstumsrate",
+    "recent_activity": "Letzte Aktivität",
+    "ai_recommendations": "KI-Empfehlungen",
+    "export_pdf": "PDF exportieren",
+    "connect_channel": "Kanal verbinden",
+    "no_channels": "Keine Kanäle verbunden"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "search": "Suchen",
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Absenden",
+    "close": "Schließen"
+  }
+}

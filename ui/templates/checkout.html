@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}{% if locale == "ko" %}결제{% elif locale == "ja" %}お支払い{% else %}Checkout{% endif %} - {{ t.app.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Order Summary -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                {% if locale == "ko" %}주문 요약{% elif locale == "ja" %}注文概要{% else %}Order Summary{% endif %}
+            </h2>
+
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-900 dark:text-white">{{ plan.name }}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            {% if locale == "ko" %}월간 구독{% elif locale == "ja" %}月額サブスクリプション{% else %}Monthly subscription{% endif %}
+                        </p>
+                    </div>
+                    <span class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{{ plan.price }}</span>
+                </div>
+
+                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    {% for feature in plan.features %}
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        {{ feature }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                    <span>{% if locale == "ko" %}소계{% elif locale == "ja" %}小計{% else %}Subtotal{% endif %}</span>
+                    <span>{{ plan.price }}</span>
+                </div>
+                <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                    <span>{% if locale == "ko" %}세금{% elif locale == "ja" %}税金{% else %}Tax{% endif %}</span>
+                    <span>{% if locale == "ko" %}포함{% elif locale == "ja" %}含む{% else %}Included{% endif %}</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold text-gray-900 dark:text-white pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <span>{% if locale == "ko" %}총 결제 금액{% elif locale == "ja" %}合計{% else %}Total{% endif %}</span>
+                    <span>{{ plan.price }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                {% if locale == "ko" %}결제 정보{% elif locale == "ja" %}お支払い情報{% else %}Payment Details{% endif %}
+            </h2>
+
+            <form action="/subscriptions/checkout/{{ plan.tier }}" method="POST" class="space-y-6">
+                <!-- Payment Method Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                        {% if locale == "ko" %}결제 수단{% elif locale == "ja" %}お支払い方法{% else %}Payment Method{% endif %}
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center justify-center p-4 border-2 border-indigo-500 rounded-lg cursor-pointer bg-indigo-50 dark:bg-indigo-900/20">
+                            <input type="radio" name="payment_method" value="card" checked class="sr-only">
+                            <span class="font-medium text-indigo-700 dark:text-indigo-400">
+                                {% if locale == "ko" %}신용카드{% elif locale == "ja" %}クレジットカード{% else %}Credit Card{% endif %}
+                            </span>
+                        </label>
+                        <label class="flex items-center justify-center p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:border-indigo-300">
+                            <input type="radio" name="payment_method" value="bank" class="sr-only">
+                            <span class="font-medium text-gray-700 dark:text-gray-300">
+                                {% if locale == "ko" %}계좌이체{% elif locale == "ja" %}銀行振込{% else %}Bank Transfer{% endif %}
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Card Details -->
+                <div id="card-details" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            {% if locale == "ko" %}카드 번호{% elif locale == "ja" %}カード番号{% else %}Card Number{% endif %}
+                        </label>
+                        <input type="text" name="card_number" placeholder="1234 5678 9012 3456"
+                               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                               maxlength="19">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                {% if locale == "ko" %}유효기간{% elif locale == "ja" %}有効期限{% else %}Expiry{% endif %}
+                            </label>
+                            <input type="text" name="expiry" placeholder="MM/YY"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   maxlength="5">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CVC</label>
+                            <input type="text" name="cvc" placeholder="123"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   maxlength="4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="flex items-start">
+                    <input type="checkbox" id="terms" required
+                           class="mt-1 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="terms" class="ml-2 text-sm text-gray-600 dark:text-gray-300">
+                        {% if locale == "ko" %}
+                        <a href="/terms" class="text-indigo-600 hover:underline">이용약관</a> 및
+                        <a href="/privacy" class="text-indigo-600 hover:underline">개인정보처리방침</a>에 동의합니다
+                        {% elif locale == "ja" %}
+                        <a href="/terms" class="text-indigo-600 hover:underline">利用規約</a>と
+                        <a href="/privacy" class="text-indigo-600 hover:underline">プライバシーポリシー</a>に同意します
+                        {% else %}
+                        I agree to the <a href="/terms" class="text-indigo-600 hover:underline">Terms of Service</a> and
+                        <a href="/privacy" class="text-indigo-600 hover:underline">Privacy Policy</a>
+                        {% endif %}
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full py-4 px-6 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg transition flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    {% if locale == "ko" %}결제하기{% elif locale == "ja" %}支払う{% else %}Pay Now{% endif %}
+                </button>
+
+                <!-- Security Note -->
+                <p class="text-xs text-center text-gray-500 dark:text-gray-400">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    {% if locale == "ko" %}SSL 암호화로 안전하게 보호됩니다{% elif locale == "ja" %}SSL暗号化で保護されています{% else %}Secured with SSL encryption{% endif %}
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back Link -->
+    <div class="text-center mt-8">
+        <a href="/subscriptions/pricing" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">
+            &larr; {% if locale == "ko" %}플랜 선택으로 돌아가기{% elif locale == "ja" %}プラン選択に戻る{% else %}Back to pricing{% endif %}
+        </a>
+    </div>
+</div>
+
+<script>
+// Payment method toggle
+document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const cardDetails = document.getElementById('card-details');
+        if (e.target.value === 'card') {
+            cardDetails.style.display = 'block';
+        } else {
+            cardDetails.style.display = 'none';
+        }
+
+        // Update radio button styles
+        document.querySelectorAll('input[name="payment_method"]').forEach(r => {
+            const label = r.closest('label');
+            if (r.checked) {
+                label.classList.add('border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                label.classList.remove('border-gray-200', 'dark:border-gray-600');
+            } else {
+                label.classList.remove('border-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-900/20');
+                label.classList.add('border-gray-200', 'dark:border-gray-600');
+            }
+        });
+    });
+});
+
+// Card number formatting
+document.querySelector('input[name="card_number"]')?.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+    let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+    e.target.value = formatted;
+});
+
+// Expiry formatting
+document.querySelector('input[name="expiry"]')?.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+    }
+    e.target.value = value;
+});
+</script>
+{% endblock %}

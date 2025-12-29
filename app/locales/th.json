@@ -1,0 +1,129 @@
+{
+  "app": {
+    "title": "ศูนย์ควบคุมครีเอเตอร์"
+  },
+  "errors": {
+    "404": {
+      "title": "ไม่พบหน้า",
+      "message": "หน้าที่คุณขอไม่มีอยู่หรือถูกย้ายแล้ว",
+      "home": "ไปหน้าแรก",
+      "dashboard": "แดชบอร์ด",
+      "services": "บริการ",
+      "support": "สนับสนุน",
+      "contact_hint": "หากปัญหายังคงอยู่ โปรดติดต่อทีมสนับสนุน"
+    },
+    "500": {
+      "title": "เซิร์ฟเวอร์ผิดพลาด",
+      "message": "เกิดข้อผิดพลาดชั่วคราว กรุณาลองใหม่อีกครั้ง",
+      "home": "ไปหน้าแรก",
+      "retry": "ลองใหม่",
+      "contact_hint": "หากปัญหายังคงอยู่ โปรดติดต่อทีมสนับสนุน"
+    }
+  },
+  "nav": {
+    "home": "หน้าแรก",
+    "services": "ผลิตภัณฑ์",
+    "personal": "ส่วนบุคคล",
+    "business": "ธุรกิจ",
+    "support": "สนับสนุน",
+    "dashboard": "แดชบอร์ด",
+    "channels": "ช่อง",
+    "profile": "โปรไฟล์",
+    "language": "ภาษา"
+  },
+  "theme": {
+    "toggle_label": "สลับธีม",
+    "light_label": "โหมดสว่าง",
+    "dark_label": "โหมดมืด"
+  },
+  "footer": {
+    "tagline": "ศูนย์กลางการตลาดสำหรับครีเอเตอร์และทีมของพวกเขา",
+    "product": "ผลิตภัณฑ์",
+    "solutions": "โซลูชัน",
+    "support": "สนับสนุน",
+    "contact": "hello@creatorcontrol.center",
+    "note": "© 2024 Creator Control Center. สงวนลิขสิทธิ์",
+    "terms": "ข้อกำหนดการใช้งาน",
+    "privacy": "นโยบายความเป็นส่วนตัว",
+    "contact_link": "ติดต่อเรา"
+  },
+  "roles": {
+    "creator": "ครีเอเตอร์",
+    "manager": "ผู้จัดการ",
+    "admin": "ผู้ดูแล",
+    "super_admin": "เจ้าของ"
+  },
+  "auth": {
+    "login": "เข้าสู่ระบบ",
+    "signup": "สมัครสมาชิก",
+    "logout": "ออกจากระบบ",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "confirm_password": "ยืนยันรหัสผ่าน",
+    "name": "ชื่อ",
+    "forgot_password": "ลืมรหัสผ่าน?",
+    "reset_password": "รีเซ็ตรหัสผ่าน",
+    "verification_code": "รหัสยืนยัน",
+    "send_code": "ส่งรหัส",
+    "verify": "ยืนยัน",
+    "invalid_credentials": "ข้อมูลไม่ถูกต้อง",
+    "email_exists": "อีเมลนี้ถูกใช้แล้ว",
+    "signup_success": "สมัครสำเร็จ! กรุณาเข้าสู่ระบบ",
+    "password_reset": "รีเซ็ตรหัสผ่านสำเร็จ",
+    "verification_sent": "ส่งรหัสยืนยันแล้ว",
+    "invalid_verification_code": "รหัสไม่ถูกต้องหรือหมดอายุ",
+    "account_inactive": "บัญชีไม่ได้ใช้งาน",
+    "email_not_verified": "กรุณายืนยันอีเมล",
+    "password_login_disabled": "ปิดการใช้รหัสผ่านเข้าสู่ระบบ",
+    "too_many_attempts": "พยายามมากเกินไป ลองใหม่ใน {minutes} นาที",
+    "consent_required": "กรุณายอมรับข้อกำหนด",
+    "name_required": "กรุณากรอกชื่อ",
+    "social_linked": "เชื่อมต่อบัญชีโซเชียลแล้ว",
+    "password_updated": "อัปเดตรหัสผ่านแล้ว"
+  },
+  "pricing": {
+    "title": "ราคา",
+    "free": "ฟรี",
+    "pro": "โปร",
+    "business": "ธุรกิจ",
+    "current_plan": "แผนปัจจุบัน",
+    "upgrade": "อัปเกรด",
+    "month": "เดือน",
+    "popular": "ยอดนิยม",
+    "start_free": "เริ่มฟรี",
+    "get_started": "เริ่มต้น"
+  },
+  "dashboard": {
+    "title": "แดชบอร์ด",
+    "welcome": "ยินดีต้อนรับกลับ",
+    "overview": "ภาพรวม",
+    "channels": "ช่อง",
+    "analytics": "การวิเคราะห์",
+    "settings": "การตั้งค่า",
+    "total_followers": "ผู้ติดตามทั้งหมด",
+    "total_posts": "โพสต์ทั้งหมด",
+    "engagement_rate": "อัตราการมีส่วนร่วม",
+    "growth_rate": "อัตราการเติบโต",
+    "recent_activity": "กิจกรรมล่าสุด",
+    "ai_recommendations": "คำแนะนำ AI",
+    "export_pdf": "ส่งออก PDF",
+    "connect_channel": "เชื่อมต่อช่อง",
+    "no_channels": "ยังไม่มีช่อง"
+  },
+  "common": {
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "add": "เพิ่ม",
+    "search": "ค้นหา",
+    "loading": "กำลังโหลด...",
+    "error": "ข้อผิดพลาด",
+    "success": "สำเร็จ",
+    "confirm": "ยืนยัน",
+    "back": "กลับ",
+    "next": "ถัดไป",
+    "submit": "ส่ง",
+    "close": "ปิด"
+  }
+}
