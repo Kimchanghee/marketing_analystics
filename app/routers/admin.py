@@ -115,7 +115,7 @@ def super_admin_dashboard(
         email_error = str(exc)
 
     response = request.app.state.templates.TemplateResponse(
-        "super_admin.html",
+        "admin/super_admin.html",
         {
             "request": request,
             "user": user,
@@ -496,7 +496,7 @@ def manager_dashboard(
         session.refresh(subscription)
 
     return request.app.state.templates.TemplateResponse(
-        "manager_dashboard.html",
+        "admin/manager_dashboard.html",
         {
             "request": request,
             "user": user,
@@ -680,7 +680,7 @@ def view_creator_detail(
     strings = translator.load_locale(locale)
 
     return request.app.state.templates.TemplateResponse(
-        "creator_detail.html",
+        "admin/creator_detail.html",
         {
             "request": request,
             "user": user,
@@ -1081,7 +1081,7 @@ def view_inquiries(
     strings = translator.load_locale(locale)
 
     return request.app.state.templates.TemplateResponse(
-        "manager_inquiries.html",
+        "admin/manager_inquiries.html",
         {
             "request": request,
             "user": user,
